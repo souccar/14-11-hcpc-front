@@ -1,0 +1,80 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientJsonpModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
+import { SharedModule } from '@shared/shared.module';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+// tenants
+import { TenantsComponent } from '@app/tenants/tenants.component';
+import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
+import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
+
+// layout
+import {WidgetsModule} from './widgets/widgets.module';
+import {LayoutModule} from './layout/layout.module';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { HotkeyModule } from 'angular2-hotkeys';
+import { ContextMenuModule } from 'ngx-contextmenu';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { ComponentsModule } from './@components/components.module';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    TenantsComponent,
+    CreateTenantDialogComponent,
+    EditTenantDialogComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
+    ModalModule.forChild(),
+    BsDropdownModule,
+    CollapseModule,    
+    PerfectScrollbarModule,
+    TabsModule,
+    PaginationModule.forRoot(),
+    AppRoutingModule,
+    ServiceProxyModule,
+    HotkeyModule.forRoot(),
+    SharedModule,
+    NgxPaginationModule,
+    AccordionModule.forRoot(),
+    WidgetsModule,
+    LayoutModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    // ContextMenuModule.forRoot({
+    //   useBootstrap4: true,
+    // }),
+    ComponentsModule,
+  ],
+ 
+ 
+  schemas: [
+    NO_ERRORS_SCHEMA,
+    CUSTOM_ELEMENTS_SCHEMA,
+  ],
+  entryComponents: [
+    // tenants
+    CreateTenantDialogComponent,
+    EditTenantDialogComponent,
+    
+  ],
+})
+export class AppModule {}

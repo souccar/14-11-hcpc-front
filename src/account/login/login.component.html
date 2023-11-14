@@ -1,0 +1,62 @@
+﻿<div class="fixed-background"></div>
+<main>
+  <div class="container">
+    <div class="row h-100">
+      <div class="col-12 col-md-10 mx-auto my-auto">
+        <div class="card auth-card">
+          <div class="position-relative image-side ">
+            <p class=" text-white h2">MAGIC IS IN THE DETAILS</p>
+            <p class="white mb-0">
+              Please use your credentials to login.
+              <a *ngIf="isSelfRegistrationAllowed" routerLink="/user/register" class="white white-underline-link">To
+                Create A
+                New Account Register Here!</a>.
+            </p>
+          </div>
+          <div class="form-side">
+            <a class="c-pointer">
+              <span class="logo-single"></span>
+            </a>
+            <h6 class="mb-4">Login</h6>
+
+            <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
+              <label class="form-group has-float-label">
+                <input type="text" class="form-control" name="userNameOrEmailAddress"
+                  [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress"
+                  required maxlength="256"
+                  #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl />
+                <span>{{'UserName' | localize}}</span>
+                <abp-validation-summary [control]="userNameOrEmailAddressModel"
+                  [controlEl]="userNameOrEmailAddressEl"></abp-validation-summary>
+              </label>
+              <label class="form-group has-float-label">
+                <input type="password" class="form-control" name="password"
+                  [(ngModel)]="authService.authenticateModel.password" required
+                  maxlength="32" #passwordModel="ngModel" #passwordEl />
+                <span>{{'Password' | localize}}</span>
+                <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
+              </label>
+              <div class="form-group row">
+                <div class="col-md-8">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe"
+                      [(ngModel)]="authService.rememberMe" />
+                    <label for="rememberMe" class="custom-control-label">
+                      {{ "RememberMe" | localize }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <app-state-button type="submit" [btnClass]="'btn btn-primary btn-lg btn-shadow'"
+                  [isDisabled]="!loginForm.form.valid || submitting">
+                  {{ "LogIn" | localize }}
+                </app-state-button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
