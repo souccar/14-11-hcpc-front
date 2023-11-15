@@ -14,10 +14,12 @@ import { AppComponentBase } from '@shared/app-component-base';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AbpModalFooterComponent extends AppComponentBase {
-  @Input() cancelLabel = this.l('Cancel');
-  @Input() cancelDisabled: boolean;
-  @Input() saveLabel = this.l('Save');
-  @Input() saveDisabled: boolean;
+  @Input() cancelLabel = 'Cancel';
+  @Input() cancelDisabled: boolean=true;
+  @Input() saveLabel = 'Save';
+  @Input() saveDisabled: boolean=true;
+  @Input() saveIcon = 'bi bi-check-lg';
+  @Input() cancelIcon = 'bi bi-x-lg';
 
   @Output() onCancelClick = new EventEmitter<number>();
 

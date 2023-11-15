@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { HomeComponent } from './home/home.component';
 import { TenantsComponent } from './tenants/tenants.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 
 @NgModule({
@@ -15,9 +16,11 @@ import { TenantsComponent } from './tenants/tenants.component';
                 children: [
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    
+                    { path: 'production', loadChildren: () => import('./production/production.module').then(m => m.ProductionModule) },
+                    { path: 'supplier', component: SupplierComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard]  },
                 ]
-            }
+            },
+           
         ])
     ],
     exports: [RouterModule]

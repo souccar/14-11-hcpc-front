@@ -1,0 +1,25 @@
+<abp-modal-header
+  [title]="'View More Details'"
+  (onCloseClick)="bsModalRef.hide()"
+></abp-modal-header>
+<div class="modal-body my-custom-scrollbar">
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="name">
+      {{ "Name" }}
+    </label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="name"
+        [value]="data"
+        [readonly]="!editable"
+      />
+    </div>
+  </div>
+  
+  
+  
+  </div>
+
