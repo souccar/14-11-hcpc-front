@@ -1,23 +1,23 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CreateFormulaDialogComponent } from './create-formula/create-formula-dialog.component';
-import { EditFormulaDialogComponent } from './edit-formula/edit-formula-dialog.component';
-import { ViewFormulaDialogComponent } from './view-formula/view-formula-dialog.component';
-import { CreateFormulaDto, FormulaDto, FormulaDtoPagedResultDto, FormulaServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateUnitDialogComponent } from './create-unit/create-unit-dialog.component';
+import { EditUnitDialogComponent } from './edit-unit/edit-unit-dialog.component';
+import { ViewUnitDialogComponent } from './view-unit/view-unit-dialog.component';
+import { CreateUnitDto, UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'formula',
-  templateUrl: './formula.component.html',
+  selector: 'unit',
+  templateUrl: './unit.component.html',
 
 })
-export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
+export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   
   displayMode = 'list';
   selectAllState = '';
-  selected: FormulaDto[] = [];
-   data: FormulaDto[] = [];
+  selected: UnitDto[] = [];
+   data: UnitDto[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -29,15 +29,14 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   itemOrder = { label: this.l("Name"), value: "name" };
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
-    { label: this.l("Description"), value: "description" },
-    { label: this.l("price"), value: "price" },
+  
    
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Formula"
+  title="Unit"
 
 
  
@@ -49,7 +48,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
 
   constructor(    injector: Injector,
     private _modalService: BsModalService,
-    private _formulaService:FormulaServiceProxy) {
+    private _unitService:UnitServiceProxy) {
     super(injector);
   }
 
@@ -62,7 +61,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   viewButton(id:number)
 {
   this._modalService.show(
-    ViewFormulaDialogComponent,
+    ViewUnitDialogComponent,
     {
       backdrop: true,
       ignoreBackdropClick: true,
@@ -76,9 +75,9 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
 
   
   editButton(id:number): void {
-    let editFormulaDialog: BsModalRef;
-        editFormulaDialog = this._modalService.show(
-        EditFormulaDialogComponent,
+    let editUnitDialog: BsModalRef;
+        editUnitDialog = this._modalService.show(
+        EditUnitDialogComponent,
         {
           backdrop: true,
           ignoreBackdropClick: true,
@@ -88,20 +87,22 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
           class: 'modal-lg',
         }
       );
-      editFormulaDialog.content.onSave.subscribe(() => {
+      editUnitDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
    
 
     }
 
-    protected delete(entity: FormulaDto): void {
+    protected delete(entity: UnitDto): void {
+    
       abp.message.confirm(
-        this.l('FormulaDeleteWarningMessage', this.selected.length, 'Formulas'),
+        this.l('UnitDeleteWarningMessage', this.selected.length, 'Units'),
         undefined,
         (result: boolean) => {
           if (result) {
-            this._formulaService.delete(entity.id).subscribe(() => {
+           
+            this._unitService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
             });
@@ -127,12 +128,12 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
     }
     else {
       abp.message.confirm(
-        this.l('ProductDeleteWarningMessage', this.selected.length, 'Products'),
+        this.l('UnitDeleteWarningMessage', this.selected.length, 'Units'),
         undefined,
         (result: boolean) => {
           if (result) {
             this.selected.forEach(element => {
-              this._formulaService.delete(element.id).subscribe(() => {
+              this._unitService.delete(element.id).subscribe(() => {
                 abp.notify.success(this.l('SuccessfullyDeleted'));
                 this.refresh();
               });
@@ -148,26 +149,26 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   }
 
   showAddNewModal(): void {
-    let createOrEditFormulaDialog: BsModalRef;
-    createOrEditFormulaDialog = this._modalService.show(
-      CreateFormulaDialogComponent,
+    let createOrEditUnitDialog: BsModalRef;
+    createOrEditUnitDialog = this._modalService.show(
+      CreateUnitDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
-       class: 'modal-lg',
+        class: 'modal-lg',
 
       }
     );
-    createOrEditFormulaDialog.content.onSave.subscribe(() => {
-      // this.getAllFormula(this.itemsPerPage,1)
+    createOrEditUnitDialog.content.onSave.subscribe(() => {
+      this.refresh();
     });
   }
 
-  isSelected(p: FormulaDto): boolean {
+  isSelected(p: UnitDto): boolean {
   
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: FormulaDto): void {
+  onSelect(item: UnitDto): void {
   
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
@@ -183,7 +184,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   ): void {
     request.keyword = this.search;
 
-    this._formulaService
+    this._unitService
       .getAll(
         request.keyword,
         request.sort_Field,
@@ -195,7 +196,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: FormulaDtoPagedResultDto) => {
+      .subscribe((result: UnitDtoPagedResultDto) => {
         
         this.data = result.items;
 

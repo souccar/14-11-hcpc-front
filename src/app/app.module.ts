@@ -29,6 +29,8 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SupplierModule } from './supplier/supplier.module';
+import { SettingsModule } from './settings/settings.module';
+
 
 
 @NgModule({
@@ -37,7 +39,7 @@ import { SupplierModule } from './supplier/supplier.module';
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
-
+    
    
   ],
   imports: [
@@ -67,7 +69,8 @@ import { SupplierModule } from './supplier/supplier.module';
     // }),
     ComponentsModule,
     ProductionModule,
-    SupplierModule
+    SupplierModule,
+    SettingsModule
   ],
  
  
