@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateFormulaDialogComponent } from './create-formula/create-formula-dialog.component';
 import { EditFormulaDialogComponent } from './edit-formula/edit-formula-dialog.component';
 import { ViewFormulaDialogComponent } from './view-formula/view-formula-dialog.component';
-import { CreateFormulaDto, FormulaDto, FormulaDtoPagedResultDto, FormulaServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateFormulaDto, FormulaDto, FormulaDtoPagedResultDto, FormulaServiceProxy, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -29,8 +29,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   itemOrder = { label: this.l("Name"), value: "name" };
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
-    { label: this.l("Description"), value: "description" },
-    { label: this.l("price"), value: "price" },
+
    
   ];
   selectedCount = 0;
@@ -39,17 +38,13 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   loading = false;
   title="Formula"
 
-
- 
-
-
-
-
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,
     private _modalService: BsModalService,
-    private _formulaService:FormulaServiceProxy) {
+    private _formulaService:FormulaServiceProxy,
+    private _productName:ProductServiceProxy,
+    ) {
     super(injector);
   }
 
@@ -57,6 +52,10 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
+
+  // getProductName(id:number){
+  //   this._productName.
+  // }
 
 
   viewButton(id:number)
