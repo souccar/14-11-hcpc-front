@@ -17,10 +17,10 @@ import { SupplierComponent } from './supplier/supplier.component';
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'production', loadChildren: () => import('./production/production.module').then(m => m.ProductionModule) },
-                    { path: 'supplier', component: SupplierComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard]  },
+                    { path: 'supplier', loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule) },
                 ]
             },
-           
+
         ])
     ],
     exports: [RouterModule]

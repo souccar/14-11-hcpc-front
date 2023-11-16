@@ -13,7 +13,7 @@ export interface IMenuItem {
 }
 
 const data: IMenuItem[] = [
- 
+
   //Personnel
   // {
   //   icon: ' iconsminds-user',
@@ -117,7 +117,13 @@ const data: IMenuItem[] = [
   label: 'Supplier',
   to: `${adminRoot}/supplier`,
   icon: 'simple-icon-user',
-  subs:[]
+  subs:[
+    {
+      label: 'supplier',
+      to: `${adminRoot}/supplier/supplier`,
+      icon: 'simple-icon-user',
+    },
+  ]
   // roles: [UserRole.Editor],
 },
 

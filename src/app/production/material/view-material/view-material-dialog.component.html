@@ -13,13 +13,76 @@
         class="form-control"
         name="name"
         id="name"
-        [value]="data"
+        [value]="data.name"
         [readonly]="!editable"
       />
     </div>
   </div>
-  
-  
-  
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="leadtime">
+      {{ "Lead Time" }}
+    </label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        class="form-control"
+        name="leadtime"
+        id="leadtime"
+        [value]="data.leadTime"
+        [readonly]="!editable"
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="price">
+      {{ "Price" }}
+    </label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        class="form-control"
+        name="price"
+        id="price"
+        [value]="data.price"
+        [readonly]="!editable"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="supplier">
+      {{ "Supplier" }}
+    </label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        class="form-control"
+        name="supplier"
+        id="supplier"
+        [value]="supplier.name"
+        [readonly]="!editable"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="description">
+      {{ "Description" }}
+    </label>
+    <div class="col-md-9">
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        id="description"
+        [value]="data.description"
+        [readonly]="!editable"
+      ></textarea>
+    </div>
+  </div>
+
+
+
+
   </div>
 

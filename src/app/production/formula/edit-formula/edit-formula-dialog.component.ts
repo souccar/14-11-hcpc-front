@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'edit-formula-dialog',
   templateUrl: './edit-formula-dialog.component.html',
-  
+
 })
 export class EditFormulaDialogComponent extends AppComponentBase {
   saving = false;
@@ -14,7 +14,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   // material =  new CreateUpdateBrandDto();
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
-   
+
     public bsModalRef: BsModalRef,
 
   ) {
@@ -34,7 +34,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   //       })
   //     )
   //     .subscribe((response:any) => {
-  //       if(response.success){  
+  //       if(response.success){
   //         this.toastr.success('Add Successfully');
   //         this.bsModalRef.hide();
   //         this.onSave.emit();}

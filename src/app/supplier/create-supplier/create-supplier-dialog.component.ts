@@ -20,12 +20,12 @@ export class CreateSupplierDialogComponent  extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    
+
   }
 
 
 
-  
+
    save(): void {
     this.saving = true;
     this._supplierService.
@@ -38,10 +38,10 @@ export class CreateSupplierDialogComponent  extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-        if(response.success){  
+
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
-          this.onSave.emit();}
+          this.onSave.emit();
       });
 
   }

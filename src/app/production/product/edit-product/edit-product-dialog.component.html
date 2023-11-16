@@ -1,21 +1,31 @@
 
 <form class="form-horizontal " autocomplete="off" #createProductModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'edit product' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
-    <div class="modal-body modal-xl">
-          <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="name">
-              {{ "Name"  }}
-            </label>
-            <div class="col-md-9">
-              <!-- <input type="text" class="form-control" name="name" id="name" required
-                [(ngModel)]="product" #nameModel="ngModel" #nameEl   /> -->
-  
-              <!-- <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary> -->
-            </div>
+  <abp-modal-header [title]="'Edit Product' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+  <div class="modal-body modal-xl">
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="name">
+            {{ "Name"  }}
+          </label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" name="name" id="name" required
+              [(ngModel)]="product.name" #nameModel="ngModel" #nameEl   />
+
+           <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
           </div>
-  
-    </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProductModal.form.valid || saving"
-      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
-  </form>
-  
+        </div>
+
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="description">
+            {{ "Description"  }}
+          </label>
+          <div class="col-md-9">
+            <textarea  type="text" class="form-control" name="description" id="description"
+            [(ngModel)]="product.description" #descriptionModel="ngModel" #descriptionEl >
+            </textarea>
+            <abp-validation-summary [control]="descriptionModel" [controlEl]="descriptionEl"></abp-validation-summary>
+          </div>
+        </div>
+  </div>
+  <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProductModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

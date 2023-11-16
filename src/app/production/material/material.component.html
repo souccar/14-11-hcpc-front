@@ -22,20 +22,20 @@
           <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.leadTime}}</p>
           <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.price}}</p>
           <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.description}}</p>
-        
+
         </div>
- 
-        
+
+
           <button id="button-basic" type="button" id="edit" class=" custom-control btn btn-empty text-primary align-self-center pr-4" (click)="editButton(p.id)">
             <i class=" text-primary simple-icon-pencil"></i>
           </button>
-          <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="delete(p.id)">
+          <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="delete(p)">
             <i class="  text-primary simple-icon-trash"></i>
           </button>
           <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="viewButton(p.id)">
             <i class="  text-primary simple-icon-eye"></i>
           </button>
-        
+
       </div>
     </div>
   </div>
