@@ -14,6 +14,7 @@ export interface IMenuItem {
 
 const data: IMenuItem[] = [
 
+
   //Personnel
   // {
   //   icon: ' iconsminds-user',
@@ -143,6 +144,21 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/security/users`,
         icon: 'iconsminds-business-man-woman',
       },
+
+    ],
+  },
+   //Setting
+   {
+    icon: 'simple-icon-settings',
+    label: 'Settings',
+    to: `${adminRoot}/settings`,
+    subs: [
+      {
+        label: 'Unit',
+        to: `${adminRoot}/settings/unit`,
+        icon: 'iconsminds-scale',
+      },
+
 
     ],
   },

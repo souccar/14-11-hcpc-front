@@ -1,0 +1,30 @@
+
+<form class="form-horizontal " autocomplete="off" #createBrandModal="ngForm" (ngSubmit)="save()" >
+    <abp-modal-header [title]="'Edit New Unit' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body modal-xl">
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="name">
+              {{ "Name"  }}
+            </label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="name" id="name" required
+                [(ngModel)]="unit.name" #nameModel="ngModel" #nameEl   />
+  
+              <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+            </div>
+          </div>
+
+        
+          
+
+     
+
+      
+
+
+  
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createBrandModal.form.valid || saving"
+      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+  </form>
+  

@@ -27,7 +27,6 @@ import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-
     CreateMaterialDialogComponent,
     EditMaterialDialogComponent,
     ViewMaterialDialogComponent,
-
     ProductComponent,
     CreateProductDialogComponent,
     EditProductDialogComponent,
