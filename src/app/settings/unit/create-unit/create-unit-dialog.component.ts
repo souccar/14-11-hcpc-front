@@ -1,43 +1,33 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateUnitDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'create-material-dialog',
-  templateUrl: './create-material-dialog.component.html',
+  selector: 'create-unit-dialog',
+  templateUrl: './create-unit-dialog.component.html',
 
 })
-export class CreateMaterialDialogComponent extends AppComponentBase {
+export class CreateUnitDialogComponent extends AppComponentBase {
   saving = false;
- 
-  material =  new CreateMaterialDto();
-  suppliers: SupplierDto[] = [];
+  unit =  new CreateUnitDto();
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
-   private _materialService:MaterialServiceProxy,
-   private _supplierService:SupplierServiceProxy,
+   private _unitService:UnitServiceProxy,
     public bsModalRef: BsModalRef,
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
-    this. initSupplier();
-  }
-
-  initSupplier(){
-   this._supplierService.getAll("","",1,1).subscribe((result) => {
-    this.suppliers = result.items;
-  });
-
+ 
   }
    save(): void {
     this.saving = true;
-    this._materialService.
+    this._unitService.
     create(
-        this.material
+        this.unit
       )
       .pipe(
         finalize(() => {
@@ -45,7 +35,8 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-      
+    
+          console.log(response);
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
           this.onSave.emit();
