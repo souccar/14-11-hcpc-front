@@ -22,7 +22,8 @@ import { EqualValidator } from './directives/equal-validator.directive';
     imports: [
         CommonModule,
         RouterModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -40,7 +41,9 @@ import { EqualValidator } from './directives/equal-validator.directive';
         AbpModalFooterComponent,
         LocalizePipe,
         BusyDirective,
-        EqualValidator
+        EqualValidator,  
+        
+      
     ]
 })
 export class SharedModule {
