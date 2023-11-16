@@ -1,0 +1,62 @@
+import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { AppComponentBase } from '@shared/app-component-base';
+import { CreateTransferDto, TransferServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { finalize } from 'rxjs';
+
+@Component({
+  selector: 'create-transfer-dialog',
+  templateUrl: './create-transfer-dialog.component.html',
+
+})
+export class CreateTransferDialogComponent extends AppComponentBase {
+  saving = false;
+  transfer = new CreateTransferDto();
+  fromUnits: UnitNameForDropdownDto[] = [];
+  ToUnits: UnitNameForDropdownDto[] = [];
+  @Output() onSave = new EventEmitter<any>();
+  constructor(injector: Injector,
+    private _transferService: TransferServiceProxy,
+    private _unitService: UnitServiceProxy,
+    public bsModalRef: BsModalRef,
+
+  ) {
+    super(injector);
+  }
+  ngOnInit(): void {
+    this.initfromUnits();
+    this.initToUnits();
+  }
+
+  initfromUnits() {
+    this._unitService.getNameForDropdown().subscribe((result) => {
+      this.fromUnits = result;
+    });
+  }
+  initToUnits() {
+    this._unitService.getNameForDropdown().subscribe((result) => {
+      this.ToUnits = result;
+    });
+  }
+  save(): void {
+    this.saving = true;
+    this._transferService.
+      create(
+        this.transfer
+      )
+      .pipe(
+        finalize(() => {
+          this.saving = false;
+        })
+      )
+      .subscribe((response: any) => {
+
+        console.log(response);
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.bsModalRef.hide();
+        this.onSave.emit();
+      });
+
+  }
+
+}

@@ -1,1 +1,25 @@
-<p>view-unit-dialog works!</p>
+<abp-modal-header [title]="'View More Details' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<div class="modal-body">
+
+
+    <div class="form-group row ">
+        <label class="col-md-3 col-form-label" for="name">
+            {{ "Name" | localize }}
+        </label>
+        <div class="col-md-9" >
+            <input type="text" class="form-control" name="name" id="unit" [value]="unit.name"
+                [readonly]="!editable" />
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
