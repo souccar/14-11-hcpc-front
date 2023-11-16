@@ -4,6 +4,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ViewSupplierDialogComponent } from './view-supplier/view-supplier-dialog.component';
 import { CreateSupplierDialogComponent } from './create-supplier/create-supplier-dialog.component';
 import { EditSupplierDialogComponent } from './edit-supplier/edit-supplier-dialog.component';
+import { SupplierDto, SupplierDtoPagedResultDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
+import { finalize } from 'rxjs';
 
 
 @Component({
@@ -11,21 +13,12 @@ import { EditSupplierDialogComponent } from './edit-supplier/edit-supplier-dialo
   templateUrl: './supplier.component.html',
 
 })
-export class SupplierComponent extends PagedListingComponentBase<any> {
+export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
   
   displayMode = 'list';
   selectAllState = '';
-  selected: any[] = [];
-  // selected: IProduct[] = [];
-  data: any[] = [{
-    name:"raneem",
-    id:1
-  },
-  {
-    name:"raghad",
-    id:2
-  }];
-  // data: IProduct[] = [];
+  selected: SupplierDto[] = [];
+   data: SupplierDto[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -38,8 +31,8 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
-    { label: this.l("Point"), value: "point" },
-    { label: this.l("Category"), value: "category" },
+    { label: this.l("price"), value: "price" },
+   
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
@@ -56,8 +49,8 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,
-    private _modalService: BsModalService,) {
-    // private apiService: ApiService
+    private _modalService: BsModalService,
+    private _supplierService:SupplierServiceProxy) {
     super(injector);
   }
 
@@ -97,46 +90,38 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
         }
       );
       editSupplierDialog.content.onSave.subscribe(() => {
-      // this.getAllSupplier(this.itemsPerPage,1)
+        this.refresh();
       });
+   
 
     }
 
-    deleteButton(id:number){
-      // this._brandService.delete(id).subscribe((responce:any)=>{
-      //   this.getAllBrand(this.itemsPerPage,1)
-      //   this.toastr.success(responce.message);
-      // });
-  
+    protected delete(entity: SupplierDto): void {
+      abp.message.confirm(
+        this.l('SupplierDeleteWarningMessage', this.selected.length, 'Suppliers'),
+        undefined,
+        (result: boolean) => {
+          if (result) {
+            this._supplierService.delete(entity.id).subscribe(() => {
+              abp.notify.success(this.l('SuccessfullyDeleted'));
+              this.refresh();
+            });
+          }
+        }
+      );
     }
-  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', orderBy: string = ''): void {
-    this.itemsPerPage = pageSize;
-    this.currentPage = currentPage;
-    this.search = search;
-    this.orderBy = orderBy;
-
-    // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-    //   data => {
-    //     if (data.status) {
-    //       this.isLoading = false;
-    //       this.data = data.data.map(x => {
-    //         return {
-    //           ...x,
-    //           img: x.img.replace('/img/', '/img/products/')
-    //         };
-    //       });
-    //       this.totalItem = data.totalItem;
-    //       this.totalPage = data.totalPage;
-    //       this.setSelectAllState();
-    //     } else {
-    //       this.endOfTheList = true;
-    //     }
-    //   },
-    //   error => {
-    //     this.isLoading = false;
-    //   }
-    // );
-  }
+    loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
+      let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+      this.itemsPerPage = pageSize;
+      this.currentPage = currentPage;
+      this.search = search;
+      request.keyword = search;
+      request.sort_Field = sort_Field;
+      request.sort_Desc = sort_Desc;
+      request.skipCount = (currentPage - 1) * pageSize;
+      request.maxResultCount = this.itemsPerPage;
+      this.list(request, this.pageNumber, () => { });
+    }
   deleteItem(): void {
     if (this.selected.length == 0) {
       abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
@@ -148,10 +133,10 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
         (result: boolean) => {
           if (result) {
             this.selected.forEach(element => {
-              // this._productService.delete(element.id).subscribe(() => {
-              //   abp.notify.success(this.l('SuccessfullyDeleted'));
-              //   this.refresh();
-              // });
+              this._supplierService.delete(element.id).subscribe(() => {
+                abp.notify.success(this.l('SuccessfullyDeleted'));
+                this.refresh();
+              });
             });
           }
         }
@@ -179,12 +164,12 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
     });
   }
 
-  isSelected(p: any): boolean {
-    // IProduct
+  isSelected(p: SupplierDto): boolean {
+  
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: any): void {
-    // IProduct
+  onSelect(item: SupplierDto): void {
+  
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -192,12 +177,35 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
     }
     this.setSelectAllState();
   }
-  protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    // throw new Error('Method not implemented.');
+  protected list(
+    request: PagedProductsRequestDto,
+    pageNumber: number,
+    finishedCallback: Function
+  ): void {
+    request.keyword = this.search;
+
+    this._supplierService
+      .getAll(
+        request.keyword,
+        request.sort_Field,
+        request.skipCount,
+        request.MaxResultCount,
+      )
+      .pipe(
+        finalize(() => {
+          finishedCallback();
+        })
+      )
+      .subscribe((result: SupplierDtoPagedResultDto) => {
+        
+        this.data = result.items;
+
+        this.totalItem = result.totalCount;
+        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+        this.setSelectAllState();
+      });
   }
-  protected delete(entity: any): void {
-    // throw new Error('Method not implemented.');
-  }
+
 
   setSelectAllState(): void {
     if (this.selected.length === this.data.length) {
@@ -237,3 +245,10 @@ export class SupplierComponent extends PagedListingComponentBase<any> {
 
   
 }
+class PagedProductsRequestDto extends PagedRequestDto {
+  keyword: string;
+  sort_Field: string;
+  sort_Desc: boolean;
+  MaxResultCount:number
+}
+

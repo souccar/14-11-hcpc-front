@@ -1,6 +1,6 @@
 
-<form class="form-horizontal " autocomplete="off" #createProductModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'Create New Product' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form class="form-horizontal " autocomplete="off" #createformulaModal="ngForm" (ngSubmit)="save()" >
+    <abp-modal-header [title]="'edit formula' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body modal-xl">
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="name">
@@ -8,14 +8,14 @@
             </label>
             <div class="col-md-9">
               <!-- <input type="text" class="form-control" name="name" id="name" required
-                [(ngModel)]="product" #nameModel="ngModel" #nameEl   /> -->
+                [(ngModel)]="formula" #nameModel="ngModel" #nameEl   /> -->
   
               <!-- <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary> -->
             </div>
           </div>
   
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProductModal.form.valid || saving"
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createformulaModal.form.valid || saving"
       (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
   </form>
   

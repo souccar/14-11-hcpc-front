@@ -14,6 +14,10 @@ import { ProductComponent } from './product/product.component';
 import { CreateProductDialogComponent } from './product/create-product/create-product-dialog.component';
 import { EditProductDialogComponent } from './product/edit-product/edit-product-dialog.component';
 import { ViewProductDialogComponent } from './product/view-product/view-product-dialog.component';
+import { FormulaComponent } from './formula/formula.component';
+import { CreateFormulaDialogComponent } from './formula/create-formula/create-formula-dialog.component';
+import { EditFormulaDialogComponent } from './formula/edit-formula/edit-formula-dialog.component';
+import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-dialog.component';
 
 
 @NgModule({
@@ -28,6 +32,10 @@ import { ViewProductDialogComponent } from './product/view-product/view-product-
     CreateProductDialogComponent,
     EditProductDialogComponent,
     ViewProductDialogComponent,
+    FormulaComponent,
+    CreateFormulaDialogComponent,
+    EditFormulaDialogComponent,
+    ViewFormulaDialogComponent,
 
 
   ],

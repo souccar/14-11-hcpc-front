@@ -5,6 +5,7 @@ import { ProductionComponent } from './production.component';
 import { MaterialComponent } from './material/material.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { ProductComponent } from './product/product.component';
+import { FormulaComponent } from './formula/formula.component';
 
 
 const routes: Routes = [{ 
@@ -20,6 +21,13 @@ const routes: Routes = [{
     {
       path: 'product',
       component: ProductComponent,
+      
+      //data: { permission : 'Pages.Products' },
+      canActivate: [AppRouteGuard]
+    },
+    {
+      path: 'formula',
+      component: FormulaComponent,
       
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]

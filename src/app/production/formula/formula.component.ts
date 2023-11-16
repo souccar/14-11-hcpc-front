@@ -1,16 +1,17 @@
 import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { EditProductDialogComponent } from './edit-product/edit-product-dialog.component';
-import { CreateProductDialogComponent } from './create-product/create-product-dialog.component';
-import { ViewProductDialogComponent } from './view-product/view-product-dialog.component';
+import { EditFormulaDialogComponent } from './edit-formula/edit-formula-dialog.component';
+import { ViewFormulaDialogComponent } from './view-formula/view-formula-dialog.component';
+import { EditProductDialogComponent } from '../product/edit-product/edit-product-dialog.component';
+import { CreateFormulaDialogComponent } from './create-formula/create-formula-dialog.component';
 
 @Component({
-  selector: 'product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  selector: 'formula',
+  templateUrl: './formula.component.html',
+
 })
-export class ProductComponent extends PagedListingComponentBase<any> {
+export class FormulaComponent extends PagedListingComponentBase<any> {
   
   displayMode = 'list';
   selectAllState = '';
@@ -69,7 +70,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
   viewButton(id:number)
 {
   this._modalService.show(
-    ViewProductDialogComponent,
+    ViewFormulaDialogComponent,
     {
       backdrop: true,
       ignoreBackdropClick: true,
@@ -165,7 +166,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
   showAddNewModal(): void {
     let createOrEditProductDialog: BsModalRef;
     createOrEditProductDialog = this._modalService.show(
-      CreateProductDialogComponent,
+      CreateFormulaDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
