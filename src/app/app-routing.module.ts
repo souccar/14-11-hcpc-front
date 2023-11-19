@@ -19,11 +19,15 @@ import { SettingsComponent } from './settings/settings.component';
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'production', loadChildren: () => import('./production/production.module').then(m => m.ProductionModule) },
                     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
+
+                    { path: 'supplier', loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule) },
+
                     { path: 'warehouse', loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule) },
-                    { path: 'supplier', component: SupplierComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard]  },
+            
+
                 ]
             },
-           
+
         ])
     ],
     exports: [RouterModule]

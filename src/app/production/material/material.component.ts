@@ -13,7 +13,7 @@ import { finalize } from 'rxjs';
 
 })
 export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
-  
+
   displayMode = 'list';
   selectAllState = '';
   selected: MaterialDto[] = [];
@@ -31,7 +31,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
     { label: this.l("price"), value: "price" },
-   
+
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
@@ -40,7 +40,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
   title="Material"
 
 
- 
+
 
 
 
@@ -74,7 +74,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
 
 }
 
-  
+
   editButton(id:number): void {
     let editMaterialDialog: BsModalRef;
         editMaterialDialog = this._modalService.show(
@@ -91,7 +91,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
       editMaterialDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
@@ -159,16 +159,16 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
       }
     );
     createOrEditMaterialDialog.content.onSave.subscribe(() => {
-      // this.getAllMaterial(this.itemsPerPage,1)
+      this.refresh()
     });
   }
 
   isSelected(p: MaterialDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: MaterialDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -196,7 +196,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
         })
       )
       .subscribe((result: MaterialDtoPagedResultDto) => {
-        
+
         this.data = result.items;
 
         this.totalItem = result.totalCount;
@@ -242,7 +242,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

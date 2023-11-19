@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierServiceProxy, UpdateMaterialDto } from '@shared/service-proxies/service-proxies';
+import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -11,11 +11,9 @@ import { finalize } from 'rxjs';
 })
 export class EditMaterialDialogComponent extends AppComponentBase {
   saving = false;
-
   id:number;
-  
   material =  new UpdateMaterialDto ();
-  suppliers: SupplierDto[] = [];
+  suppliers: SupplierNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _materialService:MaterialServiceProxy,
@@ -26,19 +24,20 @@ export class EditMaterialDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this. initSupplier();
+    this.initSupplier();
+    this.initMaterial()
   }
 
   initSupplier(){
-   this._supplierService.getAll("","",1,1).subscribe((result) => {
-    this.suppliers = result.items;
+   this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
+    this.suppliers = response;
   });
   }
 
   initMaterial(){
-  //   this._materialService.get(this.id).subscribe((result) => {
-  //    this.material = result;
-  //  });
+    this._materialService.get(this.id).subscribe((result) => {
+     this.material = result;
+   });
    }
    save(): void {
     this.saving = true;
@@ -52,10 +51,10 @@ export class EditMaterialDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-        if(response.success){  
+
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
-          this.onSave.emit();}
+          this.onSave.emit();
       });
 
   }

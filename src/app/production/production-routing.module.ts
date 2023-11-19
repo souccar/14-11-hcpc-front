@@ -8,36 +8,36 @@ import { ProductComponent } from './product/product.component';
 import { FormulaComponent } from './formula/formula.component';
 
 
-const routes: Routes = [{ 
+const routes: Routes = [{
   path: '', component: ProductionComponent ,
   children:[
     {
       path: 'material',
       component: MaterialComponent,
-      
+
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'product',
       component: ProductComponent,
-      
+
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
     },
     {
-      path: 'formula',
+      path: 'formula/:id',
       component: FormulaComponent,
-      
+
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
     }
-   
-   
-   
-   
-    
-    
+
+
+
+
+
+
   ]
 }];
 

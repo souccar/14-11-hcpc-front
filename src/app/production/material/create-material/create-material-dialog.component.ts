@@ -11,7 +11,7 @@ import { finalize } from 'rxjs';
 })
 export class CreateMaterialDialogComponent extends AppComponentBase {
   saving = false;
- 
+
   material =  new CreateMaterialDto();
   suppliers: SupplierNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
@@ -28,8 +28,10 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
   }
 
   initSupplier(){
-   this._supplierService.getNameForDropdown().subscribe((result) => {
-    this.suppliers = result;
+
+   this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
+    this.suppliers = response;
+
   });
 
   }
@@ -45,7 +47,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-      
+
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
           this.onSave.emit();

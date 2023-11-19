@@ -14,6 +14,7 @@ export interface IMenuItem {
 
 const data: IMenuItem[] = [
 
+
   //Personnel
   // {
   //   icon: ' iconsminds-user',
@@ -46,12 +47,7 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-layers',
 
       },
-      {
-        label: 'Formula',
-        to: `${adminRoot}/production/formula`,
-        icon: 'iconsminds-chemical',
 
-      },
     ],
   },
 
@@ -112,14 +108,20 @@ const data: IMenuItem[] = [
   //   ],
 
   // },
-  //Supplier
-  {
-    label: 'Supplier',
-    to: `${adminRoot}/supplier`,
-    icon: 'simple-icon-user',
-    subs: []
-    // roles: [UserRole.Editor],
-  },
+ //Supplier
+ {
+  label: 'Supplier',
+  to: `${adminRoot}/supplier`,
+  icon: 'simple-icon-user',
+  subs:[
+    {
+      label: 'supplier',
+      to: `${adminRoot}/supplier/supplier`,
+      icon: 'simple-icon-user',
+    },
+  ]
+  // roles: [UserRole.Editor],
+},
 
 
   //Warehouse
@@ -172,6 +174,7 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/settings/transfer`,
         icon: 'iconsminds-synchronize',
       },
+
 
     ],
   },

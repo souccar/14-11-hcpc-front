@@ -4,6 +4,10 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EditProductDialogComponent } from './edit-product/edit-product-dialog.component';
 import { CreateProductDialogComponent } from './create-product/create-product-dialog.component';
 import { ViewProductDialogComponent } from './view-product/view-product-dialog.component';
+import { ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { finalize } from 'rxjs';
+import { CreateFormulaDialogComponent } from '../formula/create-formula/create-formula-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'product',
@@ -11,20 +15,11 @@ import { ViewProductDialogComponent } from './view-product/view-product-dialog.c
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent extends PagedListingComponentBase<any> {
-  
+
   displayMode = 'list';
   selectAllState = '';
-  selected: any[] = [];
-  // selected: IProduct[] = [];
-  data: any[] = [{
-    name:"raneem",
-    id:1
-  },
-  {
-    name:"raghad",
-    id:2
-  }];
-  // data: IProduct[] = [];
+  selected: ProductDto[] = [];
+  data: ProductDto[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -37,26 +32,17 @@ export class ProductComponent extends PagedListingComponentBase<any> {
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
-    { label: this.l("Point"), value: "point" },
-    { label: this.l("Category"), value: "category" },
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
   title="Product"
-
-
- 
-
-
-
-
-  // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
-
   constructor(injector: Injector,
-    private _modalService: BsModalService,) {
-    // private apiService: ApiService
+    private _modalService: BsModalService,
+    private _productService:ProductServiceProxy,
+    private _router:Router) {
+
     super(injector);
   }
 
@@ -65,9 +51,13 @@ export class ProductComponent extends PagedListingComponentBase<any> {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
 
-
-  viewButton(id:number)
+  formula(id:number)
+  {
+    this._router.navigate(['/app/production/formula',id])
+  }
+viewButton(id:number)
 {
+
   this._modalService.show(
     ViewProductDialogComponent,
     {
@@ -81,7 +71,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
 
 }
 
-  
+
   editButton(id:number): void {
     let editProductDialog: BsModalRef;
         editProductDialog = this._modalService.show(
@@ -96,46 +86,22 @@ export class ProductComponent extends PagedListingComponentBase<any> {
         }
       );
       editProductDialog.content.onSave.subscribe(() => {
-      // this.getAllProduct(this.itemsPerPage,1)
+      this.refresh();
       });
 
     }
-
-    deleteButton(id:number){
-      // this._brandService.delete(id).subscribe((responce:any)=>{
-      //   this.getAllBrand(this.itemsPerPage,1)
-      //   this.toastr.success(responce.message);
-      // });
-  
+    loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
+      let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+      this.itemsPerPage = pageSize;
+      this.currentPage = currentPage;
+      this.search = search;
+      request.keyword = search;
+      request.sort_Field = sort_Field;
+      request.sort_Desc = sort_Desc;
+      request.skipCount = (currentPage - 1) * pageSize;
+      request.maxResultCount = this.itemsPerPage;
+      this.list(request, this.pageNumber, () => { });
     }
-  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', orderBy: string = ''): void {
-    this.itemsPerPage = pageSize;
-    this.currentPage = currentPage;
-    this.search = search;
-    this.orderBy = orderBy;
-
-    // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-    //   data => {
-    //     if (data.status) {
-    //       this.isLoading = false;
-    //       this.data = data.data.map(x => {
-    //         return {
-    //           ...x,
-    //           img: x.img.replace('/img/', '/img/products/')
-    //         };
-    //       });
-    //       this.totalItem = data.totalItem;
-    //       this.totalPage = data.totalPage;
-    //       this.setSelectAllState();
-    //     } else {
-    //       this.endOfTheList = true;
-    //     }
-    //   },
-    //   error => {
-    //     this.isLoading = false;
-    //   }
-    // );
-  }
   deleteItem(): void {
     if (this.selected.length == 0) {
       abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
@@ -147,10 +113,10 @@ export class ProductComponent extends PagedListingComponentBase<any> {
         (result: boolean) => {
           if (result) {
             this.selected.forEach(element => {
-              // this._productService.delete(element.id).subscribe(() => {
-              //   abp.notify.success(this.l('SuccessfullyDeleted'));
-              //   this.refresh();
-              // });
+              this._productService.delete(element.id).subscribe(() => {
+                abp.notify.success(this.l('SuccessfullyDeleted'));
+                this.refresh();
+              });
             });
           }
         }
@@ -174,7 +140,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
       }
     );
     createOrEditProductDialog.content.onSave.subscribe(() => {
-      // this.getAllProduct(this.itemsPerPage,1)
+      this.refresh()
     });
   }
 
@@ -191,12 +157,69 @@ export class ProductComponent extends PagedListingComponentBase<any> {
     }
     this.setSelectAllState();
   }
-  protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    // throw new Error('Method not implemented.');
+  protected list(
+    request: PagedProductsRequestDto,
+    pageNumber: number,
+    finishedCallback: Function
+  ): void {
+    request.keyword = this.search;
+
+    this._productService
+      .getAll(
+        request.keyword,
+        request.sort_Field,
+        request.skipCount,
+        request.MaxResultCount,
+      )
+      .pipe(
+        finalize(() => {
+          finishedCallback();
+        })
+      )
+      .subscribe((result: ProductDtoPagedResultDto) => {
+
+        this.data = result.items;
+
+        this.totalItem = result.totalCount;
+        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+        this.setSelectAllState();
+      });
   }
-  protected delete(entity: any): void {
-    // throw new Error('Method not implemented.');
+  protected delete(entity: ProductDto): void {
+    abp.message.confirm(
+      this.l('productDeleteWarningMessage', this.selected.length, 'Products'),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+          this._productService.delete(entity.id).subscribe(() => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            this.refresh();
+          });
+        }
+      }
+    );
   }
+  // addFormula(id:number)
+  // {
+
+  //   let formulaDialog: BsModalRef;
+  //   formulaDialog = this._modalService.show(
+  //     CreateFormulaDialogComponent,
+  //     {
+  //       backdrop: true,
+  //       ignoreBackdropClick: true,
+  //       initialState: {
+  //         id: id,
+  //       },
+  //       class: 'modal-lg',
+
+  //     }
+  //   );
+  //   formulaDialog.content.onSave.subscribe(() => {
+  //     this.refresh();
+  //   });
+
+  // }
 
   setSelectAllState(): void {
     if (this.selected.length === this.data.length) {
@@ -234,5 +257,11 @@ export class ProductComponent extends PagedListingComponentBase<any> {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
+}
+class PagedProductsRequestDto extends PagedRequestDto {
+  keyword: string;
+  sort_Field: string;
+  sort_Desc: boolean;
+  MaxResultCount:number
 }

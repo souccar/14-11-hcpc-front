@@ -1,6 +1,6 @@
 
-<form class="form-horizontal " autocomplete="off" #createBrandModal="ngForm" (ngSubmit)="save()" >
-  <abp-modal-header [title]="'Create New Material' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form class="form-horizontal " autocomplete="off" #editBrandModal="ngForm" (ngSubmit)="save()" >
+  <abp-modal-header [title]="'Edit New Material' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
   <div class="modal-body modal-xl">
         <div class="form-group row required">
           <label class="col-md-3 col-form-label" for="name">
@@ -14,8 +14,8 @@
           </div>
         </div>
 
-      
-        
+
+
         <div class="form-group row required">
           <label class="col-md-3 col-form-label" for="leadTime">
             {{ "Lead Time"  }}
@@ -41,9 +41,9 @@
             {{ "Suppliers" | localize }}
           </label>
           <div class="col-md-9 ">
-            <select class="form-control" aria-label="Suppliers" #supplierModel="ngModel" required name="suppliers" 
+            <select class="form-control" aria-label="Suppliers" #supplierModel="ngModel" required name="suppliers"
             [(ngModel)]="material.supplierId" #supplierEl>
-              <option *ngFor="let item of suppliers" value={{item.id}}>{{item.fullName}}</option>
+              <option *ngFor="let item of suppliers" value={{item.id}}>{{item.name}}</option>
             </select>
             <abp-validation-summary [control]="supplierModel" [controlEl]="supplierEl"></abp-validation-summary>
           </div>
@@ -54,17 +54,17 @@
             {{ "Description"  }}
           </label>
           <div class="col-md-9">
-            <textarea  type="text" class="form-control" name="description" id="description"  
+            <textarea  type="text" class="form-control" name="description" id="description"
             [(ngModel)]="material.description" #descriptionModel="ngModel" #descriptionEl >
             </textarea>
             <abp-validation-summary [control]="descriptionModel" [controlEl]="descriptionEl"></abp-validation-summary>
           </div>
         </div>
-        
+
 
 
 
   </div>
-  <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createBrandModal.form.valid || saving"
+  <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editBrandModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

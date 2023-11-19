@@ -14,7 +14,7 @@ import { finalize } from 'rxjs';
 
 })
 export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
-  
+
   displayMode = 'list';
   selectAllState = '';
   selected: SupplierDto[] = [];
@@ -32,7 +32,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
     { label: this.l("price"), value: "price" },
-   
+
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
@@ -41,7 +41,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
   title="Supplier"
 
 
- 
+
 
 
 
@@ -75,7 +75,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
 
 }
 
-  
+
   editButton(id:number): void {
     let editSupplierDialog: BsModalRef;
         editSupplierDialog = this._modalService.show(
@@ -92,7 +92,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
       editSupplierDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
@@ -111,7 +111,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
       );
     }
     loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-      let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+      let request: PagedSupplierRequestDto = new PagedSupplierRequestDto();
       this.itemsPerPage = pageSize;
       this.currentPage = currentPage;
       this.search = search;
@@ -160,16 +160,16 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
       }
     );
     createOrEditSupplierDialog.content.onSave.subscribe(() => {
-      // this.getAllSupplier(this.itemsPerPage,1)
+      this.refresh();
     });
   }
 
   isSelected(p: SupplierDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: SupplierDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -178,7 +178,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
     this.setSelectAllState();
   }
   protected list(
-    request: PagedProductsRequestDto,
+    request: PagedSupplierRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
@@ -197,7 +197,7 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
         })
       )
       .subscribe((result: SupplierDtoPagedResultDto) => {
-        
+
         this.data = result.items;
 
         this.totalItem = result.totalCount;
@@ -243,9 +243,9 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
-class PagedProductsRequestDto extends PagedRequestDto {
+class PagedSupplierRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
   sort_Desc: boolean;

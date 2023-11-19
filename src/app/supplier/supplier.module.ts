@@ -8,7 +8,7 @@ import { SharedModule } from '@shared/shared.module';
 import { LayoutModule } from '@app/layout/layout.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-
+import { SupplierRoutingModule } from './supplier-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,13 +16,14 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     CreateSupplierDialogComponent,
     EditSupplierDialogComponent,
     ViewSupplierDialogComponent
-  
+
   ],
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    SupplierRoutingModule,
     LayoutModule,
     PaginationModule.forRoot(),
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA]

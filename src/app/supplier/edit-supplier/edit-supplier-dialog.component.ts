@@ -11,11 +11,8 @@ import { finalize } from 'rxjs';
 })
 export class EditSupplierDialogComponent extends AppComponentBase {
   saving = false;
-
   id:number;
-  
   supplier =  new UpdateSupplierDto ();
-
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _supplierService:SupplierServiceProxy,
@@ -31,27 +28,27 @@ export class EditSupplierDialogComponent extends AppComponentBase {
 
 
   initSupplier(){
-  //   this._supplierService.get(this.id).subscribe((result) => {
-  //    this.supplier = result;
-  //  });
+    this._supplierService.get(this.id).subscribe((response:SupplierDto) => {
+     this.supplier = response;
+   });
    }
    save(): void {
     this.saving = true;
-    // this._supplierService
-    //   .update(
-    //     this.material
-    //   )
-    //   .pipe(
-    //     finalize(() => {
-    //       this.saving = false;
-    //     })
-    //   )
-    //   .subscribe((response:any) => {
-    //     if(response.success){  
-    //       this.notify.info(this.l('SavedSuccessfully'));
-    //       this.bsModalRef.hide();
-    //       this.onSave.emit();}
-    //   });
+    this._supplierService
+      .update(
+        this.supplier
+      )
+      .pipe(
+        finalize(() => {
+          this.saving = false;
+        })
+      )
+      .subscribe((response:any) => {
+
+          this.notify.info(this.l('SavedSuccessfully'));
+          this.bsModalRef.hide();
+          this.onSave.emit();
+      });
 
   }
 
