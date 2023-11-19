@@ -28,8 +28,10 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
   }
 
   initSupplier(){
+
    this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
     this.suppliers = response;
+
   });
 
   }

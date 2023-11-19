@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SettingsComponent } from './settings.component';
 import { UnitComponent } from './unit/unit.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
+import { TransferComponent } from './Transfer/transfer.component';
 
 
 
@@ -16,7 +17,15 @@ const routes: Routes = [{
       
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
+    },
+    {
+      path: 'transfer',
+      component: TransferComponent,
+      
+      //data: { permission : 'Pages.Products' },
+      canActivate: [AppRouteGuard]
     }
+
    
    
    
