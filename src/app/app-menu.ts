@@ -128,7 +128,7 @@ const data: IMenuItem[] = [
   {
     label: 'warehouse',
     to: `${adminRoot}/warehouse`,
-    icon: 'iconsminds-factory',
+    icon: 'iconsminds-factory-1',
     subs: [{
       label: 'Material Warehouse',
       to: `${adminRoot}/warehouse/warehouseMaterial`,
