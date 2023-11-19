@@ -26,18 +26,18 @@ import { CreateTransferDialogComponent } from './Transfer/create-transfer/create
     ViewTransferDialogComponent,
     EditTransferDialogComponent,
     CreateTransferDialogComponent,
-    
+
   ],
   imports: [
-   
+
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
     PaginationModule.forRoot(),
-  CommonModule,
-  SettingsRoutingModule
+    CommonModule,
+    SettingsRoutingModule
   ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SettingsModule { }

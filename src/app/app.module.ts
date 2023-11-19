@@ -30,6 +30,8 @@ import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
+
 
 
 
@@ -39,6 +41,7 @@ import { SettingsModule } from './settings/settings.module';
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
+   
     
    
   ],
@@ -70,7 +73,9 @@ import { SettingsModule } from './settings/settings.module';
     ComponentsModule,
     ProductionModule,
     SupplierModule,
-    SettingsModule
+    SettingsModule,
+    WarehouseModule
+    
   ],
  
  
