@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
   saving = false;
  
   material =  new CreateMaterialDto();
-  suppliers: SupplierDto[] = [];
+  suppliers: SupplierNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
    private _materialService:MaterialServiceProxy,
@@ -28,8 +28,8 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
   }
 
   initSupplier(){
-   this._supplierService.getAll("","",1,1).subscribe((result) => {
-    this.suppliers = result.items;
+   this._supplierService.getNameForDropdown().subscribe((result) => {
+    this.suppliers = result;
   });
 
   }

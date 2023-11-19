@@ -19,7 +19,6 @@ export class EditTransferDialogComponent extends AppComponentBase {
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _transferService:TransferServiceProxy,
-    private _supplierService:SupplierServiceProxy,
     private _unitService: UnitServiceProxy,
     public bsModalRef: BsModalRef,
 
@@ -60,10 +59,10 @@ export class EditTransferDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-        if(response.success){  
+       
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
-          this.onSave.emit();}
+          this.onSave.emit();
       });
 
   }

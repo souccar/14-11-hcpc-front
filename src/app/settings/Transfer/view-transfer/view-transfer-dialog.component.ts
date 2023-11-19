@@ -8,7 +8,7 @@ import { finalize } from 'rxjs';
   templateUrl: './view-transfer-dialog.component.html',
   
 })
-export class ViewTransferDialogComponent extends AppComponentBase {
+export class ViewTransferDialogComponent  {
   saving = false;
   editable:true;
   id:number;
@@ -17,13 +17,13 @@ export class ViewTransferDialogComponent extends AppComponentBase {
 
   transfer =  new UpdateTransferDto ();
  
-  constructor(injector: Injector,
+  constructor(
     private _transferService:TransferServiceProxy,
     private _unitService: UnitServiceProxy,
     public bsModalRef: BsModalRef,
 
   ) {
-    super(injector);
+    
   }
   ngOnInit(): void {
 

@@ -121,6 +121,22 @@ const data: IMenuItem[] = [
     // roles: [UserRole.Editor],
   },
 
+
+  //Warehouse
+  {
+    label: 'warehouse',
+    to: `${adminRoot}/warehouse`,
+    icon: 'iconsminds-factory',
+    subs: [{
+      label: 'Material Warehouse',
+      to: `${adminRoot}/warehouse/warehouseMaterial`,
+      icon: 'iconsminds-shopping-basket',
+
+    },
+    ]
+    // roles: [UserRole.Editor],
+  },
+
   //Security
   {
     icon: 'iconsminds-security-settings',
@@ -140,8 +156,8 @@ const data: IMenuItem[] = [
 
     ],
   },
-   //Setting
-   {
+  //Setting
+  {
     icon: 'simple-icon-settings',
     label: 'Settings',
     to: `${adminRoot}/settings`,
