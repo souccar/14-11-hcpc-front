@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { CreateFormulaDialogComponent } from './../../formula/create-formula/create-formula-dialog.component';
+import { Component, EventEmitter, Injector, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { ProductDto, ProductServiceProxy, UpdateProductDto } from '@shared/service-proxies/service-proxies';
+import { FormulaDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductNameForDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy, UpdateProductDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -12,17 +13,25 @@ import { finalize } from 'rxjs';
 export class EditProductDialogComponent extends AppComponentBase {
   saving = false;
   product :UpdateProductDto=new UpdateProductDto();
+  formulas:FormulaDto[]=[];
+  materials: MaterialNameForDropdownDto[] = [];
+  units: UnitNameForDropdownDto[] = [];
   id:number
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _productService:ProductServiceProxy,
     public bsModalRef: BsModalRef,
+    private _materialService:MaterialServiceProxy,
+    private _unitService:UnitServiceProxy
+
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
-    this.initProduct()
+    this.initMaterials();
+    this.initUnits();
+    this.initProduct();
   }
   initProduct()
   {
@@ -31,6 +40,17 @@ export class EditProductDialogComponent extends AppComponentBase {
     })
 
   }
+  initMaterials() {
+    this._materialService.getNameForDropdown().subscribe((response:MaterialNameForDropdownDto[]) => {
+      this.materials = response;
+    });
+  }
+  initUnits() {
+    this._unitService.getNameForDropdown().subscribe((response:UnitNameForDropdownDto[]) => {
+      this.units = response;
+    });
+  }
+
    save(): void {
     this.saving = true;
     this._productService

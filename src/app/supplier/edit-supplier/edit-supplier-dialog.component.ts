@@ -28,8 +28,8 @@ export class EditSupplierDialogComponent extends AppComponentBase {
 
 
   initSupplier(){
-    this._supplierService.get(this.id).subscribe((result) => {
-     this.supplier = result;
+    this._supplierService.get(this.id).subscribe((response:SupplierDto) => {
+     this.supplier = response;
    });
    }
    save(): void {

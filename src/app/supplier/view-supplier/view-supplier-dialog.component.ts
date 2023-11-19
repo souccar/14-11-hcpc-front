@@ -18,7 +18,7 @@ export class ViewSupplierDialogComponent implements OnInit {
   }
 
   initSupplier(){
-    this._supplierService.get(this.id).subscribe((response) => {
+    this._supplierService.get(this.id).subscribe((response:SupplierDto) => {
      this.data = response;
    });
    }

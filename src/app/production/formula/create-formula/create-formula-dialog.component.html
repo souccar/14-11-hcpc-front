@@ -1,6 +1,6 @@
 
 <form class="form-horizontal " autocomplete="off" #createformulaModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'Create New Formula' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="'Add New Formula' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body modal-xl">
       <!-- Name -->
           <div class="form-group row required">
@@ -9,20 +9,18 @@
             </label>
             <div class="col-md-9">
               <input type="text" class="form-control" name="name" id="name" required
-                [(ngModel)]="formula.name" #nameModel="ngModel" #nameEl   /> 
-  
+                [(ngModel)]="formula.name" #nameModel="ngModel" #nameEl   />
+
               <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
             </div>
           </div>
-       
-        
           <!-- Material -->
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="materialId">
               {{ "material" | localize }}
             </label>
             <div class="col-md-4 ">
-              <select class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId" 
+              <select class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
               [(ngModel)]="formula.materialId" #materialIdEl >
                 <option *ngFor="let item of materials" value={{item.id}}>{{item.name}}</option>
               </select>
@@ -36,31 +34,15 @@
             </div>
              <!-- units -->
             <div class="col-md-2 ">
-              <select class="form-control" aria-label="Material" #unitIdModel="ngModel" required name="unitId" 
+              <select class="form-control" aria-label="Material" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
                 <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
               </select>
               <abp-validation-summary [control]="unitIdModel" [controlEl]="unitIdEl"></abp-validation-summary>
             </div>
-           
           </div>
-           
-            <!--product  -->
-            <div class="form-group row required">
-              <label class="col-md-3 col-form-label" for="productId">
-                {{ "product" | localize }}
-              </label>
-              <div class="col-md-9 ">
-                <select class="form-control" aria-label="Material" #productIdModel="ngModel" required name="productId" 
-                [(ngModel)]="formula.productId" #productIdEl>
-                  <option *ngFor="let item of products" value={{item.id}}>{{item.name}}</option>
-                </select>
-                <abp-validation-summary [control]="productIdModel" [controlEl]="productIdEl"></abp-validation-summary>
-              </div>
-            </div>
-  
+
     </div>
     <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createformulaModal.form.valid || saving"
       (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
   </form>
-  

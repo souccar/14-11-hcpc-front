@@ -19,7 +19,7 @@
           <a class="list-item-heading mb-0 truncate w-40 w-xs-100" href="javascript:;">
             {{p.name}}
           </a>
-          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.id}}</p>
+
           <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.name}}</p>
 
         </div>
@@ -33,8 +33,8 @@
           <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="viewButton(p.id)">
             <i class="  text-primary simple-icon-eye"></i>
           </button>
-          <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="addFormula(p.id)">
-            <i class="  text-primary simple-icon-plus"></i>
+          <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4" (click)="formula(p.id)">
+            <i class="  text-primary iconsminds-chemical"></i>
           </button>
 
       </div>

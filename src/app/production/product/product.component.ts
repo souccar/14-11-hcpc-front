@@ -7,6 +7,7 @@ import { ViewProductDialogComponent } from './view-product/view-product-dialog.c
 import { ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { CreateFormulaDialogComponent } from '../formula/create-formula/create-formula-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'product',
@@ -39,7 +40,8 @@ export class ProductComponent extends PagedListingComponentBase<any> {
   title="Product"
   constructor(injector: Injector,
     private _modalService: BsModalService,
-    private _productService:ProductServiceProxy) {
+    private _productService:ProductServiceProxy,
+    private _router:Router) {
 
     super(injector);
   }
@@ -49,9 +51,13 @@ export class ProductComponent extends PagedListingComponentBase<any> {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
 
-
-  viewButton(id:number)
+  formula(id:number)
+  {
+    this._router.navigate(['/app/production/formula',id])
+  }
+viewButton(id:number)
 {
+
   this._modalService.show(
     ViewProductDialogComponent,
     {
@@ -134,7 +140,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
       }
     );
     createOrEditProductDialog.content.onSave.subscribe(() => {
-      // this.getAllProduct(this.itemsPerPage,1)
+      this.refresh()
     });
   }
 
@@ -193,25 +199,27 @@ export class ProductComponent extends PagedListingComponentBase<any> {
       }
     );
   }
-  addFormula(id:number)
-  {
+  // addFormula(id:number)
+  // {
 
-    let formulaDialog: BsModalRef;
-    formulaDialog = this._modalService.show(
-      CreateFormulaDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        id:id,
-        class: 'modal-lg',
+  //   let formulaDialog: BsModalRef;
+  //   formulaDialog = this._modalService.show(
+  //     CreateFormulaDialogComponent,
+  //     {
+  //       backdrop: true,
+  //       ignoreBackdropClick: true,
+  //       initialState: {
+  //         id: id,
+  //       },
+  //       class: 'modal-lg',
 
-      }
-    );
-    formulaDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
+  //     }
+  //   );
+  //   formulaDialog.content.onSave.subscribe(() => {
+  //     this.refresh();
+  //   });
 
-  }
+  // }
 
   setSelectAllState(): void {
     if (this.selected.length === this.data.length) {

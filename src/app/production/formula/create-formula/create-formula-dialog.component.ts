@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateFormulaDto, FormulaServiceProxy, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductNameForDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -15,6 +16,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   materials: MaterialNameForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
   products: ProductNameForDropdownDto [] = [];
+  productId:number;
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _formulaService: FormulaServiceProxy,
@@ -23,37 +25,35 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     private _productService: ProductServiceProxy  ,
     public bsModalRef: BsModalRef,
 
+
   ) {
     super(injector);
   }
   ngOnInit(): void {
+
     this.initMaterials();
     this.initUnits();
     this.initProducts();
     }
 
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((recponce:MaterialNameForDropdownDto[]) => {
-      console.log(recponce)
-      this.materials = recponce;
+    this._materialService.getNameForDropdown().subscribe((response:MaterialNameForDropdownDto[]) => {
+      this.materials = response;
     });
   }
   initUnits() {
-    this._unitService.getNameForDropdown().subscribe((recponce:UnitNameForDropdownDto[]) => {
-      console.log(recponce)
-      this.units = recponce;
+    this._unitService.getNameForDropdown().subscribe((response:UnitNameForDropdownDto[]) => {
+      this.units = response;
     });
   }
   initProducts() {
-    this._productService.getNameForDropdown().subscribe((recponce:ProductNameForDropdownDto[]) => {
-      console.log(recponce)
-      this.products = recponce;
+    this._productService.getNameForDropdown().subscribe((response:ProductNameForDropdownDto[]) => {
+      this.products = response;
     });
   }
   save(): void {
-
     this.saving = true;
-    console.log(  this.formula)
+    this.formula.productId=this.productId
     this._formulaService.
       create(
         this.formula

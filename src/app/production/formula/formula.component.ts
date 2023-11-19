@@ -6,6 +6,7 @@ import { EditFormulaDialogComponent } from './edit-formula/edit-formula-dialog.c
 import { ViewFormulaDialogComponent } from './view-formula/view-formula-dialog.component';
 import { CreateFormulaDto, FormulaDto, FormulaDtoPagedResultDto, FormulaServiceProxy, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'formula',
@@ -13,7 +14,7 @@ import { finalize } from 'rxjs';
 
 })
 export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
-  
+  id:number;
   displayMode = 'list';
   selectAllState = '';
   selected: FormulaDto[] = [];
@@ -30,34 +31,39 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
 
-   
+
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
   title="Formula"
-
-  // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
-
-  constructor(    injector: Injector,
+  constructor(injector: Injector,
     private _modalService: BsModalService,
     private _formulaService:FormulaServiceProxy,
-    private _productName:ProductServiceProxy,
+    private _productService:ProductServiceProxy,
+    private _route:ActivatedRoute
     ) {
     super(injector);
   }
 
 
   ngOnInit(): void {
-    this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+
+   this._route.params.subscribe(params => {
+    this.id=params['id'];
+    });
+    this.getFormulaById()
+    // this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
 
-  // getProductName(id:number){
-  //   this._productName.
-  // }
+   getFormulaById()
+   {
+    this._productService.get(this.id).subscribe((response)=>{
+           this.data=response.formulas;
 
-
+    })
+   }
   viewButton(id:number)
 {
   this._modalService.show(
@@ -73,7 +79,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
 
 }
 
-  
+
   editButton(id:number): void {
     let editFormulaDialog: BsModalRef;
         editFormulaDialog = this._modalService.show(
@@ -83,14 +89,15 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
           ignoreBackdropClick: true,
           initialState: {
             id: id,
+            productId:this.id
           },
           class: 'modal-lg',
         }
       );
       editFormulaDialog.content.onSave.subscribe(() => {
-        this.refresh();
+        this.getFormulaById()
       });
-   
+
 
     }
 
@@ -102,7 +109,8 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
           if (result) {
             this._formulaService.delete(entity.id).subscribe(() => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
-              this.refresh();
+              this.getFormulaById()
+
             });
           }
         }
@@ -153,21 +161,24 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
       {
         backdrop: true,
         ignoreBackdropClick: true,
+        initialState: {
+          productId: this.id,
+        },
        class: 'modal-lg',
 
       }
     );
     createOrEditFormulaDialog.content.onSave.subscribe(() => {
-      // this.getAllFormula(this.itemsPerPage,1)
+         this.getFormulaById()
     });
   }
 
   isSelected(p: FormulaDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: FormulaDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -195,7 +206,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
         })
       )
       .subscribe((result: FormulaDtoPagedResultDto) => {
-        
+
         this.data = result.items;
 
         this.totalItem = result.totalCount;
@@ -241,7 +252,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

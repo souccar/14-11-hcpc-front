@@ -47,12 +47,7 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-layers',
 
       },
-      {
-        label: 'Formula',
-        to: `${adminRoot}/production/formula`,
-        icon: 'iconsminds-chemical',
 
-      },
     ],
   },
 
