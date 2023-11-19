@@ -10,6 +10,10 @@ import { SharedModule } from '@shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TransferComponent } from './Transfer/transfer.component';
+import { ViewTransferDialogComponent } from './Transfer/view-transfer/view-transfer-dialog.component';
+import { EditTransferDialogComponent } from './Transfer/edit-transfer/edit-transfer-dialog.component';
+import { CreateTransferDialogComponent } from './Transfer/create-transfer/create-transfer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,10 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     CreateUnitDialogComponent,
     EditUnitDialogComponent,
     ViewUnitDialogComponent,
+    TransferComponent,
+    ViewTransferDialogComponent,
+    EditTransferDialogComponent,
+    CreateTransferDialogComponent,
     
   ],
   imports: [

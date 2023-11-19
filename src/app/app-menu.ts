@@ -151,7 +151,11 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/settings/unit`,
         icon: 'iconsminds-scale',
       },
-    
+      {
+        label: 'Transfer',
+        to: `${adminRoot}/settings/transfer`,
+        icon: 'iconsminds-synchronize',
+      },
 
     ],
   },
