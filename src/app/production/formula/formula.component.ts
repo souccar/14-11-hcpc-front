@@ -36,6 +36,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
+ 
   loading = false;
   title="Formula"
   constructor(injector: Injector,

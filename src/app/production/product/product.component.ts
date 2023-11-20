@@ -135,7 +135,7 @@ viewButton(id:number)
       {
         backdrop: true,
         ignoreBackdropClick: true,
-       class: 'modal-lg',
+       class: 'modal-xl',
 
       }
     );
@@ -199,27 +199,27 @@ viewButton(id:number)
       }
     );
   }
-  // addFormula(id:number)
-  // {
+  addFormula(id:number)
+  {
 
-  //   let formulaDialog: BsModalRef;
-  //   formulaDialog = this._modalService.show(
-  //     CreateFormulaDialogComponent,
-  //     {
-  //       backdrop: true,
-  //       ignoreBackdropClick: true,
-  //       initialState: {
-  //         id: id,
-  //       },
-  //       class: 'modal-lg',
+    let formulaDialog: BsModalRef;
+    formulaDialog = this._modalService.show(
+      CreateFormulaDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+        productId: id,
+        },
+        class: 'modal-xl',
 
-  //     }
-  //   );
-  //   formulaDialog.content.onSave.subscribe(() => {
-  //     this.refresh();
-  //   });
+      }
+    );
+    formulaDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
 
-  // }
+  }
 
   setSelectAllState(): void {
     if (this.selected.length === this.data.length) {

@@ -1,48 +1,106 @@
 
 <form class="form-horizontal " autocomplete="off" #createformulaModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'Add New Formula' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
-    <div class="modal-body modal-xl">
-      <!-- Name -->
-          <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="name">
-              {{ "Name"  }}
-            </label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" name="name" id="name" required
-                [(ngModel)]="formula.name" #nameModel="ngModel" #nameEl   />
 
-              <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+    <div class="modal-body modal-xl">
+      <div class="row">
+        <div class="col-md-11">
+          <!-- Inputs -->
+          <div class="row">
+            <div class="col-md-4">
+              <label form="name">name</label>
+              <input type="text" class="form-control" name="name" id="name" required
+              [(ngModel)]="formula.name" #nameModel="ngModel" #nameEl  />
+
+            <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
             </div>
-          </div>
-          <!-- Material -->
-          <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="materialId">
-              {{ "material" | localize }}
-            </label>
-            <div class="col-md-4 ">
-              <select class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
-              [(ngModel)]="formula.materialId" #materialIdEl >
+            <div class="col-md-4">
+              <label form="materialId">Material</label>
+              <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
+              [(ngModel)]="formula.materialId"  #materialIdEl >
+                <!-- <option  disabled selected hidden >Material</option> -->
                 <option *ngFor="let item of materials" value={{item.id}}>{{item.name}}</option>
               </select>
               <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary>
             </div>
-             <!-- Quantity -->
-            <div class="col-md-3">
-              <input type="number" class="form-control" name="quantity" id="quantity" required
-                [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl placeholder="Quantity"  />
+            <div class="col-md-2">
+              <label form="quantity">quantity</label>
+              <input type="number" class="form-control" name="quantity" id="quantity" required 
+                [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl  />
               <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
             </div>
-             <!-- units -->
-            <div class="col-md-2 ">
-              <select class="form-control" aria-label="Material" #unitIdModel="ngModel" required name="unitId"
+            <div class="col-md-2">
+              <label form="unitId">Unit</label>
+              <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
                 <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
               </select>
               <abp-validation-summary [control]="unitIdModel" [controlEl]="unitIdEl"></abp-validation-summary>
             </div>
           </div>
+        </div>
 
+        <div class="col-md-1">
+          <!-- Button -->
+        
+          <button type="button" class="btn btn-outline-primary mt-4" (click)="addToFormulaList()">
+            <i class="bi bi-plus-lg"> </i>  
+          </button>
+        </div>
+      </div>
+      <div class="separator my-5"></div>
+      <div class="row">
+          <div class="col-12 list">
+            <ngx-datatable [rows]="data" [columnMode]="ColumnMode.flex"  [headerHeight]="20"
+            [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]" 
+           >
+      
+            <ngx-datatable-column [name]="('Name')" prop="name" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <a class="c-pointer">
+                  <div>
+                    {{ row?.name }}
+                  </div>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="('Material')" prop="materialId" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <a class="c-pointer">
+                  <div>
+                    {{ row?.materialId }}
+                  </div>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="('Quantity')" prop="quantity" [flexGrow]="1">
+              <ng-template   let-row="row" ngx-datatable-cell-template >
+                <div > {{row.quantity}}</div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="('Unit')" prop="unitId" [flexGrow]="1">
+              <ng-template   let-row="row" ngx-datatable-cell-template >
+                <div > {{row.unitId}}</div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="('Action')" prop="action" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary" (click)="edit(row)">
+                  <i class="simple-icon-pencil text-primary"></i>
+                </button>
+                <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"(click)="delete(row)">
+                  <i class="simple-icon-trash text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+       
+          </ngx-datatable>
+          </div>
+      </div>
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createformulaModal.form.valid || saving"
-      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+
+    <div class="modal-footer justify-content-left ">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="saveDisabled">
+        <i class="bi bi-check-lg"> </i> Save 
+      </button>
+    </div>
   </form>

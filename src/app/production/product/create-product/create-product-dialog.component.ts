@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Output, ViewChild } from '@angular/core';
+import { CreateFormulaDialogComponent } from '@app/production/formula/create-formula/create-formula-dialog.component';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateFormulaDto, CreateProductDto, FormulaDto, FormulaServiceProxy, MaterialDto, MaterialServiceProxy, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -27,7 +28,7 @@ export class CreateProductDialogComponent  extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-
+     
   }
 
    save(): void {
