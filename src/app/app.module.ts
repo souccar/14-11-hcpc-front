@@ -31,7 +31,7 @@ import { ProductionModule } from './production/production.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
-
+  import { PlanModule } from './plan/plan.module';
 
 
 
@@ -42,11 +42,13 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
    
+   
     
    
   ],
   imports: [
-    CommonModule,
+
+  CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -74,7 +76,8 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     ProductionModule,
     SupplierModule,
     SettingsModule,
-    WarehouseModule
+    WarehouseModule,
+    PlanModule,
     
   ],
  
