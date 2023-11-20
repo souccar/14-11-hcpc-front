@@ -32,11 +32,14 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
    this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
     this.suppliers = response;
 
+    
+
   });
 
   }
    save(): void {
     this.saving = true;
+    console.log( this.material)
     this._materialService.
     create(
         this.material

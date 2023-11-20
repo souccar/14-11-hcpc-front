@@ -212,6 +212,7 @@ units: UnitDto[] = [];
       .getAll(
         request.keyword,
         request.sort_Field,
+        request.Including,
         request.skipCount,
         request.MaxResultCount,
       )
@@ -280,6 +281,7 @@ units: UnitDto[] = [];
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
+  Including:string;
   sort_Desc: boolean;
   MaxResultCount:number
 }

@@ -15,19 +15,19 @@ export interface IMenuItem {
 const data: IMenuItem[] = [
 
 
-  //Personnel
-  // {
-  //   icon: ' iconsminds-user',
-  //   label: 'Personnel',
-  //   to: `${adminRoot}/personnel`,
-  //   subs: [
-  //     {
-  //       label: 'Employee',
-  //       to: `${adminRoot}/personnel/employees`,
-  //       icon: 'iconsminds-user',
-  //     }
-  //   ],
-  // },
+  // Plan
+  {
+    icon: ' simple-icon-notebook',
+    label: 'Plan',
+    to: `${adminRoot}/plan`,
+    subs: [
+      {
+        label: 'Plan',
+        to: `${adminRoot}/plan`,
+        icon: 'simple-icon-notebook',
+      }
+    ],
+  },
   //Production
   {
     icon: 'iconsminds-factory',

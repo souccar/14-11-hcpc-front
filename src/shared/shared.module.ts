@@ -17,13 +17,15 @@ import { SidebarService } from './services/sidebar/sidebar.service';
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
     imports: [
         TabsModule.forRoot(),
         CommonModule,
         RouterModule,
         NgxPaginationModule,
+        NgSelectModule
+        
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -42,7 +44,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
         LocalizePipe,
         BusyDirective,
         EqualValidator,
-        TabsModule
+        TabsModule,
+        NgSelectModule
 
 
     ]

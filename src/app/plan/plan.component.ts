@@ -1,23 +1,23 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CreateTransferDialogComponent } from './create-transfer/create-transfer-dialog.component';
-import { EditTransferDialogComponent } from './edit-transfer/edit-transfer-dialog.component';
-import { ViewTransferDialogComponent } from './view-transfer/view-transfer-dialog.component';
-import { CreateTransferDto, TransferDto, TransferDtoPagedResultDto, TransferServiceProxy, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreatePlanDialogComponent } from './create-plan/create-plan-dialog.component';
+import { EditPlanDialogComponent } from './edit-plan/edit-plan-dialog.component';
+import { ViewPlanDialogComponent } from './view-plan/view-plan-dialog.component';
+import { CreatePlanDto, PlanDto, PlanDtoPagedResultDto, PlanServiceProxy, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'transfer',
-  templateUrl: './transfer.component.html',
+  selector: 'plan',
+  templateUrl: './plan.component.html',
 
 })
-export class TransferComponent extends PagedListingComponentBase<TransferDto> {
+export class PlanComponent extends PagedListingComponentBase<PlanDto> {
   
   displayMode = 'list';
   selectAllState = '';
-  selected: TransferDto[] = [];
-  data: TransferDto[] = [];
+  selected: PlanDto[] = [];
+  data: PlanDto[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -26,21 +26,21 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
-  itemOrder = { label: this.l("Name"), value: "name" };
+  itemOrder = { label: this.l("Title"), value: "title" };
   itemOptionsOrders = [
-    { label: this.l("Name"), value: "name" },
+    { label: this.l("Title"), value: "title" },
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Transfer"
+  title="Plan"
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,
     private _modalService: BsModalService,
-    private _transferService:TransferServiceProxy,
-    private _unitService:UnitServiceProxy) {
+    private _planService:PlanServiceProxy,
+   ) {
     super(injector);
   }
 
@@ -48,14 +48,11 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
-// getFromUnitName(){
-// this._unitService.getNameForDropdown().subscribe
-// }
 
   viewButton(id:number)
 {
   this._modalService.show(
-    ViewTransferDialogComponent,
+    ViewPlanDialogComponent,
     {
       backdrop: true,
       ignoreBackdropClick: true,
@@ -69,9 +66,9 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
 
   
   editButton(id:number): void {
-    let editTransferDialog: BsModalRef;
-        editTransferDialog = this._modalService.show(
-        EditTransferDialogComponent,
+    let editPlanDialog: BsModalRef;
+        editPlanDialog = this._modalService.show(
+        EditPlanDialogComponent,
         {
           backdrop: true,
           ignoreBackdropClick: true,
@@ -81,22 +78,22 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
           class: 'modal-lg',
         }
       );
-      editTransferDialog.content.onSave.subscribe(() => {
+      editPlanDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
    
 
     }
 
-    protected delete(entity: TransferDto): void {
+    protected delete(entity: PlanDto): void {
     
       abp.message.confirm(
-        this.l('TransferDeleteWarningMessage', this.selected.length, 'Transfers'),
+        this.l('PlanDeleteWarningMessage', this.selected.length, 'Plans'),
         undefined,
         (result: boolean) => {
           if (result) {
            
-            this._transferService.delete(entity.id).subscribe((recponce) => {
+            this._planService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
             });
@@ -122,12 +119,12 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
     }
     else {
       abp.message.confirm(
-        this.l('TransferDeleteWarningMessage', this.selected.length, 'Transfers'),
+        this.l('PlanDeleteWarningMessage', this.selected.length, 'Plans'),
         undefined,
         (result: boolean) => {
           if (result) {
             this.selected.forEach(element => {
-              this._transferService.delete(element.id).subscribe(() => {
+              this._planService.delete(element.id).subscribe(() => {
                 abp.notify.success(this.l('SuccessfullyDeleted'));
                 this.refresh();
               });
@@ -143,9 +140,9 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   }
 
   showAddNewModal(): void {
-    let createOrEditTransferDialog: BsModalRef;
-    createOrEditTransferDialog = this._modalService.show(
-      CreateTransferDialogComponent,
+    let createOrEditPlanDialog: BsModalRef;
+    createOrEditPlanDialog = this._modalService.show(
+      CreatePlanDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
@@ -153,16 +150,16 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
 
       }
     );
-    createOrEditTransferDialog.content.onSave.subscribe(() => {
+    createOrEditPlanDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
 
-  isSelected(p: TransferDto): boolean {
+  isSelected(p: PlanDto): boolean {
   
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: TransferDto): void {
+  onSelect(item: PlanDto): void {
   
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
@@ -178,11 +175,10 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   ): void {
     request.keyword = this.search;
 
-    this._transferService
+    this._planService
       .getAll(
         request.keyword,
         request.sort_Field,
-        request.Including,
         request.skipCount,
         request.MaxResultCount,
       )
@@ -191,7 +187,7 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: TransferDtoPagedResultDto) => {
+      .subscribe((result: PlanDtoPagedResultDto) => {
         
         this.data = result.items;
         console.log(result)
@@ -243,7 +239,6 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
-  Including:string;
   sort_Desc: boolean;
   MaxResultCount:number
 }
