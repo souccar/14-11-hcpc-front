@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { HomeComponent } from './home/home.component';
 import { TenantsComponent } from './tenants/tenants.component';
+import { SupplierComponent } from './supplier/supplier.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
@@ -15,9 +17,16 @@ import { TenantsComponent } from './tenants/tenants.component';
                 children: [
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    
+                    { path: 'production', loadChildren: () => import('./production/production.module').then(m => m.ProductionModule) },
+                    { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
+                    { path: 'plan', loadChildren: () => import('./plan/plan.module').then(m => m.PlanModule) },
+                    { path: 'supplier', loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule) },
+                    { path: 'warehouse', loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule) },
+            
+
                 ]
-            }
+            },
+
         ])
     ],
     exports: [RouterModule]

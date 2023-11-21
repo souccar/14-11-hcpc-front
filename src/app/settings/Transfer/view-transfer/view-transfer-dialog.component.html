@@ -1,0 +1,41 @@
+<abp-modal-header [title]="'View More Details' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<div class="modal-body">
+
+
+    <div class="form-group row ">
+        <label class="col-md-3 col-form-label" for="From">
+            {{ "From" | localize }}
+        </label>
+        <div class="col-md-9" >
+            <input type="text" class="form-control" name="From" id="from" [value]="fromUnit.name"
+                [readonly]="!editable" />
+        </div>
+    </div>
+    <div class="form-group row ">
+        <label class="col-md-3 col-form-label" for="To">
+            {{ "To" | localize }}
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" name="To" id="to" [value]="ToUnit.name" [readonly]="!editable" />
+        </div>
+    </div>
+    <div class="form-group row ">
+        <label class="col-md-3 col-form-label" for="Value">
+            {{ "Value" | localize }}
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" name="Value" id="Value" [value]="transfer.value"
+                [readonly]="!editable" />
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>

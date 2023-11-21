@@ -25,9 +25,14 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { ContextMenuModule } from 'ngx-contextmenu';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
+
 import { ComponentsModule } from './@components/components.module';
+import { ProductionModule } from './production/production.module';
+import { SupplierModule } from './supplier/supplier.module';
+import { SettingsModule } from './settings/settings.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
+  import { PlanModule } from './plan/plan.module';
+
 
 
 @NgModule({
@@ -36,9 +41,14 @@ import { ComponentsModule } from './@components/components.module';
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
+   
+   
+    
+   
   ],
   imports: [
-    CommonModule,
+
+  CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -63,6 +73,12 @@ import { ComponentsModule } from './@components/components.module';
     //   useBootstrap4: true,
     // }),
     ComponentsModule,
+    ProductionModule,
+    SupplierModule,
+    SettingsModule,
+    WarehouseModule,
+    PlanModule,
+    
   ],
  
  

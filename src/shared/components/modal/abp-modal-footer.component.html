@@ -1,13 +1,14 @@
-<div class="modal-footer justify-content-between">
+
+<div class="modal-footer justify-content-between ">
   <button
     type="button"
-    class="btn btn-default"
+    class="btn btn-outline-danger"
     [disabled]="cancelDisabled"
     (click)="onCancelClick.emit()"
   >
-    {{ cancelLabel }}
+  <i [class]="cancelIcon"> </i> {{ cancelLabel }}
   </button>
-  <button type="submit" class="btn btn-primary" [disabled]="saveDisabled">
-    {{ saveLabel }}
+  <button type="submit" class="btn btn-outline-primary" [disabled]="saveDisabled">
+    <i [class]="saveIcon"> </i> {{ saveLabel }}
   </button>
 </div>

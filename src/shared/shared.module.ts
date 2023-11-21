@@ -8,7 +8,6 @@ import { AppUrlService } from './nav/app-url.service';
 import { AppAuthService } from './auth/app-auth.service';
 import { AppRouteGuard } from './auth/auth-route-guard';
 import { LocalizePipe } from '@shared/pipes/localize.pipe';
-
 import { AbpPaginationControlsComponent } from './components/pagination/abp-pagination-controls.component';
 import { AbpValidationSummaryComponent } from './components/validation/abp-validation.summary.component';
 import { AbpModalHeaderComponent } from './components/modal/abp-modal-header.component';
@@ -17,12 +16,16 @@ import { LayoutStoreService } from './layout/layout-store.service';
 import { SidebarService } from './services/sidebar/sidebar.service';
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
-
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
     imports: [
+        TabsModule.forRoot(),
         CommonModule,
         RouterModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        NgSelectModule
+        
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -40,7 +43,11 @@ import { EqualValidator } from './directives/equal-validator.directive';
         AbpModalFooterComponent,
         LocalizePipe,
         BusyDirective,
-        EqualValidator
+        EqualValidator,
+        TabsModule,
+        NgSelectModule
+
+
     ]
 })
 export class SharedModule {

@@ -14,7 +14,7 @@ import menuItems, { IMenuItem } from 'app/app-menu';
 
 export class BreadcrumbComponent extends AppComponentBase {
   @Input() title = '';
-  menuItems: IMenuItem[];
+  menuItems: IMenuItem[]=menuItems;
 
   path = '';
   pathArr: string[] = [];
@@ -42,9 +42,9 @@ export class BreadcrumbComponent extends AppComponentBase {
     return '/' + this.path.split(sub)[0] + sub;
   }
 
-  getLabel(path): string {
+  getLabel(path:any): string {
     if (path === environment.adminRoot) {
-      return this.l("Home");
+      return "app";
     }
 
     // step 0
@@ -81,7 +81,7 @@ export class BreadcrumbComponent extends AppComponentBase {
       }
     }
 
-    if (foundedMenuItem) { return this.l(foundedMenuItem.label); } else { return ''; }
+    if (foundedMenuItem) { return (foundedMenuItem.label); } else { return ''; }
   }
 
 }
