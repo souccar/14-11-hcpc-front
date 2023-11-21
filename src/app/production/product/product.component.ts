@@ -66,6 +66,7 @@ viewButton(id:number)
       initialState: {
         id: id,
       },
+      class: 'modal-xl',
     }
   );
 
@@ -82,7 +83,7 @@ viewButton(id:number)
           initialState: {
             id: id,
           },
-          class: 'modal-lg',
+          class: 'modal-xl',
         }
       );
       editProductDialog.content.onSave.subscribe(() => {

@@ -36,9 +36,9 @@ export class EditUnitDialogComponent extends AppComponentBase {
   }
 
   initUnit(){
-  //   this._unitService.get(this.id).subscribe((result) => {
-  //    this.unit = result;
-  //  });
+    this._unitService.get(this.id).subscribe((result) => {
+     this.unit = result;
+   });
    }
    save(): void {
     this.saving = true;

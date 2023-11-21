@@ -26,13 +26,14 @@
             <abp-validation-summary [control]="descriptionModel" [controlEl]="descriptionEl"></abp-validation-summary>
           </div>
         </div>
+        
       </div>
       <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProductModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
     </tab>
     
     <tab heading="Formula">
-      <create-formula-dialog></create-formula-dialog>
+      <create-formula-dialog (saveFormulaList)="addFormula($event)"   ></create-formula-dialog>
       
     </tab>
   </tabset>

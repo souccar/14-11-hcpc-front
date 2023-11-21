@@ -72,9 +72,9 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
     {
       backdrop: true,
       ignoreBackdropClick: true,
-      initialState: {
-        id: id,
-      },
+      // initialState: {
+      //   id: id,
+      // },
     }
   );
 
@@ -89,7 +89,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
           backdrop: true,
           ignoreBackdropClick: true,
           initialState: {
-            id: id,
+            // id: id,
             productId:this.id
           },
           class: 'modal-lg',

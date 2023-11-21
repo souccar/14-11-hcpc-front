@@ -1539,6 +1539,309 @@ export class MaterialServiceProxy {
 }
 
 @Injectable()
+export class MaterialSuppliersServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined): Observable<MaterialSuppliersDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialSuppliersDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialSuppliersDto>;
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<MaterialSuppliersDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialSuppliersDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/GetAll?";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialSuppliersDtoPagedResultDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialSuppliersDtoPagedResultDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<MaterialSuppliersDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialSuppliersDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateMaterialSuppliersDto | undefined): Observable<MaterialSuppliersDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialSuppliersDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialSuppliersDto>;
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<MaterialSuppliersDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialSuppliersDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: UpdateMaterialSuppliersDto | undefined): Observable<MaterialSuppliersDto> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialSuppliersDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialSuppliersDto>;
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<MaterialSuppliersDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialSuppliersDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class NotificationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2185,6 +2488,62 @@ export class PlanServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreatePlanDto | undefined): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanDto>;
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlanDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -2301,62 +2660,6 @@ export class PlanServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = PlanDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    create(body: CreatePlanDto | undefined): Observable<PlanDto> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PlanDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PlanDto>;
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<PlanDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PlanDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6713,8 +7016,8 @@ export interface ICreateFormulaDto {
 }
 
 export class CreateInputRequestDto implements ICreateInputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
+    inputRequestMaterials: CreateInputRequestMaterialDto[] | undefined;
 
     constructor(data?: ICreateInputRequestDto) {
         if (data) {
@@ -6727,8 +7030,12 @@ export class CreateInputRequestDto implements ICreateInputRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
+            this.title = _data["title"];
+            if (Array.isArray(_data["inputRequestMaterials"])) {
+                this.inputRequestMaterials = [] as any;
+                for (let item of _data["inputRequestMaterials"])
+                    this.inputRequestMaterials.push(CreateInputRequestMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -6741,8 +7048,12 @@ export class CreateInputRequestDto implements ICreateInputRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
+        data["title"] = this.title;
+        if (Array.isArray(this.inputRequestMaterials)) {
+            data["inputRequestMaterials"] = [];
+            for (let item of this.inputRequestMaterials)
+                data["inputRequestMaterials"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -6755,8 +7066,59 @@ export class CreateInputRequestDto implements ICreateInputRequestDto {
 }
 
 export interface ICreateInputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
+    inputRequestMaterials: CreateInputRequestMaterialDto[] | undefined;
+}
+
+export class CreateInputRequestMaterialDto implements ICreateInputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
+
+    constructor(data?: ICreateInputRequestMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.quantity = _data["quantity"];
+            this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
+        }
+    }
+
+    static fromJS(data: any): CreateInputRequestMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateInputRequestMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
+        return data;
+    }
+
+    clone(): CreateInputRequestMaterialDto {
+        const json = this.toJSON();
+        let result = new CreateInputRequestMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateInputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
 }
 
 export class CreateMaterialDto implements ICreateMaterialDto {
@@ -6764,7 +7126,7 @@ export class CreateMaterialDto implements ICreateMaterialDto {
     description: string | undefined;
     leadTime: number;
     price: number;
-    suppliers: SupplierDto[] | undefined;
+    suppliers: CreateMaterialSuppliersDto[] | undefined;
 
     constructor(data?: ICreateMaterialDto) {
         if (data) {
@@ -6784,7 +7146,7 @@ export class CreateMaterialDto implements ICreateMaterialDto {
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
                 for (let item of _data["suppliers"])
-                    this.suppliers.push(SupplierDto.fromJS(item));
+                    this.suppliers.push(CreateMaterialSuppliersDto.fromJS(item));
             }
         }
     }
@@ -6823,12 +7185,55 @@ export interface ICreateMaterialDto {
     description: string | undefined;
     leadTime: number;
     price: number;
-    suppliers: SupplierDto[] | undefined;
+    suppliers: CreateMaterialSuppliersDto[] | undefined;
+}
+
+export class CreateMaterialSuppliersDto implements ICreateMaterialSuppliersDto {
+    supplierId: number;
+
+    constructor(data?: ICreateMaterialSuppliersDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.supplierId = _data["supplierId"];
+        }
+    }
+
+    static fromJS(data: any): CreateMaterialSuppliersDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateMaterialSuppliersDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["supplierId"] = this.supplierId;
+        return data;
+    }
+
+    clone(): CreateMaterialSuppliersDto {
+        const json = this.toJSON();
+        let result = new CreateMaterialSuppliersDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateMaterialSuppliersDto {
+    supplierId: number;
 }
 
 export class CreateOutputRequestDto implements ICreateOutputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
+    outputRequestMaterials: CreateOutputRequestMaterialDto[] | undefined;
 
     constructor(data?: ICreateOutputRequestDto) {
         if (data) {
@@ -6841,8 +7246,12 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
+            this.title = _data["title"];
+            if (Array.isArray(_data["outputRequestMaterials"])) {
+                this.outputRequestMaterials = [] as any;
+                for (let item of _data["outputRequestMaterials"])
+                    this.outputRequestMaterials.push(CreateOutputRequestMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -6855,8 +7264,12 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
+        data["title"] = this.title;
+        if (Array.isArray(this.outputRequestMaterials)) {
+            data["outputRequestMaterials"] = [];
+            for (let item of this.outputRequestMaterials)
+                data["outputRequestMaterials"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -6869,14 +7282,65 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
 }
 
 export interface ICreateOutputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
+    outputRequestMaterials: CreateOutputRequestMaterialDto[] | undefined;
+}
+
+export class CreateOutputRequestMaterialDto implements ICreateOutputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
+
+    constructor(data?: ICreateOutputRequestMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.quantity = _data["quantity"];
+            this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOutputRequestMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOutputRequestMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
+        return data;
+    }
+
+    clone(): CreateOutputRequestMaterialDto {
+        const json = this.toJSON();
+        let result = new CreateOutputRequestMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOutputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
 }
 
 export class CreatePlanDto implements ICreatePlanDto {
     title: string | undefined;
     duration: number;
-    startDate: moment.Moment | undefined;
+    startDate: string | undefined;
     planProducts: CreatePlanProductDto[] | undefined;
 
     constructor(data?: ICreatePlanDto) {
@@ -6892,7 +7356,7 @@ export class CreatePlanDto implements ICreatePlanDto {
         if (_data) {
             this.title = _data["title"];
             this.duration = _data["duration"];
-            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.startDate = _data["startDate"];
             if (Array.isArray(_data["planProducts"])) {
                 this.planProducts = [] as any;
                 for (let item of _data["planProducts"])
@@ -6912,7 +7376,7 @@ export class CreatePlanDto implements ICreatePlanDto {
         data = typeof data === 'object' ? data : {};
         data["title"] = this.title;
         data["duration"] = this.duration;
-        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["startDate"] = this.startDate;
         if (Array.isArray(this.planProducts)) {
             data["planProducts"] = [];
             for (let item of this.planProducts)
@@ -6932,7 +7396,7 @@ export class CreatePlanDto implements ICreatePlanDto {
 export interface ICreatePlanDto {
     title: string | undefined;
     duration: number;
-    startDate: moment.Moment | undefined;
+    startDate: string | undefined;
     planProducts: CreatePlanProductDto[] | undefined;
 }
 
@@ -6994,7 +7458,7 @@ export interface ICreatePlanProductDto {
 export class CreateProductDto implements ICreateProductDto {
     name: string | undefined;
     description: string | undefined;
-    formulas: FormulaDto[] | undefined;
+    formulas: CreateFormulaDto[] | undefined;
 
     constructor(data?: ICreateProductDto) {
         if (data) {
@@ -7012,7 +7476,7 @@ export class CreateProductDto implements ICreateProductDto {
             if (Array.isArray(_data["formulas"])) {
                 this.formulas = [] as any;
                 for (let item of _data["formulas"])
-                    this.formulas.push(FormulaDto.fromJS(item));
+                    this.formulas.push(CreateFormulaDto.fromJS(item));
             }
         }
     }
@@ -7047,7 +7511,7 @@ export class CreateProductDto implements ICreateProductDto {
 export interface ICreateProductDto {
     name: string | undefined;
     description: string | undefined;
-    formulas: FormulaDto[] | undefined;
+    formulas: CreateFormulaDto[] | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
@@ -8587,57 +9051,10 @@ export class ICustomAttributeProvider implements IICustomAttributeProvider {
 export interface IICustomAttributeProvider {
 }
 
-export class IEventData implements IIEventData {
-    eventTime: moment.Moment;
-    eventSource: any | undefined;
-
-    constructor(data?: IIEventData) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.eventTime = _data["eventTime"] ? moment(_data["eventTime"].toString()) : <any>undefined;
-            this.eventSource = _data["eventSource"];
-        }
-    }
-
-    static fromJS(data: any): IEventData {
-        data = typeof data === 'object' ? data : {};
-        let result = new IEventData();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["eventTime"] = this.eventTime ? this.eventTime.toISOString() : <any>undefined;
-        data["eventSource"] = this.eventSource;
-        return data;
-    }
-
-    clone(): IEventData {
-        const json = this.toJSON();
-        let result = new IEventData();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IIEventData {
-    eventTime: moment.Moment;
-    eventSource: any | undefined;
-}
-
 export class InputRequestDto implements IInputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    inputRequestMaterials: InputRequestMaterialDto[] | undefined;
 
     constructor(data?: IInputRequestDto) {
         if (data) {
@@ -8650,9 +9067,13 @@ export class InputRequestDto implements IInputRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
+            this.title = _data["title"];
             this.id = _data["id"];
+            if (Array.isArray(_data["inputRequestMaterials"])) {
+                this.inputRequestMaterials = [] as any;
+                for (let item of _data["inputRequestMaterials"])
+                    this.inputRequestMaterials.push(InputRequestMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -8665,9 +9086,13 @@ export class InputRequestDto implements IInputRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
+        data["title"] = this.title;
         data["id"] = this.id;
+        if (Array.isArray(this.inputRequestMaterials)) {
+            data["inputRequestMaterials"] = [];
+            for (let item of this.inputRequestMaterials)
+                data["inputRequestMaterials"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -8680,9 +9105,9 @@ export class InputRequestDto implements IInputRequestDto {
 }
 
 export interface IInputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    inputRequestMaterials: InputRequestMaterialDto[] | undefined;
 }
 
 export class InputRequestDtoPagedResultDto implements IInputRequestDtoPagedResultDto {
@@ -8738,6 +9163,61 @@ export class InputRequestDtoPagedResultDto implements IInputRequestDtoPagedResul
 export interface IInputRequestDtoPagedResultDto {
     items: InputRequestDto[] | undefined;
     totalCount: number;
+}
+
+export class InputRequestMaterialDto implements IInputRequestMaterialDto {
+    id: number;
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
+
+    constructor(data?: IInputRequestMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.quantity = _data["quantity"];
+            this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
+        }
+    }
+
+    static fromJS(data: any): InputRequestMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputRequestMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["quantity"] = this.quantity;
+        data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
+        return data;
+    }
+
+    clone(): InputRequestMaterialDto {
+        const json = this.toJSON();
+        let result = new InputRequestMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IInputRequestMaterialDto {
+    id: number;
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
 }
 
 export class Int64EntityDto implements IInt64EntityDto {
@@ -8916,128 +9396,13 @@ export enum LayoutKind {
     _3 = 3,
 }
 
-export class Material implements IMaterial {
-    id: number;
-    readonly domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    tenantId: number | undefined;
-    name: string | undefined;
-    description: string | undefined;
-    leadTime: number;
-    price: number;
-    suppliers: Supplier[] | undefined;
-
-    constructor(data?: IMaterial) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            if (Array.isArray(_data["domainEvents"])) {
-                (<any>this).domainEvents = [] as any;
-                for (let item of _data["domainEvents"])
-                    (<any>this).domainEvents.push(IEventData.fromJS(item));
-            }
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.tenantId = _data["tenantId"];
-            this.name = _data["name"];
-            this.description = _data["description"];
-            this.leadTime = _data["leadTime"];
-            this.price = _data["price"];
-            if (Array.isArray(_data["suppliers"])) {
-                this.suppliers = [] as any;
-                for (let item of _data["suppliers"])
-                    this.suppliers.push(Supplier.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): Material {
-        data = typeof data === 'object' ? data : {};
-        let result = new Material();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        if (Array.isArray(this.domainEvents)) {
-            data["domainEvents"] = [];
-            for (let item of this.domainEvents)
-                data["domainEvents"].push(item.toJSON());
-        }
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["tenantId"] = this.tenantId;
-        data["name"] = this.name;
-        data["description"] = this.description;
-        data["leadTime"] = this.leadTime;
-        data["price"] = this.price;
-        if (Array.isArray(this.suppliers)) {
-            data["suppliers"] = [];
-            for (let item of this.suppliers)
-                data["suppliers"].push(item.toJSON());
-        }
-        return data;
-    }
-
-    clone(): Material {
-        const json = this.toJSON();
-        let result = new Material();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IMaterial {
-    id: number;
-    domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    tenantId: number | undefined;
-    name: string | undefined;
-    description: string | undefined;
-    leadTime: number;
-    price: number;
-    suppliers: Supplier[] | undefined;
-}
-
 export class MaterialDto implements IMaterialDto {
     name: string | undefined;
     description: string | undefined;
     leadTime: number;
     price: number;
     id: number;
-    suppliers: SupplierDto[] | undefined;
+    suppliers: MaterialSuppliersDto[] | undefined;
 
     constructor(data?: IMaterialDto) {
         if (data) {
@@ -9058,7 +9423,7 @@ export class MaterialDto implements IMaterialDto {
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
                 for (let item of _data["suppliers"])
-                    this.suppliers.push(SupplierDto.fromJS(item));
+                    this.suppliers.push(MaterialSuppliersDto.fromJS(item));
             }
         }
     }
@@ -9099,7 +9464,7 @@ export interface IMaterialDto {
     leadTime: number;
     price: number;
     id: number;
-    suppliers: SupplierDto[] | undefined;
+    suppliers: MaterialSuppliersDto[] | undefined;
 }
 
 export class MaterialDtoPagedResultDto implements IMaterialDtoPagedResultDto {
@@ -9202,6 +9567,108 @@ export class MaterialNameForDropdownDto implements IMaterialNameForDropdownDto {
 export interface IMaterialNameForDropdownDto {
     id: number;
     name: string | undefined;
+}
+
+export class MaterialSuppliersDto implements IMaterialSuppliersDto {
+    supplier: ReadSupplierDto;
+    id: number;
+
+    constructor(data?: IMaterialSuppliersDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.supplier = _data["supplier"] ? ReadSupplierDto.fromJS(_data["supplier"]) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MaterialSuppliersDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialSuppliersDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["supplier"] = this.supplier ? this.supplier.toJSON() : <any>undefined;
+        data["id"] = this.id;
+        return data;
+    }
+
+    clone(): MaterialSuppliersDto {
+        const json = this.toJSON();
+        let result = new MaterialSuppliersDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMaterialSuppliersDto {
+    supplier: ReadSupplierDto;
+    id: number;
+}
+
+export class MaterialSuppliersDtoPagedResultDto implements IMaterialSuppliersDtoPagedResultDto {
+    items: MaterialSuppliersDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IMaterialSuppliersDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(MaterialSuppliersDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): MaterialSuppliersDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialSuppliersDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+
+    clone(): MaterialSuppliersDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new MaterialSuppliersDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMaterialSuppliersDtoPagedResultDto {
+    items: MaterialSuppliersDto[] | undefined;
+    totalCount: number;
 }
 
 export class MemberInfo implements IMemberInfo {
@@ -10042,9 +10509,9 @@ export interface INotificationSubscriptionWithDisplayNameDto {
 }
 
 export class OutputRequestDto implements IOutputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    outputRequestMaterials: OutputRequestMaterialDto[] | undefined;
 
     constructor(data?: IOutputRequestDto) {
         if (data) {
@@ -10057,9 +10524,13 @@ export class OutputRequestDto implements IOutputRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
+            this.title = _data["title"];
             this.id = _data["id"];
+            if (Array.isArray(_data["outputRequestMaterials"])) {
+                this.outputRequestMaterials = [] as any;
+                for (let item of _data["outputRequestMaterials"])
+                    this.outputRequestMaterials.push(OutputRequestMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -10072,9 +10543,13 @@ export class OutputRequestDto implements IOutputRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
+        data["title"] = this.title;
         data["id"] = this.id;
+        if (Array.isArray(this.outputRequestMaterials)) {
+            data["outputRequestMaterials"] = [];
+            for (let item of this.outputRequestMaterials)
+                data["outputRequestMaterials"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -10087,9 +10562,9 @@ export class OutputRequestDto implements IOutputRequestDto {
 }
 
 export interface IOutputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    outputRequestMaterials: OutputRequestMaterialDto[] | undefined;
 }
 
 export class OutputRequestDtoPagedResultDto implements IOutputRequestDtoPagedResultDto {
@@ -10145,6 +10620,61 @@ export class OutputRequestDtoPagedResultDto implements IOutputRequestDtoPagedRes
 export interface IOutputRequestDtoPagedResultDto {
     items: OutputRequestDto[] | undefined;
     totalCount: number;
+}
+
+export class OutputRequestMaterialDto implements IOutputRequestMaterialDto {
+    id: number;
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
+
+    constructor(data?: IOutputRequestMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.quantity = _data["quantity"];
+            this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
+        }
+    }
+
+    static fromJS(data: any): OutputRequestMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OutputRequestMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["quantity"] = this.quantity;
+        data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
+        return data;
+    }
+
+    clone(): OutputRequestMaterialDto {
+        const json = this.toJSON();
+        let result = new OutputRequestMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOutputRequestMaterialDto {
+    id: number;
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
 }
 
 export enum ParameterAttributes {
@@ -10378,7 +10908,7 @@ export class PlanDto implements IPlanDto {
     id: number;
     title: string | undefined;
     duration: number;
-    startDate: moment.Moment | undefined;
+    startDate: string | undefined;
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     readonly totalItems: number;
@@ -10397,7 +10927,7 @@ export class PlanDto implements IPlanDto {
             this.id = _data["id"];
             this.title = _data["title"];
             this.duration = _data["duration"];
-            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.startDate = _data["startDate"];
             if (Array.isArray(_data["planProducts"])) {
                 this.planProducts = [] as any;
                 for (let item of _data["planProducts"])
@@ -10424,7 +10954,7 @@ export class PlanDto implements IPlanDto {
         data["id"] = this.id;
         data["title"] = this.title;
         data["duration"] = this.duration;
-        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["startDate"] = this.startDate;
         if (Array.isArray(this.planProducts)) {
             data["planProducts"] = [];
             for (let item of this.planProducts)
@@ -10451,7 +10981,7 @@ export interface IPlanDto {
     id: number;
     title: string | undefined;
     duration: number;
-    startDate: moment.Moment | undefined;
+    startDate: string | undefined;
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     totalItems: number;
@@ -10519,8 +11049,8 @@ export class PlanMaterialDto implements IPlanMaterialDto {
     unitId: number | undefined;
     materialId: number | undefined;
     planId: number;
-    unit: Unit;
-    material: Material;
+    unit: UnitDto;
+    material: MaterialDto;
 
     constructor(data?: IPlanMaterialDto) {
         if (data) {
@@ -10539,8 +11069,8 @@ export class PlanMaterialDto implements IPlanMaterialDto {
             this.unitId = _data["unitId"];
             this.materialId = _data["materialId"];
             this.planId = _data["planId"];
-            this.unit = _data["unit"] ? Unit.fromJS(_data["unit"]) : <any>undefined;
-            this.material = _data["material"] ? Material.fromJS(_data["material"]) : <any>undefined;
+            this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
+            this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
         }
     }
 
@@ -10579,8 +11109,8 @@ export interface IPlanMaterialDto {
     unitId: number | undefined;
     materialId: number | undefined;
     planId: number;
-    unit: Unit;
-    material: Material;
+    unit: UnitDto;
+    material: MaterialDto;
 }
 
 export class PlanProductDto implements IPlanProductDto {
@@ -10660,7 +11190,7 @@ export interface IPlanProductDto {
 
 export class PlanProductMaterialDto implements IPlanProductMaterialDto {
     id: number;
-    quantity: number;
+    requiredQuantity: number;
     unitId: number | undefined;
     materialId: number | undefined;
     unit: UnitDto;
@@ -10678,7 +11208,7 @@ export class PlanProductMaterialDto implements IPlanProductMaterialDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.quantity = _data["quantity"];
+            this.requiredQuantity = _data["requiredQuantity"];
             this.unitId = _data["unitId"];
             this.materialId = _data["materialId"];
             this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
@@ -10696,7 +11226,7 @@ export class PlanProductMaterialDto implements IPlanProductMaterialDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["quantity"] = this.quantity;
+        data["requiredQuantity"] = this.requiredQuantity;
         data["unitId"] = this.unitId;
         data["materialId"] = this.materialId;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>undefined;
@@ -10714,7 +11244,7 @@ export class PlanProductMaterialDto implements IPlanProductMaterialDto {
 
 export interface IPlanProductMaterialDto {
     id: number;
-    quantity: number;
+    requiredQuantity: number;
     unitId: number | undefined;
     materialId: number | undefined;
     unit: UnitDto;
@@ -11007,6 +11537,57 @@ export interface IPropertyInfo {
     canWrite: boolean;
     getMethod: MethodInfo;
     setMethod: MethodInfo;
+}
+
+export class ReadSupplierDto implements IReadSupplierDto {
+    name: string | undefined;
+    description: string | undefined;
+    id: number;
+
+    constructor(data?: IReadSupplierDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ReadSupplierDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReadSupplierDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["id"] = this.id;
+        return data;
+    }
+
+    clone(): ReadSupplierDto {
+        const json = this.toJSON();
+        let result = new ReadSupplierDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReadSupplierDto {
+    name: string | undefined;
+    description: string | undefined;
+    id: number;
 }
 
 export class RegisterInput implements IRegisterInput {
@@ -11696,101 +12277,6 @@ export class StructLayoutAttribute implements IStructLayoutAttribute {
 export interface IStructLayoutAttribute {
     typeId: any | undefined;
     value: LayoutKind;
-}
-
-export class Supplier implements ISupplier {
-    id: number;
-    readonly domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    tenantId: number | undefined;
-    name: string | undefined;
-    description: string | undefined;
-
-    constructor(data?: ISupplier) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            if (Array.isArray(_data["domainEvents"])) {
-                (<any>this).domainEvents = [] as any;
-                for (let item of _data["domainEvents"])
-                    (<any>this).domainEvents.push(IEventData.fromJS(item));
-            }
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.tenantId = _data["tenantId"];
-            this.name = _data["name"];
-            this.description = _data["description"];
-        }
-    }
-
-    static fromJS(data: any): Supplier {
-        data = typeof data === 'object' ? data : {};
-        let result = new Supplier();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        if (Array.isArray(this.domainEvents)) {
-            data["domainEvents"] = [];
-            for (let item of this.domainEvents)
-                data["domainEvents"].push(item.toJSON());
-        }
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["tenantId"] = this.tenantId;
-        data["name"] = this.name;
-        data["description"] = this.description;
-        return data;
-    }
-
-    clone(): Supplier {
-        const json = this.toJSON();
-        let result = new Supplier();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ISupplier {
-    id: number;
-    domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    tenantId: number | undefined;
-    name: string | undefined;
-    description: string | undefined;
 }
 
 export class SupplierDto implements ISupplierDto {
@@ -13121,97 +13607,6 @@ export interface ITypeInfo {
     implementedInterfaces: Type[] | undefined;
 }
 
-export class Unit implements IUnit {
-    id: number;
-    readonly domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    tenantId: number | undefined;
-    name: string | undefined;
-
-    constructor(data?: IUnit) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            if (Array.isArray(_data["domainEvents"])) {
-                (<any>this).domainEvents = [] as any;
-                for (let item of _data["domainEvents"])
-                    (<any>this).domainEvents.push(IEventData.fromJS(item));
-            }
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.tenantId = _data["tenantId"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): Unit {
-        data = typeof data === 'object' ? data : {};
-        let result = new Unit();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        if (Array.isArray(this.domainEvents)) {
-            data["domainEvents"] = [];
-            for (let item of this.domainEvents)
-                data["domainEvents"].push(item.toJSON());
-        }
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["tenantId"] = this.tenantId;
-        data["name"] = this.name;
-        return data;
-    }
-
-    clone(): Unit {
-        const json = this.toJSON();
-        let result = new Unit();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUnit {
-    id: number;
-    domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    tenantId: number | undefined;
-    name: string | undefined;
-}
-
 export class UnitDto implements IUnitDto {
     name: string | undefined;
     id: number;
@@ -13492,12 +13887,12 @@ export interface IUpdateEmployeeDto {
 }
 
 export class UpdateFormulaDto implements IUpdateFormulaDto {
+    id: number;
     name: string | undefined;
     quantity: number;
     materialId: number;
     unitId: number;
     productId: number;
-    id: number;
 
     constructor(data?: IUpdateFormulaDto) {
         if (data) {
@@ -13510,12 +13905,12 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
             this.quantity = _data["quantity"];
             this.materialId = _data["materialId"];
             this.unitId = _data["unitId"];
             this.productId = _data["productId"];
-            this.id = _data["id"];
         }
     }
 
@@ -13528,12 +13923,12 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         data["quantity"] = this.quantity;
         data["materialId"] = this.materialId;
         data["unitId"] = this.unitId;
         data["productId"] = this.productId;
-        data["id"] = this.id;
         return data;
     }
 
@@ -13546,18 +13941,18 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
 }
 
 export interface IUpdateFormulaDto {
+    id: number;
     name: string | undefined;
     quantity: number;
     materialId: number;
     unitId: number;
     productId: number;
-    id: number;
 }
 
 export class UpdateInputRequestDto implements IUpdateInputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    inputRequestMaterials: UpdateInputRequestMaterialDto[] | undefined;
 
     constructor(data?: IUpdateInputRequestDto) {
         if (data) {
@@ -13570,9 +13965,13 @@ export class UpdateInputRequestDto implements IUpdateInputRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
+            this.title = _data["title"];
             this.id = _data["id"];
+            if (Array.isArray(_data["inputRequestMaterials"])) {
+                this.inputRequestMaterials = [] as any;
+                for (let item of _data["inputRequestMaterials"])
+                    this.inputRequestMaterials.push(UpdateInputRequestMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -13585,9 +13984,13 @@ export class UpdateInputRequestDto implements IUpdateInputRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
+        data["title"] = this.title;
         data["id"] = this.id;
+        if (Array.isArray(this.inputRequestMaterials)) {
+            data["inputRequestMaterials"] = [];
+            for (let item of this.inputRequestMaterials)
+                data["inputRequestMaterials"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -13600,9 +14003,60 @@ export class UpdateInputRequestDto implements IUpdateInputRequestDto {
 }
 
 export interface IUpdateInputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    inputRequestMaterials: UpdateInputRequestMaterialDto[] | undefined;
+}
+
+export class UpdateInputRequestMaterialDto implements IUpdateInputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
+
+    constructor(data?: IUpdateInputRequestMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.quantity = _data["quantity"];
+            this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
+        }
+    }
+
+    static fromJS(data: any): UpdateInputRequestMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateInputRequestMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
+        return data;
+    }
+
+    clone(): UpdateInputRequestMaterialDto {
+        const json = this.toJSON();
+        let result = new UpdateInputRequestMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateInputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
 }
 
 export class UpdateMaterialDto implements IUpdateMaterialDto {
@@ -13611,7 +14065,7 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
     leadTime: number;
     price: number;
     id: number;
-    suppliers: SupplierDto[] | undefined;
+    suppliers: UpdateMaterialSuppliersDto[] | undefined;
 
     constructor(data?: IUpdateMaterialDto) {
         if (data) {
@@ -13632,7 +14086,7 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
                 for (let item of _data["suppliers"])
-                    this.suppliers.push(SupplierDto.fromJS(item));
+                    this.suppliers.push(UpdateMaterialSuppliersDto.fromJS(item));
             }
         }
     }
@@ -13673,7 +14127,54 @@ export interface IUpdateMaterialDto {
     leadTime: number;
     price: number;
     id: number;
-    suppliers: SupplierDto[] | undefined;
+    suppliers: UpdateMaterialSuppliersDto[] | undefined;
+}
+
+export class UpdateMaterialSuppliersDto implements IUpdateMaterialSuppliersDto {
+    supplierId: number;
+    id: number;
+
+    constructor(data?: IUpdateMaterialSuppliersDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.supplierId = _data["supplierId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UpdateMaterialSuppliersDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateMaterialSuppliersDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["supplierId"] = this.supplierId;
+        data["id"] = this.id;
+        return data;
+    }
+
+    clone(): UpdateMaterialSuppliersDto {
+        const json = this.toJSON();
+        let result = new UpdateMaterialSuppliersDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateMaterialSuppliersDto {
+    supplierId: number;
+    id: number;
 }
 
 export class UpdateNotificationSettingsInput implements IUpdateNotificationSettingsInput {
@@ -13732,9 +14233,9 @@ export interface IUpdateNotificationSettingsInput {
 }
 
 export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    outputRequestMaterials: UpdateOutputRequestMaterialDto[] | undefined;
 
     constructor(data?: IUpdateOutputRequestDto) {
         if (data) {
@@ -13747,9 +14248,13 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.description = _data["description"];
+            this.title = _data["title"];
             this.id = _data["id"];
+            if (Array.isArray(_data["outputRequestMaterials"])) {
+                this.outputRequestMaterials = [] as any;
+                for (let item of _data["outputRequestMaterials"])
+                    this.outputRequestMaterials.push(UpdateOutputRequestMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -13762,9 +14267,13 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["description"] = this.description;
+        data["title"] = this.title;
         data["id"] = this.id;
+        if (Array.isArray(this.outputRequestMaterials)) {
+            data["outputRequestMaterials"] = [];
+            for (let item of this.outputRequestMaterials)
+                data["outputRequestMaterials"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -13777,16 +14286,67 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
 }
 
 export interface IUpdateOutputRequestDto {
-    name: string | undefined;
-    description: string | undefined;
+    title: string | undefined;
     id: number;
+    outputRequestMaterials: UpdateOutputRequestMaterialDto[] | undefined;
+}
+
+export class UpdateOutputRequestMaterialDto implements IUpdateOutputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
+
+    constructor(data?: IUpdateOutputRequestMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.quantity = _data["quantity"];
+            this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
+        }
+    }
+
+    static fromJS(data: any): UpdateOutputRequestMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateOutputRequestMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["quantity"] = this.quantity;
+        data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
+        return data;
+    }
+
+    clone(): UpdateOutputRequestMaterialDto {
+        const json = this.toJSON();
+        let result = new UpdateOutputRequestMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateOutputRequestMaterialDto {
+    quantity: number;
+    unitId: number | undefined;
+    materialId: number | undefined;
 }
 
 export class UpdatePlanDto implements IUpdatePlanDto {
     id: number;
     title: string | undefined;
     duration: number;
-    startDate: moment.Moment | undefined;
+    startDate: string | undefined;
     planProducts: UpdatePlanProductDto[] | undefined;
 
     constructor(data?: IUpdatePlanDto) {
@@ -13803,7 +14363,7 @@ export class UpdatePlanDto implements IUpdatePlanDto {
             this.id = _data["id"];
             this.title = _data["title"];
             this.duration = _data["duration"];
-            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
+            this.startDate = _data["startDate"];
             if (Array.isArray(_data["planProducts"])) {
                 this.planProducts = [] as any;
                 for (let item of _data["planProducts"])
@@ -13824,7 +14384,7 @@ export class UpdatePlanDto implements IUpdatePlanDto {
         data["id"] = this.id;
         data["title"] = this.title;
         data["duration"] = this.duration;
-        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["startDate"] = this.startDate;
         if (Array.isArray(this.planProducts)) {
             data["planProducts"] = [];
             for (let item of this.planProducts)
@@ -13845,7 +14405,7 @@ export interface IUpdatePlanDto {
     id: number;
     title: string | undefined;
     duration: number;
-    startDate: moment.Moment | undefined;
+    startDate: string | undefined;
     planProducts: UpdatePlanProductDto[] | undefined;
 }
 
@@ -13909,10 +14469,10 @@ export interface IUpdatePlanProductDto {
 }
 
 export class UpdateProductDto implements IUpdateProductDto {
+    id: number;
     name: string | undefined;
     description: string | undefined;
-    formulas: FormulaDto[] | undefined;
-    id: number;
+    formulas: UpdateFormulaDto[] | undefined;
 
     constructor(data?: IUpdateProductDto) {
         if (data) {
@@ -13925,14 +14485,14 @@ export class UpdateProductDto implements IUpdateProductDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
             this.description = _data["description"];
             if (Array.isArray(_data["formulas"])) {
                 this.formulas = [] as any;
                 for (let item of _data["formulas"])
-                    this.formulas.push(FormulaDto.fromJS(item));
+                    this.formulas.push(UpdateFormulaDto.fromJS(item));
             }
-            this.id = _data["id"];
         }
     }
 
@@ -13945,6 +14505,7 @@ export class UpdateProductDto implements IUpdateProductDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         data["description"] = this.description;
         if (Array.isArray(this.formulas)) {
@@ -13952,7 +14513,6 @@ export class UpdateProductDto implements IUpdateProductDto {
             for (let item of this.formulas)
                 data["formulas"].push(item.toJSON());
         }
-        data["id"] = this.id;
         return data;
     }
 
@@ -13965,10 +14525,10 @@ export class UpdateProductDto implements IUpdateProductDto {
 }
 
 export interface IUpdateProductDto {
+    id: number;
     name: string | undefined;
     description: string | undefined;
-    formulas: FormulaDto[] | undefined;
-    id: number;
+    formulas: UpdateFormulaDto[] | undefined;
 }
 
 export class UpdateSupplierDto implements IUpdateSupplierDto {
@@ -14026,8 +14586,6 @@ export class UpdateTransferDto implements IUpdateTransferDto {
     fromId: number;
     toId: number;
     value: number;
-    from: UnitDto;
-    to: UnitDto;
     id: number;
 
     constructor(data?: IUpdateTransferDto) {
@@ -14044,8 +14602,6 @@ export class UpdateTransferDto implements IUpdateTransferDto {
             this.fromId = _data["fromId"];
             this.toId = _data["toId"];
             this.value = _data["value"];
-            this.from = _data["from"] ? UnitDto.fromJS(_data["from"]) : <any>undefined;
-            this.to = _data["to"] ? UnitDto.fromJS(_data["to"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -14062,8 +14618,6 @@ export class UpdateTransferDto implements IUpdateTransferDto {
         data["fromId"] = this.fromId;
         data["toId"] = this.toId;
         data["value"] = this.value;
-        data["from"] = this.from ? this.from.toJSON() : <any>undefined;
-        data["to"] = this.to ? this.to.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data;
     }
@@ -14080,8 +14634,6 @@ export interface IUpdateTransferDto {
     fromId: number;
     toId: number;
     value: number;
-    from: UnitDto;
-    to: UnitDto;
     id: number;
 }
 
