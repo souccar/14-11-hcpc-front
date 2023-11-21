@@ -177,6 +177,7 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
+    request.Including ="From,To";
 
     this._transferService
       .getAll(

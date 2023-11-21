@@ -14,17 +14,20 @@ import { AbpModalHeaderComponent } from './components/modal/abp-modal-header.com
 import { AbpModalFooterComponent } from './components/modal/abp-modal-footer.component';
 import { LayoutStoreService } from './layout/layout-store.service';
 import { SidebarService } from './services/sidebar/sidebar.service';
+import {SharedService} from './services/shared.service';
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
     imports: [
         TabsModule.forRoot(),
         CommonModule,
         RouterModule,
         NgxPaginationModule,
-        NgSelectModule
+        NgSelectModule,
+        NgxDatatableModule,
         
     ],
     declarations: [
@@ -45,7 +48,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         BusyDirective,
         EqualValidator,
         TabsModule,
-        NgSelectModule
+        NgSelectModule,
+        NgxDatatableModule,
 
 
     ]
@@ -60,7 +64,9 @@ export class SharedModule {
                 AppAuthService,
                 AppRouteGuard,
                 LayoutStoreService,
-                SidebarService
+                SidebarService,
+                SharedService
+
             ]
         };
     }

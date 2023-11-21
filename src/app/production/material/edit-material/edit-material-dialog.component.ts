@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialDto } from '@shared/service-proxies/service-proxies';
+import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialDto, UpdateMaterialSuppliersDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -36,7 +36,12 @@ export class EditMaterialDialogComponent extends AppComponentBase {
 
   initMaterial(){
     this._materialService.get(this.id).subscribe((result) => {
-     this.material = result;
+    var materialSuppliers : UpdateMaterialSuppliersDto[] = [];
+    result.suppliers.forEach(item=>{
+      var updateMaterialSupplier = new UpdateMaterialSuppliersDto();
+      updateMaterialSupplier.init({supplierId: item.supplier.id, id: item.id});
+      materialSuppliers.push(updateMaterialSupplier);
+    })
    });
    }
    save(): void {

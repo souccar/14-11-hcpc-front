@@ -10,6 +10,7 @@ export class ViewProductDialogComponent implements OnInit {
 
   data :ProductDto=new ProductDto();
   id: number;
+  loaded=false;
   editable: true;
   constructor(public bsModalRef: BsModalRef,
     private _productService:ProductServiceProxy){}
@@ -20,12 +21,11 @@ export class ViewProductDialogComponent implements OnInit {
   initProduct()
   {
      this._productService.get(this.id).subscribe((response:ProductDto)=>{
-       console.log(response);
+    
       this.data=response;
-      // this.data.formulas.forEach((item)=>{
-      //   this.initMaterials(item.materialId)
-      //   this.initUnits(item.unitId);
-      // })
+      this.loaded=true;
+     
+  
 
 
      })
