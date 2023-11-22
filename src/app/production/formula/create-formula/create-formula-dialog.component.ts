@@ -20,8 +20,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   data: CreateFormulaDto[] = [];
   formula = new CreateFormulaDto();
   ColumnMode = ColumnMode;
-  saveDisabled = true
-
+  saveDisabled = true;
   @Output() saveFormulaList = new EventEmitter<CreateFormulaDto[]>();
   
   constructor(injector: Injector,
@@ -57,20 +56,27 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     });
   }
   addToFormulaList() {
-    
-    this.data.push(this.formula)
-    this.formula = new FormulaDto()
-    this.data = [...this.data]
-    this.saveFormulaList.emit(this.data);
-    this.saving = true;
+    if(this.formula.materialId ==null || this.formula.name == null || this.formula.quantity==null || this.formula.unitId ==null){
+      return;
+    }
+    else{
+      this.data.push(this.formula)
+      this.formula = new FormulaDto()
+      this.data = [...this.data]
+      this.saveFormulaList.emit(this.data);
+      this.saving = true;
+    }
   }
+
+getUnitNameById(unitId){
+  return  this.units.find(t=>t.id ==unitId).name;
+}
+
   edit(row: FormulaDto) {
     this.formula = row
     console.log(row)
-
     const index = this.data.indexOf(row);
     console.log(index);
-
     if (index !== -1) {
       this.data.splice(index, 1);
     }

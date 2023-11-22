@@ -188,7 +188,11 @@ body.show {
   -ms-user-select: none;
   user-select: none;
 }
-
+.required label:after
+{ content:"*";
+ color: red;
+display: inline;
+ }
 .scroll {
   position: relative;
   height: 100%;
