@@ -57,9 +57,9 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
     {
       backdrop: true,
       ignoreBackdropClick: true,
-      initialState: {
-        id: id,
-      },
+      // initialState: {
+      //   id: id,
+      // },
     }
   );
 

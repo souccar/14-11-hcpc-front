@@ -13,6 +13,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { EditPlanProductDialogComponent } from './edit-plan-product/edit-plan-product-dialog.component';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
 
+import { ChartsModule } from '@app/@components/charts/charts.module';
 
 
 
@@ -36,6 +37,7 @@ import { ViewPlanComponent } from './view-plan/view-plan.component';
     LayoutModule,
     PaginationModule.forRoot(),
     CommonModule,
+    ChartsModule
   ],
   schemas:[NO_ERRORS_SCHEMA]
 })
