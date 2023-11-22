@@ -213,7 +213,7 @@ units: UnitDto[] = [];
       .getAll(
         request.keyword,
         request.sort_Field,
-        request.Including,
+       'material,unit',
         request.skipCount,
         request.MaxResultCount,
       )
