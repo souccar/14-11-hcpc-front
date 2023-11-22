@@ -38,7 +38,7 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Material Warehouse"
+  title="Inventory"
 
 materials: MaterialDto[] = [];
 units: UnitDto[] = [];

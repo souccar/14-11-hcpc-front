@@ -51,63 +51,7 @@ const data: IMenuItem[] = [
     ],
   },
 
-  //Selling
-  // {
-  //   icon: 'iconsminds-target-market',
-  //   label: 'Selling',
-  //   to: `${adminRoot}/selling`,
-  //   subs: [
-  //     {
-  //       icon: 'iconsminds-map2',
-  //       label: 'Area',
-  //       to: `${adminRoot}/selling/area`,
-  //     },
 
-  //     {
-  //       icon: 'iconsminds-map-marker-2',
-  //       label: 'SellingPoint',
-  //       to: `${adminRoot}/selling/sellingpoint`,
-  //     },
-
-  //     {
-  //       icon: 'simple-icon-people',
-  //       label: 'Agent',
-  //       to: `${adminRoot}/selling/agent`,
-  //     },
-  //     {
-  //       icon: 'iconsminds-receipt-4',
-  //       label: 'Sales',
-  //       to: `${adminRoot}/selling/sales`,
-  //     },
-  //     {
-  //       icon: 'iconsminds-newspaper',
-  //       label: 'Plan',
-  //       to: `${adminRoot}/selling/plan`,
-  //     },
-  //   ],
-  // },
-  //report
-  // {
-  //   icon: 'bi bi-file-text',
-  //   label: 'Report',
-  //   to: `${adminRoot}/report`,
-  //   subs: [
-  //     {
-  //       icon: 'iconsminds-paper',
-  //       label: 'Template',
-  //       to: `${adminRoot}/report/template`,
-  //     },
-
-  //     {
-  //       icon: 'bi bi-clipboard2-check',
-  //       label: 'ReportBuilder',
-  //       to: `${adminRoot}/report/reportbuilder`,
-  //     },
-
-
-  //   ],
-
-  // },
  //Supplier
  {
   label: 'Supplier',
@@ -130,7 +74,7 @@ const data: IMenuItem[] = [
     to: `${adminRoot}/warehouse`,
     icon: 'iconsminds-factory-1',
     subs: [{
-      label: 'Material Warehouse',
+      label: 'Inventory',
       to: `${adminRoot}/warehouse/warehouseMaterial`,
       icon: 'iconsminds-shopping-basket',
 
