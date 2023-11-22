@@ -11,29 +11,33 @@
 
 <div class="row">
   <div class="col-12 list" *ngIf="displayMode==='list'">
-    <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(p)}" *ngFor="let p of data; let i=index"
-    >
+    <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(p)}" *ngFor="let p of data; let i=index">
       <div class="d-flex flex-grow-1 min-width-zero">
         <div
           class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-          <a class="list-item-heading mb-0 truncate w-40 w-xs-100" href="javascript:;">
+          <a class="list-item-heading mb-0 truncate w-20 w-xs-100" href="javascript:;">
             {{p.name}}
           </a>
 
-          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.name}}</p>
+          <p class="mb-0 text-muted w-60  w-xs-100">{{p.description}}</p>
 
         </div>
-
-          <button id="button-basic" type="button" id="edit" class=" custom-control btn btn-empty text-primary align-self-center pr-4" (click)="editButton(p.id)">
+        <div class=" mx-5 justify-content-center d-flex">
+           <button id="button-basic" type="button" id="edit"
+            class=" custom-control btn btn-empty text-primary align-self-center " (click)="editButton(p.id)">
             <i class=" text-primary simple-icon-pencil"></i>
           </button>
-          <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="delete(p)">
+          <button id="button-basic" type="button" id="edit"
+            class="custom-control btn btn-empty text-primary align-self-center " (click)="delete(p)">
             <i class="  text-primary simple-icon-trash"></i>
           </button>
-          <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="viewButton(p.id)">
+          <button id="button-basic" type="button" id="edit"
+            class="custom-control btn btn-empty text-primary align-self-center " (click)="viewButton(p.id)">
             <i class="  text-primary simple-icon-eye"></i>
           </button>
-     
+        </div>
+
+
 
       </div>
     </div>

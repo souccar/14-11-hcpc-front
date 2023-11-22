@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateMaterialDto, CreateMaterialSuppliersDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialSuppliersDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -14,6 +14,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
 
   material =  new CreateMaterialDto();
   suppliers: SupplierNameForDropdownDto[] = [];
+  supplierList: SupplierNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
    private _materialService:MaterialServiceProxy,
@@ -24,6 +25,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
+    this.material.suppliers=[]
     this. initSupplier();
   }
 
@@ -31,7 +33,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
 
    this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
     this.suppliers = response;
-
+   
     
 
   });
@@ -39,7 +41,16 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
   }
    save(): void {
     this.saving = true;
-    console.log( this.material)
+    console.log(this. supplierList)  
+    // var materialSuppliers : CreateMaterialSuppliersDto[] = [];
+    this.supplierList.forEach(element => {
+      var creatMaterialSupplier = new CreateMaterialSuppliersDto();
+        creatMaterialSupplier.init({supplierId: element.id});
+        console.log( creatMaterialSupplier)  
+        this.material.suppliers.push(creatMaterialSupplier);
+    
+    });
+    
     this._materialService.
     create(
         this.material

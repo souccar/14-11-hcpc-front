@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreatePlanDto, PlanServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreatePlanDto, PlanDto, PlanProductDto, PlanServiceProxy, ProductDto, UnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -25,6 +25,9 @@ export class CreatePlanDialogComponent extends AppComponentBase {
   
   }
 
+  addPlan(items: PlanProductDto[]) {
+    this.plan.planProducts = [...items];
+  }
 
 
   save(): void {
