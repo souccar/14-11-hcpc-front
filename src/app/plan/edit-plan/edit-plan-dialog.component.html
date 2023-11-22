@@ -1,1 +1,49 @@
-<p>edit-plan-dialog works!</p>
+
+<form class="form-horizontal " autocomplete="off" #editUnitModal="ngForm" (ngSubmit)="save()" >
+    <abp-modal-header [title]="'EditPlan' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <tabset>
+      <tab heading="Plan">
+    <div class="modal-body modal-xl">
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="title">
+          {{ "Title" | localize }}
+        </label>
+        <div class="col-md-9 ">
+            <input type="text" class="form-control" name="title" id="title" required
+            [(ngModel)]="plan.title" #titleModel="ngModel" #titleEl   />
+          <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
+        </div>
+      </div>
+      <!--  -->
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="duration">
+          {{ "Duration'in days'"  }}
+        </label>
+        <div class="col-md-9">
+          <input type="number" class="form-control" name="duration"id="duration" required
+            [(ngModel)]="plan.duration" #durationModel="ngModel" #durationEl   />
+          <abp-validation-summary [control]="durationModel" [controlEl]="durationEl"></abp-validation-summary>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="startDate">
+          {{ "Start Date"  }}
+        </label>
+        <div class="col-md-9">
+          <input type="date" class="form-control" name="startDate" id="startDate" required
+            [ngModel]="plan.startDate| date:'yyyy-MM-dd'"   (ngModelChange)="plan.startDate = $event" #startDateModel="ngModel" #startDateEl   />
+          <abp-validation-summary [control]="startDateModel" [controlEl]="startDateEl"></abp-validation-summary>
+        </div>
+      </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editUnitModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    </tab>
+    <tab heading="Plan Product"  *ngIf="loaded">
+      <edit-plan-product-dialog [planId]="plan.id"   (savePlanProductList)="addPlan($event)"  ></edit-plan-product-dialog>
+    </tab>
+
+    </tabset>
+  
+  </form>
+  

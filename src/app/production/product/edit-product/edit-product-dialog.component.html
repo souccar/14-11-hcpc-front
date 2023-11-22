@@ -1,5 +1,5 @@
-<form class="form-horizontal " autocomplete="off" #createProductModal="ngForm" (ngSubmit)="save()">
-  <abp-modal-header [title]="'Create New Product' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form class="form-horizontal " autocomplete="off" #editProductModal="ngForm" (ngSubmit)="save()">
+  <abp-modal-header [title]="'Edit Product' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
   <tabset>
     <tab heading=" Product ">
       <div class="modal-body modal-xl">
@@ -28,7 +28,7 @@
         </div>
         
       </div>
-      <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProductModal.form.valid || saving"
+      <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editProductModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
     </tab>
     

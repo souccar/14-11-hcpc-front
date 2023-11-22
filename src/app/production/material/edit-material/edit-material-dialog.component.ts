@@ -36,12 +36,13 @@ export class EditMaterialDialogComponent extends AppComponentBase {
 
   initMaterial(){
     this._materialService.get(this.id).subscribe((result) => {
+      console.log(result)
     var materialSuppliers : UpdateMaterialSuppliersDto[] = [];
     result.suppliers.forEach(item=>{
       var updateMaterialSupplier = new UpdateMaterialSuppliersDto();
       updateMaterialSupplier.init({supplierId: item.supplier.id, id: item.id});
       materialSuppliers.push(updateMaterialSupplier);
-    })
+    });
    });
    }
    save(): void {

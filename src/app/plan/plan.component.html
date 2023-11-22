@@ -15,15 +15,15 @@
       <div class="d-flex flex-grow-1 min-width-zero">
         <div
           class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-          <a class="list-item-heading mb-0 truncate w-40 w-xs-100" href="javascript:;">
+          <a class="list-item-heading mb-0 truncate w-20 w-xs-100" href="javascript:;">
             {{p.title}}
           </a>
-          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.startDate}}</p>
-          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.duration}}</p>
+          <p class="mb-0 text-muted text-small w-20 w-xs-100">{{p.startDate| date :'yyyy-MM-dd'}}</p>
+          <p class="mb-0 text-muted text-small w-20 w-xs-100">{{p.duration}}</p>
 
         </div>
 
-
+        <div class=" mx-5 justify-content-center d-flex"> 
           <button id="button-basic" type="button" id="edit" class=" custom-control btn btn-empty text-primary align-self-center pr-4" (click)="editButton(p.id)">
             <i class=" text-primary simple-icon-pencil"></i>
           </button>
@@ -33,6 +33,7 @@
           <button id="button-basic" type="button" id="edit" class="custom-control btn btn-empty text-primary align-self-center pr-4"(click)="viewButton(p.id)">
             <i class="  text-primary simple-icon-eye"></i>
           </button>
+        </div>
 
       </div>
     </div>
