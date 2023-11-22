@@ -6,6 +6,7 @@ import { EditMaterialDialogComponent } from './edit-material/edit-material-dialo
 import { ViewMaterialDialogComponent } from './view-material/view-material-dialog.component';
 import { CreateMaterialDto, MaterialDto, MaterialDtoPagedResultDto, MaterialServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'material',
@@ -13,7 +14,7 @@ import { finalize } from 'rxjs';
 
 })
 export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
-
+  ColumnMode = ColumnMode;
   displayMode = 'list';
   selectAllState = '';
   selected: MaterialDto[] = [];

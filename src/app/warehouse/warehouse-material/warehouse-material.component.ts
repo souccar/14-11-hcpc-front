@@ -7,6 +7,7 @@ import { ViewWarehouseMaterialDialogComponent } from './view-warehouse-Material/
 import { CreateWarehouseMaterialDto, MaterialDto, MaterialServiceProxy, UnitDto, UnitServiceProxy, WarehouseMaterialDto, WarehouseMaterialDtoPagedResultDto, WarehouseMaterialServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { forEach } from 'lodash-es';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'warehouseMaterial',
@@ -14,7 +15,7 @@ import { forEach } from 'lodash-es';
 
 })
 export class WarehouseMaterialComponent extends PagedListingComponentBase<WarehouseMaterialDto> {
-  
+  ColumnMode = ColumnMode;
   displayMode = 'list';
   selectAllState = '';
   selected: WarehouseMaterialDto[] = [];
@@ -212,7 +213,7 @@ units: UnitDto[] = [];
       .getAll(
         request.keyword,
         request.sort_Field,
-        request.Including,
+       'material,unit',
         request.skipCount,
         request.MaxResultCount,
       )
@@ -226,12 +227,12 @@ units: UnitDto[] = [];
         this.data = result.items;
 
         this.totalItem = result.totalCount;
-        // result.items.forEach(element => {
-        //   this.getMaterialById(element.materialId);
-        //   this.getUnitById(element.materialId);
-        //   console.log(this.materials)
-        //   console.log(this.units)
-        // });
+        result.items.forEach(element => {
+          this.getMaterialById(element.materialId);
+          this.getUnitById(element.unitId);
+          console.log(this.materials)
+          console.log(this.units)
+        });
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
      
