@@ -6,6 +6,7 @@ import { CreateSupplierDialogComponent } from './create-supplier/create-supplier
 import { EditSupplierDialogComponent } from './edit-supplier/edit-supplier-dialog.component';
 import { SupplierDto, SupplierDtoPagedResultDto, SupplierServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { finalize } from 'rxjs';
 
 })
 export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
-
+  ColumnMode = ColumnMode;
   displayMode = 'list';
   selectAllState = '';
   selected: SupplierDto[] = [];

@@ -6,6 +6,7 @@ import { EditPlanDialogComponent } from './edit-plan/edit-plan-dialog.component'
 import { ViewPlanDialogComponent } from './view-plan/view-plan-dialog.component';
 import { CreatePlanDto, PlanDto, PlanDtoPagedResultDto, PlanServiceProxy, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'plan',
@@ -13,7 +14,7 @@ import { finalize } from 'rxjs';
 
 })
 export class PlanComponent extends PagedListingComponentBase<PlanDto> {
-  
+  ColumnMode = ColumnMode;
   displayMode = 'list';
   selectAllState = '';
   selected: PlanDto[] = [];

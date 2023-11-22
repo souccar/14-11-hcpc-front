@@ -6,6 +6,7 @@ import { EditTransferDialogComponent } from './edit-transfer/edit-transfer-dialo
 import { ViewTransferDialogComponent } from './view-transfer/view-transfer-dialog.component';
 import { CreateTransferDto, TransferDto, TransferDtoPagedResultDto, TransferServiceProxy, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'transfer',
@@ -23,6 +24,7 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   search = '';
   orderBy = '';
   isLoading: boolean;
+  ColumnMode = ColumnMode;
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
