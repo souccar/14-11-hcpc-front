@@ -9,6 +9,7 @@ import { SharedModule } from '@shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ChartsModule } from '@app/@components/charts/charts.module';
 
 
 
@@ -28,6 +29,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     LayoutModule,
     PaginationModule.forRoot(),
     CommonModule,
+    ChartsModule
   ],
   schemas:[NO_ERRORS_SCHEMA]
 })

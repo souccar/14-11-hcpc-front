@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from './carousel/carousel.module';
+import { ChartsModule } from './charts/charts.module';
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
@@ -10,6 +11,7 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     SharedModule,
     CarouselModule,
+    ChartsModule
   ],
   exports: [
     
