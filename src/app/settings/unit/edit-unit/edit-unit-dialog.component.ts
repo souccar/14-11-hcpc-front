@@ -26,7 +26,7 @@ export class EditUnitDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this. initSupplier();
+    this.initUnit();
   }
 
   initSupplier(){

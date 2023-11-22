@@ -8,6 +8,7 @@ import { ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shar
 import { finalize } from 'rxjs';
 import { CreateFormulaDialogComponent } from '../formula/create-formula/create-formula-dialog.component';
 import { Router } from '@angular/router';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'product',
@@ -25,6 +26,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
   search = '';
   orderBy = '';
   isLoading: boolean;
+  ColumnMode = ColumnMode;
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
