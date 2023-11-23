@@ -1,4 +1,4 @@
-import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
@@ -25,7 +25,9 @@ import { ChartsModule } from '@app/@components/charts/charts.module';
     ViewPlanDialogComponent,
     CreatePlanProductDialogComponent,
     EditPlanProductDialogComponent,
-    ViewPlanComponent
+    ViewPlanComponent,
+    LogsComponent,
+    LastLoginsComponent
  
   ],
   imports: [
@@ -39,6 +41,6 @@ import { ChartsModule } from '@app/@components/charts/charts.module';
     CommonModule,
     ChartsModule
   ],
-  schemas:[NO_ERRORS_SCHEMA]
+  schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PlanModule { }
