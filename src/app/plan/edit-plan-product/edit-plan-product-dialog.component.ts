@@ -55,10 +55,8 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
       this.plan = response;
       console.log( this.plan  )
       this.plan.planProducts.forEach(element => {
-        this.data.push(element)
-        console.log(element)
-        // this.getMaterialsName(element.materialId)
-        // this.getUnitName(element.unitId)
+      this.data.push(element);
+       this.getProductName(element.productId);
         this.data = [...this.data]
 
 
@@ -67,16 +65,18 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
 
   }
 
-  getMaterialName(id:number){
+  getProductName(id:number){
     this._productService.get(id).subscribe((response)=>{
       this.products.push(response);
     });
   }
-  
+ 
   addToProductList()
   {
-    this.getMaterialName(this.planProduct.productId)
+  
+    this.getProductName(this.planProduct.productId)
     this.data.push(this.planProduct)
+    console.log(this.data)
     this.planProduct = new PlanProductDto()
     this.data = [...this.data]
     this.savePlanProductList.emit(this.data);
@@ -100,7 +100,9 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
     const index = this.data.indexOf(row);
     if (index !== -1) {
       this.data.splice(index, 1);
+      this.savePlanProductList.emit(this.data);
     }
+    
 
   }
 
