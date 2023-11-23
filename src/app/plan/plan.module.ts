@@ -1,4 +1,4 @@
-import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
@@ -12,6 +12,8 @@ import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { EditPlanProductDialogComponent } from './edit-plan-product/edit-plan-product-dialog.component';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
+import { LogsComponent } from '@app/dashboards/logs/logs.component';
+import { LastLoginsComponent } from '@app/dashboards/last-logins/last-logins.component';
 
 
 
@@ -24,7 +26,9 @@ import { ViewPlanComponent } from './view-plan/view-plan.component';
     ViewPlanDialogComponent,
     CreatePlanProductDialogComponent,
     EditPlanProductDialogComponent,
-    ViewPlanComponent
+    ViewPlanComponent,
+    LogsComponent,
+    LastLoginsComponent
  
   ],
   imports: [
@@ -37,6 +41,6 @@ import { ViewPlanComponent } from './view-plan/view-plan.component';
     PaginationModule.forRoot(),
     CommonModule,
   ],
-  schemas:[NO_ERRORS_SCHEMA]
+  schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PlanModule { }

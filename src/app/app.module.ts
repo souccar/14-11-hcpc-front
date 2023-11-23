@@ -32,6 +32,7 @@ import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
   import { PlanModule } from './plan/plan.module';
+import { LogsComponent } from './dashboards/logs/logs.component';
 
 
 
@@ -40,7 +41,8 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     AppComponent,
     TenantsComponent,
     CreateTenantDialogComponent,
-    EditTenantDialogComponent,
+    EditTenantDialogComponent
+  
    
    
     
