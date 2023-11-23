@@ -10,11 +10,15 @@ import { SharedModule } from '@shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+<<<<<<< HEAD
 import { EditPlanProductDialogComponent } from './edit-plan-product/edit-plan-product-dialog.component';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
 import { LogsComponent } from '@app/dashboards/logs/logs.component';
 import { LastLoginsComponent } from '@app/dashboards/last-logins/last-logins.component';
 
+=======
+import { ChartsModule } from '@app/@components/charts/charts.module';
+>>>>>>> e261431 (12312)
 
 
 
@@ -40,6 +44,7 @@ import { LastLoginsComponent } from '@app/dashboards/last-logins/last-logins.com
     LayoutModule,
     PaginationModule.forRoot(),
     CommonModule,
+    ChartsModule
   ],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
