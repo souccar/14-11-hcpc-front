@@ -12,19 +12,22 @@ import { finalize } from 'rxjs';
 })
 export class EditFormulaDialogComponent extends AppComponentBase {
   saving = false;
+  loaded = false;
   ColumnMode = ColumnMode;
   materials: MaterialNameForDropdownDto[] = [];
+  materialDropdown: MaterialNameForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
-  products: ProductNameForDropdownDto [] = [];
+  unitDropdown: UnitNameForDropdownDto[] = [];
+  products: ProductNameForDropdownDto[] = [];
   data: UpdateFormulaDto[] = [];
   formula = new UpdateFormulaDto();
-  product :UpdateProductDto=new UpdateProductDto();
-  @Input() productId : number;
-  @Output() saveFormulaList = new EventEmitter<UpdateFormulaDto []>();
-  
+  product: UpdateProductDto = new UpdateProductDto();
+  @Input() productId: number;
+  @Output() saveFormulaList = new EventEmitter<UpdateFormulaDto[]>();
+
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
-    private _unitService: UnitServiceProxy ,
+    private _unitService: UnitServiceProxy,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
 
@@ -32,58 +35,70 @@ export class EditFormulaDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this.initProduct()
- 
-   
+    this.initProduct();
+    this.initMaterials();
+    this.initUnits();
   }
 
-  initProduct()
-  {
-    this._productService.get(this.productId).subscribe((response:ProductDto)=>{
-      this.product=response;
+  initProduct() {
+    this._productService.get(this.productId).subscribe((response: ProductDto) => {
+      this.product = response;
       this.product.formulas.forEach(element => {
-        this.initMaterials(element.materialId);
-        this.initUnits(element.unitId);
-
         this.data.push(element)
-        this.data=[...this.data]
+        this.getMaterialsName(element.materialId)
+        this.getUnitName(element.unitId)
+        this.data = [...this.data]
+
+
       });
     })
 
   }
 
-  initMaterials(id: number) {
-    this._materialService.get(id).subscribe((response: MaterialDto) => {
-      this.materials.push(response);
+  initMaterials() {
+    this._materialService.getNameForDropdown().subscribe((response) => {
+      this.materialDropdown = response
 
     });
   }
-  initUnits(id: number) {
-    this._unitService.get(id).subscribe((response: UnitDto) => {
-      this.units.push(response);
+  initUnits() {
+    this._unitService.getNameForDropdown().subscribe((response) => {
+      this.unitDropdown = response;
 
     });
   }
+  getMaterialsName(id) {
+    this._materialService.get(id).subscribe((response) => {
+      this.materials.push ( response);
 
+    });
+  }
+  getUnitName(id) {
+    this._unitService.get(id).subscribe((response) => {
+      this.units.push ( response);
+
+    });
+  }
   addToFormulaList() {
-    
+    this.getMaterialsName(this.formula.materialId);
+    this.getUnitName(this.formula.unitId);
     this.data.push(this.formula)
-    this.formula.init();
+    this.formula = new FormulaDto();
+    console.log(this.formula)
     this.data = [...this.data]
     this.saveFormulaList.emit(this.data);
-   
+
   }
   edit(row: FormulaDto) {
     this.formula = row
     console.log(row)
-
     const index = this.data.indexOf(row);
     console.log(index);
-
     if (index !== -1) {
       this.data.splice(index, 1);
     }
   }
+
 
   delete(row: FormulaDto) {
     const index = this.data.indexOf(row);

@@ -20,7 +20,12 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   data: CreateFormulaDto[] = [];
   formula = new CreateFormulaDto();
   ColumnMode = ColumnMode;
-  saveDisabled = true;
+
+  saveDisabled = true
+  unitsNames:string[]=[];
+  materialNames:string[]=[];
+
+
   @Output() saveFormulaList = new EventEmitter<CreateFormulaDto[]>();
   
   constructor(injector: Injector,
@@ -36,7 +41,6 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   ngOnInit(): void {
     this.initMaterials();
     this.initUnits();
-    this.initProducts();
 
   }
 
@@ -50,12 +54,19 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.units = response;
     });
   }
-  initProducts() {
-    this._productService.getNameForDropdown().subscribe((response: ProductNameForDropdownDto[]) => {
-      this.products = response;
+  getUnitName(id:number){
+    this._unitService.get(id).subscribe((response)=>{
+      this.unitsNames.push(response.name);
+    });
+  }
+  
+  getMaterialName(id:number){
+    this._materialService.get(id).subscribe((response)=>{
+      this.materialNames.push(response.name);
     });
   }
   addToFormulaList() {
+
     if(this.formula.materialId ==null || this.formula.name == null || this.formula.quantity==null || this.formula.unitId ==null){
       return;
     }
@@ -66,6 +77,10 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.saveFormulaList.emit(this.data);
       this.saving = true;
     }
+
+    this.getUnitName(this.formula.unitId);
+    this.getMaterialName(this.formula.materialId);
+
   }
 
 getUnitNameById(unitId){
@@ -74,9 +89,9 @@ getUnitNameById(unitId){
 
   edit(row: FormulaDto) {
     this.formula = row
-    console.log(row)
+
     const index = this.data.indexOf(row);
-    console.log(index);
+
     if (index !== -1) {
       this.data.splice(index, 1);
     }

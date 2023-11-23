@@ -32,8 +32,8 @@ export class EditProductDialogComponent extends AppComponentBase {
   }
   ngOnInit(): void {
     this.initProduct();
-    this.initMaterials();
-    this.initUnits();
+    // this.initMaterials();
+    // this.initUnits();
    
   }
   initProduct()
@@ -65,6 +65,9 @@ export class EditProductDialogComponent extends AppComponentBase {
       this.notify.error(this.l('Add One formula at least'));
     }
     else {
+      this.product.formulas.forEach((element) =>
+        element.id = 0
+      );
       this.saving = true;
       console.log(this.product)
       this._productService

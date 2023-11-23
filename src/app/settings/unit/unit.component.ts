@@ -6,6 +6,7 @@ import { EditUnitDialogComponent } from './edit-unit/edit-unit-dialog.component'
 import { ViewUnitDialogComponent } from './view-unit/view-unit-dialog.component';
 import { CreateUnitDto, UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
+import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'unit',
@@ -26,6 +27,8 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
+  ColumnMode = ColumnMode;
+ 
   itemOrder = { label: this.l("Name"), value: "name" };
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
