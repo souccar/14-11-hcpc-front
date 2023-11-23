@@ -14,6 +14,8 @@ import { EditPlanProductDialogComponent } from './edit-plan-product/edit-plan-pr
 import { ViewPlanComponent } from './view-plan/view-plan.component';
 
 import { ChartsModule } from '@app/@components/charts/charts.module';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 
 
@@ -37,7 +39,9 @@ import { ChartsModule } from '@app/@components/charts/charts.module';
     LayoutModule,
     PaginationModule.forRoot(),
     CommonModule,
-    ChartsModule
+    ChartsModule,
+    BsDropdownModule.forRoot(),
+    PerfectScrollbarModule
   ],
   schemas:[NO_ERRORS_SCHEMA]
 })
