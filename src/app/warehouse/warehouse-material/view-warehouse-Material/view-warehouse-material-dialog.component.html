@@ -16,10 +16,13 @@
         <label class="col-md-3 col-form-label" for="quantity">
             {{ "Quantity" | localize }}
         </label>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <input type="text" class="form-control" name="quantity" id="quantity" [value]="materialWarehouse.quantity"
                 [readonly]="!editable" />
         </div>
+        <label class="col-md-1 col-form-label" for="unit">
+            {{ "Unit"  }}
+          </label>
         <div class="col-md-3">
             <input type="text" class="form-control" name="Unit" id="to" [value]="unit.name" [readonly]="!editable" />
         </div>
