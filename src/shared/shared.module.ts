@@ -20,6 +20,7 @@ import { EqualValidator } from './directives/equal-validator.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {SummaryPipe} from '../app/pipes/summury.pipe'
 @NgModule({
     imports: [
         TabsModule.forRoot(),
@@ -28,7 +29,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         NgxPaginationModule,
         NgSelectModule,
         NgxDatatableModule,
-        
+       
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -37,7 +38,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         AbpModalFooterComponent,
         LocalizePipe,
         BusyDirective,
-        EqualValidator
+        EqualValidator,
+        SummaryPipe
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -50,6 +52,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         TabsModule,
         NgSelectModule,
         NgxDatatableModule,
+        SummaryPipe,
 
 
     ]

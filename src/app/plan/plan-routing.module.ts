@@ -11,7 +11,9 @@ const routes: Routes = [{
   children:[
    
   ]
-}];
+},
+{path: 'displayAllPlan', component: PlanComponent} ,
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
