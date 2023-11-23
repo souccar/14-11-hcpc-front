@@ -15,11 +15,12 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { RootRoutingModule } from './root-routing.module';
 import { AppConsts } from '@shared/AppConsts';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
 
 import { RootComponent } from './root.component';
 import { AppInitializer } from './app-initializer';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 export function getCurrentLanguage(): string {
   if (abp.localization.currentLanguage.name) {
