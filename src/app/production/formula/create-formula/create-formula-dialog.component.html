@@ -6,35 +6,35 @@
         <div class="col-md-11">
           <!-- Inputs -->
           <div class="row">
-            <div class="col-md-4">
-              <label form="name">name</label>
+            <div class="col-md-4 required">
+              <label form="name">Name</label>
               <input type="text" class="form-control" name="name" id="name" required
               [(ngModel)]="formula.name" #nameModel="ngModel" #nameEl  />
 
-            <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+            <!-- <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary> -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 required">
               <label form="materialId">Material</label>
               <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
               [(ngModel)]="formula.materialId"  #materialIdEl >
                 <!-- <option  disabled selected hidden >Material</option> -->
                 <option *ngFor="let item of materials" value={{item.id}}>{{item.name}}</option>
               </select>
-              <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary>
+              <!-- <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary> -->
             </div>
-            <div class="col-md-2">
-              <label form="quantity">quantity</label>
-              <input type="number" class="form-control" name="quantity" id="quantity" required 
+            <div class="col-md-2 required">
+              <label form="quantity">Quantity</label>
+              <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
                 [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl  />
-              <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
+              <!-- <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary> -->
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 required">
               <label form="unitId">Unit</label>
               <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
                 <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
               </select>
-              <abp-validation-summary [control]="unitIdModel" [controlEl]="unitIdEl"></abp-validation-summary>
+              <!-- <abp-validation-summary [control]="unitIdModel" [controlEl]="unitIdEl"></abp-validation-summary> -->
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
             </ngx-datatable-column>
             <ngx-datatable-column [name]="('Unit')" prop="unitId" [flexGrow]="1">
               <ng-template   let-row="row" ngx-datatable-cell-template >
-                <div > {{row.unitId}}</div>
+                <div > {{getUnitNameById(row.unitId)}}</div>
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column [name]="('Action')" prop="action" [flexGrow]="1">

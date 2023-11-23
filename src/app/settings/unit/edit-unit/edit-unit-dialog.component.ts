@@ -29,11 +29,6 @@ export class EditUnitDialogComponent extends AppComponentBase {
     this.initUnit();
   }
 
-  initSupplier(){
-   this._supplierService.getAll("","",1,1).subscribe((result) => {
-    this.suppliers = result.items;
-  });
-  }
 
   initUnit(){
     this._unitService.get(this.id).subscribe((result) => {
