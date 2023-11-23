@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-6 col-md-6" *ngFor="let p of PlanInfo.planProducts">
         <div class="card ">
             <div class="card-body border-bottom pb-2">
                 <!-- header -->
                 <div class="float-left float-none-xs">
                     <div class="d-inline-block">
-                        <h5 class="d-inline">Men Shampo</h5><span class="text-muted text-small d-block">MMT</span>
+                        <h5 class="d-inline">{{p.product.name}}</h5><span class="text-muted text-small d-block">MMT</span>
                     </div>
                 </div>
                 <div class="btn-group float-right float-none-xs mt-2" dropdown>
@@ -37,8 +37,7 @@
                                         <p class="mb-1"><span class="simple-icon-calendar mr-1"></span>Expected days:</p>
                                     </div>
                                     <div class="d-flex w-30 flex-column">
-                                        
-                                        <p class="mb-1">200 <span class="simple-icon-pencil mx-1"></span></p>
+                                        <p class="mb-1">{{p.numberOfItems}}<span class="simple-icon-pencil mx-1"></span></p>
                                         <p class="mb-1">150</p>
                                         <p class="mb-1">7</p>
                                     </div>
@@ -58,16 +57,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let material of materials">
+                                                <tr *ngFor="let f of p.product.formulas">
                                                     <td>
                                                         <span
-                                                            [class]="'log-indicator align-middle '+ material.color"></span>
+                                                            [class]="'log-indicator align-middle '"></span>
                                                     </td>
                                                     <td>
-                                                        <span class="font-weight-medium">{{material.name}}</span>
+                                                        <span class="font-weight-medium">{{f.name}}</span>
                                                     </td>
                                                     <td class="text-right"><span
-                                                            class="text-muted">{{material.quantity}}</span>
+                                                            class="text-muted">{{f.quantity}}{{f.unit.name}}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>

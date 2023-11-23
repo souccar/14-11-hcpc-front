@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartService } from '@app/@components/charts/chart.service';
 import { Colors } from '@app/@components/charts/color.service';
+import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'view-plan-dialog',
   templateUrl: './view-plan-dialog.component.html',
 
 })
-export class ViewPlanDialogComponent {
+export class ViewPlanDialogComponent implements OnInit{
 
+  PlanInfo:PlanDto=new PlanDto
   materials: [] = listOfMaterials;
   public barChartData: any = {
     labels: ['Water', 'Phosphat', 'Silicon'],
@@ -24,8 +26,17 @@ export class ViewPlanDialogComponent {
   };
   chartDataConfig: ChartService;
 
-  constructor(private chartService: ChartService) {
+  constructor(private chartService: ChartService,private _planService:PlanServiceProxy) {
     this.chartDataConfig = this.chartService;
+  }
+  ngOnInit(): void {
+    this. getInformationOfLatestPlan()
+  }
+  getInformationOfLatestPlan()
+  {
+    this._planService.getLastPlan().subscribe((response)=>{
+      this.PlanInfo=response;
+    })
   }
 
 
