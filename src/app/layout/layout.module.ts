@@ -32,7 +32,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     CommonModule,
     ContentTemplateModule,
     SharedModule,
-    PerfectScrollbarModule,
+    // PerfectScrollbarModule,
     CollapseModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
@@ -47,7 +47,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     FooterComponent,
     SidebarComponent,
     ContentTemplateModule,
-    PerfectScrollbarModule,
+    // PerfectScrollbarModule,
   ],
   schemas: [
     NO_ERRORS_SCHEMA

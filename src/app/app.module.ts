@@ -34,13 +34,13 @@ import { WarehouseModule } from './warehouse/warehouse.module';
   import { PlanModule } from './plan/plan.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
+
    
    
     
