@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { EditPlanProductDialogComponent } from './edit-plan-product/edit-plan-product-dialog.component';
+import { ViewPlanComponent } from './view-plan/view-plan.component';
 
 
 
@@ -22,7 +23,8 @@ import { EditPlanProductDialogComponent } from './edit-plan-product/edit-plan-pr
     EditPlanDialogComponent,
     ViewPlanDialogComponent,
     CreatePlanProductDialogComponent,
-    EditPlanProductDialogComponent
+    EditPlanProductDialogComponent,
+    ViewPlanComponent
  
   ],
   imports: [
