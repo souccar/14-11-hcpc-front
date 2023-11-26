@@ -3,7 +3,7 @@ import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listin
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreatePlanDialogComponent } from './create-plan/create-plan-dialog.component';
 import { EditPlanDialogComponent } from './edit-plan/edit-plan-dialog.component';
-import { ViewPlanDialogComponent } from './view-plan/view-plan-dialog.component';
+import { PlanProductComponent } from './view-plan/plan-product/plan-product.component';
 import { CreatePlanDto, PlanDto, PlanDtoPagedResultDto, PlanServiceProxy, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
@@ -53,7 +53,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
   viewButton(id:number)
 {
   this._modalService.show(
-    ViewPlanDialogComponent,
+    PlanProductComponent,
     {
       backdrop: true,
       ignoreBackdropClick: true,
@@ -191,7 +191,6 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
       .subscribe((result: PlanDtoPagedResultDto) => {
         
         this.data = result.items;
-        console.log(result)
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();

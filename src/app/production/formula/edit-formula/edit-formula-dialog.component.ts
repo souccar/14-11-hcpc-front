@@ -84,7 +84,6 @@ export class EditFormulaDialogComponent extends AppComponentBase {
     this.getUnitName(this.formula.unitId);
     this.data.push(this.formula)
     this.formula = new FormulaDto();
-    console.log(this.formula)
     this.data = [...this.data]
     this.saveFormulaList.emit(this.data);
 
