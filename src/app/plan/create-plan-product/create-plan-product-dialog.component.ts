@@ -53,12 +53,17 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
   
   addToProductList()
   {
+    if(this.planProduct.numberOfItems ==null || this.planProduct.productId == null || this.planProduct.priority==null){
+      return;
+    }
+    else{
     this.getMaterialName(this.planProduct.productId)
     this.data.push(this.planProduct)
     this.planProduct = new PlanProductDto()
     this.data = [...this.data]
     this.savePlanProductList.emit(this.data);
     this.saving = true;
+    }
 
   }
  

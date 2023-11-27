@@ -24,9 +24,9 @@
         <div class="d-flex justify-content-right">
 
 
-            <i *ngIf="canProduce" class=" text-success  glyph-icon simple-icon-check mt-2 mr-1"
+            <i *ngIf="plan.lack" class=" text-success  glyph-icon simple-icon-check mt-2 mr-1"
             data-bs-toggle="tooltip" data-bs-placement="right" title="Plan Can Produce"></i>
-            <i *ngIf="!canProduce" class=" text-danger  glyph-icon simple-icon-close mt-2 mr-1"
+            <i *ngIf="!plan.lack" class=" text-danger  glyph-icon simple-icon-close mt-2 mr-1"
             data-bs-toggle="tooltip" data-bs-placement="right" title=" Plan Can't Produce"></i>
             &nbsp;&nbsp;
             <app-heading title="{{plan.title}}"></app-heading>

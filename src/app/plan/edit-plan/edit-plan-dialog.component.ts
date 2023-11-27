@@ -13,6 +13,8 @@ export class EditPlanDialogComponent extends AppComponentBase {
   saving = false;
   id:number;
   loaded=false;
+  date;
+
   plan = new UpdatePlanDto();
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -23,6 +25,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
+    this.date = new Date().toISOString().slice(0, 10);
     this.initPlan()
   
   }
@@ -44,9 +47,9 @@ export class EditPlanDialogComponent extends AppComponentBase {
   save(): void {
     
     this.plan.startDate.toString();
-    console.log(this.plan)
+   
     if (this.plan.planProducts.length < 1) {
-      this.notify.error(this.l('Add One formula at least'));
+      this.notify.error(this.l('Add One Plan Product at least'));
     }
     else{
       this.saving = true;
@@ -54,7 +57,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
       element.id = 0
     );
     this._planService.
-    create(
+    update(
       this.plan
     )
     .pipe(

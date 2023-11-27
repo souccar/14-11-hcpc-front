@@ -55,7 +55,9 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     });
   }
   getUnitName(id:number){
+   
     this._unitService.get(id).subscribe((response)=>{
+      console.log(response)
       this.unitsNames.push(response.name);
     });
   }
@@ -72,14 +74,19 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     }
     else{
       this.data.push(this.formula)
-      this.formula = new FormulaDto()
+   
       this.data = [...this.data]
       this.saveFormulaList.emit(this.data);
-      this.saving = true;
+      this.saving = true; 
+   
+      console.log(this.formula.unitId)
+      console.log("asdsadsadasdsaaaaaaaaaaaaa")
+      this.getUnitName(this.formula.unitId);
+      this.getMaterialName(this.formula.materialId);
+      this.formula = new FormulaDto()
     }
 
-    this.getUnitName(this.formula.unitId);
-    this.getMaterialName(this.formula.materialId);
+   
 
   }
 

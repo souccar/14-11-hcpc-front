@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateMaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialDto, UpdateMaterialSuppliersDto } from '@shared/service-proxies/service-proxies';
+import { CreateMaterialDto, MaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialDto, UpdateMaterialSuppliersDto, UpdateSupplierDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -14,6 +14,8 @@ export class EditMaterialDialogComponent extends AppComponentBase {
   id:number;
   material =  new UpdateMaterialDto ();
   suppliers: SupplierNameForDropdownDto[] = [];
+  supplierIds:number[]=[]
+  updateSupplier:UpdateMaterialSuppliersDto[]=[];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _materialService:MaterialServiceProxy,
@@ -29,14 +31,30 @@ export class EditMaterialDialogComponent extends AppComponentBase {
   }
 
   initSupplier(){
-   this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
-    this.suppliers = response;
+   this._supplierService.getNameForDropdown().subscribe((result:SupplierNameForDropdownDto[]) => {
+    this.suppliers = result;
+    console.log(result)
   });
   }
 
   initMaterial(){
-    this._materialService.get(this.id).subscribe((result) => {
-      console.log(result)
+    this._materialService.get(this.id).subscribe((result:MaterialDto) => {
+      console.log(result.name)
+      this.material.id=result.id;
+      this.material.name=result.name;
+      this.material.description=result.description;
+      this.material.price=result.price;
+      this.material.leadTime=result.leadTime;
+     result.suppliers.forEach((item)=>{
+      let supplier =new UpdateMaterialSuppliersDto();
+      supplier.id=item.id,
+      supplier.supplierId=item.supplier.id
+      this.material.suppliers=[]
+      this.material.suppliers.push(supplier)
+      this.supplierIds.push(item.supplier.id)
+     });
+     
+        
     var materialSuppliers : UpdateMaterialSuppliersDto[] = [];
     result.suppliers.forEach(item=>{
       var updateMaterialSupplier = new UpdateMaterialSuppliersDto();
@@ -47,6 +65,12 @@ export class EditMaterialDialogComponent extends AppComponentBase {
    }
    save(): void {
     this.saving = true;
+    console.log( this.material)
+    this.supplierIds.forEach((item)=>{
+      let supplier =new UpdateMaterialSuppliersDto();
+      supplier.id=item;
+
+    })
     this._materialService
       .update(
         this.material
