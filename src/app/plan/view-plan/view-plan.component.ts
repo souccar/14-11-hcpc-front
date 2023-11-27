@@ -24,6 +24,7 @@ getLatestPlan()
 {
   this._planService.getLastPlan().subscribe((result)=>{
     this.plan=result;
+    console.log(result)
   })
 }
 

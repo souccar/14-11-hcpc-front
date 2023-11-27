@@ -11553,6 +11553,7 @@ export class PlanDto implements IPlanDto {
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     readonly totalItems: number;
+    readonly lack: boolean;
 
     constructor(data?: IPlanDto) {
         if (data) {
@@ -11580,6 +11581,7 @@ export class PlanDto implements IPlanDto {
                     this.planMaterials.push(PlanMaterialDto.fromJS(item));
             }
             (<any>this).totalItems = _data["totalItems"];
+            (<any>this).lack = _data["lack"];
         }
     }
 
@@ -11607,6 +11609,7 @@ export class PlanDto implements IPlanDto {
                 data["planMaterials"].push(item.toJSON());
         }
         data["totalItems"] = this.totalItems;
+        data["lack"] = this.lack;
         return data;
     }
 
@@ -11626,6 +11629,7 @@ export interface IPlanDto {
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     totalItems: number;
+    lack: boolean;
 }
 
 export class PlanDtoPagedResultDto implements IPlanDtoPagedResultDto {
