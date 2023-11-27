@@ -1,4 +1,19 @@
 <div class="row">
+<div class="col-md-3">
+    <plan-logs></plan-logs>
+</div>
+
+<div class="col-md-3">
+    <last-logins></last-logins>
+</div>
+
+<div class="col-md-3">
+    <plan-logs></plan-logs>
+</div>
+</div>
+
+
+<div class="row">
     <div class="col-12">
         <div class="top-right-button-container">
             <div class="d-flex justify-content-center ">
@@ -54,14 +69,15 @@
                 title="Duration">   
                 <h6 class="mt-2"> {{plan.duration}} day</h6>
             </div>
-
-
         </div>
-
         <div class="separator mt-3"></div>
         <br>
-        <view-plan-dialog></view-plan-dialog>
+        <ng-container *ngIf="plan.planMaterials">
+            <app-plan-material [planMaterials]="plan.planMaterials"></app-plan-material>
+        </ng-container>
+        <ng-container *ngIf="plan.planProducts">
+            <app-plan-product [planProducts]="plan.planProducts"></app-plan-product>
+        </ng-container>
         
-
     </div>
 </div>

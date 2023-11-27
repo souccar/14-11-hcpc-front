@@ -1,5 +1,7 @@
-<div class="row">
-    <div class="col-lg-6 col-md-6" *ngFor="let p of PlanInfo.planProducts">
+<!-- <h4>Products</h4>
+<div class="separator my-3"></div> -->
+<div class="row mb-4">
+    <div class="col-lg-6 col-md-6" *ngFor="let p of planProducts">
         <div class="card ">
             <div class="card-body border-bottom pb-2">
                 <!-- header -->
@@ -25,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-6 border-right">
                         <app-bar-chart [shadow]="true" [options]="chartDataConfig.barChartOptions"
-                            [data]="barChartData"></app-bar-chart>
+                            [data]="getChartData(p)"></app-bar-chart>
                     </div>
                     <div class="col-md-6 p">
                         <div class="row">
@@ -38,8 +40,8 @@
                                     </div>
                                     <div class="d-flex w-30 flex-column">
                                         <p class="mb-1">{{p.numberOfItems}}<span class="simple-icon-pencil mx-1"></span></p>
-                                        <p class="mb-1">150</p>
-                                        <p class="mb-1">7</p>
+                                        <p class="mb-1">{{p.canProduce}}</p>
+                                        <p class="mb-1">{{p.durationProduce}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +83,5 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6">
-        
-    </div>
 </div>
+

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { PlanComponent } from './plan.component';
-// import { ViewPlanDialogComponent } from './view-plan/view-plan-dialog.component';
+// import { PlanProductComponent } from './view-plan/plan-product.component';
 import { ViewPlanComponent } from './view-plan/view-plan.component';
 
 
