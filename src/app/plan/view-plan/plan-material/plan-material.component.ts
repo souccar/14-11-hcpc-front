@@ -21,7 +21,8 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
     { prop: 'Title' },
     { name: 'Total Quantity' },
     { name: 'Inventory' },
-    { name: 'Lead Time' }
+    { name: 'Lead Time' },
+    { name: 'Days' },
   ];
   columnMode = ColumnMode;
 
@@ -45,7 +46,12 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
       labels.push(item.material?.name);
     });
     this.planMaterials.forEach(item => {
-      this.rows.push({ name: item.material.name, totalQuantity: item.totalQuantity, inventory: item.inventoryQuantity, leadTime: item.material.leadTime });
+      this.rows.push({ 
+        name: item.material.name, 
+        totalQuantity: item.totalQuantity, 
+        inventory: item.inventoryQuantity, 
+        leadTime: item.material.leadTime,
+        produceDays: item.produceDays });
       inventoryData.push(Math.round(item.inventoryQuantity));
       planData.push(Math.round(item.totalQuantity));
     });

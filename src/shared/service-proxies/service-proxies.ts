@@ -11553,6 +11553,7 @@ export class PlanDto implements IPlanDto {
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     readonly totalItems: number;
+    readonly lack: boolean;
 
     constructor(data?: IPlanDto) {
         if (data) {
@@ -11580,6 +11581,7 @@ export class PlanDto implements IPlanDto {
                     this.planMaterials.push(PlanMaterialDto.fromJS(item));
             }
             (<any>this).totalItems = _data["totalItems"];
+            (<any>this).lack = _data["lack"];
         }
     }
 
@@ -11607,6 +11609,7 @@ export class PlanDto implements IPlanDto {
                 data["planMaterials"].push(item.toJSON());
         }
         data["totalItems"] = this.totalItems;
+        data["lack"] = this.lack;
         return data;
     }
 
@@ -11626,6 +11629,7 @@ export interface IPlanDto {
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     totalItems: number;
+    lack: boolean;
 }
 
 export class PlanDtoPagedResultDto implements IPlanDtoPagedResultDto {
@@ -11690,6 +11694,7 @@ export class PlanMaterialDto implements IPlanMaterialDto {
     unitId: number | undefined;
     materialId: number | undefined;
     planId: number;
+    produceDays: number;
     unit: UnitDto;
     material: MaterialDto;
 
@@ -11710,6 +11715,7 @@ export class PlanMaterialDto implements IPlanMaterialDto {
             this.unitId = _data["unitId"];
             this.materialId = _data["materialId"];
             this.planId = _data["planId"];
+            this.produceDays = _data["produceDays"];
             this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
             this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
         }
@@ -11730,6 +11736,7 @@ export class PlanMaterialDto implements IPlanMaterialDto {
         data["unitId"] = this.unitId;
         data["materialId"] = this.materialId;
         data["planId"] = this.planId;
+        data["produceDays"] = this.produceDays;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>undefined;
         data["material"] = this.material ? this.material.toJSON() : <any>undefined;
         return data;
@@ -11750,6 +11757,7 @@ export interface IPlanMaterialDto {
     unitId: number | undefined;
     materialId: number | undefined;
     planId: number;
+    produceDays: number;
     unit: UnitDto;
     material: MaterialDto;
 }
@@ -11761,9 +11769,9 @@ export class PlanProductDto implements IPlanProductDto {
     productId: number;
     planId: number;
     product: ProductDto;
+    durationProduce: number;
     readonly canProduce: number;
     planProductMaterials: PlanProductMaterialDto[] | undefined;
-    durationProduce: number;
 
     constructor(data?: IPlanProductDto) {
         if (data) {
@@ -11782,13 +11790,13 @@ export class PlanProductDto implements IPlanProductDto {
             this.productId = _data["productId"];
             this.planId = _data["planId"];
             this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
+            this.durationProduce = _data["durationProduce"];
             (<any>this).canProduce = _data["canProduce"];
             if (Array.isArray(_data["planProductMaterials"])) {
                 this.planProductMaterials = [] as any;
                 for (let item of _data["planProductMaterials"])
                     this.planProductMaterials.push(PlanProductMaterialDto.fromJS(item));
             }
-            this.durationProduce = _data["durationProduce"];
         }
     }
 
@@ -11807,13 +11815,13 @@ export class PlanProductDto implements IPlanProductDto {
         data["productId"] = this.productId;
         data["planId"] = this.planId;
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
+        data["durationProduce"] = this.durationProduce;
         data["canProduce"] = this.canProduce;
         if (Array.isArray(this.planProductMaterials)) {
             data["planProductMaterials"] = [];
             for (let item of this.planProductMaterials)
                 data["planProductMaterials"].push(item.toJSON());
         }
-        data["durationProduce"] = this.durationProduce;
         return data;
     }
 
@@ -11832,9 +11840,9 @@ export interface IPlanProductDto {
     productId: number;
     planId: number;
     product: ProductDto;
+    durationProduce: number;
     canProduce: number;
     planProductMaterials: PlanProductMaterialDto[] | undefined;
-    durationProduce: number;
 }
 
 export class PlanProductMaterialDto implements IPlanProductMaterialDto {

@@ -15,6 +15,10 @@ import { ViewPlanComponent } from './view-plan/view-plan.component';
 import { ChartsModule } from '@app/@components/charts/charts.module';
 import { PlanMaterialComponent } from './view-plan/plan-material/plan-material.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PlanProductsPercentageComponent } from './view-plan/plan-products/plan-products-percentage.component';
+import { LogsComponent } from './view-plan/logs/logs.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { LastLoginsComponent } from './view-plan/last-logins/last-logins.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     CreatePlanProductDialogComponent,
     EditPlanProductDialogComponent,
     ViewPlanComponent,
-    PlanMaterialComponent
+    PlanMaterialComponent,
+    PlanProductsPercentageComponent,
+    LogsComponent,
+    LastLoginsComponent
   ],
   imports: [
   
@@ -37,7 +44,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     PaginationModule.forRoot(),
     BsDropdownModule,
     CommonModule,
-    ChartsModule
+    ChartsModule,
+    PerfectScrollbarModule
   ],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })

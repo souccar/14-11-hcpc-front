@@ -40,11 +40,6 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
-
-   
-   
-    
-   
   ],
   imports: [
 

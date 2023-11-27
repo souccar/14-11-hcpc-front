@@ -10,7 +10,7 @@ import { Colors } from '@app/@components/charts/color.service';
 export class PlanProductsPercentageComponent {
   chartDataConfig: ChartService;
   doughnutChartData = {
-    labels: ['Cakes', 'Cupcakes', 'Desserts'],
+    labels: ['Men Shampoo', 'Oil Replacement'],
     datasets: [
       {
         label: '',
@@ -18,10 +18,10 @@ export class PlanProductsPercentageComponent {
         backgroundColor: [
           Colors.getColors().themeColor3_10,
           Colors.getColors().themeColor2_10,
-          Colors.getColors().themeColor1_10
+          // Colors.getColors().themeColor1_10
         ],
         borderWidth: 2,
-        data: [15, 25, 20]
+        data: [15, 25]
       }
     ]
   };
