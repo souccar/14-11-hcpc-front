@@ -6,27 +6,27 @@
         <div class="col-md-11">
           <!-- Inputs -->
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 required">
               <label form="numberOfItems">Number Of Items</label>
-              <input type="text" class="form-control" name="numberOfItems" id="numberOfItems" required
+              <input type="number" class="form-control" name="numberOfItems" id="numberOfItems" required min="0" max="1000000" oninput="validity.valid||(value='');"
               [(ngModel)]="planProduct.numberOfItems" #numberOfItemsModel="ngModel" #numberOfItemsEl  />
 
-            <abp-validation-summary [control]="numberOfItemsModel" [controlEl]="numberOfItemsEl"></abp-validation-summary>
+       
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 required">
               <label form="productId">Product</label>
               <select aria-placeholder="product" class="form-control" aria-label="Product" #productIdModel="ngModel" required name="productId"
               [(ngModel)]="planProduct.productId"  #productIdEl >
                 <!-- <option  disabled selected hidden >Material</option> -->
                 <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.name}}</option>
               </select>
-              <abp-validation-summary [control]="productIdModel" [controlEl]="productIdEl"></abp-validation-summary>
+          
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 required">
               <label form="priority">priority</label>
               <input type="number" class="form-control" name="priority" id="priority" required 
                 [(ngModel)]="planProduct.priority" #priorityModel="ngModel" #priorityEl  />
-              <abp-validation-summary [control]="priorityModel" [controlEl]="priorityEl"></abp-validation-summary>
+        
             </div>
           
           </div>

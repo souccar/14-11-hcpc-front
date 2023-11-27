@@ -11,6 +11,7 @@ import { finalize } from 'rxjs';
 })
 export class CreatePlanDialogComponent extends AppComponentBase {
   saving = false;
+  date;
   plan = new CreatePlanDto();
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -22,7 +23,8 @@ export class CreatePlanDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-  
+    this.date = new Date().toISOString().slice(0, 10);
+  console.log(this.date);
   }
 
   addPlan(items: PlanProductDto[]) {

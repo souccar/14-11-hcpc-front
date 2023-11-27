@@ -191,6 +191,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
       .subscribe((result: PlanDtoPagedResultDto) => {
         
         this.data = result.items;
+        
         console.log(result)
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
