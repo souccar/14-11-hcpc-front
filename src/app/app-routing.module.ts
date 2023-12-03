@@ -21,7 +21,7 @@ import { SettingsComponent } from './settings/settings.component';
                     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
                     { path: 'plan', loadChildren: () => import('./plan/plan.module').then(m => m.PlanModule) },
                     { path: 'supplier', loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule) },
-                    { path: 'warehouse', loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule) },
+                    { path: 'warehouses', loadChildren: () => import('./warehouses/warehouses.module').then(m => m.WarehousesModule) },
             
 
                 ]

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, SupplierDto, SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, SupplierDto, SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -11,38 +11,46 @@ import { finalize } from 'rxjs';
 })
 export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   saving = false;
-
   id:number;
+  warehouseMaterial = new UpdateWarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
   materials: MaterialNameForDropdownDto[] = [];
-  warehouseMaterial =  new UpdateWarehouseMaterialDto ();
-  suppliers: SupplierDto[] = [];
+  suppliers: SupplierNameForDropdownDto[] = [];
+  warehouses: WarehouseNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
-    private _warehouseMaterialService:WarehouseMaterialServiceProxy,
+    private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
     private _materialService: MaterialServiceProxy,
+    private _warehouseService: WarehouseServiceProxy ,
+    private _supplierService: SupplierServiceProxy ,
     public bsModalRef: BsModalRef,
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
+    this.initWarehouseMaterial();
     this.initUnits();
     this.initMaterials();
-    this.initWarehouseMaterial();
+    this. initWarehouses();
+    this.initSuppliers()
   }
-
-
-
   initWarehouseMaterial(){
     this._warehouseMaterialService.get(this.id).subscribe((result) => {
-     this.warehouseMaterial = result;
-   });
-   }
-   initUnits() {
+      this.warehouseMaterial = result;
+      console.log(result)
+    });
+  }
+
+  initUnits() {
     this._unitService.getNameForDropdown().subscribe((result) => {
       this.units = result;
+    });
+  }
+  initSuppliers() {
+    this._supplierService.getNameForDropdown().subscribe((result) => {
+      this.suppliers = result;
     });
   }
   initMaterials() {
@@ -50,8 +58,14 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
       this.materials = result;
     });
   }
+  initWarehouses() {
+    this._warehouseService.getNameForDropdown().subscribe((result) => {
+      this.warehouses = result;
+    });
+  }
    save(): void {
     this.saving = true;
+    console.log(this.warehouseMaterial)
     this._warehouseMaterialService
       .update(
         this.warehouseMaterial
