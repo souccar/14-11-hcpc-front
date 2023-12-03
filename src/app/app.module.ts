@@ -50,7 +50,7 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     HttpClientJsonpModule,
     ModalModule.forChild(),
     BsDropdownModule,
-    CollapseModule,    
+    CollapseModule.forRoot(),
     PerfectScrollbarModule,
     TabsModule,
     PaginationModule.forRoot(),
@@ -73,6 +73,7 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     SettingsModule,
     WarehouseModule,
     PlanModule,
+
     
   ],
  

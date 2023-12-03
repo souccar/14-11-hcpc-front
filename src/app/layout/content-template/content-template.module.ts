@@ -20,7 +20,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
   imports: [
     CommonModule,
     // PerfectScrollbarModule,
-    CollapseModule,
+
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     SharedModule

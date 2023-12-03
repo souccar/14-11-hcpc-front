@@ -175,11 +175,12 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-
+    request.Including ="";
     this._planService
       .getAll(
         request.keyword,
         request.sort_Field,
+        request.Including,
         request.skipCount,
         request.MaxResultCount,
       )
@@ -239,6 +240,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
+  Including:string;
   sort_Desc: boolean;
   MaxResultCount:number
 }

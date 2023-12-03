@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
-import { CreateFormulaDialogComponent } from '@app/production/formula/create-formula/create-formula-dialog.component';
+import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateFormulaDto, CreateProductDto, FormulaDto, FormulaServiceProxy, MaterialDto, MaterialServiceProxy, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateFormulaDto, CreateProductDto, FormulaDto, MaterialDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'create-product-dialog',
   templateUrl: './create-product-dialog.component.html',
@@ -15,13 +15,14 @@ export class CreateProductDialogComponent extends AppComponentBase {
   product: CreateProductDto = new CreateProductDto();
   formulas: CreateFormulaDto[] = [];
   material: MaterialDto[] = [];
-  selectedPeople = [{ name: 'Karyn Wright' }];
-  people: [{ 'raneem', 'rem' }]
+  showItemIndex = 0;
   @Output() onSave = new EventEmitter<any>();
   
   constructor(injector: Injector,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
+    private _router: Router,
+    private _location: Location
 
   ) {
     super(injector);
@@ -31,6 +32,11 @@ export class CreateProductDialogComponent extends AppComponentBase {
   }
   addFormula(items: FormulaDto[]) {
     this.product.formulas = [...items];
+  }
+
+  backToAllProduct(){
+    this._location.back();
+
   }
 
   save(): void {

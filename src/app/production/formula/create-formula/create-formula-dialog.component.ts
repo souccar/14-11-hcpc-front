@@ -22,12 +22,12 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   ColumnMode = ColumnMode;
 
   saveDisabled = true
-  unitsNames:string[]=[];
-  materialNames:string[]=[];
+  unitsNames: string[] = [];
+  materialNames: string[] = [];
 
 
   @Output() saveFormulaList = new EventEmitter<CreateFormulaDto[]>();
-  
+
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -54,45 +54,45 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.units = response;
     });
   }
-  getUnitName(id:number){
-   
-    this._unitService.get(id).subscribe((response)=>{
+  getUnitName(id: number) {
+
+    this._unitService.get(id).subscribe((response) => {
       console.log(response)
       this.unitsNames.push(response.name);
     });
   }
-  
-  getMaterialName(id:number){
-    this._materialService.get(id).subscribe((response)=>{
-      this.materialNames.push(response.name);
-    });
+
+  getMaterialName(id: number) {
+    const material = this.materials.find(x => x.id == id);
+    if (material) {
+      return material.name;
+    }
+    return '';
+   
   }
   addToFormulaList() {
 
-    if(this.formula.materialId ==null || this.formula.name == null || this.formula.quantity==null || this.formula.unitId ==null){
+    if (this.formula.materialId == null || this.formula.quantity == null || this.formula.unitId == null) {
       return;
     }
-    else{
+    else {
       this.data.push(this.formula)
-   
+
       this.data = [...this.data]
       this.saveFormulaList.emit(this.data);
-      this.saving = true; 
-   
-      console.log(this.formula.unitId)
-      console.log("asdsadsadasdsaaaaaaaaaaaaa")
+      this.saving = true;
       this.getUnitName(this.formula.unitId);
       this.getMaterialName(this.formula.materialId);
       this.formula = new FormulaDto()
     }
 
-   
+
 
   }
 
-getUnitNameById(unitId){
-  return  this.units.find(t=>t.id ==unitId).name;
-}
+  getUnitNameById(unitId) {
+    return this.units.find(t => t.id == unitId).name;
+  }
 
   edit(row: FormulaDto) {
     this.formula = row

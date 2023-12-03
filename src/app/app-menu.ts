@@ -25,7 +25,8 @@ const data: IMenuItem[] = [
         label: 'Plan',
         to: `${adminRoot}/plan`,
         icon: 'simple-icon-notebook',
-      }
+      },
+     
     ],
   },
   //Production

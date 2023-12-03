@@ -6,6 +6,7 @@ import { MaterialComponent } from './material/material.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { ProductComponent } from './product/product.component';
 import { FormulaComponent } from './formula/formula.component';
+import { CreateProductDialogComponent } from './product/create-product/create-product-dialog.component';
 
 
 const routes: Routes = [{
@@ -31,18 +32,20 @@ const routes: Routes = [{
 
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
+    },
+    {
+      path: 'newproduct',
+      component: CreateProductDialogComponent,
+
+      //data: { permission : 'Pages.Products' },
+      canActivate: [AppRouteGuard]
     }
-
-
-
-
-
-
   ]
 }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+imports: [RouterModule.forChild(routes)],
+  
+exports: [RouterModule]
 })
 export class ProductionRoutingModule { }

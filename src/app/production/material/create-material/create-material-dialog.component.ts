@@ -14,6 +14,8 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
 
   material =  new CreateMaterialDto();
   suppliers: SupplierNameForDropdownDto[] = [];
+
+  materialSuppliers :CreateMaterialSuppliersDto[]=[];
   supplierList: SupplierNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -31,22 +33,24 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
 
   initSupplier(){
 
-   this._supplierService.getNameForDropdown().subscribe((response:SupplierNameForDropdownDto[]) => {
-    this.suppliers = response;
+   this._supplierService.getNameForDropdown().subscribe((result:SupplierNameForDropdownDto[]) => {
+    this.suppliers = result;
+   
   });
-
   }
+  addMaterialSupplier(){
+    let materialSupplier = new CreateMaterialSuppliersDto();
+    this.material.suppliers.push(materialSupplier);
+    console.log( this.material.suppliers)
+  }
+  removeMaterialSupplier(i:number){
+    this.material.suppliers.splice(i,1); 
+  }
+
    save(): void {
     this.saving = true;
-    console.log(this. supplierList)  
-    // var materialSuppliers : CreateMaterialSuppliersDto[] = [];
-    this.supplierList.forEach(element => {
-      var creatMaterialSupplier = new CreateMaterialSuppliersDto();
-        creatMaterialSupplier.init({supplierId: element.id});
-        console.log( creatMaterialSupplier)  
-        this.material.suppliers.push(creatMaterialSupplier);
-    
-    });
+    console.log(this. material)  
+
     
     this._materialService.
     create(
@@ -57,7 +61,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
           this.saving = false;
         })
       )
-      .subscribe((response:any) => {
+      .subscribe((result:any) => {
 
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
