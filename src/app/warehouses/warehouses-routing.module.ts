@@ -2,15 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { WarehouseComponent } from './warehouse.component';
+import { WarehousesComponent } from './warehouses.component';
 import { WarehouseMaterialComponent } from './warehouse-material/warehouse-material.component';
+import { WarehouseComponent } from './warehouse/warehouse.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 
 
 
 const routes: Routes = [{ 
-  path: '', component: WarehouseComponent ,
+  path: '', component: WarehousesComponent ,
   children:[
+    {
+      path: 'warehouse',
+      component: WarehouseComponent,
+      
+      //data: { permission : 'Pages.Products' },
+      canActivate: [AppRouteGuard]
+    },
     {
       path: 'warehouseMaterial',
       component: WarehouseMaterialComponent,

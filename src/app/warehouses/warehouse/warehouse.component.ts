@@ -1,25 +1,25 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CreateWarehouseMaterialDialogComponent } from './create-warehouse-Material/create-warehouse-material-dialog.component';
-import { EditWarehouseMaterialDialogComponent } from './edit-warehouse-Material/edit-warehouse-Material-dialog.component';
-import { ViewWarehouseMaterialDialogComponent } from './view-warehouse-Material/view-warehouse-Material-dialog.component';
-import { CreateWarehouseMaterialDto, MaterialDto, MaterialServiceProxy, UnitDto, UnitServiceProxy, WarehouseMaterialDto, WarehouseMaterialDtoPagedResultDto, WarehouseMaterialServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateWarehouseDialogComponent } from './create-warehouse/create-warehouse-dialog.component';
+import { EditWarehouseDialogComponent } from './edit-warehouse/edit-warehouse-dialog.component';
+// import { ViewWarehouseDialogComponent } from '';
+import { CreateWarehouseDto, UnitDto, UnitServiceProxy, WarehouseDto, WarehouseDtoPagedResultDto, WarehouseServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { forEach } from 'lodash-es';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'warehouseMaterial',
-  templateUrl: './warehouse-material.component.html',
+  selector: 'warehouse',
+  templateUrl: './warehouse.component.html',
 
 })
-export class WarehouseMaterialComponent extends PagedListingComponentBase<WarehouseMaterialDto> {
+export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> {
   ColumnMode = ColumnMode;
   displayMode = 'list';
   selectAllState = '';
-  selected: WarehouseMaterialDto[] = [];
-   data: WarehouseMaterialDto[] = [];
+  selected: WarehouseDto[] = [];
+   data: WarehouseDto[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -38,12 +38,7 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Inventory"
-
-materials: MaterialDto[] = [];
-units: UnitDto[] = [];
- 
-
+  title="Warehouse"
 
 
 
@@ -51,9 +46,8 @@ units: UnitDto[] = [];
 
   constructor(    injector: Injector,
     private _modalService: BsModalService,
-    private _warehouseMaterialService:WarehouseMaterialServiceProxy,
-    private _materialService:MaterialServiceProxy,
-    private _unitService:UnitServiceProxy,
+    private _warehouseService:WarehouseServiceProxy,
+ 
     ) {
     super(injector);
   }
@@ -65,42 +59,30 @@ units: UnitDto[] = [];
     
   }
 
-  getMaterialById(materialId){
-   
-    this._materialService.get(materialId).subscribe((responce)=>{
-    this.materials.push (responce);
-    });
-  }
-  getUnitById(unitId){
-  
-    this._unitService.get(unitId).subscribe((responce)=>{
-
-      this.units.push (responce);
-   
-    });
-  }
+ 
 
 
-  viewButton(id:number)
-{
-  this._modalService.show(
-    ViewWarehouseMaterialDialogComponent,
-    {
-      backdrop: true,
-      ignoreBackdropClick: true,
-      initialState: {
-        id: id,
-      },
-    }
-  );
 
-}
+//   viewButton(id:number)
+// {
+//   this._modalService.show(
+//     ViewWarehouseDialogComponent,
+//     {
+//       backdrop: true,
+//       ignoreBackdropClick: true,
+//       initialState: {
+//         id: id,
+//       },
+//     }
+//   );
+
+// }
 
   
   editButton(id:number): void {
-    let editWarehouseMaterialDialog: BsModalRef;
-        editWarehouseMaterialDialog = this._modalService.show(
-        EditWarehouseMaterialDialogComponent,
+    let editWarehouseDialog: BsModalRef;
+        editWarehouseDialog = this._modalService.show(
+        EditWarehouseDialogComponent,
         {
           backdrop: true,
           ignoreBackdropClick: true,
@@ -110,22 +92,22 @@ units: UnitDto[] = [];
           class: 'modal-lg',
         }
       );
-      editWarehouseMaterialDialog.content.onSave.subscribe(() => {
+      editWarehouseDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
    
 
     }
 
-    protected delete(entity: WarehouseMaterialDto): void {
+    protected delete(entity: WarehouseDto): void {
     
       abp.message.confirm(
-        this.l('WarehouseMaterialDeleteWarningMessage', this.selected.length, ' WarehouseMaterials'),
+        this.l('WarehouseDeleteWarningMessage', this.selected.length, ' Warehouses'),
         undefined,
         (result: boolean) => {
           if (result) {
            
-            this._warehouseMaterialService.delete(entity.id).subscribe((recponce) => {
+            this._warehouseService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
             });
@@ -153,12 +135,12 @@ units: UnitDto[] = [];
     }
     else {
       abp.message.confirm(
-        this.l('WarehouseMaterialDeleteWarningMessage', this.selected.length, ' WarehouseMaterials'),
+        this.l('WarehouseDeleteWarningMessage', this.selected.length, ' Warehouses'),
         undefined,
         (result: boolean) => {
           if (result) {
             this.selected.forEach(element => {
-              this._warehouseMaterialService.delete(element.id).subscribe(() => {
+              this._warehouseService.delete(element.id).subscribe(() => {
                 abp.notify.success(this.l('SuccessfullyDeleted'));
                 this.refresh();
               });
@@ -174,9 +156,9 @@ units: UnitDto[] = [];
   }
 
   showAddNewModal(): void {
-    let createOrEditWarehouseMaterialDialog: BsModalRef;
-    createOrEditWarehouseMaterialDialog = this._modalService.show(
-      CreateWarehouseMaterialDialogComponent,
+    let createOrEditWarehouseDialog: BsModalRef;
+    createOrEditWarehouseDialog = this._modalService.show(
+      CreateWarehouseDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
@@ -184,16 +166,16 @@ units: UnitDto[] = [];
 
       }
     );
-    createOrEditWarehouseMaterialDialog.content.onSave.subscribe(() => {
+    createOrEditWarehouseDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
 
-  isSelected(p: WarehouseMaterialDto): boolean {
+  isSelected(p: WarehouseDto): boolean {
   
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: WarehouseMaterialDto): void {
+  onSelect(item: WarehouseDto): void {
   
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
@@ -209,11 +191,11 @@ units: UnitDto[] = [];
   ): void {
     request.keyword = this.search;
 
-    this._warehouseMaterialService
+    this._warehouseService
       .getAll(
         request.keyword,
         request.sort_Field,
-       'material,unit',
+       ',unit',
         request.skipCount,
         request.MaxResultCount,
       )
@@ -222,16 +204,12 @@ units: UnitDto[] = [];
           finishedCallback();
         })
       )
-      .subscribe((result: WarehouseMaterialDtoPagedResultDto) => {
+      .subscribe((result: WarehouseDtoPagedResultDto) => {
         
         this.data = result.items;
 
         this.totalItem = result.totalCount;
         result.items.forEach(element => {
-          this.getMaterialById(element.materialId);
-          this.getUnitById(element.unitId);
-          console.log(this.materials)
-          console.log(this.units)
         });
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();

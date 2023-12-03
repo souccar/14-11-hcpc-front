@@ -34,6 +34,7 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   }
   ngOnInit(): void {
     this.radarChartData = this.getChartData();
+    console.log(this.planMaterials)
   }
   getChartData() {
     if (!this.planMaterials)

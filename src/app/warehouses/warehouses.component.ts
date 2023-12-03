@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'warehouse',
   template:`<router-outlet></router-outlet>` 
 })
-export class WarehouseComponent {
+export class WarehousesComponent {
 
 }

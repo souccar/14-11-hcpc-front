@@ -18,7 +18,7 @@ export class PlanProductComponent implements OnInit{
     this.chartDataConfig = this.chartService;
   }
   ngOnInit(): void {
-    
+ 
   }
 
   getChartData(planProduct: PlanProductDto){
