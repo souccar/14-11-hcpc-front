@@ -26,7 +26,7 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/plan`,
         icon: 'simple-icon-notebook',
       },
-     
+
     ],
   },
   //Production
@@ -83,6 +83,12 @@ const data: IMenuItem[] = [
     {
       label: 'Warehouse Material',
       to: `${adminRoot}/warehouses/warehouseMaterial`,
+      icon: 'iconsminds-shopping-basket',
+
+    },
+    {
+      label: 'outputRequest',
+      to: `${adminRoot}/warehouses/outputRequest`,
       icon: 'iconsminds-shopping-basket',
 
     },
