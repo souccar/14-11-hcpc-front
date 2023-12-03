@@ -54,19 +54,19 @@ const data: IMenuItem[] = [
 
 
  //Supplier
- {
-  label: 'Supplier',
-  to: `${adminRoot}/supplier`,
-  icon: 'simple-icon-user',
-  subs:[
-    {
-      label: 'supplier',
-      to: `${adminRoot}/supplier/supplier`,
-      icon: 'simple-icon-user',
-    },
-  ]
-  // roles: [UserRole.Editor],
-},
+//  {
+//   label: 'Supplier',
+//   to: `${adminRoot}/supplier`,
+//   icon: 'simple-icon-user',
+//   subs:[
+//     {
+//       label: 'supplier',
+//       to: `${adminRoot}/supplier/supplier`,
+//       icon: 'simple-icon-user',
+//     },
+//   ]
+  
+// },
 
 
   //Warehouse
@@ -89,7 +89,36 @@ const data: IMenuItem[] = [
     ]
     // roles: [UserRole.Editor],
   },
+  //Setting
+  {
+    icon: 'simple-icon-settings',
+    label: 'Settings',
+    to: `${adminRoot}/settings`,
+    subs: [
+      {
+        label: 'supplier',
+        to: `${adminRoot}/settings/supplier`,
+        icon: 'simple-icon-user',
+      },
+      {
+        label: 'Unit',
+        to: `${adminRoot}/settings/unit`,
+        icon: 'iconsminds-scale',
+      },
+      {
+        label: 'Transfer',
+        to: `${adminRoot}/settings/transfer`,
+        icon: 'iconsminds-synchronize',
+      },
+      {
+        label: 'general Setting',
+        to: `${adminRoot}/settings/generalsetting`,
+        icon: 'simple-icon-globe',
+      },
 
+
+    ],
+  },
   //Security
   {
     icon: 'iconsminds-security-settings',
@@ -109,25 +138,6 @@ const data: IMenuItem[] = [
 
     ],
   },
-  //Setting
-  {
-    icon: 'simple-icon-settings',
-    label: 'Settings',
-    to: `${adminRoot}/settings`,
-    subs: [
-      {
-        label: 'Unit',
-        to: `${adminRoot}/settings/unit`,
-        icon: 'iconsminds-scale',
-      },
-      {
-        label: 'Transfer',
-        to: `${adminRoot}/settings/transfer`,
-        icon: 'iconsminds-synchronize',
-      },
 
-
-    ],
-  },
 ];
 export default data;

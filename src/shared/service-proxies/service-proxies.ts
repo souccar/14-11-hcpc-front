@@ -456,6 +456,71 @@ export class DailyProductionServiceProxy {
     }
 
     /**
+     * @param planId (optional) 
+     * @return Success
+     */
+    getAllProductionsCountForPlan(planId: number | undefined): Observable<{ [key: string]: number; }> {
+        let url_ = this.baseUrl + "/api/services/app/DailyProduction/GetAllProductionsCountForPlan?";
+        if (planId === null)
+            throw new Error("The parameter 'planId' cannot be null.");
+        else if (planId !== undefined)
+            url_ += "PlanId=" + encodeURIComponent("" + planId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllProductionsCountForPlan(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllProductionsCountForPlan(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<{ [key: string]: number; }>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<{ [key: string]: number; }>;
+        }));
+    }
+
+    protected processGetAllProductionsCountForPlan(response: HttpResponseBase): Observable<{ [key: string]: number; }> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {} as any;
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        (<any>result200)[key] = resultData200[key] !== undefined ? resultData200[key] : <any>null;
+                }
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -1537,6 +1602,62 @@ export class MaterialServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = MaterialDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param materialId (optional) 
+     * @return Success
+     */
+    getMaterialDetails(materialId: number | undefined): Observable<MaterialDetailDto> {
+        let url_ = this.baseUrl + "/api/services/app/Material/GetMaterialDetails?";
+        if (materialId === null)
+            throw new Error("The parameter 'materialId' cannot be null.");
+        else if (materialId !== undefined)
+            url_ += "materialId=" + encodeURIComponent("" + materialId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMaterialDetails(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMaterialDetails(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialDetailDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialDetailDto>;
+        }));
+    }
+
+    protected processGetMaterialDetails(response: HttpResponseBase): Observable<MaterialDetailDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialDetailDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8622,7 +8743,6 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
     name: string | undefined;
     place: string | undefined;
     warehouseKeeper: string | undefined;
-    warehouseMaterials: CreateWarehouseMaterialDto[] | undefined;
 
     constructor(data?: ICreateWarehouseDto) {
         if (data) {
@@ -8638,11 +8758,6 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
             this.name = _data["name"];
             this.place = _data["place"];
             this.warehouseKeeper = _data["warehouseKeeper"];
-            if (Array.isArray(_data["warehouseMaterials"])) {
-                this.warehouseMaterials = [] as any;
-                for (let item of _data["warehouseMaterials"])
-                    this.warehouseMaterials.push(CreateWarehouseMaterialDto.fromJS(item));
-            }
         }
     }
 
@@ -8658,11 +8773,6 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
         data["name"] = this.name;
         data["place"] = this.place;
         data["warehouseKeeper"] = this.warehouseKeeper;
-        if (Array.isArray(this.warehouseMaterials)) {
-            data["warehouseMaterials"] = [];
-            for (let item of this.warehouseMaterials)
-                data["warehouseMaterials"].push(item.toJSON());
-        }
         return data;
     }
 
@@ -8678,7 +8788,6 @@ export interface ICreateWarehouseDto {
     name: string | undefined;
     place: string | undefined;
     warehouseKeeper: string | undefined;
-    warehouseMaterials: CreateWarehouseMaterialDto[] | undefined;
 }
 
 export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
@@ -10306,6 +10415,85 @@ export enum LayoutKind {
     _0 = 0,
     _2 = 2,
     _3 = 3,
+}
+
+export class MaterialDetailDto implements IMaterialDetailDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    readonly totalQuantity: number;
+    suppliers: MaterialSuppliersDto[] | undefined;
+    warehouseMaterials: WarehouseMaterialDto[] | undefined;
+
+    constructor(data?: IMaterialDetailDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            (<any>this).totalQuantity = _data["totalQuantity"];
+            if (Array.isArray(_data["suppliers"])) {
+                this.suppliers = [] as any;
+                for (let item of _data["suppliers"])
+                    this.suppliers.push(MaterialSuppliersDto.fromJS(item));
+            }
+            if (Array.isArray(_data["warehouseMaterials"])) {
+                this.warehouseMaterials = [] as any;
+                for (let item of _data["warehouseMaterials"])
+                    this.warehouseMaterials.push(WarehouseMaterialDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): MaterialDetailDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialDetailDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["totalQuantity"] = this.totalQuantity;
+        if (Array.isArray(this.suppliers)) {
+            data["suppliers"] = [];
+            for (let item of this.suppliers)
+                data["suppliers"].push(item.toJSON());
+        }
+        if (Array.isArray(this.warehouseMaterials)) {
+            data["warehouseMaterials"] = [];
+            for (let item of this.warehouseMaterials)
+                data["warehouseMaterials"].push(item.toJSON());
+        }
+        return data;
+    }
+
+    clone(): MaterialDetailDto {
+        const json = this.toJSON();
+        let result = new MaterialDetailDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMaterialDetailDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+    totalQuantity: number;
+    suppliers: MaterialSuppliersDto[] | undefined;
+    warehouseMaterials: WarehouseMaterialDto[] | undefined;
 }
 
 export class MaterialDto implements IMaterialDto {
@@ -12070,6 +12258,7 @@ export class PlanProductDto implements IPlanProductDto {
     product: ProductDto;
     durationProduce: number;
     readonly canProduce: number;
+    totalProduction: number;
     planProductMaterials: PlanProductMaterialDto[] | undefined;
 
     constructor(data?: IPlanProductDto) {
@@ -12091,6 +12280,7 @@ export class PlanProductDto implements IPlanProductDto {
             this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
             this.durationProduce = _data["durationProduce"];
             (<any>this).canProduce = _data["canProduce"];
+            this.totalProduction = _data["totalProduction"];
             if (Array.isArray(_data["planProductMaterials"])) {
                 this.planProductMaterials = [] as any;
                 for (let item of _data["planProductMaterials"])
@@ -12116,6 +12306,7 @@ export class PlanProductDto implements IPlanProductDto {
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
         data["durationProduce"] = this.durationProduce;
         data["canProduce"] = this.canProduce;
+        data["totalProduction"] = this.totalProduction;
         if (Array.isArray(this.planProductMaterials)) {
             data["planProductMaterials"] = [];
             for (let item of this.planProductMaterials)
@@ -12141,6 +12332,7 @@ export interface IPlanProductDto {
     product: ProductDto;
     durationProduce: number;
     canProduce: number;
+    totalProduction: number;
     planProductMaterials: PlanProductMaterialDto[] | undefined;
 }
 
@@ -15661,7 +15853,6 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
     name: string | undefined;
     place: string | undefined;
     warehouseKeeper: string | undefined;
-    warehouseMaterials: UpdateWarehouseMaterialDto[] | undefined;
 
     constructor(data?: IUpdateWarehouseDto) {
         if (data) {
@@ -15678,11 +15869,6 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
             this.name = _data["name"];
             this.place = _data["place"];
             this.warehouseKeeper = _data["warehouseKeeper"];
-            if (Array.isArray(_data["warehouseMaterials"])) {
-                this.warehouseMaterials = [] as any;
-                for (let item of _data["warehouseMaterials"])
-                    this.warehouseMaterials.push(UpdateWarehouseMaterialDto.fromJS(item));
-            }
         }
     }
 
@@ -15699,11 +15885,6 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
         data["name"] = this.name;
         data["place"] = this.place;
         data["warehouseKeeper"] = this.warehouseKeeper;
-        if (Array.isArray(this.warehouseMaterials)) {
-            data["warehouseMaterials"] = [];
-            for (let item of this.warehouseMaterials)
-                data["warehouseMaterials"].push(item.toJSON());
-        }
         return data;
     }
 
@@ -15720,7 +15901,6 @@ export interface IUpdateWarehouseDto {
     name: string | undefined;
     place: string | undefined;
     warehouseKeeper: string | undefined;
-    warehouseMaterials: UpdateWarehouseMaterialDto[] | undefined;
 }
 
 export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
@@ -16092,7 +16272,6 @@ export class WarehouseDto implements IWarehouseDto {
     name: string | undefined;
     place: string | undefined;
     warehouseKeeper: string | undefined;
-    warehouseMaterials: WarehouseMaterialDto[] | undefined;
 
     constructor(data?: IWarehouseDto) {
         if (data) {
@@ -16109,11 +16288,6 @@ export class WarehouseDto implements IWarehouseDto {
             this.name = _data["name"];
             this.place = _data["place"];
             this.warehouseKeeper = _data["warehouseKeeper"];
-            if (Array.isArray(_data["warehouseMaterials"])) {
-                this.warehouseMaterials = [] as any;
-                for (let item of _data["warehouseMaterials"])
-                    this.warehouseMaterials.push(WarehouseMaterialDto.fromJS(item));
-            }
         }
     }
 
@@ -16130,11 +16304,6 @@ export class WarehouseDto implements IWarehouseDto {
         data["name"] = this.name;
         data["place"] = this.place;
         data["warehouseKeeper"] = this.warehouseKeeper;
-        if (Array.isArray(this.warehouseMaterials)) {
-            data["warehouseMaterials"] = [];
-            for (let item of this.warehouseMaterials)
-                data["warehouseMaterials"].push(item.toJSON());
-        }
         return data;
     }
 
@@ -16151,7 +16320,6 @@ export interface IWarehouseDto {
     name: string | undefined;
     place: string | undefined;
     warehouseKeeper: string | undefined;
-    warehouseMaterials: WarehouseMaterialDto[] | undefined;
 }
 
 export class WarehouseDtoPagedResultDto implements IWarehouseDtoPagedResultDto {
