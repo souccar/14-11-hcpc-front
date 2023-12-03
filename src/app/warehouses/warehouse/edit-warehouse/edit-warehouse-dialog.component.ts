@@ -27,10 +27,10 @@ export class EditWarehouseDialogComponent extends AppComponentBase {
     this.initWarehouse();
   }
   initWarehouse() {
-    this._warehouseService.get(this.id).subscribe((result) => {
-      this.warehouse = result;
-      console.log(this.warehouse )
-    });
+    // this._warehouseService.get(this.id).subscribe((result) => {
+    //   this.warehouse = result;
+    //   console.log(this.warehouse )
+    // });
   }
 
 

@@ -11,12 +11,14 @@ import { ViewWarehouseMaterialDialogComponent } from './view-warehouse-Material/
 import { EditWarehouseMaterialDialogComponent } from './edit-warehouse-Material/edit-warehouse-Material-dialog.component';
 
 
+
 @NgModule({
   declarations: [
     WarehouseMaterialComponent,
    ViewWarehouseMaterialDialogComponent,
    EditWarehouseMaterialDialogComponent,
     CreateWarehouseMaterialDialogComponent,
+
   ],
   imports: [
     CommonModule,

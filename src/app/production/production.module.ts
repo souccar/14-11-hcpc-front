@@ -20,6 +20,7 @@ import { EditFormulaDialogComponent } from './formula/edit-formula/edit-formula-
 import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-dialog.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { MaterialDetailsComponent } from './material/material-details/material-details.component';
 @NgModule({
   declarations: [
     ProductionComponent,
@@ -35,6 +36,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     CreateFormulaDialogComponent,
     EditFormulaDialogComponent,
     ViewFormulaDialogComponent,
+    MaterialDetailsComponent,
 
 
   ],
