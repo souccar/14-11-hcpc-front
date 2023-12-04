@@ -1,0 +1,117 @@
+
+<form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()" >
+    <abp-modal-header [title]="'Edit Item in Warehouse' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body modal-xl">
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="material">
+          {{ "Material" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <select class="form-control" aria-label="material" #materialModel="ngModel" required name="material" 
+          [(ngModel)]="warehouseMaterial.materialId" #materialEl>
+            <option *ngFor="let item of materials" value={{item.id}}>{{item.name}}</option>
+          </select>
+          <abp-validation-summary [control]="materialModel" [controlEl]="materialEl"></abp-validation-summary>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="warehouse">
+          {{ "Warehouse" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <select class="form-control" aria-label="warehouse" #warehouseModel="ngModel" required name="warehouse" 
+          [(ngModel)]="warehouseMaterial.warehouseId" #warehouseEl>
+            <option *ngFor="let item of warehouses" value={{item.id}}>{{item.name}}</option>
+          </select>
+          <abp-validation-summary [control]="warehouseModel" [controlEl]="warehouseEl"></abp-validation-summary>
+        </div>
+      </div>
+         <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="supplier">
+          {{ "Supplier" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <select class="form-control" aria-label="supplier" #supplierModel="ngModel" required name="supplier" 
+          [(ngModel)]="warehouseMaterial.supplierId" #supplierEl>
+            <option *ngFor="let item of suppliers" value={{item.id}}>{{item.name}}</option>
+          </select>
+          <abp-validation-summary [control]="supplierModel" [controlEl]="supplierEl"></abp-validation-summary>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="code">
+          {{ "code" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <input type="text" class="form-control" name="code" id="code" required
+            [(ngModel)]="warehouseMaterial.code" #codeModel="ngModel" #codeEl   />
+          <abp-validation-summary [control]="codeModel" [controlEl]="codeEl"></abp-validation-summary>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="entryDate">
+          {{ "entryDate"  }}
+        </label>
+        <div class="col-md-9">
+          <input type="date" class="form-control" name="entryDate" id="entryDate" required 
+          [ngModel]="warehouseMaterial.entryDate| date:'yyyy-MM-dd'"   (ngModelChange)="warehouseMaterial.entryDate = $event" #entryDateModel="ngModel" #entryDateEl   />
+          <abp-validation-summary [control]="entryDateModel" [controlEl]="entryDateEl"></abp-validation-summary>
+        </div>
+      </div>
+
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="expirationDate">
+          {{ "Expiration Date"  }}
+        </label>
+        <div class="col-md-9">
+          <input type="date" class="form-control" name="expirationDate" id="expirationDate" required 
+          [ngModel]="warehouseMaterial.expirationDate| date:'yyyy-MM-dd'"   (ngModelChange)="warehouseMaterial.expirationDate = $event"  #expirationDateModel="ngModel" #expirationDateEl   />
+          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="quantity">
+          {{ "Quantity"  }}
+        </label>
+        <div class="col-md-4">
+          <input type="number" class="form-control" name="quantity" id="quantity" required min="0"
+            [(ngModel)]="warehouseMaterial.initialQuantity" #quantityModel="ngModel" #quantityEl   />
+          <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
+        </div>
+        <label class="col-md-1 col-form-label" for="unit">
+          {{ "Unit"  }}
+        </label>
+        <div class="col-md-4 ">
+          <select class="form-control" aria-label="unit" #unitModel="ngModel" required name="unit" 
+          [(ngModel)]="warehouseMaterial.unitId" #unitEl>
+            <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
+          </select>
+          <abp-validation-summary [control]="unitModel" [controlEl]="unitEl"></abp-validation-summary>
+        </div>
+      </div>
+
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="price">
+          {{ "Price"  }}
+        </label>
+        <div class="col-md-4">
+          <input type="number" class="form-control" name="price" id="price" required min="0"
+            [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
+          <abp-validation-summary [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
+        </div>
+        <label class="col-md-1 col-form-label" for="unitPriceId">
+          {{ "Price Unit"  }}
+        </label>
+        <div class="col-md-4 ">
+          <select class="form-control" aria-label="unitPriceId" #unitPriceIdModel="ngModel" required name="unitPriceId" 
+          [(ngModel)]="warehouseMaterial.unitPriceId" #unitPriceIdEl>
+            <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
+          </select>
+          <abp-validation-summary [control]="unitPriceIdModel" [controlEl]="unitPriceIdEl"></abp-validation-summary>
+        </div>
+      </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
+      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+  </form>
+  

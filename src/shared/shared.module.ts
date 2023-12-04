@@ -21,14 +21,18 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {SummaryPipe} from '../app/pipes/summury.pipe'
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+
 @NgModule({
     imports: [
         TabsModule.forRoot(),
+
         CommonModule,
         RouterModule,
         NgxPaginationModule,
         NgSelectModule,
         NgxDatatableModule,
+    
        
     ],
     declarations: [
@@ -50,11 +54,11 @@ import {SummaryPipe} from '../app/pipes/summury.pipe'
         BusyDirective,
         EqualValidator,
         TabsModule,
+
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe,
-
-
+     
     ]
 })
 export class SharedModule {

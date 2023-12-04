@@ -19,6 +19,9 @@ import { PlanProductsPercentageComponent } from './view-plan/plan-products/plan-
 import { LogsComponent } from './view-plan/logs/logs.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { LastLoginsComponent } from './view-plan/last-logins/last-logins.component';
+import { EditDialyProductionDialogComponent } from './daily-Production/edit-dialy-production/edit-dialy-production-dialog.component';
+import { CreateDialyProductionDialogComponent } from './daily-Production/create-dialy-production/create-dialy-production-dialog.component';
+import { DailyProductionComponent } from './daily-Production/daily-production.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { LastLoginsComponent } from './view-plan/last-logins/last-logins.compone
     PlanMaterialComponent,
     PlanProductsPercentageComponent,
     LogsComponent,
-    LastLoginsComponent
+    LastLoginsComponent,
+    DailyProductionComponent,
+    CreateDialyProductionDialogComponent,
+    EditDialyProductionDialogComponent
   ],
   imports: [
   
@@ -45,7 +51,8 @@ import { LastLoginsComponent } from './view-plan/last-logins/last-logins.compone
     BsDropdownModule,
     CommonModule,
     ChartsModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+  
   ],
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })

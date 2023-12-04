@@ -81,7 +81,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   }
   addToFormulaList() {
     
-    if(this.formula.materialId ==null || this.formula.name == null || this.formula.quantity==null || this.formula.unitId ==null){
+    if(this.formula.materialId ==null || this.formula.quantity==null || this.formula.unitId ==null){
       return;
     }
     else{

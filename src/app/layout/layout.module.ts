@@ -8,12 +8,10 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {ContentTemplateModule} from './content-template/content-template.module';
 import { SharedModule } from '@shared/shared.module';
-
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 @NgModule({
@@ -33,7 +31,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     ContentTemplateModule,
     SharedModule,
     // PerfectScrollbarModule,
-    CollapseModule,
+
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     

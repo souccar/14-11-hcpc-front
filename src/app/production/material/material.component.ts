@@ -7,6 +7,7 @@ import { ViewMaterialDialogComponent } from './view-material/view-material-dialo
 import { CreateMaterialDto, MaterialDto, MaterialDtoPagedResultDto, MaterialServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import { MaterialDetailsComponent } from './material-details/material-details.component';
 
 @Component({
   selector: 'material',
@@ -163,7 +164,25 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
       this.refresh()
     });
   }
+  materialDetails(id:number)
+  {
+    let materialDetailsDialog: BsModalRef;
+    materialDetailsDialog = this._modalService.show(
+      MaterialDetailsComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+       class: 'modal-lg',
+       initialState: {
+        id: id,
+      },
 
+      }
+    );
+    materialDetailsDialog.content.onSave.subscribe(() => {
+      this.refresh()
+    });
+  }
   isSelected(p: MaterialDto): boolean {
 
     return this.selected.findIndex(x => x.id === p.id) > -1;

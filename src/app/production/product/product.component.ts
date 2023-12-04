@@ -39,11 +39,12 @@ export class ProductComponent extends PagedListingComponentBase<any> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Product"
+  title = "Product"
   constructor(injector: Injector,
     private _modalService: BsModalService,
-    private _productService:ProductServiceProxy,
-    private _router:Router) {
+    private _productService: ProductServiceProxy,
+    private _router: Router,
+  ) {
 
     super(injector);
   }
@@ -53,58 +54,56 @@ export class ProductComponent extends PagedListingComponentBase<any> {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
 
-  formula(id:number)
-  {
-    this._router.navigate(['/app/production/formula',id])
+  formula(id: number) {
+    this._router.navigate(['/app/production/formula', id])
   }
-viewButton(id:number)
-{
+  viewButton(id: number) {
 
-  this._modalService.show(
-    ViewProductDialogComponent,
-    {
-      backdrop: true,
-      ignoreBackdropClick: true,
-      initialState: {
-        id: id,
-      },
-      class: 'modal-xl',
-    }
-  );
+    this._modalService.show(
+      ViewProductDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+        class: 'modal-xl',
+      }
+    );
 
-}
+  }
 
 
-  editButton(id:number): void {
+  editButton(id: number): void {
     let editProductDialog: BsModalRef;
-        editProductDialog = this._modalService.show(
-        EditProductDialogComponent,
-        {
-          backdrop: true,
-          ignoreBackdropClick: true,
-          initialState: {
-            id: id,
-          },
-          class: 'modal-xl',
-        }
-      );
-      editProductDialog.content.onSave.subscribe(() => {
+    editProductDialog = this._modalService.show(
+      EditProductDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+        class: 'modal-xl',
+      }
+    );
+    editProductDialog.content.onSave.subscribe(() => {
       this.refresh();
-      });
+    });
 
-    }
-    loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-      let request: PagedProductsRequestDto = new PagedProductsRequestDto();
-      this.itemsPerPage = pageSize;
-      this.currentPage = currentPage;
-      this.search = search;
-      request.keyword = search;
-      request.sort_Field = sort_Field;
-      request.sort_Desc = sort_Desc;
-      request.skipCount = (currentPage - 1) * pageSize;
-      request.maxResultCount = this.itemsPerPage;
-      this.list(request, this.pageNumber, () => { });
-    }
+  }
+  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
+    let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+    this.itemsPerPage = pageSize;
+    this.currentPage = currentPage;
+    this.search = search;
+    request.keyword = search;
+    request.sort_Field = sort_Field;
+    request.sort_Desc = sort_Desc;
+    request.skipCount = (currentPage - 1) * pageSize;
+    request.maxResultCount = this.itemsPerPage;
+    this.list(request, this.pageNumber, () => { });
+  }
   deleteItem(): void {
     if (this.selected.length == 0) {
       abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
@@ -132,19 +131,10 @@ viewButton(id:number)
   }
 
   showAddNewModal(): void {
-    let createOrEditProductDialog: BsModalRef;
-    createOrEditProductDialog = this._modalService.show(
-      CreateProductDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-       class: 'modal-xl',
 
-      }
-    );
-    createOrEditProductDialog.content.onSave.subscribe(() => {
-      this.refresh()
-    });
+
+    this._router.navigate(['app/production/newproduct']);
+
   }
 
   isSelected(p: any): boolean {
@@ -182,9 +172,9 @@ viewButton(id:number)
       .subscribe((result: ProductDtoPagedResultDto) => {
 
         this.data = result.items;
-
+console.log(this.data)
         this.totalItem = result.totalCount;
-        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
       });
   }
@@ -202,8 +192,7 @@ viewButton(id:number)
       }
     );
   }
-  addFormula(id:number)
-  {
+  addFormula(id: number) {
 
     let formulaDialog: BsModalRef;
     formulaDialog = this._modalService.show(
@@ -212,7 +201,7 @@ viewButton(id:number)
         backdrop: true,
         ignoreBackdropClick: true,
         initialState: {
-        productId: id,
+          productId: id,
         },
         class: 'modal-xl',
 
@@ -266,5 +255,5 @@ class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
   sort_Desc: boolean;
-  MaxResultCount:number
+  MaxResultCount: number
 }

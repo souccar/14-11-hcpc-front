@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -16,11 +16,15 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   warehouseMaterial = new CreateWarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
   materials: MaterialNameForDropdownDto[] = [];
+  suppliers: SupplierNameForDropdownDto[] = [];
+  warehouses: WarehouseNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
     private _materialService: MaterialServiceProxy,
+    private _warehouseService: WarehouseServiceProxy ,
+    private _supplierService: SupplierServiceProxy ,
     public bsModalRef: BsModalRef,
 
   ) {
@@ -29,6 +33,8 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   ngOnInit(): void {
     this.initUnits();
     this.initMaterials();
+    this. initWarehouses();
+    this.initSuppliers()
   }
 
   initUnits() {
@@ -36,9 +42,19 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
       this.units = result;
     });
   }
+  initSuppliers() {
+    this._supplierService.getNameForDropdown().subscribe((result) => {
+      this.suppliers = result;
+    });
+  }
   initMaterials() {
     this._materialService.getNameForDropdown().subscribe((result) => {
       this.materials = result;
+    });
+  }
+  initWarehouses() {
+    this._warehouseService.getNameForDropdown().subscribe((result) => {
+      this.warehouses = result;
     });
   }
   save(): void {
@@ -53,8 +69,6 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response: any) => {
-
-        console.log(response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();

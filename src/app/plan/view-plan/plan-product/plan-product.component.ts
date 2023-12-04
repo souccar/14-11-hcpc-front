@@ -18,15 +18,15 @@ export class PlanProductComponent implements OnInit{
     this.chartDataConfig = this.chartService;
   }
   ngOnInit(): void {
-    
+ 
   }
 
   getChartData(planProduct: PlanProductDto){
     let materials = [];
     let data = [];
-    planProduct.product.formulas.forEach(formula => {
-      materials.push(formula.name);
-    }); 
+    // planProduct.product.formulas.forEach(formula => {
+    //   materials.push(formula.name);
+    // }); 
     planProduct.planProductMaterials.forEach(planProductMaterial => {
       data.push(planProductMaterial.requiredQuantity);
     }); 

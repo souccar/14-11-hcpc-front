@@ -31,7 +31,7 @@ export class AppComponent extends AppComponentBase implements OnInit {
       }
     );
 
-    SignalRAspNetCoreHelper.initSignalR();
+    //SignalRAspNetCoreHelper.initSignalR();
 
     abp.event.on('abp.notifications.received', (userNotification) => {
       abp.notifications.showUiNotifyForUserNotification(userNotification);
