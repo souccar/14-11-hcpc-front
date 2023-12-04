@@ -45,7 +45,7 @@ export function getCurrentLanguage(): string {
     RootRoutingModule,
     
     PerfectScrollbarModule,
-    CollapseModule,
+
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
   ],

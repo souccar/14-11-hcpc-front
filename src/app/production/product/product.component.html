@@ -22,6 +22,12 @@
          
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-column [name]="l('Price')" prop="price" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template >
+           {{row.price}}
+         
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Description')" prop="description" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            {{row.description}}

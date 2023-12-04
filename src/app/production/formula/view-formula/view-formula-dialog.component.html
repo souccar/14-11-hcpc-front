@@ -1,4 +1,3 @@
-
 <div class="modal-body my-custom-scrollbar">
 
   <table class="table table-hover">
@@ -12,15 +11,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let formula of data; ">
+      <tr *ngFor="let formula of data; ;let i=index;  ">
         <th scope="row">{{formula.id}}</th>
-        <td>{{formula.name}} </td>
-        <ng-contanier *ngFor="let m of materials">   <td>{{m.name}} </td> </ng-contanier>
-     
+        <!--  -->
+
+        <ng-contanier *ngFor="let m of materials;let mId=index">
+          <td *ngIf="mId==i">{{m.name}} </td>
+        </ng-contanier>
         <td>{{formula.quantity}}</td>
-        <ng-contanier *ngFor="let u of units ;">   <td>{{u.name}} </td> </ng-contanier>
-     
-     
+        <ng-contanier *ngFor="let u of units;let uId=index ">
+          <td *ngIf="uId==i">{{u.name}} </td>
+        </ng-contanier>
+        <!--  -->
+        <td>{{formula.quantity}}</td>
+    
+
+
       </tr>
 
     </tbody>

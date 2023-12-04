@@ -30,8 +30,8 @@ import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
-import { WarehouseModule } from './warehouse/warehouse.module';
-import { PlanModule } from './plan/plan.module';
+import { WarehousesModule } from './warehouses/warehouses.module';
+  import { PlanModule } from './plan/plan.module';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { PlanModule } from './plan/plan.module';
     HttpClientJsonpModule,
     ModalModule.forChild(),
     BsDropdownModule,
-    CollapseModule,    
+    CollapseModule.forRoot(),
     PerfectScrollbarModule,
     TabsModule,
     PaginationModule.forRoot(),
@@ -70,8 +70,9 @@ import { PlanModule } from './plan/plan.module';
     ProductionModule,
     SupplierModule,
     SettingsModule,
-    WarehouseModule,
+    WarehousesModule,
     PlanModule,
+
     
   ],
  

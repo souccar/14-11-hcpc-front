@@ -28,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
     imports: [
         TabsModule.forRoot(),
+
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -56,6 +57,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         BusyDirective,
         EqualValidator,
         TabsModule,
+
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe

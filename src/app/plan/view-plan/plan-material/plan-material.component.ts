@@ -34,6 +34,7 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   }
   ngOnInit(): void {
     this.radarChartData = this.getChartData();
+    console.log(this.planMaterials)
   }
   getChartData() {
     if (!this.planMaterials)
@@ -50,7 +51,7 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
         name: item.material.name, 
         totalQuantity: item.totalQuantity, 
         inventory: item.inventoryQuantity, 
-        leadTime: item.material.leadTime,
+        // leadTime: item.material.leadTime,
         produceDays: item.produceDays });
       inventoryData.push(Math.round(item.inventoryQuantity));
       planData.push(Math.round(item.totalQuantity));

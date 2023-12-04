@@ -6,14 +6,8 @@
         <div class="col-md-11">
           <!-- Inputs -->
           <div class="row">
-            <div class="col-md-4 required">
-              <label form="name">Name</label>
-              <input type="text" class="form-control" name="name" id="name" required
-              [(ngModel)]="formula.name" #nameModel="ngModel" #nameEl  />
-
-            <!-- <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary> -->
-            </div>
-            <div class="col-md-4 required">
+          
+            <div class="col-md-5 required">
               <label form="materialId">Material</label>
               <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
               [(ngModel)]="formula.materialId"  #materialIdEl >
@@ -22,13 +16,13 @@
               </select>
               <!-- <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary> -->
             </div>
-            <div class="col-md-2 required">
+            <div class="col-md-4 required">
               <label form="quantity">Quantity</label>
               <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
                 [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl  />
               <!-- <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary> -->
             </div>
-            <div class="col-md-2 required">
+            <div class="col-md-3 required">
               <label form="unitId">Unit</label>
               <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
@@ -54,20 +48,11 @@
             [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]" 
            >
       
-            <ngx-datatable-column [name]="('Name')" prop="name" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <a class="c-pointer">
-                  <div>
-                    {{ row?.name }}
-                  </div>
-                </a>
-              </ng-template>
-            </ngx-datatable-column>
             <ngx-datatable-column [name]="('Material')" prop="materialId" [flexGrow]="1">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <a class="c-pointer">
                   <div>
-                    {{ row?.materialId }}
+                    {{ getMaterialName(row.materialId)  }}
                   </div>
                 </a>
               </ng-template>

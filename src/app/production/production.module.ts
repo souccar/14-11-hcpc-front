@@ -18,8 +18,9 @@ import { FormulaComponent } from './formula/formula.component';
 import { CreateFormulaDialogComponent } from './formula/create-formula/create-formula-dialog.component';
 import { EditFormulaDialogComponent } from './formula/edit-formula/edit-formula-dialog.component';
 import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-dialog.component';
-
-
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { MaterialDetailsComponent } from './material/material-details/material-details.component';
 @NgModule({
   declarations: [
     ProductionComponent,
@@ -35,6 +36,7 @@ import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-
     CreateFormulaDialogComponent,
     EditFormulaDialogComponent,
     ViewFormulaDialogComponent,
+    MaterialDetailsComponent,
 
 
   ],
@@ -46,6 +48,12 @@ import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-
     ReactiveFormsModule,
     LayoutModule,
     PaginationModule.forRoot(),
+    CollapseModule.forRoot(),
+    AccordionModule.forRoot(),
+
+  
+  
+   
 
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
