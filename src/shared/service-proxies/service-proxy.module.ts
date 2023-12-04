@@ -21,7 +21,8 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.ProductServiceProxy,
         ApiServiceProxies.WarehouseMaterialServiceProxy  ,
         ApiServiceProxies.PlanServiceProxy  ,
-        ApiServiceProxies.WarehouseServiceProxy   ,
+        ApiServiceProxies.WarehouseServiceProxy,
+        ApiServiceProxies.OutputRequestServiceProxy,
 
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]

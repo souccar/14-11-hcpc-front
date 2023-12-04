@@ -6,6 +6,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EditOutputRequestDialogComponent } from './edit-output-request/edit-output-request-dialog.component';
 import { CreateOutputRequestDialogComponent } from './create-output-request/create-output-request-dialog.component';
 import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'output-request',
@@ -36,7 +37,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "Warehouse Material"
+  title = "output Request"
 
   outPutRequest: OutputRequestDto[] = [];
 
@@ -50,6 +51,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _OutputRequestService: OutputRequestServiceProxy,
+    private _router:Router
 
   ) {
     super(injector);
@@ -155,19 +157,8 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
 
   showAddNewModal(): void {
-    let createOrEditOutputRequestDialog: BsModalRef;
-    createOrEditOutputRequestDialog = this._modalService.show(
-      CreateOutputRequestDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        class: 'modal-lg',
-
-      }
-    );
-    createOrEditOutputRequestDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
+       
+    this._router.navigate(['app/warehouses/newoutputRequest']);
   }
 
   isSelected(p: OutputRequestDto): boolean {
