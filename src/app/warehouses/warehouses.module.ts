@@ -15,6 +15,8 @@ import { EditWarehouseDialogComponent } from './warehouse/edit-warehouse/edit-wa
 import { OutputRequestComponent } from './output-request/output-request.component';
 import { CreateOutputRequestDialogComponent } from './output-request/create-output-request/create-output-request-dialog.component';
 import { EditOutputRequestDialogComponent } from './output-request/edit-output-request/edit-output-request-dialog.component';
+import { CreateOutputRequestMaterialDialogComponent } from './output-request-materials/create-output-request-materials/create-output-request-material-dialog.component';
+import { EditOutputRequestMaterialDialogComponent } from './output-request-materials/edit-output-request-materials/edit-output-request-material-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { EditOutputRequestDialogComponent } from './output-request/edit-output-r
     OutputRequestComponent,
     CreateOutputRequestDialogComponent,
     EditOutputRequestDialogComponent,
+    CreateOutputRequestMaterialDialogComponent,
+    EditOutputRequestMaterialDialogComponent,
     
   ],
   imports: [

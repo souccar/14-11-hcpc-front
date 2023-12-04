@@ -91,7 +91,7 @@
       </div>
 
       <div class="form-group row required">
-        <label class="col-md-3 col-form-label" for="price">
+        <label class="col-md-9 col-form-label" for="price">
           {{ "Price"  }}
         </label>
         <div class="col-md-4">
@@ -99,16 +99,7 @@
             [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
           <abp-validation-summary [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
         </div>
-        <label class="col-md-1 col-form-label" for="unitPriceId">
-          {{ "Price Unit"  }}
-        </label>
-        <div class="col-md-4 ">
-          <select class="form-control" aria-label="unitPriceId" #unitPriceIdModel="ngModel" required name="unitPriceId" 
-          [(ngModel)]="warehouseMaterial.unitPriceId" #unitPriceIdEl>
-            <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
-          </select>
-          <abp-validation-summary [control]="unitPriceIdModel" [controlEl]="unitPriceIdEl"></abp-validation-summary>
-        </div>
+
       </div>
     </div>
     <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"

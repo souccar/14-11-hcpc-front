@@ -1,0 +1,75 @@
+
+<form class="form-horizontal " autocomplete="off" #createoutputRequestModal="ngForm"   >
+
+    <div class="modal-body modal-xl">
+      <div class="row">
+        <div class="col-md-11">
+          <!-- Inputs -->
+          <div class="row">
+
+            <div class="col-md-5 required">
+              <label form="unitId">Unit</label>
+              <select aria-placeholder="material" class="form-control" aria-label="Material" #unitIdModel="ngModel" required name="unitId"
+              [(ngModel)]="outputRequestMaterial.unitId"  #unitIdEl >
+                <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-md-4 required">
+              <label form="quantity">Quantity</label>
+              <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
+                [(ngModel)]="outputRequestMaterial.quantity" #quantityModel="ngModel" #quantityEl  />
+              <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
+            </div>
+            <div class="col-md-3 required">
+              <label form="unitId">Unit</label>
+              <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
+              [(ngModel)]="outputRequestMaterial.warehouseMaterialId" #unitIdEl>
+                <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
+              </select>
+              <!-- <abp-validation-summary [control]="unitIdModel" [controlEl]="unitIdEl"></abp-validation-summary> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1">
+          <!-- Button -->
+
+          <button type="button" class="btn btn-outline-primary mt-4" (click)="addToOutputRequestMaterialList()">
+            <i class="bi bi-plus-lg"> </i>
+          </button>
+        </div>
+      </div>
+      <div class="separator my-5"></div>
+      <div class="row">
+          <div class="col-12 list">
+            <ngx-datatable [rows]="data" [columnMode]="ColumnMode.flex"  [headerHeight]="20"
+            [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]"
+           >
+           <ngx-datatable-column [name]="('Unit')" prop="unitId" [flexGrow]="1">
+            <ng-template   let-row="row" ngx-datatable-cell-template >
+              <div > {{getUnitNameById(row.unitId)}}</div>
+            </ng-template>
+          </ngx-datatable-column>
+            <ngx-datatable-column [name]="('Quantity')" prop="quantity" [flexGrow]="1">
+              <ng-template   let-row="row" ngx-datatable-cell-template >
+                <div > {{row.quantity}}</div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="('Action')" prop="action" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary" (click)="edit(row)">
+                  <i class="simple-icon-pencil text-primary"></i>
+                </button>
+                <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"(click)="delete(row)">
+                  <i class="simple-icon-trash text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+          </div>
+      </div>
+    </div>
+
+  </form>

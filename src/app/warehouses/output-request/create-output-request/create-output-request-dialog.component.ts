@@ -13,10 +13,9 @@ import { finalize } from 'rxjs';
 export class CreateOutputRequestDialogComponent extends AppComponentBase {
   saving = false;
   outputRequest: CreateOutputRequestDto = new CreateOutputRequestDto();
-
+  plans:[]=[]
   showItemIndex = 0;
   @Output() onSave = new EventEmitter<any>();
-  
   constructor(injector: Injector,
     private _outputRequestService: OutputRequestServiceProxy,
     public bsModalRef: BsModalRef,
@@ -35,6 +34,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     // this._location.back();
 
   }
+
 
   save(): void {
 
