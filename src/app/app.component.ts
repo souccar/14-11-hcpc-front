@@ -30,8 +30,8 @@ export class AppComponent extends AppComponentBase implements OnInit {
         console.error(`An error occurred: ${err.message}`);
       }
     );
-
-    //SignalRAspNetCoreHelper.initSignalR();
+      
+    SignalRAspNetCoreHelper.initSignalR();
 
     abp.event.on('abp.notifications.received', (userNotification) => {
       abp.notifications.showUiNotifyForUserNotification(userNotification);
