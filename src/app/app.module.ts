@@ -31,8 +31,7 @@ import { ProductionModule } from './production/production.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
-  import { PlanModule } from './plan/plan.module';
-
+import { PlanModule } from './plan/plan.module';
 
 @NgModule({
   declarations: [

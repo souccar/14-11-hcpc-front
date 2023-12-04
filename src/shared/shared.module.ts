@@ -20,16 +20,22 @@ import { EqualValidator } from './directives/equal-validator.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import {SummaryPipe} from '../app/pipes/summury.pipe'
+import {SummaryPipe} from '../app/pipes/summury.pipe';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 @NgModule({
     imports: [
         TabsModule.forRoot(),
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         NgxPaginationModule,
         NgSelectModule,
         NgxDatatableModule,
-       
+        ModalModule.forRoot()
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -52,9 +58,7 @@ import {SummaryPipe} from '../app/pipes/summury.pipe'
         TabsModule,
         NgSelectModule,
         NgxDatatableModule,
-        SummaryPipe,
-
-
+        SummaryPipe
     ]
 })
 export class SharedModule {
@@ -68,8 +72,8 @@ export class SharedModule {
                 AppRouteGuard,
                 LayoutStoreService,
                 SidebarService,
-                SharedService
-
+                SharedService,
+                
             ]
         };
     }

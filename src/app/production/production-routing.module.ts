@@ -32,12 +32,6 @@ const routes: Routes = [{
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
     }
-
-
-
-
-
-
   ]
 }];
 

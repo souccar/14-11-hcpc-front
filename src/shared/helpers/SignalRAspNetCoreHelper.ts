@@ -3,6 +3,7 @@ import { UtilsService } from 'abp-ng2-module';
 
 export class SignalRAspNetCoreHelper {
     static initSignalR(callback?: () => void): void {
+        
         const encryptedAuthToken = new UtilsService().getCookieValue(AppConsts.authorization.encryptedAuthTokenName);
 
         abp.signalr = {
