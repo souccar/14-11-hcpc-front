@@ -25,24 +25,4 @@ export class ViewActuallyComponent implements OnInit {
     })
   }
 
-  // editButton(id:number): void {
-  //   let editPlanDialog: BsModalRef;
-  //       editPlanDialog = this._modalService.show(
-  //       EditPlanDialogComponent,
-  //       {
-  //         backdrop: true,
-  //         ignoreBackdropClick: true,
-  //         initialState: {
-  //           id: id,
-  //         },
-  //         class: 'modal-lg',
-  //       }
-  //     );
-  //     editPlanDialog.content.onSave.subscribe(() => {
-  //       this.getLatestPlan()
-  //     });
-
-
-  //   }
-
 }
