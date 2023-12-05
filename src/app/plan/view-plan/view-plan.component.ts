@@ -9,11 +9,11 @@ import { EditPlanDialogComponent } from '../edit-plan/edit-plan-dialog.component
   styleUrls: ['./view-plan.component.scss']
 })
 export class ViewPlanComponent implements OnInit{
-  
- 
+
+
   canProduce:boolean=false;
   plan:PlanDto=new PlanDto();
-  
+
   constructor( private _modalService: BsModalService,
     private _planService:PlanServiceProxy){}
   ngOnInit(): void {
@@ -45,7 +45,7 @@ editButton(id:number): void {
     editPlanDialog.content.onSave.subscribe(() => {
       this.getLatestPlan()
     });
- 
+
 
   }
 

@@ -8,6 +8,7 @@ import { WarehouseComponent } from './warehouse/warehouse.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { OutputRequestComponent } from './output-request/output-request.component';
 import { CreateOutputRequestDialogComponent } from './output-request/create-output-request/create-output-request-dialog.component';
+import { EditOutputRequestDialogComponent } from './output-request/edit-output-request/edit-output-request-dialog.component';
 
 
 
@@ -37,8 +38,15 @@ const routes: Routes = [{
     },
 
     {
-      path: 'newoutputRequest',
+      path: 'newOutputRequest',
       component: CreateOutputRequestDialogComponent,
+
+      //data: { permission : 'Pages.Products' },
+      canActivate: [AppRouteGuard]
+    },
+    {
+      path: 'editOutputRequest/:id',
+      component: EditOutputRequestDialogComponent,
 
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]

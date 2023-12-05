@@ -57,7 +57,6 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   getUnitName(id: number) {
 
     this._unitService.get(id).subscribe((response) => {
-      console.log(response)
       this.unitsNames.push(response.name);
     });
   }
@@ -68,7 +67,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       return material.name;
     }
     return '';
-   
+
   }
   addToFormulaList() {
 
@@ -108,6 +107,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     const index = this.data.indexOf(row);
     if (index !== -1) {
       this.data.splice(index, 1);
+      this.saveFormulaList.emit(this.data);
     }
 
   }

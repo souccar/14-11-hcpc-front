@@ -21,7 +21,7 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
   saveDisabled = true
 
   @Output() savePlanProductList = new EventEmitter<CreatePlanProductDto[]>();
-  
+
   constructor(injector: Injector,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
@@ -40,17 +40,17 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
   initProducts() {
     this._productService.getNameForDropdown().subscribe((response: ProductNameForDropdownDto[]) => {
       this.productsForDropDown = response;
- 
-    
+
+
     });
   }
- 
+
   getMaterialName(id:number){
     this._productService.get(id).subscribe((response)=>{
       this.products.push(response);
     });
   }
-  
+
   addToProductList()
   {
     if(this.planProduct.numberOfItems ==null || this.planProduct.productId == null || this.planProduct.priority==null){
@@ -66,13 +66,13 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
     }
 
   }
- 
+
   edit(row: PlanProductDto) {
     this.planProduct = row
-    console.log(row)
+
 
     const index = this.data.indexOf(row);
-    console.log(index);
+
 
     if (index !== -1) {
       this.data.splice(index, 1);

@@ -5,7 +5,7 @@
       <div class="col-md-11">
         <!-- Inputs -->
         <div class="row">
-         
+
           <div class="col-md-4">
             <label form="materialId">Material</label>
             <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
@@ -13,13 +13,13 @@
               <!-- <option  disabled selected hidden >Material</option> -->
               <option *ngFor="let item of materialDropdown" value={{item.id}}>{{item.name}}</option>
             </select>
-            <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary>
+
           </div>
           <div class="col-md-2">
             <label form="quantity">quantity</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required
               [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl />
-            <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
+
           </div>
           <div class="col-md-2">
             <label form="unitId">Unit</label>
@@ -27,7 +27,7 @@
               [(ngModel)]="formula.unitId" #unitIdEl>
               <option *ngFor="let item of unitDropdown" value={{item.id}}>{{item.name}}</option>
             </select>
-            <abp-validation-summary [control]="unitIdModel" [controlEl]="unitIdEl"></abp-validation-summary>
+
           </div>
         </div>
       </div>
@@ -43,12 +43,11 @@
     <div class="separator my-5"></div>
     <!-- tabel -->
     <div class="row">
-      <div class="col-12 list">
+      <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Name</th>
               <th scope="col">Material</th>
               <th scope="col">Quantity</th>
               <th scope="col">Unit</th>
@@ -58,7 +57,6 @@
           <tbody>
             <tr *ngFor="let formula of data;let i=index; ">
               <td></td>
-              <td>{{formula.name}} </td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
                 <td *ngIf="mId==i">{{m.name}} </td>
               </ng-contanier>

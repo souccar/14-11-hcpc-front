@@ -15,7 +15,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent extends PagedListingComponentBase<any> {
+export class ProductComponent extends PagedListingComponentBase<ProductDto> {
 
   displayMode = 'list';
   selectAllState = '';
@@ -75,21 +75,22 @@ export class ProductComponent extends PagedListingComponentBase<any> {
 
 
   editButton(id: number): void {
-    let editProductDialog: BsModalRef;
-    editProductDialog = this._modalService.show(
-      EditProductDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
-        class: 'modal-xl',
-      }
-    );
-    editProductDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
+    this._router.navigate(['app/production/editproduct',id]);
+    // let editProductDialog: BsModalRef;
+    // editProductDialog = this._modalService.show(
+    //   EditProductDialogComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //     class: 'modal-xl',
+    //   }
+    // );
+    // editProductDialog.content.onSave.subscribe(() => {
+    //   this.refresh();
+    // });
 
   }
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
@@ -172,7 +173,7 @@ export class ProductComponent extends PagedListingComponentBase<any> {
       .subscribe((result: ProductDtoPagedResultDto) => {
 
         this.data = result.items;
-console.log(this.data)
+ (this.data)
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();

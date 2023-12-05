@@ -23,6 +23,8 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.PlanServiceProxy,
         ApiServiceProxies.NotificationServiceProxy,
         ApiServiceProxies.WarehouseServiceProxy,
+        ApiServiceProxies.OutputRequestServiceProxy,
+
         ApiServiceProxies.DailyProductionServiceProxy,
         ApiServiceProxies.GeneralSettingServiceProxy ,
 

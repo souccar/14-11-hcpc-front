@@ -24,7 +24,7 @@ export class CreatePlanDialogComponent extends AppComponentBase {
   }
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
-  console.log(this.date);
+
   }
 
   addPlan(items: PlanProductDto[]) {
@@ -35,7 +35,7 @@ export class CreatePlanDialogComponent extends AppComponentBase {
   save(): void {
     this.saving = true;
     this.plan.startDate.toString();
-    console.log(this.plan)
+
     this._planService.
       create(
         this.plan
@@ -47,7 +47,7 @@ export class CreatePlanDialogComponent extends AppComponentBase {
       )
       .subscribe((response: any) => {
 
-        console.log(response);
+         (response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();

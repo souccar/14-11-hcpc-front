@@ -9,7 +9,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
   selector: 'app-plan-material',
   templateUrl: './plan-material.component.html',
   styles:['/deep/ .row-color1 {color: #dc3545 ;}']
-    
+
 })
 export class PlanMaterialComponent extends AppComponentBase implements OnInit {
 
@@ -34,11 +34,12 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   }
   ngOnInit(): void {
     this.radarChartData = this.getChartData();
-    console.log(this.planMaterials)
+     (this.planMaterials)
   }
   getRowClass(row){
     return {'row-color1' : row.totalQuantity > row.inventory}
   }
+
   getChartData() {
     if (!this.planMaterials)
       return;
@@ -50,10 +51,10 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
       labels.push(item.material?.name);
     });
     this.planMaterials.forEach(item => {
-      this.rows.push({ 
-        name: item.material.name, 
-        totalQuantity: item.totalQuantity, 
-        inventory: item.inventoryQuantity, 
+      this.rows.push({
+        name: item.material.name,
+        totalQuantity: item.totalQuantity,
+        inventory: item.inventoryQuantity,
         unit: item.unit});
       inventoryData.push(Math.round(item.inventoryQuantity));
       planData.push(Math.round(item.totalQuantity));

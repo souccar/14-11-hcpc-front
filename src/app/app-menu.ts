@@ -26,8 +26,8 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/diallyProduction`,
         icon: 'simple-icon-notebook',
       },
-     
-    
+
+
     ],
   },
   //Production
@@ -54,18 +54,18 @@ const data: IMenuItem[] = [
         label: 'Stok',
         to: `${adminRoot}/warehouses/warehouseMaterial`,
         icon: 'iconsminds-shopping-basket',
-  
+
       },
       {
       label: 'Warehouse',
       to: `${adminRoot}/warehouses/warehouse`,
-      icon: 'iconsminds-shopping-basket',
+      icon: 'iconsminds-fire-staion',
 
     },
     {
       label: 'Output Requests',
       to: `${adminRoot}/warehouses/outputRequest`,
-      icon: 'iconsminds-shopping-basket',
+      icon: 'iconsminds-check',
 
     },
     ]

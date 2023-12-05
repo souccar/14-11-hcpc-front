@@ -11,7 +11,7 @@
               <input type="number" class="form-control" name="numberOfItems" id="numberOfItems" required min="0"  oninput="validity.valid||(value='');"
               [(ngModel)]="planProduct.numberOfItems" #numberOfItemsModel="ngModel" #numberOfItemsEl  />
 
-       
+
             </div>
             <div class="col-md-4 required">
               <label form="productId">Product</label>
@@ -20,13 +20,13 @@
                 <!-- <option  disabled selected hidden >Material</option> -->
                 <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.name}}</option>
               </select>
-          
+
             </div>
             <div class="col-md-4 required">
               <label form="priority">priority</label>
-              <input type="number" class="form-control" name="priority" id="priority" required 
+              <input type="number" class="form-control" name="priority" id="priority" required
                 [(ngModel)]="planProduct.priority" #priorityModel="ngModel" #priorityEl  />
-           
+
             </div>
 
             <!-- <div class="col-md-4 required">
@@ -38,15 +38,15 @@
                 <option  value="1">High</option>
               </select>
             </div> -->
-          
+
           </div>
         </div>
 
         <div class="col-md-1">
           <!-- Button -->
-        
+
           <button type="button" class="btn btn-outline-primary mt-4" (click)="addToProductList()">
-            <i class="bi bi-plus-lg"> </i>  
+            <i class="bi bi-plus-lg"> </i>
           </button>
         </div>
       </div>
@@ -71,7 +71,7 @@
                   <td >{{planProduct.product.name}} </td>
                 <!-- </ng-contanier> -->
                 <td>{{planProduct.priority}}</td>
-           
+
                 <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                     (click)="edit(planProduct)">
                     <i class="simple-icon-pencil text-primary"></i>
@@ -81,10 +81,10 @@
                     <i class="simple-icon-trash text-primary"></i>
                   </button>
                 </td>
-  
-  
+
+
               </tr>
-  
+
             </tbody>
           </table>
         </div>
