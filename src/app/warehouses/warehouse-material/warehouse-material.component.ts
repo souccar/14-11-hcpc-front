@@ -31,24 +31,17 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
   itemOrder = { label: this.l("Name"), value: "name" };
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
-
-
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "Warehouse Material"
+  title = "Stock"
 
   materials: MaterialDto[] = [];
   units: UnitDto[] = [];
 
-
-
-
-
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
-
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
@@ -65,20 +58,20 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
 
   }
 
-  getMaterialById(materialId) {
+  // getMaterialById(materialId) {
 
-    this._materialService.get(materialId).subscribe((responce) => {
-      this.materials.push(responce);
-    });
-  }
-  getUnitById(unitId) {
+  //   this._materialService.get(materialId).subscribe((responce) => {
+  //     this.materials.push(responce);
+  //   });
+  // }
+  // getUnitById(unitId) {
 
-    this._unitService.get(unitId).subscribe((responce) => {
+  //   this._unitService.get(unitId).subscribe((responce) => {
 
-      this.units.push(responce);
+  //     this.units.push(responce);
 
-    });
-  }
+  //   });
+  // }
 
 
   viewButton(id: number) {
@@ -117,7 +110,6 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
   }
 
   protected delete(entity: WarehouseMaterialDto): void {
-
     abp.message.confirm(
       this.l('WarehouseMaterialDeleteWarningMessage', this.selected.length, ' WarehouseMaterials'),
       undefined,
@@ -143,8 +135,6 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
     request.skipCount = (currentPage - 1) * pageSize;
     request.maxResultCount = this.itemsPerPage;
     this.list(request, this.pageNumber, () => { });
-
-
   }
   deleteItem(): void {
     if (this.selected.length == 0) {
@@ -211,7 +201,7 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
       .getAll(
         request.keyword,
         request.sort_Field,
-        'material,warehouse',
+        'material,warehouse,unit,supplier',
         request.skipCount,
         request.MaxResultCount,
       )

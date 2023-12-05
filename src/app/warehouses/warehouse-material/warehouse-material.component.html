@@ -7,8 +7,6 @@
 </app-list-page-header>
 <!-- <app-add-new-product-modal #addNewModalRef></app-add-new-product-modal> -->
 
-
-
 <div class="row">
   <div class="col-12 mb-4 data-table-rows" >
     <ngx-datatable [rows]="data" [columnMode]="ColumnMode.flex" [limit]="itemsPerPage" [headerHeight]="20"
@@ -18,29 +16,50 @@
         <ngx-datatable-column [name]="l('Material')" prop="material" [flexGrow]="1">
           <ng-template let-row="row" ngx-datatable-cell-template >
              {{row.material?.name}}
-
           </ng-template>
         </ngx-datatable-column>
+
+        <ngx-datatable-column [name]="l('Code')" prop="code" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template >
+             {{row.code}}
+          </ng-template>
+        </ngx-datatable-column>
+
         <ngx-datatable-column [name]="l('Warehouse')" prop="unit" [flexGrow]="1">
           <ng-template let-row="row" ngx-datatable-cell-template >
              {{row.warehouse?.name}}
-
           </ng-template>
         </ngx-datatable-column>
+      
+      <ngx-datatable-column [name]="l('Quantity')" prop="initialQuantity" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template >
+           {{row.initialQuantity}} {{row.unit?.name}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="l('Withdrawn')" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template >
+           {{row.initialQuantity - row.currentQuantity}} {{row.unit?.name}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="l('Price')" prop="price" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template >
+           {{row.price}}
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column [name]="l('ExpirationDate')" prop="expirationDate" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
-           {{row.expirationDate|date:'dd/MM/yyyy'}}
-
+           <span class="badge badge-pill badge-outline-success mb-1">{{row.expirationDate|date:'dd/MM/yyyy'}}</span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="l('currentQuantity')" prop="currentQuantity" [flexGrow]="1">
+
+      <ngx-datatable-column [name]="l('Supplier')" prop="supplier" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
-           {{row.currentQuantity}}
-
+           {{row.supplier?.name}}
         </ng-template>
       </ngx-datatable-column>
-
-
 
       <ngx-datatable-column [sortable]="false" [name]="l('')" prop="Action"  [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >

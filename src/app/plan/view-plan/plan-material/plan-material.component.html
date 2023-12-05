@@ -14,32 +14,25 @@
           <div class="col-lg-8">
             <perfect-scrollbar class="scroll" [config]="{suppressScrollX: true, wheelPropagation: false}">
               <ngx-datatable [rows]="rows" [columns]="columns" [columnMode]="columnMode.flex"
-                [sorts]="[{ prop: 'title', dir: 'asc' }]">
-                <ngx-datatable-column title="Material" prop="name" [flexGrow]="2">
-                  <ng-template let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
+                [sorts]="[{ prop: 'title', dir: 'asc' }]" [rowClass]="getRowClass">
+                <ngx-datatable-column [name]="l('Material')" prop="name" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template >
+                     {{row.name}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column title="Total Quantity" prop="totalQuantity" [flexGrow]="2">
-                  <ng-template let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
+                <!--  -->
+                <ngx-datatable-column [name]="l('Total Quentity')" prop="totalQuantity" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template >
+                     {{row.totalQuantity}} {{row.unit?.name}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column title="Inventory" prop="inventory" [flexGrow]="2">
-                  <ng-template let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
+                <!--  -->
+                <ngx-datatable-column [name]="l('Inventory')" prop="inventory" [flexGrow]="1">
+                  <ng-template let-row="row" ngx-datatable-cell-template >
+                     {{row.inventory}} {{row.unit?.name}}
                   </ng-template>
                 </ngx-datatable-column>
-                <!-- <ngx-datatable-column title="Lead Time" prop="leadTime" [flexGrow]="2">
-                  <ng-template let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column> -->
-                <ngx-datatable-column title="Days" prop="produceDays" [flexGrow]="2">
-                  <ng-template let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
+                
               </ngx-datatable>
             </perfect-scrollbar>
           </div>
