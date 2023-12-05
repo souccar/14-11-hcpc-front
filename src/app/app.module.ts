@@ -33,7 +33,6 @@ import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
   import { PlanModule } from './plan/plan.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

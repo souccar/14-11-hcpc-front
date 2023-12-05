@@ -8,12 +8,16 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {ContentTemplateModule} from './content-template/content-template.module';
 import { SharedModule } from '@shared/shared.module';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-
-
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule } from '@angular/forms';
+import { NotificationComponent } from './notification/notification.component';
+import { UserNotificationHelper } from './notification/UserNotificationHelper';
+import { NotificationSettingsModalComponent } from './notification/notification-settings-modal/notification-settings-modal.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -22,19 +26,23 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     HeaderUserMenuComponent,
     FooterComponent,
     SidebarComponent,
+    NotificationSettingsModalComponent,
+    NotificationComponent
   ],
   providers: [
     SidebarComponent,
+    UserNotificationHelper
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ContentTemplateModule,
     SharedModule,
-    // PerfectScrollbarModule,
-
+    PerfectScrollbarModule,
+    CollapseModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    
+    ModalModule.forRoot()
   ],
   exports:[
     HeaderComponent,

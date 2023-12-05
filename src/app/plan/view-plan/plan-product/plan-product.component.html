@@ -25,14 +25,10 @@
             <div class="card-body pt-0">
                 <!-- content -->
                 <div class="row">
-                    <div class="col-md-6 border-right">
-                        <app-bar-chart [shadow]="true" [options]="chartDataConfig.barChartOptions"
-                            [data]="getChartData(p)"></app-bar-chart>
-                    </div>
-                    <div class="col-md-6 p">
+                    <div class="col-md-4 p">
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
-                                <div class="d-flex flex-row justify-content-between px-2 pt-3 pb-2 mb-2 border-bottom">
+                                <div class="d-flex flex-row justify-content-between px-2 pt-3 pb-2 mb-2 ">
                                     <div class="d-flex flex-column">
                                         <p class="mb-1 ">Number of items:</p>
                                         <p class="mb-1">Can produce:</p>
@@ -48,7 +44,16 @@
 
                             <div class="col-lg-12 col-md-12">
                                 <div ><!-- style="height: 270px;" -->
-                                    <perfect-scrollbar class="scroll"
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8 border-right">
+                        <!-- <app-bar-chart [shadow]="true" [options]="chartDataConfig.barChartOptions"
+                            [data]="getChartData(p)"></app-bar-chart> -->
+                            <perfect-scrollbar class="scroll"
                                         [config]="{suppressScrollX: true, wheelPropagation: false}">
                                         <table class="table table-sm table-borderless">
                                             <thead>
@@ -68,18 +73,18 @@
                                                     <td>
                                                         <span class="font-weight-medium">{{f.material.name}}</span>
                                                     </td>
+                                                    <td>
+                                                        <span class="font-weight-medium">{{f.quantity}}{{f.unit.name}}</span>
+                                                    </td>
                                                     <td class="text-right"><span
-                                                            class="text-muted">{{f.quantity}}{{f.unit.name}}</span>
+                                                            class="text-muted">{{getTotalQuentity(p, f.materialId)}}{{f.unit.name}}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </perfect-scrollbar>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+                    
                 </div>
             </div>
         </div>

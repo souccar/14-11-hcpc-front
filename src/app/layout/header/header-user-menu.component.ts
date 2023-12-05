@@ -1,20 +1,31 @@
-import { Component, ChangeDetectionStrategy, HostListener, OnInit, Injector } from '@angular/core';
+import { Component, ChangeDetectionStrategy, HostListener, OnInit, Injector, NgZone } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { NotificationServiceProxy, UserNotification } from '@shared/service-proxies/service-proxies';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { getThemeColor, setThemeColor } from 'app/utils/util';
+import * as _ from 'lodash';
+import { IFormattedUserNotification, UserNotificationHelper } from '../notification/UserNotificationHelper';
 
 @Component({
   selector: 'header-user-menu',
   templateUrl: './header-user-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderUserMenuComponent extends AppComponentBase implements OnInit{
+export class HeaderUserMenuComponent extends AppComponentBase implements OnInit {
   isDarkModeActive = false;
   isFullScreen = false;
   displayName = "";
+  notifications: IFormattedUserNotification[] = [];
+  public unreadNotificationCount = 0;
 
-  constructor(private _authService: AppAuthService,private _session:AppSessionService, injector: Injector,) {
+  constructor(
+    private _authService: AppAuthService,
+    private _session: AppSessionService,
+    private _notificationService: NotificationServiceProxy,
+    private _userNotificationHelper: UserNotificationHelper,
+    injector: Injector,
+    public _zone: NgZone) {
 
     super(injector);
     this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
@@ -22,6 +33,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit{
   }
   ngOnInit(): void {
     this.displayName = this.displayName = this._session.user.name;
+    this.loadNotifications();
   }
   onDarkModeChange(event): void {
     let color = getThemeColor();
@@ -54,5 +66,72 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit{
 
   logout(): void {
     this._authService.logout();
+  }
+
+  loadNotifications(): void {
+    this._notificationService.getUserNotifications(undefined, 3, 0).subscribe(result => {
+      this.unreadNotificationCount = result.unreadCount;
+      this.notifications = [];
+      _.forEach(result.items, (item: UserNotification) => {
+        this.notifications.push(this._userNotificationHelper.format(<any>item));
+      });
+    });
+  }
+
+  registerToEvents() {
+    let self = this;
+
+    function onNotificationReceived(userNotification) {
+      self._userNotificationHelper.show(userNotification);
+      self.loadNotifications();
+    }
+
+    abp.event.on('abp.notifications.received', userNotification => {
+      self._zone.run(() => {
+        onNotificationReceived(userNotification);
+      });
+    });
+
+    function onNotificationsRefresh() {
+      self.loadNotifications();
+    }
+
+    abp.event.on('app.notifications.refresh', () => {
+      self._zone.run(() => {
+        onNotificationsRefresh();
+      });
+    });
+
+    function onNotificationsRead(userNotificationId) {
+      for (let i = 0; i < self.notifications.length; i++) {
+        if (self.notifications[i].userNotificationId === userNotificationId) {
+          self.notifications[i].state = 'READ';
+        }
+      }
+
+      self.unreadNotificationCount -= 1;
+    }
+
+    abp.event.on('app.notifications.read', userNotificationId => {
+      self._zone.run(() => {
+        onNotificationsRead(userNotificationId);
+      });
+    });
+  }
+
+  setAllNotificationsAsRead(): void {
+    this._userNotificationHelper.setAllAsRead();
+  }
+
+  openNotificationSettingsModal(): void {
+    this._userNotificationHelper.openSettingsModal();
+  }
+
+  setNotificationAsRead(userNotification: IFormattedUserNotification): void {
+    this._userNotificationHelper.setAsRead(userNotification.userNotificationId);
+  }
+
+  test(){
+    alert(this.unreadNotificationCount);
   }
 }

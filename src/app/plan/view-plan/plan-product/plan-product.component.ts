@@ -20,13 +20,15 @@ export class PlanProductComponent implements OnInit{
   ngOnInit(): void {
  
   }
-
+  getTotalQuentity(planProduct: PlanProductDto, materialId){
+    return planProduct.planProductMaterials.find(x=>x.materialId == materialId).requiredQuantity;
+  }
   getChartData(planProduct: PlanProductDto){
     let materials = [];
     let data = [];
-    // planProduct.product.formulas.forEach(formula => {
-    //   materials.push(formula.name);
-    // }); 
+    planProduct.product.formulas.forEach(formula => {
+      materials.push(formula.material.name);
+    }); 
     planProduct.planProductMaterials.forEach(planProductMaterial => {
       data.push(planProductMaterial.requiredQuantity);
     }); 
