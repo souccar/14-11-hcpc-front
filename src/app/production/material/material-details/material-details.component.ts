@@ -14,9 +14,9 @@ export class MaterialDetailsComponent implements OnInit {
   id:number;
   ColumnMode = ColumnMode;
   data:MaterialDetailDto=new MaterialDetailDto();
-
   constructor(public bsModalRef: BsModalRef,
     private _materialService:MaterialServiceProxy){}
+
   ngOnInit(): void {
 
    this.getMaterialDetails()
