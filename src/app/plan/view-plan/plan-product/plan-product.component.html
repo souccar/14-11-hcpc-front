@@ -1,7 +1,7 @@
 <!-- <h4>Products</h4>
 <div class="separator my-3"></div> -->
 <div class="row mb-4 h-100">
-    <div class="col-lg-6 col-md-6" *ngFor="let p of planProducts">
+    <div class="col-lg-6 col-md-6" *ngFor="let p of planProducts;let i=index">
         <div class="card  " >
             <div class="card-body border-bottom pb-2">
                 <!-- header -->
@@ -11,24 +11,42 @@
                     </div>
                 </div>
                 <div class="float-right float-none-xs">
-                    <span class="p font-weight-semibold mx-1">Number of items: {{p.numberOfItems}}</span>
+                    <span *ngIf="!editable" class="p font-weight-semibold mx-1">Number of items: {{p.numberOfItems}}</span>
                     <div class="d-inline-block align-middle">
-                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                        <button *ngIf="!editable" type="button"
+                        name="btn{{i}}"
+                        id="btn{{i}}"
+                        class="btn btn-empty d-none d-sm-inline-block p-1"
+                        (click)="editNumberofItem($event)">
                             <span class="simple-icon-pencil text-success"></span>
                         </button>
-                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+
+                        <ng-conatiner *ngIf="!editable">
+                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1"
+                        (click)="deleteProduct(p.productId)">
                             <span class="simple-icon-trash text-danger"></span>
                         </button>
-                        <!-- <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                       </ng-conatiner>
+                        <ng-container *ngIf="editable">
+                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1"
+                        (click)="updatePlan(p.numberOfItems,p.productId)">
                             <span class="bi bi-check-lg text-success"></span>
                         </button>
-                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1"
+                        (click)="CancelEdit()">
                             <span class="bi bi-x-lg text-danger"></span>
-                        </button> -->
+                        </button>
+
+
+
+                      </ng-container>
+
+
+
                     </div>
-                    <!-- <div class="input-sm d-inline-block float-md-left mr-1 mb-1 align-top"><input placeholder="Total quentity" [value]="p.numberOfItems" class="form-control"></div> -->
+                    <div  *ngIf="editable"class="input-sm d-inline-block float-md-left mr-1 mb-1 align-top"><input #oo [(ngModel)]="p.numberOfItems" placeholder="Total quentity"  class="form-control"></div>
                 </div>
-                
+
 
             </div>
             <div class="card-body pt-0">
@@ -72,7 +90,7 @@
                                         </table>
                                     </perfect-scrollbar>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

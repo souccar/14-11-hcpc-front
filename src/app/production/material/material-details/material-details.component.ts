@@ -19,6 +19,7 @@ export class MaterialDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log(this.id);
    this.getMaterialDetails()
   }
 

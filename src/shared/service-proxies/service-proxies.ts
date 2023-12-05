@@ -275,11 +275,12 @@ export class DailyProductionServiceProxy {
     /**
      * @param keyword (optional) 
      * @param sorting (optional) 
+     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
+    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/DailyProduction/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
@@ -289,6 +290,10 @@ export class DailyProductionServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -2654,6 +2659,62 @@ export class OutputRequestServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateOutputRequestDto | undefined): Observable<OutputRequestDto> {
+        let url_ = this.baseUrl + "/api/services/app/OutputRequest/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OutputRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OutputRequestDto>;
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<OutputRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OutputRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param including (optional) 
@@ -2719,62 +2780,6 @@ export class OutputRequestServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = OutputRequestDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    create(body: CreateOutputRequestDto | undefined): Observable<OutputRequestDto> {
-        let url_ = this.baseUrl + "/api/services/app/OutputRequest/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<OutputRequestDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<OutputRequestDto>;
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<OutputRequestDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = OutputRequestDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -3161,6 +3166,169 @@ export class PlanServiceProxy {
     }
 
     protected processGetLastPlan(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlanDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getLastPlanActual(): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetLastPlanActual";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetLastPlanActual(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetLastPlanActual(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanDto>;
+        }));
+    }
+
+    protected processGetLastPlanActual(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlanDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    changeStatusToActual(id: number | undefined): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/ChangeStatusToActual?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processChangeStatusToActual(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processChangeStatusToActual(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanDto>;
+        }));
+    }
+
+    protected processChangeStatusToActual(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlanDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    changeStatusToArchive(id: number | undefined): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/ChangeStatusToArchive?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processChangeStatusToArchive(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processChangeStatusToArchive(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanDto>;
+        }));
+    }
+
+    protected processChangeStatusToArchive(response: HttpResponseBase): Observable<PlanDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4985,6 +5153,62 @@ export class TransferServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ConvertToOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    convertToGreaterUnit(body: TransferToGreaterUnitInputDto | undefined): Observable<TransferToGreaterUnitOutputDto> {
+        let url_ = this.baseUrl + "/api/services/app/Transfer/ConvertToGreaterUnit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processConvertToGreaterUnit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processConvertToGreaterUnit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<TransferToGreaterUnitOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<TransferToGreaterUnitOutputDto>;
+        }));
+    }
+
+    protected processConvertToGreaterUnit(response: HttpResponseBase): Observable<TransferToGreaterUnitOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TransferToGreaterUnitOutputDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -11772,7 +11996,7 @@ export class OutputRequestDto implements IOutputRequestDto {
     title: string | undefined;
     outputDate: string | undefined;
     planId: number | undefined;
-    plan: PlanDto;
+    plan: PlanNameDto;
     outputRequestMaterials: OutputRequestMaterialDto[] | undefined;
 
     constructor(data?: IOutputRequestDto) {
@@ -11790,7 +12014,7 @@ export class OutputRequestDto implements IOutputRequestDto {
             this.title = _data["title"];
             this.outputDate = _data["outputDate"];
             this.planId = _data["planId"];
-            this.plan = _data["plan"] ? PlanDto.fromJS(_data["plan"]) : <any>undefined;
+            this.plan = _data["plan"] ? PlanNameDto.fromJS(_data["plan"]) : <any>undefined;
             if (Array.isArray(_data["outputRequestMaterials"])) {
                 this.outputRequestMaterials = [] as any;
                 for (let item of _data["outputRequestMaterials"])
@@ -11834,7 +12058,7 @@ export interface IOutputRequestDto {
     title: string | undefined;
     outputDate: string | undefined;
     planId: number | undefined;
-    plan: PlanDto;
+    plan: PlanNameDto;
     outputRequestMaterials: OutputRequestMaterialDto[] | undefined;
 }
 
@@ -11899,7 +12123,7 @@ export class OutputRequestMaterialDto implements IOutputRequestMaterialDto {
     unitId: number | undefined;
     warehouseMaterialId: number | undefined;
     unit: UnitDto;
-    warehouseMaterial: WarehouseMaterialDto;
+    warehouseMaterial: WarehouseMaterialNameDto;
 
     constructor(data?: IOutputRequestMaterialDto) {
         if (data) {
@@ -11917,7 +12141,7 @@ export class OutputRequestMaterialDto implements IOutputRequestMaterialDto {
             this.unitId = _data["unitId"];
             this.warehouseMaterialId = _data["warehouseMaterialId"];
             this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
-            this.warehouseMaterial = _data["warehouseMaterial"] ? WarehouseMaterialDto.fromJS(_data["warehouseMaterial"]) : <any>undefined;
+            this.warehouseMaterial = _data["warehouseMaterial"] ? WarehouseMaterialNameDto.fromJS(_data["warehouseMaterial"]) : <any>undefined;
         }
     }
 
@@ -11953,7 +12177,7 @@ export interface IOutputRequestMaterialDto {
     unitId: number | undefined;
     warehouseMaterialId: number | undefined;
     unit: UnitDto;
-    warehouseMaterial: WarehouseMaterialDto;
+    warehouseMaterial: WarehouseMaterialNameDto;
 }
 
 export enum ParameterAttributes {
@@ -12188,6 +12412,7 @@ export class PlanDto implements IPlanDto {
     title: string | undefined;
     duration: number;
     startDate: string | undefined;
+    status: number;
     readonly totalItems: number;
     readonly planAmountWasted: number;
     readonly planArbitrage: number;
@@ -12211,6 +12436,7 @@ export class PlanDto implements IPlanDto {
             this.title = _data["title"];
             this.duration = _data["duration"];
             this.startDate = _data["startDate"];
+            this.status = _data["status"];
             (<any>this).totalItems = _data["totalItems"];
             (<any>this).planAmountWasted = _data["planAmountWasted"];
             (<any>this).planArbitrage = _data["planArbitrage"];
@@ -12246,6 +12472,7 @@ export class PlanDto implements IPlanDto {
         data["title"] = this.title;
         data["duration"] = this.duration;
         data["startDate"] = this.startDate;
+        data["status"] = this.status;
         data["totalItems"] = this.totalItems;
         data["planAmountWasted"] = this.planAmountWasted;
         data["planArbitrage"] = this.planArbitrage;
@@ -12281,6 +12508,7 @@ export interface IPlanDto {
     title: string | undefined;
     duration: number;
     startDate: string | undefined;
+    status: number;
     totalItems: number;
     planAmountWasted: number;
     planArbitrage: number;
@@ -12350,10 +12578,12 @@ export class PlanMaterialDto implements IPlanMaterialDto {
     totalQuantity: number;
     inventoryQuantity: number;
     unitId: number | undefined;
+    inventoryUnitId: number | undefined;
     materialId: number | undefined;
     planId: number | undefined;
     produceDays: number;
     unit: UnitDto;
+    inventoryUnit: UnitDto;
     material: MaterialDto;
 
     constructor(data?: IPlanMaterialDto) {
@@ -12371,10 +12601,12 @@ export class PlanMaterialDto implements IPlanMaterialDto {
             this.totalQuantity = _data["totalQuantity"];
             this.inventoryQuantity = _data["inventoryQuantity"];
             this.unitId = _data["unitId"];
+            this.inventoryUnitId = _data["inventoryUnitId"];
             this.materialId = _data["materialId"];
             this.planId = _data["planId"];
             this.produceDays = _data["produceDays"];
             this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
+            this.inventoryUnit = _data["inventoryUnit"] ? UnitDto.fromJS(_data["inventoryUnit"]) : <any>undefined;
             this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
         }
     }
@@ -12392,10 +12624,12 @@ export class PlanMaterialDto implements IPlanMaterialDto {
         data["totalQuantity"] = this.totalQuantity;
         data["inventoryQuantity"] = this.inventoryQuantity;
         data["unitId"] = this.unitId;
+        data["inventoryUnitId"] = this.inventoryUnitId;
         data["materialId"] = this.materialId;
         data["planId"] = this.planId;
         data["produceDays"] = this.produceDays;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>undefined;
+        data["inventoryUnit"] = this.inventoryUnit ? this.inventoryUnit.toJSON() : <any>undefined;
         data["material"] = this.material ? this.material.toJSON() : <any>undefined;
         return data;
     }
@@ -12413,11 +12647,60 @@ export interface IPlanMaterialDto {
     totalQuantity: number;
     inventoryQuantity: number;
     unitId: number | undefined;
+    inventoryUnitId: number | undefined;
     materialId: number | undefined;
     planId: number | undefined;
     produceDays: number;
     unit: UnitDto;
+    inventoryUnit: UnitDto;
     material: MaterialDto;
+}
+
+export class PlanNameDto implements IPlanNameDto {
+    id: number;
+    title: string | undefined;
+
+    constructor(data?: IPlanNameDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): PlanNameDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanNameDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data;
+    }
+
+    clone(): PlanNameDto {
+        const json = this.toJSON();
+        let result = new PlanNameDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanNameDto {
+    id: number;
+    title: string | undefined;
 }
 
 export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
@@ -14133,6 +14416,100 @@ export class TransferDtoPagedResultDto implements ITransferDtoPagedResultDto {
 export interface ITransferDtoPagedResultDto {
     items: TransferDto[] | undefined;
     totalCount: number;
+}
+
+export class TransferToGreaterUnitInputDto implements ITransferToGreaterUnitInputDto {
+    unitId: number;
+    value: number;
+
+    constructor(data?: ITransferToGreaterUnitInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.unitId = _data["unitId"];
+            this.value = _data["value"];
+        }
+    }
+
+    static fromJS(data: any): TransferToGreaterUnitInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferToGreaterUnitInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["unitId"] = this.unitId;
+        data["value"] = this.value;
+        return data;
+    }
+
+    clone(): TransferToGreaterUnitInputDto {
+        const json = this.toJSON();
+        let result = new TransferToGreaterUnitInputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferToGreaterUnitInputDto {
+    unitId: number;
+    value: number;
+}
+
+export class TransferToGreaterUnitOutputDto implements ITransferToGreaterUnitOutputDto {
+    value: number;
+    unitId: number;
+
+    constructor(data?: ITransferToGreaterUnitOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.value = _data["value"];
+            this.unitId = _data["unitId"];
+        }
+    }
+
+    static fromJS(data: any): TransferToGreaterUnitOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TransferToGreaterUnitOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value;
+        data["unitId"] = this.unitId;
+        return data;
+    }
+
+    clone(): TransferToGreaterUnitOutputDto {
+        const json = this.toJSON();
+        let result = new TransferToGreaterUnitOutputDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITransferToGreaterUnitOutputDto {
+    value: number;
+    unitId: number;
 }
 
 export class Type implements IType {
@@ -16629,7 +17006,6 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     material: MaterialDto;
     supplier: SupplierDto;
     warehouse: WarehouseDto;
-    outputRequestMaterilas: OutputRequestMaterialDto[] | undefined;
 
     constructor(data?: IWarehouseMaterialDto) {
         if (data) {
@@ -16659,11 +17035,6 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
             this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
             this.supplier = _data["supplier"] ? SupplierDto.fromJS(_data["supplier"]) : <any>undefined;
             this.warehouse = _data["warehouse"] ? WarehouseDto.fromJS(_data["warehouse"]) : <any>undefined;
-            if (Array.isArray(_data["outputRequestMaterilas"])) {
-                this.outputRequestMaterilas = [] as any;
-                for (let item of _data["outputRequestMaterilas"])
-                    this.outputRequestMaterilas.push(OutputRequestMaterialDto.fromJS(item));
-            }
         }
     }
 
@@ -16693,11 +17064,6 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
         data["material"] = this.material ? this.material.toJSON() : <any>undefined;
         data["supplier"] = this.supplier ? this.supplier.toJSON() : <any>undefined;
         data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>undefined;
-        if (Array.isArray(this.outputRequestMaterilas)) {
-            data["outputRequestMaterilas"] = [];
-            for (let item of this.outputRequestMaterilas)
-                data["outputRequestMaterilas"].push(item.toJSON());
-        }
         return data;
     }
 
@@ -16727,7 +17093,6 @@ export interface IWarehouseMaterialDto {
     material: MaterialDto;
     supplier: SupplierDto;
     warehouse: WarehouseDto;
-    outputRequestMaterilas: OutputRequestMaterialDto[] | undefined;
 }
 
 export class WarehouseMaterialDtoPagedResultDto implements IWarehouseMaterialDtoPagedResultDto {
@@ -16783,6 +17148,69 @@ export class WarehouseMaterialDtoPagedResultDto implements IWarehouseMaterialDto
 export interface IWarehouseMaterialDtoPagedResultDto {
     items: WarehouseMaterialDto[] | undefined;
     totalCount: number;
+}
+
+export class WarehouseMaterialNameDto implements IWarehouseMaterialNameDto {
+    id: number;
+    code: string | undefined;
+    materialId: number | undefined;
+    warehouseId: number | undefined;
+    material: MaterialDto;
+    warehouse: WarehouseDto;
+
+    constructor(data?: IWarehouseMaterialNameDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.code = _data["code"];
+            this.materialId = _data["materialId"];
+            this.warehouseId = _data["warehouseId"];
+            this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
+            this.warehouse = _data["warehouse"] ? WarehouseDto.fromJS(_data["warehouse"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): WarehouseMaterialNameDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarehouseMaterialNameDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["code"] = this.code;
+        data["materialId"] = this.materialId;
+        data["warehouseId"] = this.warehouseId;
+        data["material"] = this.material ? this.material.toJSON() : <any>undefined;
+        data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>undefined;
+        return data;
+    }
+
+    clone(): WarehouseMaterialNameDto {
+        const json = this.toJSON();
+        let result = new WarehouseMaterialNameDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWarehouseMaterialNameDto {
+    id: number;
+    code: string | undefined;
+    materialId: number | undefined;
+    warehouseId: number | undefined;
+    material: MaterialDto;
+    warehouse: WarehouseDto;
 }
 
 export class WarehouseMaterialNameForDropdownDto implements IWarehouseMaterialNameForDropdownDto {
