@@ -13,23 +13,13 @@
                     <i class="iconsminds-inbox   glyph-icon text-primary"></i>
                 </button>
             </div>
-
             <div class="home-text d-flex justify-content-center  ">
                 <a class=" top-right-button btn btn-primary btn-sm mr-2 mb-1" (click)="editButton(plan.id)">
                     <i class="simple-icon-pencil text-light mx-1"></i> {{'Edit'|localize}}
                 </a>
             </div>
-            <div class="home-text d-flex justify-content-center  ">
-                <a class=" top-right-button btn btn-primary btn-sm mr-2 mb-1"
-                    [routerLink]="['dailyproduction',plan.id]">
-                    <i class=" text-light mx-1"></i>{{'Daily Production'|localize}}
-                </a>
-            </div>
         </div>
-
         <div class="d-flex justify-content-right  ">
-
-
             <i *ngIf="plan.lack" class=" text-success  glyph-icon simple-icon-check mt-2 mr-1" data-bs-toggle="tooltip"
                 data-bs-placement="right" title="Plan Can Produce"></i>
             <i *ngIf="!plan.lack" class=" text-danger  glyph-icon simple-icon-close mt-2 mr-1" data-bs-toggle="tooltip"
@@ -38,19 +28,13 @@
             <app-heading title="{{plan.title}}"></app-heading>
             &nbsp;
             <h1 class="text-primary">&nbsp;#{{plan.id}}</h1>
-
-
         </div>
-
-
         <div class="ml-2 d-flex justify-content-right text-muted ">
-
             <div class="d-flex justify-content-center " data-bs-toggle="tooltip" data-bs-placement="top"
                 title="Start Date">
-                <i class=" glyph-icon iconsminds-calendar-4">
-
+                <i class="glyph-icon iconsminds-calendar-4">
                 </i>
-                <h6 class="mt-2">{{plan.startDate|date:'yyyy-MM-dd'}}</h6>
+                <span class="mt-2 text-one">{{plan.startDate|date:'yyyy-MM-dd'}}</span>
             </div>
             &nbsp; &nbsp;
             <div class="my-1" style="  border-right: 1px solid ;
@@ -58,10 +42,10 @@
             &nbsp; &nbsp;
             <div class=" d-flex justify-content-center  " data-bs-toggle="tooltip" data-bs-placement="top"
                 title="Duration">
-                <h6 class="mt-2"> {{plan.duration}} day</h6>
+                <span class="mt-2 text-one"> {{plan.duration}} day</span>
             </div>
         </div>
-        <div class="separator mt-5"></div>
+        <div class="separator mt-1"></div>
         <br>
         <ng-container *ngIf="plan.planMaterials">
             <app-plan-material [planMaterials]="plan.planMaterials"></app-plan-material>
@@ -72,8 +56,10 @@
     </div>
 </div>
 
-<div class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column" *ngIf="plan == undefined || plan.id == 0">
+<div class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
+    *ngIf="plan == undefined || plan.id == 0">
     <!-- <a class="btn btn-empty"><i class="glyph-icon simple-icon-plus text-primary large-icon"></i></a> -->
     <p>There is no plan, please add a new plan</p>
-    <a class="btn btn-link btn-empty btn-lg" href="/app/plan/displayAllPlan">Go to Plan List <i class="simple-icon-arrow-right"></i></a>
+    <a class="btn btn-link btn-empty btn-lg" href="/app/plan/displayAllPlan">Go to Plan List <i
+            class="simple-icon-arrow-right"></i></a>
 </div>
