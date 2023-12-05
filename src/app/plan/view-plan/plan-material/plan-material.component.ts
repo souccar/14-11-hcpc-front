@@ -7,7 +7,9 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-plan-material',
-  templateUrl: './plan-material.component.html'
+  templateUrl: './plan-material.component.html',
+  styles:['/deep/ .row-color1 {color: #dc3545 ;}']
+
 })
 export class PlanMaterialComponent extends AppComponentBase implements OnInit {
 
@@ -18,11 +20,9 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   //Table
   rows = [];
   columns = [
-    { prop: 'Title' },
-    { name: 'Total Quantity' },
+    { name: 'Title' },
+    { name: 'TotalQuantity' },
     { name: 'Inventory' },
-    { name: 'Lead Time' },
-    { name: 'Days' },
   ];
   columnMode = ColumnMode;
 
@@ -35,6 +35,12 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   ngOnInit(): void {
     this.radarChartData = this.getChartData();
      (this.planMaterials)
+  }
+  getRowClass(row){
+    return {'row-color1' : row.totalQuantity > row.inventory}
+  }
+  getRowClass(row){
+    return {'row-color1' : row.totalQuantity > row.inventory}
   }
   getChartData() {
     if (!this.planMaterials)
@@ -51,8 +57,7 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
         name: item.material.name,
         totalQuantity: item.totalQuantity,
         inventory: item.inventoryQuantity,
-        // leadTime: item.material.leadTime,
-        produceDays: item.produceDays });
+        unit: item.unit});
       inventoryData.push(Math.round(item.inventoryQuantity));
       planData.push(Math.round(item.totalQuantity));
     });
