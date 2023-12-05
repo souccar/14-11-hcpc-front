@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartService } from '@app/@components/charts/chart.service';
 import { Colors } from '@app/@components/charts/color.service';
+import { MaterialDetailsComponent } from '@app/production/material/material-details/material-details.component';
 import { PlanDto, PlanMaterialDto, PlanProductDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { forEach } from 'lodash';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-plan-product',
@@ -14,11 +16,26 @@ export class PlanProductComponent implements OnInit{
   @Input() planProducts: PlanProductDto[];
   chartDataConfig: ChartService;
 
-  constructor(private chartService: ChartService,private _planService:PlanServiceProxy) {
+  constructor(private chartService: ChartService
+    ,private _planService:PlanServiceProxy,
+    private _modalService: BsModalService,) {
     this.chartDataConfig = this.chartService;
   }
   ngOnInit(): void {
  
+  }
+  editMaterial(id:number) {
+    this._modalService.show(
+      MaterialDetailsComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+        class:'modal-lg'
+      }
+    );
   }
   getTotalQuentity(planProduct: PlanProductDto, materialId){
     return planProduct.planProductMaterials.find(x=>x.materialId == materialId).requiredQuantity;

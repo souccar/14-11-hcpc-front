@@ -17,7 +17,7 @@
                 [sorts]="[{ prop: 'title', dir: 'asc' }]" [rowClass]="getRowClass">
                 <ngx-datatable-column [name]="l('Material')" prop="name" [flexGrow]="1">
                   <ng-template let-row="row" ngx-datatable-cell-template >
-                     <a class="btn btn-empty" [ngClass]="{'text-danger' : row.totalQuantity > row.inventory,'text-muted' : row.totalQuantity <= row.inventory}">
+                     <a class="btn btn-empty" (click)="editMaterial(row.id)" [ngClass]="{'text-danger' : row.totalQuantity > row.inventory,'text-muted' : row.totalQuantity <= row.inventory}">
                       {{row.name}}
                      </a>
                   </ng-template>
