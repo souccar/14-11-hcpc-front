@@ -1,0 +1,25 @@
+
+<form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()" >
+    <abp-modal-header [title]="'Add Daily Production' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+
+    <div class="modal-body modal-xl">
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="plan">
+          {{ "Plan" | localize }}
+        </label>
+        <div class="col-md-9 ">
+            <select aria-placeholder="plan" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="plan"
+            [(ngModel)]="dailyProduction.planId"  #planIdEl >
+              <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
+            </select>
+          <abp-validation-summary [control]="planIdModel" [controlEl]="planIdEl"></abp-validation-summary>
+        </div>
+      </div>
+     <!--  -->
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    
+  
+  </form>
+  

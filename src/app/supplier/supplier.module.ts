@@ -8,7 +8,7 @@ import { SharedModule } from '@shared/shared.module';
 import { LayoutModule } from '@app/layout/layout.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { SupplierRoutingModule } from './supplier-routing.module';
+// import { SupplierRoutingModule } from './supplier-routing.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { SupplierRoutingModule } from './supplier-routing.module';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    SupplierRoutingModule,
+    // SupplierRoutingModule,
     LayoutModule,
     PaginationModule.forRoot(),
   ],schemas:[CUSTOM_ELEMENTS_SCHEMA]

@@ -2,7 +2,7 @@
 <div class="separator my-3"></div> -->
 <div class="row mb-4 h-100">
     <div class="col-lg-6 col-md-6" *ngFor="let p of planProducts">
-        <div class="card ">
+        <div class="card  " >
             <div class="card-body border-bottom pb-2">
                 <!-- header -->
                 <div class="float-left float-none-xs">
@@ -11,17 +11,22 @@
                     </div>
                 </div>
                 <div class="float-right float-none-xs">
-                    <span class="p font-weight-semibold badge badge-pill badge-outline-primary mb-1"> Number of items: {{p.numberOfItems}}</span>
-                    <!-- <div class="btn-group mt-2" dropdown>
-                        <button dropdownToggle type="button" class="btn btn-outline-primary btn-xs dropdown-toggle">
-                            <span class="simple-icon-menu"></span>
-                            <span class="caret"></span>
+                    <span class="p font-weight-semibold mx-1">Number of items: {{p.numberOfItems}}</span>
+                    <div class="d-inline-block align-middle">
+                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                            <span class="simple-icon-pencil text-success"></span>
                         </button>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem"><a href="javascript:;" class="dropdown-item">Edit</a></li>
-                            <li role="menuitem"><a href="javascript:;" class="dropdown-item">Delete</a></li>
-                        </ul>
-                    </div> -->
+                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                            <span class="simple-icon-trash text-danger"></span>
+                        </button>
+                        <!-- <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                            <span class="bi bi-check-lg text-success"></span>
+                        </button>
+                        <button type="button" class="btn btn-empty d-none d-sm-inline-block p-1">
+                            <span class="bi bi-x-lg text-danger"></span>
+                        </button> -->
+                    </div>
+                    <!-- <div class="input-sm d-inline-block float-md-left mr-1 mb-1 align-top"><input placeholder="Total quentity" [value]="p.numberOfItems" class="form-control"></div> -->
                 </div>
                 
 
@@ -34,7 +39,7 @@
                             [data]="getChartData(p)"></app-bar-chart> -->
                             <perfect-scrollbar class="scroll"
                                         [config]="{suppressScrollX: true, wheelPropagation: false}">
-                                        <table class="table table-sm table-borderless">
+                                        <table class="table table-sm table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>
@@ -51,13 +56,15 @@
                                             <tbody>
                                                 <tr *ngFor="let f of p.product.formulas">
                                                     <td>
-                                                        <span class="log-indicator align-middle mx-1" [ngClass]="{'border-danger' : !checkBalanceIsSufficient(p,f.materialId)}"></span>
-                                                        <span class="font-weight-medium">{{f.material.name}} / {{f.quantity}}{{f.unit.name}}</span>
+                                                        <a class="btn btn-empty text-muted">
+                                                            <span class="log-indicator align-middle mx-1" [ngClass]="{'border-danger' : !checkBalanceIsSufficient(p,f.materialId)}"></span>
+                                                            <span class="font-weight-medium">{{f.material.name}} / {{f.quantity}}{{f.unit.name}}</span>
+                                                        </a>
                                                     </td>
                                                     <td>
                                                         <span class="font-weight-medium">{{getNumberOfItem(p, f.materialId)}}</span>
                                                     </td>
-                                                    <td class="text-right"><span
+                                                    <td><span
                                                             class="text-muted">{{getTotalQuentity(p, f.materialId)}}{{f.unit.name}}</span>
                                                     </td>
                                                 </tr>

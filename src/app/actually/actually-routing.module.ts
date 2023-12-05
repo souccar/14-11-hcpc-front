@@ -1,29 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { PlanComponent } from './plan.component';
-// import { PlanProductComponent } from './view-plan/plan-product.component';
-import { ViewPlanComponent } from './view-plan/view-plan.component';
+import { ViewActuallyComponent } from './view-actually/view-actually.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
+import { ActuallyComponent } from './actually.component';
+
 
 
 const routes: Routes = [
   {
-    path: '', component: ViewPlanComponent,
+    path: '', component: ViewActuallyComponent,
     canActivate: [AppRouteGuard]
   },
   {
-    path: 'displayAllPlan',
-    component: PlanComponent,
+    path: 'allactuallyplan',
+    component: ActuallyComponent,
     canActivate: [AppRouteGuard]
   },
-
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PlanRoutingModule { }
+export class ActuallyRoutingModule { }
