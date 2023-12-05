@@ -89,5 +89,6 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     EditTenantDialogComponent,
     
   ],
+
 })
 export class AppModule {}
