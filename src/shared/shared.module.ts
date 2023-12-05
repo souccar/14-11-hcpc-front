@@ -23,6 +23,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {SummaryPipe} from '../app/pipes/summury.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommaNumberPipe } from './pipes/comma-number.pipe';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         LocalizePipe,
         BusyDirective,
         EqualValidator,
-        SummaryPipe
+        SummaryPipe,
+        CommaNumberPipe
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -57,7 +59,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         BusyDirective,
         EqualValidator,
         TabsModule,
-
+        CommaNumberPipe,
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe
