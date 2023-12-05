@@ -39,9 +39,7 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   getRowClass(row){
     return {'row-color1' : row.totalQuantity > row.inventory}
   }
-  getRowClass(row){
-    return {'row-color1' : row.totalQuantity > row.inventory}
-  }
+
   getChartData() {
     if (!this.planMaterials)
       return;

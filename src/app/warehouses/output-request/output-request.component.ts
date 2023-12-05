@@ -7,6 +7,7 @@ import { EditOutputRequestDialogComponent } from './edit-output-request/edit-out
 import { CreateOutputRequestDialogComponent } from './create-output-request/create-output-request-dialog.component';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
+import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
 
 @Component({
   selector: 'output-request',
@@ -66,16 +67,16 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
 
 
   viewButton(id: number) {
-    // this._modalService.show(
-    //   ViewOutputRequestDialogComponent,
-    //   {
-    //     backdrop: true,
-    //     ignoreBackdropClick: true,
-    //     initialState: {
-    //       id: id,
-    //     },
-    //   }
-    // );
+    this._modalService.show(
+      ViewOutputRequestDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+      }
+    );
 
   }
 

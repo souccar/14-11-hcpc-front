@@ -54,7 +54,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
       // this.supplierIds.push(item.supplier.id)
      });
 
-      (this.material)
+
 
     // var materialSuppliers : UpdateMaterialSuppliersDto[] = [];
     // result.suppliers.forEach(item=>{
@@ -72,8 +72,9 @@ export class EditMaterialDialogComponent extends AppComponentBase {
 
   }
   removeMaterialSupplier (i:number){
+      this.material.suppliers.splice(i,1);
 
-    this.material.suppliers .splice(i,1);
+
   }
 
    save(): void {
@@ -83,6 +84,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
     //   supplier.id=item;
 
     // })
+    console.log(this.material)
     this._materialService
       .update(
         this.material

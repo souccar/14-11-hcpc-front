@@ -42,7 +42,8 @@
                 {{ "outputDate" }}
               </label>
               <div class="col-md-9">
-                <input type="date" class="form-control" name="outputDate" id="outputDate" required [(ngModel)]="outputRequest.outputDate"
+                <input type="date" class="form-control" name="outputDate" id="outputDate" required
+                [ngModel]="outputRequest.outputDate| date:'yyyy-MM-dd'"   (ngModelChange)="outputRequest.outputDate = $event"
                   #outputDateModel="ngModel" #outputDateEl />
               <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
               </div>
