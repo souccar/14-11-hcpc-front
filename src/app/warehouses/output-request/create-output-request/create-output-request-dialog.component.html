@@ -16,7 +16,7 @@
           </a>
         </div>
       </div>   &nbsp;&nbsp; &nbsp;&nbsp;
-      <app-heading title="{{'New Output Request Material'|localize}}" ></app-heading>
+      <app-heading title="{{'New Output Request'|localize}}" ></app-heading>
 
 
     </div>
@@ -25,7 +25,7 @@
     <br>
 
     <accordion class="mt-2">
-      <accordion-group heading="{{'New Product' | localize}}" [panelClass]="'border'" [isOpen]="true">
+      <accordion-group heading="{{'New output Request Material' | localize}}" [panelClass]="'border'" [isOpen]="true">
         <div class="modal-body modal-xl">
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="title">
@@ -47,19 +47,23 @@
             <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
             </div>
           </div>
-
-          <div class="col-md-5 required">
-            <label form="planId">Plans</label>
-            <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
-            [(ngModel)]="outputRequest.planId"  #planIdEl >
-              <option *ngFor="let item of plans" value={{item.id}}>{{item.name}}</option>
-            </select>
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Plans">
+              {{ "Plans" }}
+            </label>
+            <div class="col-md-9">
+              <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
+              [(ngModel)]="outputRequest.planId"  #planIdEl >
+                <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
+              </select>
+            <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
+            </div>
           </div>
 
         </div>
       </accordion-group>
-      <accordion-group class="mt-2" heading="{{'Formula' | localize}}" [panelClass]="'border'">
-        <!-- <create-formula-dialog (saveFormulaList)="addFormula($event)"></create-formula-dialog> -->
+      <accordion-group class="mt-2" heading="{{'Output Request Material' | localize}}" [panelClass]="'border'">
+        <create-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></create-output-request-material-dialog>
 
       </accordion-group>
 

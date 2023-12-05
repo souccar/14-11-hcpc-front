@@ -17,6 +17,9 @@ import { CreateOutputRequestDialogComponent } from './output-request/create-outp
 import { EditOutputRequestDialogComponent } from './output-request/edit-output-request/edit-output-request-dialog.component';
 import { CreateOutputRequestMaterialDialogComponent } from './output-request-materials/create-output-request-materials/create-output-request-material-dialog.component';
 import { EditOutputRequestMaterialDialogComponent } from './output-request-materials/edit-output-request-materials/edit-output-request-material-dialog.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ViewOutputRequestDialogComponent } from './output-request/view-output-request/view-output-request-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { EditOutputRequestMaterialDialogComponent } from './output-request-mater
     EditOutputRequestDialogComponent,
     CreateOutputRequestMaterialDialogComponent,
     EditOutputRequestMaterialDialogComponent,
-    
+    ViewOutputRequestDialogComponent,
+
   ],
   imports: [
     CommonModule,
@@ -42,9 +46,12 @@ import { EditOutputRequestMaterialDialogComponent } from './output-request-mater
     CommonModule,
     WarehouseRoutingModule,
     WarehouseMaterialModule,
-  
-    
+    CollapseModule.forRoot(),
+    AccordionModule.forRoot(),
+
+
   ],
+
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
 })
 export class WarehousesModule { }

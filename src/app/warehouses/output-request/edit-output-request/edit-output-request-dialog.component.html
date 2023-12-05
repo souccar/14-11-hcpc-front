@@ -1,1 +1,73 @@
-<p>edit-output-request-dialog works!</p>
+<div class="row">
+    <div class="col-12">
+      <div class="top-right-button-container ">
+        <div class="d-flex justify-content-center ">
+          <div class="home-text d-flex justify-content-center  ">
+            <a class=" top-right-button btn btn-primary btn-sm mr-2 " (click)="save()">
+              {{'Save'|localize}}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-right   ">
+        <div class="simple-line-icons">
+          <div>
+            <a class="glyph-icon simple-icon-action-undo btn-md text-primary" (click)="backToAlloutputRequest()"   data-bs-toggle="tooltip" data-bs-placement="right" title="back to all product" >
+            </a>
+          </div>
+        </div>   &nbsp;&nbsp; &nbsp;&nbsp;
+        <app-heading title="{{'edit Output Request '|localize}}" ></app-heading>
+
+
+      </div>
+
+      <div class="separator "></div>
+      <br>
+
+      <accordion class="mt-2">
+        <accordion-group heading="{{'edit output Request ' | localize}}" [panelClass]="'border'" [isOpen]="true">
+          <div class="modal-body modal-xl">
+            <div class="form-group row required">
+              <label class="col-md-3 col-form-label" for="title">
+                {{ "Title" }}
+              </label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" name="title" id="title" required [(ngModel)]="outputRequest.title"
+                  #titleModel="ngModel" #titleEl />
+                <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
+              </div>
+            </div>
+            <div class="form-group row required">
+              <label class="col-md-3 col-form-label" for="outputDate">
+                {{ "outputDate" }}
+              </label>
+              <div class="col-md-9">
+                <input type="date" class="form-control" name="outputDate" id="outputDate" required [(ngModel)]="outputRequest.outputDate"
+                  #outputDateModel="ngModel" #outputDateEl />
+              <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
+              </div>
+            </div>
+            <div class="form-group row required">
+              <label class="col-md-3 col-form-label" for="Plans">
+                {{ "Plans" }}
+              </label>
+              <div class="col-md-9">
+                <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
+                [(ngModel)]="outputRequest.planId"  #planIdEl >
+                  <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
+                </select>
+              <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
+              </div>
+            </div>
+
+          </div>
+        </accordion-group>
+        <accordion-group class="mt-2" heading="{{'Output Request Material' | localize}}" [panelClass]="'border'">
+          <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
+
+        </accordion-group>
+
+      </accordion>
+
+    </div>
+  </div>

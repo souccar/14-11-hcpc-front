@@ -27,14 +27,14 @@ export class EditPlanDialogComponent extends AppComponentBase {
   ngOnInit(): void {
     this.date = new Date().toISOString().slice(0, 10);
     this.initPlan()
-  
+
   }
 
   initPlan()
   {
     this._planService.get(this.id).subscribe((response)=>{
       this.plan=response;
-      console.log( this.plan)
+       ( this.plan)
       this.loaded=true;
 
     })
@@ -45,9 +45,9 @@ export class EditPlanDialogComponent extends AppComponentBase {
 
 
   save(): void {
-    
+
     this.plan.startDate.toString();
-   
+
     if (this.plan.planProducts.length < 1) {
       this.notify.error(this.l('Add One Plan Product at least'));
     }
@@ -67,13 +67,13 @@ export class EditPlanDialogComponent extends AppComponentBase {
     )
     .subscribe((response: any) => {
 
-      console.log(response);
+       (response);
       this.notify.info(this.l('SavedSuccessfully'));
       this.bsModalRef.hide();
       this.onSave.emit();
     });
     }
- 
+
 
   }
 

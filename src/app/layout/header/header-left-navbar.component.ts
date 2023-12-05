@@ -44,11 +44,11 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
         console.error(`An error occurred: ${err.message}`);
       }
     );
-    
+
   }
   switchLang(lang:string)
-  { 
-    console.log(lang);
+  {
+     (lang);
   }
   changeLanguage(languageName: string): void {
     const input = new ChangeUserLanguageDto();

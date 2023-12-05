@@ -26,16 +26,16 @@ export class ViewWarehouseMaterialDialogComponent {
     public bsModalRef: BsModalRef,
 
   ) {
-   
+
   }
   ngOnInit(): void {
     this.initWarehouseMaterial();
-   
+
   }
   initWarehouseMaterial(){
     this._warehouseMaterialService.get(this.id).subscribe((result) => {
       this.warehouseMaterial = result;
-      console.log(result)
+       (result)
       this.loaded=true;
     });
   }

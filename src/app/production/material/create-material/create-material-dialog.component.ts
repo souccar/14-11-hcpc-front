@@ -35,23 +35,23 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
 
    this._supplierService.getNameForDropdown().subscribe((result:SupplierNameForDropdownDto[]) => {
     this.suppliers = result;
-   
+
   });
   }
   addMaterialSupplier(){
     let materialSupplier = new CreateMaterialSuppliersDto();
     this.material.suppliers.push(materialSupplier);
-    console.log( this.material.suppliers)
+     ( this.material.suppliers)
   }
   removeMaterialSupplier(i:number){
-    this.material.suppliers.splice(i,1); 
+    this.material.suppliers.splice(i,1);
   }
 
    save(): void {
     this.saving = true;
-    console.log(this. material)  
+     (this. material)
 
-    
+
     this._materialService.
     create(
         this.material

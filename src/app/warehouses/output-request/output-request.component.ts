@@ -81,21 +81,24 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
 
 
   editButton(id: number): void {
-    let editOutputRequestDialog: BsModalRef;
-    editOutputRequestDialog = this._modalService.show(
-      EditOutputRequestDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
-        class: 'modal-lg',
-      }
-    );
-    editOutputRequestDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
+
+
+    this._router.navigate(['app/warehouses/editOutputRequest',id])
+    // let editOutputRequestDialog: BsModalRef;
+    // editOutputRequestDialog = this._modalService.show(
+    //   EditOutputRequestDialogComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //     class: 'modal-lg',
+    //   }
+    // );
+    // editOutputRequestDialog.content.onSave.subscribe(() => {
+    //   this.refresh();
+    // });
 
 
   }
@@ -157,8 +160,8 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
 
   showAddNewModal(): void {
-       
-    this._router.navigate(['app/warehouses/newoutputRequest']);
+
+    this._router.navigate(['app/warehouses/newOutputRequest']);
   }
 
   isSelected(p: OutputRequestDto): boolean {
@@ -196,7 +199,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       .subscribe((result: OutputRequestDtoPagedResultDto) => {
 
         this.data = result.items;
-        console.log(this.data)
+         (this.data)
         this.totalItem = result.totalCount;
 
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;

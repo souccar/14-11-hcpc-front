@@ -21,7 +21,7 @@ export class CreateUnitDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
- 
+
   }
    save(): void {
     this.saving = true;
@@ -35,8 +35,8 @@ export class CreateUnitDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-    
-          console.log(response);
+
+           (response);
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
           this.onSave.emit();

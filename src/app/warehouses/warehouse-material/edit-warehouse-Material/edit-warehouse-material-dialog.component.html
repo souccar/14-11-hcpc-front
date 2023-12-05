@@ -92,10 +92,10 @@
 
 
       <div class="form-group row required">
-        <label class="col-md-9 col-form-label" for="price">
+        <label class="col-md-3 col-form-label" for="price">
           {{ "Price"  }}
         </label>
-        <div class="col-md-4">
+        <div class="col-md-9">
           <input type="number" class="form-control" name="price" id="price" required min="0"
             [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
           <abp-validation-summary [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>

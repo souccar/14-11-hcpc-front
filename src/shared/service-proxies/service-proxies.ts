@@ -2906,6 +2906,64 @@ export class PlanServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getNameForDropdown(): Observable<PlanNameForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetNameForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetNameForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetNameForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanNameForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanNameForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetNameForDropdown(response: HttpResponseBase): Observable<PlanNameForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(PlanNameForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -6642,6 +6700,111 @@ export class WarehouseMaterialServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = WarehouseMaterialDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    sendMaterialExpiryNotifications(): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/SendMaterialExpiryNotifications";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSendMaterialExpiryNotifications(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSendMaterialExpiryNotifications(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processSendMaterialExpiryNotifications(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getNameForDropdown(): Observable<WarehouseMaterialNameForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetNameForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetNameForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetNameForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<WarehouseMaterialNameForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<WarehouseMaterialNameForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetNameForDropdown(response: HttpResponseBase): Observable<WarehouseMaterialNameForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(WarehouseMaterialNameForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -12025,11 +12188,13 @@ export class PlanDto implements IPlanDto {
     title: string | undefined;
     duration: number;
     startDate: string | undefined;
+    readonly totalItems: number;
+    readonly planAmountWasted: number;
+    readonly planArbitrage: number;
+    readonly lack: boolean;
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     outputRequests: OutputRequestDto[] | undefined;
-    readonly totalItems: number;
-    readonly lack: boolean;
 
     constructor(data?: IPlanDto) {
         if (data) {
@@ -12046,6 +12211,10 @@ export class PlanDto implements IPlanDto {
             this.title = _data["title"];
             this.duration = _data["duration"];
             this.startDate = _data["startDate"];
+            (<any>this).totalItems = _data["totalItems"];
+            (<any>this).planAmountWasted = _data["planAmountWasted"];
+            (<any>this).planArbitrage = _data["planArbitrage"];
+            (<any>this).lack = _data["lack"];
             if (Array.isArray(_data["planProducts"])) {
                 this.planProducts = [] as any;
                 for (let item of _data["planProducts"])
@@ -12061,8 +12230,6 @@ export class PlanDto implements IPlanDto {
                 for (let item of _data["outputRequests"])
                     this.outputRequests.push(OutputRequestDto.fromJS(item));
             }
-            (<any>this).totalItems = _data["totalItems"];
-            (<any>this).lack = _data["lack"];
         }
     }
 
@@ -12079,6 +12246,10 @@ export class PlanDto implements IPlanDto {
         data["title"] = this.title;
         data["duration"] = this.duration;
         data["startDate"] = this.startDate;
+        data["totalItems"] = this.totalItems;
+        data["planAmountWasted"] = this.planAmountWasted;
+        data["planArbitrage"] = this.planArbitrage;
+        data["lack"] = this.lack;
         if (Array.isArray(this.planProducts)) {
             data["planProducts"] = [];
             for (let item of this.planProducts)
@@ -12094,8 +12265,6 @@ export class PlanDto implements IPlanDto {
             for (let item of this.outputRequests)
                 data["outputRequests"].push(item.toJSON());
         }
-        data["totalItems"] = this.totalItems;
-        data["lack"] = this.lack;
         return data;
     }
 
@@ -12112,11 +12281,13 @@ export interface IPlanDto {
     title: string | undefined;
     duration: number;
     startDate: string | undefined;
+    totalItems: number;
+    planAmountWasted: number;
+    planArbitrage: number;
+    lack: boolean;
     planProducts: PlanProductDto[] | undefined;
     planMaterials: PlanMaterialDto[] | undefined;
     outputRequests: OutputRequestDto[] | undefined;
-    totalItems: number;
-    lack: boolean;
 }
 
 export class PlanDtoPagedResultDto implements IPlanDtoPagedResultDto {
@@ -12249,6 +12420,53 @@ export interface IPlanMaterialDto {
     material: MaterialDto;
 }
 
+export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
+    id: number;
+    title: string | undefined;
+
+    constructor(data?: IPlanNameForDropdownDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): PlanNameForDropdownDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanNameForDropdownDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data;
+    }
+
+    clone(): PlanNameForDropdownDto {
+        const json = this.toJSON();
+        let result = new PlanNameForDropdownDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanNameForDropdownDto {
+    id: number;
+    title: string | undefined;
+}
+
 export class PlanProductDto implements IPlanProductDto {
     id: number;
     numberOfItems: number;
@@ -12256,9 +12474,13 @@ export class PlanProductDto implements IPlanProductDto {
     planId: number | undefined;
     productId: number | undefined;
     product: ProductDto;
-    durationProduce: number;
     readonly canProduce: number;
     totalProduction: number;
+    totalCost: number;
+    produceCost: number;
+    readonly amountWasted: number;
+    readonly totalSalesAmount: number;
+    readonly productArbitrage: number;
     planProductMaterials: PlanProductMaterialDto[] | undefined;
 
     constructor(data?: IPlanProductDto) {
@@ -12278,9 +12500,13 @@ export class PlanProductDto implements IPlanProductDto {
             this.planId = _data["planId"];
             this.productId = _data["productId"];
             this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
-            this.durationProduce = _data["durationProduce"];
             (<any>this).canProduce = _data["canProduce"];
             this.totalProduction = _data["totalProduction"];
+            this.totalCost = _data["totalCost"];
+            this.produceCost = _data["produceCost"];
+            (<any>this).amountWasted = _data["amountWasted"];
+            (<any>this).totalSalesAmount = _data["totalSalesAmount"];
+            (<any>this).productArbitrage = _data["productArbitrage"];
             if (Array.isArray(_data["planProductMaterials"])) {
                 this.planProductMaterials = [] as any;
                 for (let item of _data["planProductMaterials"])
@@ -12304,9 +12530,13 @@ export class PlanProductDto implements IPlanProductDto {
         data["planId"] = this.planId;
         data["productId"] = this.productId;
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
-        data["durationProduce"] = this.durationProduce;
         data["canProduce"] = this.canProduce;
         data["totalProduction"] = this.totalProduction;
+        data["totalCost"] = this.totalCost;
+        data["produceCost"] = this.produceCost;
+        data["amountWasted"] = this.amountWasted;
+        data["totalSalesAmount"] = this.totalSalesAmount;
+        data["productArbitrage"] = this.productArbitrage;
         if (Array.isArray(this.planProductMaterials)) {
             data["planProductMaterials"] = [];
             for (let item of this.planProductMaterials)
@@ -12330,9 +12560,13 @@ export interface IPlanProductDto {
     planId: number | undefined;
     productId: number | undefined;
     product: ProductDto;
-    durationProduce: number;
     canProduce: number;
     totalProduction: number;
+    totalCost: number;
+    produceCost: number;
+    amountWasted: number;
+    totalSalesAmount: number;
+    productArbitrage: number;
     planProductMaterials: PlanProductMaterialDto[] | undefined;
 }
 
@@ -16549,6 +16783,53 @@ export class WarehouseMaterialDtoPagedResultDto implements IWarehouseMaterialDto
 export interface IWarehouseMaterialDtoPagedResultDto {
     items: WarehouseMaterialDto[] | undefined;
     totalCount: number;
+}
+
+export class WarehouseMaterialNameForDropdownDto implements IWarehouseMaterialNameForDropdownDto {
+    id: number;
+    code: string | undefined;
+
+    constructor(data?: IWarehouseMaterialNameForDropdownDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.code = _data["code"];
+        }
+    }
+
+    static fromJS(data: any): WarehouseMaterialNameForDropdownDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarehouseMaterialNameForDropdownDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["code"] = this.code;
+        return data;
+    }
+
+    clone(): WarehouseMaterialNameForDropdownDto {
+        const json = this.toJSON();
+        let result = new WarehouseMaterialNameForDropdownDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWarehouseMaterialNameForDropdownDto {
+    id: number;
+    code: string | undefined;
 }
 
 export class WarehouseNameForDropdownDto implements IWarehouseNameForDropdownDto {

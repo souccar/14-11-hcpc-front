@@ -43,7 +43,38 @@
   </div>
 
   <div class="separator my-5"></div>
-  <div class="row">
+       <!-- tabel -->
+       <div class="row">
+        <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+
+                <th scope="col">Warehouse Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">code</th>
+                <th scope="col">expiration Date</th>
+                <th scope="col">OutPut Request</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let warehousematerial of data.warehouseMaterials; let i = index">
+                <td>{{warehousematerial.warehouse.warehouseKeeper}}</td>
+                <td>{{warehousematerial.currentQuantity}}</td>
+                <td>{{warehousematerial.code}}</td>
+                <td>{{warehousematerial.expirationDate}}</td>
+                <ng-contanier *ngFor="let outputRequest of warehousematerial.OutPutRequest; let wId = index">
+                  <td *ngIf="wId == i">{{ outputRequest.quantity }}</td>
+                </ng-contanier>
+
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  <!-- <div class="row">
     <div class="col-12 list">
       <ngx-datatable
         [rows]="data.warehouseMaterials"
@@ -104,5 +135,5 @@
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  </div>
+  </div> -->
 </div>
