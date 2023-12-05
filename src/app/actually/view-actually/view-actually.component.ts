@@ -17,7 +17,7 @@ export class ViewActuallyComponent implements OnInit {
     this.getLatestDailyProduction()
   }
   getLatestDailyProduction(){
-    this._dailyProductionService.get(2).subscribe((result) => {
+    this._dailyProductionService.get(1).subscribe((result) => {
       console.log(result)
       if (result.id > 0) {
         this.dailyProduction = result;
