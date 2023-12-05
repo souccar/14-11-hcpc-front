@@ -41,32 +41,14 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-shopping-basket',
 
       },
-
       {
         label: 'Product',
         to: `${adminRoot}/production/product`,
         icon: 'simple-icon-layers',
 
       },
-
     ],
   },
-
-
- //Supplier
- {
-  label: 'Supplier',
-  to: `${adminRoot}/supplier`,
-  icon: 'simple-icon-user',
-  subs:[
-    {
-      label: 'supplier',
-      to: `${adminRoot}/supplier/supplier`,
-      icon: 'simple-icon-user',
-    },
-  ]
-  // roles: [UserRole.Editor],
-},
 
 
   //Warehouse
@@ -74,20 +56,21 @@ const data: IMenuItem[] = [
     label: 'Warehouses',
     to: `${adminRoot}/warehouses`,
     icon: 'iconsminds-factory-1',
-    subs: [{
+    subs: [
+      {
+        label: 'Stok',
+        to: `${adminRoot}/warehouses/warehouseMaterial`,
+        icon: 'iconsminds-shopping-basket',
+  
+      },
+      {
       label: 'Warehouse',
       to: `${adminRoot}/warehouses/warehouse`,
       icon: 'iconsminds-shopping-basket',
 
     },
     {
-      label: 'Warehouse Material',
-      to: `${adminRoot}/warehouses/warehouseMaterial`,
-      icon: 'iconsminds-shopping-basket',
-
-    },
-    {
-      label: 'outputRequest',
+      label: 'Output Requests',
       to: `${adminRoot}/warehouses/outputRequest`,
       icon: 'iconsminds-shopping-basket',
 
@@ -121,6 +104,13 @@ const data: IMenuItem[] = [
     label: 'Settings',
     to: `${adminRoot}/settings`,
     subs: [
+      
+      {
+        label: 'supplier',
+        to: `${adminRoot}/supplier/supplier`,
+        icon: 'simple-icon-user',
+      },
+      
       {
         label: 'Unit',
         to: `${adminRoot}/settings/unit`,
