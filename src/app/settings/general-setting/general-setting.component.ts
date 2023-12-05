@@ -1,53 +1,46 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CreateWarehouseDialogComponent } from './create-warehouse/create-warehouse-dialog.component';
-import { EditWarehouseDialogComponent } from './edit-warehouse/edit-warehouse-dialog.component';
-// import { ViewWarehouseDialogComponent } from '';
-import { CreateWarehouseDto, UnitDto, UnitServiceProxy, WarehouseDto, WarehouseDtoPagedResultDto, WarehouseServiceProxy } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs';
-import { forEach } from 'lodash-es';
+import { GeneralSettingDto, GeneralSettingDtoPagedResultDto, GeneralSettingServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EditGeneralSettingDialogComponent } from './edit-general-setting/edit-general-setting-dialog.component';
+import { finalize } from 'rxjs';
+import { CreateGeneralSettingDialogComponent } from './create-general-setting/create-general-setting-dialog.component';
 
 @Component({
-  selector: 'warehouse',
-  templateUrl: './warehouse.component.html',
+  selector: 'general-setting',
+  templateUrl: './general-setting.component.html',
 
 })
-export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> {
-  ColumnMode = ColumnMode;
+export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSettingDto> {
+  
   displayMode = 'list';
   selectAllState = '';
-  selected: WarehouseDto[] = [];
-   data: WarehouseDto[] = [];
+  selected: GeneralSettingDto[] = [];
+  data: GeneralSettingDto[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
   orderBy = '';
   isLoading: boolean;
+  ColumnMode = ColumnMode;
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
   itemOrder = { label: this.l("Name"), value: "name" };
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
-  
-   
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Warehouse"
-
-
-
+  title="GeneralSetting"
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,
     private _modalService: BsModalService,
-    private _warehouseService:WarehouseServiceProxy,
- 
+    private _GeneralSettingService:GeneralSettingServiceProxy,
     ) {
     super(injector);
   }
@@ -55,34 +48,31 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
 
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
-
-    
   }
-
- 
-
-
-
-//   viewButton(id:number)
-// {
-//   this._modalService.show(
-//     ViewWarehouseDialogComponent,
-//     {
-//       backdrop: true,
-//       ignoreBackdropClick: true,
-//       initialState: {
-//         id: id,
-//       },
-//     }
-//   );
-
+// getFromUnitName(){
+// this._unitService.getNameForDropdown().subscribe
 // }
+
+  viewButton(id:number)
+{
+  // this._modalService.show(
+  //   ViewGeneralSettingDialogComponent,
+  //   {
+  //     backdrop: true,
+  //     ignoreBackdropClick: true,
+  //     initialState: {
+  //       id: id,
+  //     },
+  //   }
+  // );
+
+}
 
   
   editButton(id:number): void {
-    let editWarehouseDialog: BsModalRef;
-        editWarehouseDialog = this._modalService.show(
-        EditWarehouseDialogComponent,
+    let editGeneralSettingDialog: BsModalRef;
+        editGeneralSettingDialog = this._modalService.show(
+        EditGeneralSettingDialogComponent,
         {
           backdrop: true,
           ignoreBackdropClick: true,
@@ -92,22 +82,22 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
           class: 'modal-lg',
         }
       );
-      editWarehouseDialog.content.onSave.subscribe(() => {
+      editGeneralSettingDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
    
 
     }
 
-    protected delete(entity: WarehouseDto): void {
+    protected delete(entity: GeneralSettingDto): void {
     
       abp.message.confirm(
-        this.l('WarehouseDeleteWarningMessage', this.selected.length, ' Warehouses'),
+        this.l('GeneralSettingDeleteWarningMessage', this.selected.length, 'GeneralSettings'),
         undefined,
         (result: boolean) => {
           if (result) {
            
-            this._warehouseService.delete(entity.id).subscribe((recponce) => {
+            this._GeneralSettingService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
             });
@@ -126,8 +116,6 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
       request.skipCount = (currentPage - 1) * pageSize;
       request.maxResultCount = this.itemsPerPage;
       this.list(request, this.pageNumber, () => { });
-
-    
     }
   deleteItem(): void {
     if (this.selected.length == 0) {
@@ -135,12 +123,12 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
     }
     else {
       abp.message.confirm(
-        this.l('WarehouseDeleteWarningMessage', this.selected.length, ' Warehouses'),
+        this.l('GeneralSettingDeleteWarningMessage', this.selected.length, 'GeneralSettings'),
         undefined,
         (result: boolean) => {
           if (result) {
             this.selected.forEach(element => {
-              this._warehouseService.delete(element.id).subscribe(() => {
+              this._GeneralSettingService.delete(element.id).subscribe(() => {
                 abp.notify.success(this.l('SuccessfullyDeleted'));
                 this.refresh();
               });
@@ -156,9 +144,9 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   }
 
   showAddNewModal(): void {
-    let createOrEditWarehouseDialog: BsModalRef;
-    createOrEditWarehouseDialog = this._modalService.show(
-      CreateWarehouseDialogComponent,
+    let createOrEditGeneralSettingDialog: BsModalRef;
+    createOrEditGeneralSettingDialog = this._modalService.show(
+      CreateGeneralSettingDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
@@ -166,16 +154,16 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
 
       }
     );
-    createOrEditWarehouseDialog.content.onSave.subscribe(() => {
+    createOrEditGeneralSettingDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
 
-  isSelected(p: WarehouseDto): boolean {
+  isSelected(p: GeneralSettingDto): boolean {
   
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: WarehouseDto): void {
+  onSelect(item: GeneralSettingDto): void {
   
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
@@ -190,12 +178,12 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
+  
 
-    this._warehouseService
+    this._GeneralSettingService
       .getAll(
         request.keyword,
         request.sort_Field,
-       '',
         request.skipCount,
         request.MaxResultCount,
       )
@@ -204,17 +192,13 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
           finishedCallback();
         })
       )
-      .subscribe((result: WarehouseDtoPagedResultDto) => {
+      .subscribe((result: GeneralSettingDtoPagedResultDto) => {
         
         this.data = result.items;
-
+        console.log(result)
         this.totalItem = result.totalCount;
-        result.items.forEach(element => {
-        });
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
-     
-       
       });
   }
 

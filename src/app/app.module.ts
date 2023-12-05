@@ -32,6 +32,7 @@ import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
   import { PlanModule } from './plan/plan.module';
+  import { ActuallyModule } from './actually/actually.module';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     SettingsModule,
     WarehousesModule,
     PlanModule,
+    ActuallyModule
 
     
   ],

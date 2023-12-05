@@ -37,7 +37,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
       console.log( this.plan)
       this.loaded=true;
 
-    })
+    });
   }
   addPlan(items: PlanProductDto[]) {
     this.plan.planProducts = [...items];

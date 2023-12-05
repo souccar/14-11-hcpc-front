@@ -6,21 +6,21 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 
 const routes: Routes = [{
   path: '', component: SupplierComponent ,
-  children:[
-    {
-      path: 'supplier',
-      component: SupplierComponent,
+  // children:[
+  //   {
+  //     path: 'supplier',
+  //     component: SupplierComponent,
 
-      //data: { permission : 'Pages.Products' },
-      canActivate: [AppRouteGuard]
-    },
-
-
+  //     //data: { permission : 'Pages.Products' },
+  //     canActivate: [AppRouteGuard]
+  //   },
 
 
 
 
-  ]
+
+
+  // ]
 }];
 
 @NgModule({

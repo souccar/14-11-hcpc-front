@@ -42,6 +42,8 @@ export class PlanProductComponent implements OnInit{
     planProduct.planProductMaterials.forEach(planProductMaterial => {
       data.push(planProductMaterial.requiredQuantity);
     }); 
+  
+
     return {
       labels: materials,
       datasets: [

@@ -14,6 +14,9 @@ import { TransferComponent } from './Transfer/transfer.component';
 import { ViewTransferDialogComponent } from './Transfer/view-transfer/view-transfer-dialog.component';
 import { EditTransferDialogComponent } from './Transfer/edit-transfer/edit-transfer-dialog.component';
 import { CreateTransferDialogComponent } from './Transfer/create-transfer/create-transfer-dialog.component';
+import { GeneralSettingComponent } from './general-setting/general-setting.component';
+import { CreateGeneralSettingDialogComponent } from './general-setting/create-general-setting/create-general-setting-dialog.component';
+import { EditGeneralSettingDialogComponent } from './general-setting/edit-general-setting/edit-general-setting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { CreateTransferDialogComponent } from './Transfer/create-transfer/create
     ViewTransferDialogComponent,
     EditTransferDialogComponent,
     CreateTransferDialogComponent,
+    GeneralSettingComponent,
+    CreateGeneralSettingDialogComponent,
+    EditGeneralSettingDialogComponent,
 
   ],
   imports: [
