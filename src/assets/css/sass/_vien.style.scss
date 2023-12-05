@@ -5993,6 +5993,21 @@ aw-wizard-navigation-bar.vertical.small ul.steps-indicator li:not(:last-child):a
   }
 }
 
+.input-sm {
+  position: relative;
+
+  input {
+    background: none;
+    outline: initial !important;
+    border-radius: 15px;
+    padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+    font-size: 0.76rem;
+    line-height: 1.3;
+    border: 1px solid $secondary-color;
+    color: $primary-color;
+  }
+}
+
 div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0;
 }
