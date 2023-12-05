@@ -15,18 +15,19 @@ export interface IMenuItem {
 const data: IMenuItem[] = [
 
 
-  // Plan
+  // Dially Production
   {
     icon: ' simple-icon-notebook',
-    label: 'Plan',
-    to: `${adminRoot}/plan`,
+    label: 'Dially Production',
+    to: `${adminRoot}/diallyProduction`,
     subs: [
       {
-        label: 'Plan',
-        to: `${adminRoot}/plan`,
+        label: 'Actually',
+        to: `${adminRoot}/diallyProduction`,
         icon: 'simple-icon-notebook',
       },
-
+     
+    
     ],
   },
   //Production
@@ -36,36 +37,12 @@ const data: IMenuItem[] = [
     to: `${adminRoot}/production`,
     subs: [
       {
-        label: 'Material',
-        to: `${adminRoot}/production/material`,
-        icon: 'iconsminds-shopping-basket',
-
-      },
-      {
-        label: 'Product',
-        to: `${adminRoot}/production/product`,
-        icon: 'simple-icon-layers',
-
+        label: 'Plan',
+        to: `${adminRoot}/plan`,
+        icon: 'simple-icon-notebook',
       },
     ],
   },
-
-
- //Supplier
- {
-  label: 'Supplier',
-  to: `${adminRoot}/supplier`,
-  icon: 'simple-icon-user',
-  subs:[
-    {
-      label: 'supplier',
-      to: `${adminRoot}/supplier/supplier`,
-      icon: 'simple-icon-user',
-    },
-  ]
-  // roles: [UserRole.Editor],
-},
-
 
   //Warehouse
   {
@@ -100,6 +77,18 @@ const data: IMenuItem[] = [
     label: 'Settings',
     to: `${adminRoot}/settings`,
     subs: [
+      {
+        label: 'Material',
+        to: `${adminRoot}/production/material`,
+        icon: 'iconsminds-shopping-basket',
+
+      },
+      {
+        label: 'Product',
+        to: `${adminRoot}/production/product`,
+        icon: 'simple-icon-layers',
+
+      },
       {
         label: 'supplier',
         to: `${adminRoot}/settings/supplier`,
@@ -143,33 +132,7 @@ const data: IMenuItem[] = [
 
     ],
   },
-  //Setting
-  {
-    icon: 'simple-icon-settings',
-    label: 'Settings',
-    to: `${adminRoot}/settings`,
-    subs: [
-      
-      {
-        label: 'supplier',
-        to: `${adminRoot}/supplier/supplier`,
-        icon: 'simple-icon-user',
-      },
-      
-      {
-        label: 'Unit',
-        to: `${adminRoot}/settings/unit`,
-        icon: 'iconsminds-scale',
-      },
-      {
-        label: 'Transfer',
-        to: `${adminRoot}/settings/transfer`,
-        icon: 'iconsminds-synchronize',
-      },
 
-
-    ],
-  },
 
 ];
 export default data;
