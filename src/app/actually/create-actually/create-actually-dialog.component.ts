@@ -30,7 +30,7 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
     this.initPlans();
   }
   initPlans() {
-    this._planService.getNameForDropdown().subscribe((result) => {
+    this._planService.getActualPlansNameForDropdown().subscribe((result) => {
       this.plans = result;
       console.log(this.plans);
     });
