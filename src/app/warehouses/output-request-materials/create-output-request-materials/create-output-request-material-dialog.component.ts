@@ -47,10 +47,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       })
    }
    getWarehouseCode(id: number) {
-
-
     this._warehouseMaterialService.get(id).subscribe((result) => {
-      console.log(result)
       this.warehouseCodes.push(result);
     });
 
@@ -80,7 +77,6 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.data = [...this.data]
       this.saveoutputRequestMaterialList.emit(this.data);
       this.saving = true;
-      console.log(this.outputRequestMaterial.warehouseMaterialId)
       this.getUnitName(this.outputRequestMaterial.unitId);
       this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
       this.outputRequestMaterial = new CreateOutputRequestMaterialDto()
@@ -99,7 +95,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
     // return this.warehouseCode.find(t => t.id == warehouseMaterialId).code;
        const warehouseCode = this.warehouseCode.find(x => x.id == warehouseMaterialId);
     if (warehouseCode) {
-      console.log(warehouseCode.code)
+
       return warehouseCode.code;
     }
     return '';

@@ -84,7 +84,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
     //   supplier.id=item;
 
     // })
-    console.log(this.material)
+
     this._materialService
       .update(
         this.material

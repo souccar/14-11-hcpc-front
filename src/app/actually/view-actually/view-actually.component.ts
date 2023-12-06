@@ -17,10 +17,10 @@ export class ViewActuallyComponent implements OnInit {
   }
   getLatestDailyProduction(){
     this._planService.getLastPlanActual().subscribe((result) => {
-      console.log(result)
+
       if (result.id > 0) {
         this.dailyProduction.plan = result;
-        console.log( this.dailyProduction)
+
       }
     })
   }

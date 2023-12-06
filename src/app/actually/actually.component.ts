@@ -195,7 +195,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
-        console.log(this.data)
+
       });
   }
 

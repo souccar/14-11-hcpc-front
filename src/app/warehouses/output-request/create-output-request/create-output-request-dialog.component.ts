@@ -20,10 +20,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     private _outputRequestService: OutputRequestServiceProxy,
     public bsModalRef: BsModalRef,
     private _planService:PlanServiceProxy,
-    private _router: Router,
     private _location: Location
-
-
   ) {
     super(injector);
   }
@@ -40,13 +37,13 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
 
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
     this.outputRequest.outputRequestMaterials = [...items];
-    console.log(this.outputRequest.outputRequestMaterials)
+
   }
  initPlan()
  {
-      this._planService.getNameForDropdown().subscribe((result)=>{
+      this._planService.getActualPlansNameForDropdown().subscribe((result)=>{
          this.plans=result;
-         console.log(result)
+
 
       })
  }

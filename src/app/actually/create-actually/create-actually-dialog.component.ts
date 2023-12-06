@@ -32,24 +32,24 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
   initPlans() {
     this._planService.getNameForDropdown().subscribe((result) => {
       this.plans = result;
-      console.log(this.plans);
+
     });
   }
   getProductForPlan(id:number){
 
-    if(id!=null){ 
+    if(id!=null){
       this._planService.get(id).subscribe((result)=>{
         this.planProducts=result.planProducts;
         this.planProductloaded=true;
        });
   }
 
-   
+
   }
 
   save(): void {
     this.saving = true;
-    console.log(this.dailyProduction)
+
     this._dailyProductionService.
       create(
         this.dailyProduction
@@ -61,7 +61,7 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
       )
       .subscribe((response: any) => {
 
-        console.log(response);
+
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();

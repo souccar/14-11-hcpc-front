@@ -9,7 +9,7 @@
                     title=" all Plans" routerLink="displayAllPlan">
                     <i class="simple-icon-list glyph-icon text-primary"></i>
                 </a>
-     
+
                 <button type="button"  class=" btn btn-empty pt-1 pb-1 " *ngIf=" plan.status!==1"data-bs-toggle="tooltip"
                     data-bs-placement="right" title="change to production" (click)="changePlanStatusToActually()">
                     <i class="iconsminds-factory   glyph-icon text-primary"></i>
@@ -60,7 +60,7 @@
         </ng-container>
         <ng-container *ngIf="plan.planProducts">
             <!-- <app-plan-product [planProducts]="plan.planProducts" ></app-plan-product> -->
-            <app-plan-product [planProducts]="plan.planProducts" ></app-plan-product>
+            <app-plan-product [planProducts]="plan.planProducts"  [sendplan]="plan"></app-plan-product>
         </ng-container>
     </div>
 </div>
