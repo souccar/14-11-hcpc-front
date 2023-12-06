@@ -6,7 +6,7 @@ import { finalize } from 'rxjs';
 @Component({
   selector: 'view-transfer-dialog',
   templateUrl: './view-transfer-dialog.component.html',
-  
+
 })
 export class ViewTransferDialogComponent  {
   saving = false;
@@ -16,20 +16,20 @@ export class ViewTransferDialogComponent  {
   ToUnit: UnitDto=new UnitDto();
 
   transfer =  new UpdateTransferDto ();
- 
+
   constructor(
     private _transferService:TransferServiceProxy,
     private _unitService: UnitServiceProxy,
     public bsModalRef: BsModalRef,
 
   ) {
-    
+
   }
   ngOnInit(): void {
 
-   
+
     this. initTransfer();
-    
+
   }
   initfromUnits() {
     this._unitService.get(this.transfer.fromId).subscribe((result) => {
@@ -41,10 +41,10 @@ export class ViewTransferDialogComponent  {
       this.ToUnit = result;
     });
   }
- 
+
 
   initTransfer(){
-    console.log(this.id)
+     (this.id)
     this._transferService.get(this.id).subscribe((result) => {
      this.transfer = result;
      this.initfromUnits();

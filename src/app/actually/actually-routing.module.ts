@@ -8,12 +8,12 @@ import { ActuallyComponent } from './actually.component';
 
 
 const routes: Routes = [
+  // {
+  //   path: '', component: ViewActuallyComponent,
+  //   canActivate: [AppRouteGuard]
+  // },
   {
-    path: '', component: ViewActuallyComponent,
-    canActivate: [AppRouteGuard]
-  },
-  {
-    path: 'allactuallyplan',
+    path: '',
     component: ActuallyComponent,
     canActivate: [AppRouteGuard]
   },

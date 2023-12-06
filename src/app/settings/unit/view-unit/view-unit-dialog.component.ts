@@ -6,7 +6,7 @@ import { finalize } from 'rxjs';
 @Component({
   selector: 'view-unit-dialog',
   templateUrl: './view-unit-dialog.component.html',
-  
+
 })
 export class ViewUnitDialogComponent extends AppComponentBase {
   saving = false;
@@ -14,7 +14,7 @@ export class ViewUnitDialogComponent extends AppComponentBase {
   id:number;
   unit: UnitDto=new UnitDto();
 
- 
+
   constructor(injector: Injector,
     private _unitService: UnitServiceProxy,
     public bsModalRef: BsModalRef,
@@ -24,15 +24,15 @@ export class ViewUnitDialogComponent extends AppComponentBase {
   }
   ngOnInit(): void {
 
-   
+
     this. initUnit();
-    
+
   }
- 
- 
+
+
 
   initUnit(){
-    console.log(this.id)
+     (this.id)
     this._unitService.get(this.id).subscribe((result) => {
      this.unit = result;
 

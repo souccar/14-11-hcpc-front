@@ -180,7 +180,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
       .getAll(
         request.keyword,
         request.sort_Field,
-        // request.Including,
+        request.Including,
         request.skipCount,
         request.MaxResultCount,
       )
@@ -195,6 +195,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
+        console.log(this.data)
       });
   }
 

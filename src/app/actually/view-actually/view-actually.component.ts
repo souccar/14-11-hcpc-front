@@ -8,8 +8,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 })
 export class ViewActuallyComponent implements OnInit {
-  canProduce: boolean = false;
-  dailyProduction: DailyProductionDto = new DailyProductionDto();
+  dailyProduction = new DailyProductionDto();
   constructor(private _modalService: BsModalService,
     private _dailyProductionService: DailyProductionServiceProxy,
     private _planService: PlanServiceProxy) { }
@@ -17,10 +16,11 @@ export class ViewActuallyComponent implements OnInit {
     this.getLatestDailyProduction()
   }
   getLatestDailyProduction(){
-    this._dailyProductionService.get(1).subscribe((result) => {
+    this._planService.getLastPlanActual().subscribe((result) => {
       console.log(result)
       if (result.id > 0) {
-        this.dailyProduction = result;
+        this.dailyProduction.plan = result;
+        console.log( this.dailyProduction)
       }
     })
   }

@@ -14,7 +14,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 
 })
 export class TransferComponent extends PagedListingComponentBase<TransferDto> {
-  
+
   displayMode = 'list';
   selectAllState = '';
   selected: TransferDto[] = [];
@@ -69,7 +69,7 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
 
 }
 
-  
+
   editButton(id:number): void {
     let editTransferDialog: BsModalRef;
         editTransferDialog = this._modalService.show(
@@ -86,18 +86,18 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
       editTransferDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
     protected delete(entity: TransferDto): void {
-    
+
       abp.message.confirm(
         this.l('TransferDeleteWarningMessage', this.selected.length, 'Transfers'),
         undefined,
         (result: boolean) => {
           if (result) {
-           
+
             this._transferService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
@@ -161,11 +161,11 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   }
 
   isSelected(p: TransferDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: TransferDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -195,9 +195,9 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
         })
       )
       .subscribe((result: TransferDtoPagedResultDto) => {
-        
+
         this.data = result.items;
-        console.log(result)
+         (result)
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
@@ -241,7 +241,7 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

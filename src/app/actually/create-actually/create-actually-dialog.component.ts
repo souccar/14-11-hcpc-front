@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateDailyProductionDto, DailyProductionDto, DailyProductionServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductDto, ProductNameForDropdownDto, UnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateDailyProductionDetailsDto, CreateDailyProductionDto, DailyProductionDto, DailyProductionServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductDto, ProductNameForDropdownDto, UnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { forEach } from 'lodash-es';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -14,7 +15,7 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
   planProductloaded=false;
   dailyProduction = new CreateDailyProductionDto();
   plans: PlanNameForDropdownDto[] = [];
-  PlanProducs: PlanProductDto[] = [];
+  planProducts: PlanProductDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _dailyProductionService: DailyProductionServiceProxy,
@@ -34,12 +35,15 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
       console.log(this.plans);
     });
   }
-  getProductForPlan(){
-    if(this.dailyProduction.planId){ 
-      this._planService.get(this.dailyProduction.planId).subscribe((result)=>{
-        this.PlanProducs=result.planProducts;
-        this.planProductloaded=true
-    });}
+  getProductForPlan(id:number){
+
+    if(id!=null){ 
+      this._planService.get(id).subscribe((result)=>{
+        this.planProducts=result.planProducts;
+        this.planProductloaded=true;
+       });
+  }
+
    
   }
 

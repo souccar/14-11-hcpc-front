@@ -1,23 +1,24 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateFormulaDto, CreateProductDto, FormulaDto, MaterialDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateFormulaDto, CreateProductDto, FormulaDto, MaterialDto, ProductDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
+import { PagedListingComponentBase } from '@shared/paged-listing-component-base';
 @Component({
   selector: 'create-product-dialog',
   templateUrl: './create-product-dialog.component.html',
 
 })
-export class CreateProductDialogComponent extends AppComponentBase {
+export class CreateProductDialogComponent extends AppComponentBase  {
   saving = false;
   product: CreateProductDto = new CreateProductDto();
   formulas: CreateFormulaDto[] = [];
   material: MaterialDto[] = [];
   showItemIndex = 0;
   @Output() onSave = new EventEmitter<any>();
-  
+
   constructor(injector: Injector,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
@@ -47,7 +48,7 @@ export class CreateProductDialogComponent extends AppComponentBase {
     }
     else {
       this.saving = true;
-      console.log(this.product)
+       (this.product)
       this._productService
         .create(
           this.product
@@ -59,7 +60,7 @@ export class CreateProductDialogComponent extends AppComponentBase {
         )
         .subscribe((response: any) => {
           this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
+          location.reload();
           this.onSave.emit();
         });
     }

@@ -1,15 +1,17 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ChartService } from '@app/@components/charts/chart.service';
 import { Colors } from '@app/@components/charts/color.service';
+import { MaterialDetailsComponent } from '@app/production/material/material-details/material-details.component';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PlanMaterialDto } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-plan-material',
   templateUrl: './plan-material.component.html',
-  styles:['/deep/ .row-color1 {color: #dc3545 ;}']
-    
+  styles: ['/deep/ .row-color1 {color: #dc3545 ;}']
+
 })
 export class PlanMaterialComponent extends AppComponentBase implements OnInit {
 
@@ -27,17 +29,33 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
   columnMode = ColumnMode;
 
   constructor(injector: Injector,
+    private _modalService: BsModalService,
     private _chartService: ChartService,
   ) {
     super(injector);
     this.chartDataConfig = this._chartService;
   }
   ngOnInit(): void {
+    console.log (this.planMaterials)
     this.radarChartData = this.getChartData();
-    console.log(this.planMaterials)
+ 
   }
-  getRowClass(row){
-    return {'row-color1' : row.totalQuantity > row.inventory}
+  getRowClass(row) {
+    return { 'row-color1': row.totalQuantity > row.inventory }
+  }
+  editMaterial(id:number) {
+    console.log(id)
+    this._modalService.show(
+      MaterialDetailsComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+        class:'modal-xl'
+      }
+    );
   }
   getChartData() {
     if (!this.planMaterials)
@@ -50,11 +68,13 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
       labels.push(item.material?.name);
     });
     this.planMaterials.forEach(item => {
-      this.rows.push({ 
-        name: item.material.name, 
-        totalQuantity: item.totalQuantity, 
-        inventory: item.inventoryQuantity, 
-        unit: item.unit});
+      this.rows.push({
+        id:item.material.id,
+        name: item.material.name,
+        totalQuantity: item.totalQuantity,
+        inventory: item.inventoryQuantity,
+        unit: item.unit
+      });
       inventoryData.push(Math.round(item.inventoryQuantity));
       planData.push(Math.round(item.totalQuantity));
     });

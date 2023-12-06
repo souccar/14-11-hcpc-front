@@ -179,9 +179,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
 
       }
     );
-    materialDetailsDialog.content.onSave.subscribe(() => {
-      this.refresh()
-    });
+
   }
   isSelected(p: MaterialDto): boolean {
 

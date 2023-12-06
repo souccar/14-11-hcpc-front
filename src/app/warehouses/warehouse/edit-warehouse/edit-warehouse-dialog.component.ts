@@ -29,7 +29,7 @@ export class EditWarehouseDialogComponent extends AppComponentBase {
   initWarehouse() {
     // this._warehouseService.get(this.id).subscribe((result) => {
     //   this.warehouse = result;
-    //   console.log(this.warehouse )
+    //    (this.warehouse )
     // });
   }
 
@@ -47,7 +47,7 @@ export class EditWarehouseDialogComponent extends AppComponentBase {
       )
       .subscribe((response: any) => {
 
-        console.log(response);
+         (response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();

@@ -1,0 +1,93 @@
+
+<form class="form-horizontal " autocomplete="off" #createoutputRequestModal="ngForm"   >
+
+    <div class="modal-body modal-xl">
+      <div class="row">
+        <div class="col-md-11">
+          <!-- Inputs -->
+          <div class="row">
+            <div class="col-md-3 required">
+              <label form="warehouseMaterialId">warehouseMaterial</label>
+              <select class="form-control" aria-label="unit" #warehouseMaterialIdModel="ngModel" required name="warehouseMaterialId"
+              [(ngModel)]="outputRequestMaterial.warehouseMaterialId" #warehouseMaterialIdEl>
+                <option *ngFor="let item of warehouseMaterialCodes" value={{item.id}}>{{item.code}}</option>
+              </select>
+
+            </div>
+            <div class="col-md-5 required">
+              <label form="unitId">Unit</label>
+              <select aria-placeholder="material" class="form-control" aria-label="Material" #unitIdModel="ngModel" required name="unitId"
+              [(ngModel)]="outputRequestMaterial.unitId"  #unitIdEl >
+                <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-md-4 required">
+              <label form="quantity">Quantity</label>
+              <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
+                [(ngModel)]="outputRequestMaterial.quantity" #quantityModel="ngModel" #quantityEl  />
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-1">
+          <!-- Button -->
+
+          <button type="button" class="btn btn-outline-primary mt-4" (click)="addToOutputRequestMaterialList()">
+            <i class="bi bi-plus-lg"> </i>
+          </button>
+        </div>
+      </div>
+      <div class="separator my-5"></div>
+          <!-- tabel -->
+          <div class="row">
+            <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+
+                    <th scope="col">Warehouse Code</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let outputRequestMaterial of data; let i = index">
+
+                    <ng-contanier *ngFor="let w of warehouseCodes; let wId = index">
+                      <td *ngIf="wId == i">{{ w.code }}</td>
+                    </ng-contanier>
+                    <td>{{ outputRequestMaterial.quantity }}</td>
+                    <ng-contanier *ngFor="let u of unitsNames; let uId = index">
+                      <td *ngIf="uId == i">{{ u.name }}</td>
+                    </ng-contanier>
+                    <td>
+                      <button
+                        id="button-basic"
+                        type="button"
+                        id="edit"
+                        class="header-icon btn btn-empty text-primary"
+                        (click)="edit(outputRequestMaterial)"
+                      >
+                        <i class="simple-icon-pencil text-primary"></i>
+                      </button>
+                      <button
+                        id="button-basic"
+                        type="button"
+                        id="delete"
+                        class="header-icon btn btn-empty text-primary"
+                        (click)="delete(outputRequestMaterial)"
+                      >
+                        <i class="simple-icon-trash text-primary"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+
+  </form>

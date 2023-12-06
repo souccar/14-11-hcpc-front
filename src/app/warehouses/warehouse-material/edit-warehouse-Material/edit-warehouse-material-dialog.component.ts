@@ -39,7 +39,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   initWarehouseMaterial(){
     this._warehouseMaterialService.get(this.id).subscribe((result) => {
       this.warehouseMaterial = result;
-      console.log(result)
+       (result)
     });
   }
 
@@ -65,7 +65,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   }
    save(): void {
     this.saving = true;
-    console.log(this.warehouseMaterial)
+     (this.warehouseMaterial)
     this._warehouseMaterialService
       .update(
         this.warehouseMaterial
@@ -76,7 +76,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response:any) => {
-        
+
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
           this.onSave.emit();

@@ -7,6 +7,7 @@ import { EditOutputRequestDialogComponent } from './edit-output-request/edit-out
 import { CreateOutputRequestDialogComponent } from './create-output-request/create-output-request-dialog.component';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
+import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
 
 @Component({
   selector: 'output-request',
@@ -66,36 +67,39 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
 
 
   viewButton(id: number) {
-    // this._modalService.show(
-    //   ViewOutputRequestDialogComponent,
-    //   {
-    //     backdrop: true,
-    //     ignoreBackdropClick: true,
-    //     initialState: {
-    //       id: id,
-    //     },
-    //   }
-    // );
-
-  }
-
-
-  editButton(id: number): void {
-    let editOutputRequestDialog: BsModalRef;
-    editOutputRequestDialog = this._modalService.show(
-      EditOutputRequestDialogComponent,
+    this._modalService.show(
+      ViewOutputRequestDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
         initialState: {
           id: id,
         },
-        class: 'modal-lg',
       }
     );
-    editOutputRequestDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
+
+  }
+
+
+  editButton(id: number): void {
+
+
+    this._router.navigate(['app/warehouses/editOutputRequest',id])
+    // let editOutputRequestDialog: BsModalRef;
+    // editOutputRequestDialog = this._modalService.show(
+    //   EditOutputRequestDialogComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //     class: 'modal-lg',
+    //   }
+    // );
+    // editOutputRequestDialog.content.onSave.subscribe(() => {
+    //   this.refresh();
+    // });
 
 
   }
@@ -157,8 +161,8 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
 
   showAddNewModal(): void {
-       
-    this._router.navigate(['app/warehouses/newoutputRequest']);
+
+    this._router.navigate(['app/warehouses/newOutputRequest']);
   }
 
   isSelected(p: OutputRequestDto): boolean {
@@ -196,7 +200,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       .subscribe((result: OutputRequestDtoPagedResultDto) => {
 
         this.data = result.items;
-        console.log(this.data)
+         (this.data)
         this.totalItem = result.totalCount;
 
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
