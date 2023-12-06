@@ -4,6 +4,7 @@ import { Colors } from '@app/@components/charts/color.service';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PlanDto, PlanMaterialDto, PlanProductDto, PlanServiceProxy, ProductServiceProxy, UpdatePlanDto, UpdatePlanProductDto } from '@shared/service-proxies/service-proxies';
 import { forEach } from 'lodash';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-plan-product',
@@ -19,7 +20,9 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   numberOfItem:number;
   plan = new UpdatePlanDto();
   index:number;
-  constructor(private chartService: ChartService,private _planService:PlanServiceProxy,
+  constructor(private chartService: ChartService
+    ,private _planService:PlanServiceProxy,
+    private _modalService: BsModalService,,
     private _productService:ProductServiceProxy,injector: Injector,
   ) {
     super(injector);
@@ -27,6 +30,19 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   }
   ngOnInit(): void {
 
+  }
+  editMaterial(id:number) {
+    this._modalService.show(
+      MaterialDetailsComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+        class:'modal-lg'
+      }
+    );
     this.initPlan();
 
   }

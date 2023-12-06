@@ -13,6 +13,7 @@ export class ViewPlanComponent implements OnInit{
 
   canProduce:boolean=false;
   plan:PlanDto=new PlanDto();
+  changeStatus=false;
 
   constructor( private _modalService: BsModalService,
     private _planService:PlanServiceProxy){}
@@ -26,6 +27,17 @@ getLatestPlan()
     if(result.id > 0){
       this.plan = result;
     }
+    console.log(this.plan)
+  })
+}
+changePlanStatusToActually(){
+  this._planService.changeStatusToActual(this.plan.id).subscribe((result)=>{
+    this.changeStatus=true;
+    console.log(result)
+  })
+}
+changePlanStatusToArchive(){
+  this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
   })
 }
 

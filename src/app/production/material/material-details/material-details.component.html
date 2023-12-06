@@ -63,7 +63,7 @@
                 <td>{{warehousematerial.warehouse.warehouseKeeper}}</td>
                 <td>{{warehousematerial.currentQuantity}}</td>
                 <td>{{warehousematerial.code}}</td>
-                <td>{{warehousematerial.expirationDate}}</td>
+                <td>{{warehousematerial.expirationDate|date:"yyyy/MM/dd"}}</td>
                 <ng-contanier *ngFor="let outputRequest of warehousematerial.OutPutRequest; let wId = index">
                   <td *ngIf="wId == i">{{ outputRequest.quantity }}</td>
                 </ng-contanier>

@@ -13,23 +13,6 @@ export interface IMenuItem {
 }
 
 const data: IMenuItem[] = [
-
-
-  // Dially Production
-  {
-    icon: ' simple-icon-notebook',
-    label: 'Dially Production',
-    to: `${adminRoot}/diallyProduction`,
-    subs: [
-      {
-        label: 'Actually',
-        to: `${adminRoot}/diallyProduction`,
-        icon: 'simple-icon-notebook',
-      },
-
-
-    ],
-  },
   //Production
   {
     icon: 'iconsminds-factory',
@@ -39,6 +22,11 @@ const data: IMenuItem[] = [
       {
         label: 'Plan',
         to: `${adminRoot}/plan`,
+        icon: 'simple-icon-notebook',
+      },
+      {
+        label: 'Actually',
+        to: `${adminRoot}/diallyProduction`,
         icon: 'simple-icon-notebook',
       },
     ],
