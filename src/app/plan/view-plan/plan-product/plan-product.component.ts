@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ChartService } from '@app/@components/charts/chart.service';
 import { Colors } from '@app/@components/charts/color.service';
-import { PlanDto, PlanMaterialDto, PlanProductDto, PlanServiceProxy, ProductServiceProxy, UpdatePlanDto } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/app-component-base';
+import { PlanDto, PlanMaterialDto, PlanProductDto, PlanServiceProxy, ProductServiceProxy, UpdatePlanDto, UpdatePlanProductDto } from '@shared/service-proxies/service-proxies';
 import { forEach } from 'lodash';
 
 @Component({
@@ -9,19 +10,36 @@ import { forEach } from 'lodash';
   templateUrl: './plan-product.component.html',
 
 })
-export class PlanProductComponent implements OnInit{
+export class PlanProductComponent extends AppComponentBase implements OnInit {
 
   @Input() planProducts: PlanProductDto[];
+  updatePlanProducts: UpdatePlanProductDto[]=[];
   chartDataConfig: ChartService;
   editable:boolean=false;
   numberOfItem:number;
+  plan = new UpdatePlanDto();
+  index:number;
   constructor(private chartService: ChartService,private _planService:PlanServiceProxy,
-    private _productService:ProductServiceProxy
+    private _productService:ProductServiceProxy,injector: Injector,
   ) {
+    super(injector);
     this.chartDataConfig = this.chartService;
   }
   ngOnInit(): void {
 
+    this.initPlan();
+
+  }
+
+  initPlan()
+  {
+    this._planService.get(this.planProducts[0].planId).subscribe((response)=>{
+      this.plan=response;
+
+      console.log(this.plan);
+
+
+    });
   }
   getTotalQuentity(planProduct: PlanProductDto, materialId){
     return planProduct.planProductMaterials.find(x=>x.materialId == materialId).requiredQuantity;
@@ -36,43 +54,70 @@ export class PlanProductComponent implements OnInit{
 
     return planProductMaterial.canProduce == planProduct.numberOfItems;
   }
-  editNumberofItem(event:any)
+  editNumberofItem(index:number)
   {
-       console.log(event)
-    if(event.isTrusted){
-       this.editable=true;
-    }
+    this.index=index;
   }
   CancelEdit()
   {
+
     this.editable=false;
   }
   updatePlan(numberOfItems:number,productId:number)
   {
-    console.log(numberOfItems)
-    console.log(productId)
-    this.planProducts.forEach((item)=>{
-      console.log(item)
-      if(item.id==productId)
+
+    this.plan.planProducts.forEach((item)=>{
+
+      if(item.productId==productId)
       {
         item.numberOfItems=numberOfItems
+
       }
+      this.updatePlanProducts.push(new UpdatePlanProductDto({
+        id:0,
+        numberOfItems:item.numberOfItems,
+        priority:item.priority,
+        productId:item.productId,
+        planId:item.planId,
+      }))
+       this.plan.planProducts=this.updatePlanProducts;
     })
-    let plan=new UpdatePlanDto();
-    plan.planProducts=this.planProducts;
-     console.log(plan.planProducts)
-      this._planService.update(plan).subscribe((result)=>{
+      this._planService.update(this.plan).subscribe((result)=>{
+        this.notify.info(this.l('SavedSuccessfully'));
+        location.reload()
+      });
 
-        console.log(result);
-
-      })
   }
   deleteProduct(productId:number)
   {
-    console.log(productId);
-       this._productService.delete(productId).subscribe((result)=>{
-        console.log(result)
-       });
+
+    let planProduct=this.plan.planProducts.filter(x=>x.productId!=productId);
+    if (planProduct.length < 1) {
+      this.notify.error(this.l('There must be at least one product'));
+    }
+    else{
+
+    planProduct.forEach((item)=>{
+      this.updatePlanProducts.push(new UpdatePlanProductDto({
+        id:0,
+        numberOfItems:item.numberOfItems,
+        priority:item.priority,
+        productId:item.productId,
+        planId:item.planId,
+      }))
+       this.plan.planProducts=this.updatePlanProducts;
+
+    });
+
+
+      this._planService.update(this.plan).subscribe((result)=>{
+
+        this.notify.info(this.l('DeleteSuccessfully'));
+        location.reload()
+      });
+    }
+
+
   }
   getChartData(planProduct: PlanProductDto){
     let materials = [];

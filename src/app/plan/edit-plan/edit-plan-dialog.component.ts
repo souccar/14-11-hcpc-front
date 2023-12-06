@@ -34,7 +34,6 @@ export class EditPlanDialogComponent extends AppComponentBase {
   {
     this._planService.get(this.id).subscribe((response)=>{
       this.plan=response;
-       ( this.plan)
       this.loaded=true;
 
     });
@@ -66,8 +65,6 @@ export class EditPlanDialogComponent extends AppComponentBase {
       })
     )
     .subscribe((response: any) => {
-
-       (response);
       this.notify.info(this.l('SavedSuccessfully'));
       this.bsModalRef.hide();
       this.onSave.emit();
