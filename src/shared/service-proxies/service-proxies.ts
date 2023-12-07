@@ -2969,6 +2969,64 @@ export class PlanServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getActualPlansNameForDropdown(): Observable<PlanNameForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetActualPlansNameForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetActualPlansNameForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetActualPlansNameForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanNameForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanNameForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetActualPlansNameForDropdown(response: HttpResponseBase): Observable<PlanNameForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(PlanNameForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -5153,62 +5211,6 @@ export class TransferServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ConvertToOutputDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    convertToGreaterUnit(body: TransferToGreaterUnitInputDto | undefined): Observable<TransferToGreaterUnitOutputDto> {
-        let url_ = this.baseUrl + "/api/services/app/Transfer/ConvertToGreaterUnit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processConvertToGreaterUnit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processConvertToGreaterUnit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<TransferToGreaterUnitOutputDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<TransferToGreaterUnitOutputDto>;
-        }));
-    }
-
-    protected processConvertToGreaterUnit(response: HttpResponseBase): Observable<TransferToGreaterUnitOutputDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TransferToGreaterUnitOutputDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -12117,6 +12119,61 @@ export interface IOutputRequestDtoPagedResultDto {
     totalCount: number;
 }
 
+export class OutputRequestForWarehouseMaterialDto implements IOutputRequestForWarehouseMaterialDto {
+    id: number;
+    title: string | undefined;
+    outputDate: string | undefined;
+    quantity: number;
+
+    constructor(data?: IOutputRequestForWarehouseMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.outputDate = _data["outputDate"];
+            this.quantity = _data["quantity"];
+        }
+    }
+
+    static fromJS(data: any): OutputRequestForWarehouseMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OutputRequestForWarehouseMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["outputDate"] = this.outputDate;
+        data["quantity"] = this.quantity;
+        return data;
+    }
+
+    clone(): OutputRequestForWarehouseMaterialDto {
+        const json = this.toJSON();
+        let result = new OutputRequestForWarehouseMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOutputRequestForWarehouseMaterialDto {
+    id: number;
+    title: string | undefined;
+    outputDate: string | undefined;
+    quantity: number;
+}
+
 export class OutputRequestMaterialDto implements IOutputRequestMaterialDto {
     id: number;
     quantity: number;
@@ -12758,6 +12815,7 @@ export class PlanProductDto implements IPlanProductDto {
     productId: number | undefined;
     product: ProductDto;
     readonly canProduce: number;
+    itemCost: number;
     totalProduction: number;
     totalCost: number;
     produceCost: number;
@@ -12784,6 +12842,7 @@ export class PlanProductDto implements IPlanProductDto {
             this.productId = _data["productId"];
             this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
             (<any>this).canProduce = _data["canProduce"];
+            this.itemCost = _data["itemCost"];
             this.totalProduction = _data["totalProduction"];
             this.totalCost = _data["totalCost"];
             this.produceCost = _data["produceCost"];
@@ -12814,6 +12873,7 @@ export class PlanProductDto implements IPlanProductDto {
         data["productId"] = this.productId;
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
         data["canProduce"] = this.canProduce;
+        data["itemCost"] = this.itemCost;
         data["totalProduction"] = this.totalProduction;
         data["totalCost"] = this.totalCost;
         data["produceCost"] = this.produceCost;
@@ -12844,6 +12904,7 @@ export interface IPlanProductDto {
     productId: number | undefined;
     product: ProductDto;
     canProduce: number;
+    itemCost: number;
     totalProduction: number;
     totalCost: number;
     produceCost: number;
@@ -14416,100 +14477,6 @@ export class TransferDtoPagedResultDto implements ITransferDtoPagedResultDto {
 export interface ITransferDtoPagedResultDto {
     items: TransferDto[] | undefined;
     totalCount: number;
-}
-
-export class TransferToGreaterUnitInputDto implements ITransferToGreaterUnitInputDto {
-    unitId: number;
-    value: number;
-
-    constructor(data?: ITransferToGreaterUnitInputDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.unitId = _data["unitId"];
-            this.value = _data["value"];
-        }
-    }
-
-    static fromJS(data: any): TransferToGreaterUnitInputDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TransferToGreaterUnitInputDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["unitId"] = this.unitId;
-        data["value"] = this.value;
-        return data;
-    }
-
-    clone(): TransferToGreaterUnitInputDto {
-        const json = this.toJSON();
-        let result = new TransferToGreaterUnitInputDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITransferToGreaterUnitInputDto {
-    unitId: number;
-    value: number;
-}
-
-export class TransferToGreaterUnitOutputDto implements ITransferToGreaterUnitOutputDto {
-    value: number;
-    unitId: number;
-
-    constructor(data?: ITransferToGreaterUnitOutputDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.value = _data["value"];
-            this.unitId = _data["unitId"];
-        }
-    }
-
-    static fromJS(data: any): TransferToGreaterUnitOutputDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TransferToGreaterUnitOutputDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["value"] = this.value;
-        data["unitId"] = this.unitId;
-        return data;
-    }
-
-    clone(): TransferToGreaterUnitOutputDto {
-        const json = this.toJSON();
-        let result = new TransferToGreaterUnitOutputDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITransferToGreaterUnitOutputDto {
-    value: number;
-    unitId: number;
 }
 
 export class Type implements IType {
@@ -17006,6 +16973,7 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     material: MaterialDto;
     supplier: SupplierDto;
     warehouse: WarehouseDto;
+    outputRequests: OutputRequestForWarehouseMaterialDto[] | undefined;
 
     constructor(data?: IWarehouseMaterialDto) {
         if (data) {
@@ -17035,6 +17003,11 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
             this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
             this.supplier = _data["supplier"] ? SupplierDto.fromJS(_data["supplier"]) : <any>undefined;
             this.warehouse = _data["warehouse"] ? WarehouseDto.fromJS(_data["warehouse"]) : <any>undefined;
+            if (Array.isArray(_data["outputRequests"])) {
+                this.outputRequests = [] as any;
+                for (let item of _data["outputRequests"])
+                    this.outputRequests.push(OutputRequestForWarehouseMaterialDto.fromJS(item));
+            }
         }
     }
 
@@ -17064,6 +17037,11 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
         data["material"] = this.material ? this.material.toJSON() : <any>undefined;
         data["supplier"] = this.supplier ? this.supplier.toJSON() : <any>undefined;
         data["warehouse"] = this.warehouse ? this.warehouse.toJSON() : <any>undefined;
+        if (Array.isArray(this.outputRequests)) {
+            data["outputRequests"] = [];
+            for (let item of this.outputRequests)
+                data["outputRequests"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -17093,6 +17071,7 @@ export interface IWarehouseMaterialDto {
     material: MaterialDto;
     supplier: SupplierDto;
     warehouse: WarehouseDto;
+    outputRequests: OutputRequestForWarehouseMaterialDto[] | undefined;
 }
 
 export class WarehouseMaterialDtoPagedResultDto implements IWarehouseMaterialDtoPagedResultDto {

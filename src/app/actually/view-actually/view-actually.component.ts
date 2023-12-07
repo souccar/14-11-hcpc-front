@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DailyProductionDto, DailyProductionServiceProxy, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'view-actually',
@@ -8,21 +8,34 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 })
 export class ViewActuallyComponent implements OnInit {
-  dailyProduction = new DailyProductionDto();
-  constructor(private _modalService: BsModalService,
-    private _dailyProductionService: DailyProductionServiceProxy,
-    private _planService: PlanServiceProxy) { }
+
+
+  canProduce:boolean=false;
+  plan:PlanDto=new PlanDto();
+  changeStatus=false;
+
+  constructor( private _modalService: BsModalService,
+    private _planService:PlanServiceProxy){}
   ngOnInit(): void {
-    this.getLatestDailyProduction()
-  }
-  getLatestDailyProduction(){
-    this._planService.getLastPlanActual().subscribe((result) => {
-      console.log(result)
-      if (result.id > 0) {
-        this.dailyProduction.plan = result;
-        console.log( this.dailyProduction)
-      }
-    })
-  }
+  this.getLatestPlan()
+}
+
+getLatestPlan()
+{
+  this._planService.getLastPlan().subscribe((result)=>{
+    if(result.id > 0){
+      this.plan = result;
+    }
+  })
+}
+changePlanStatusToActually(){
+  this._planService.changeStatusToActual(this.plan.id).subscribe((result)=>{
+    this.changeStatus=true;
+  })
+}
+changePlanStatusToArchive(){
+  this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
+  })
+}
 
 }

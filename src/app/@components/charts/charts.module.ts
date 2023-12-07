@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartService } from './chart.service';
 import { Colors } from './color.service';
@@ -11,7 +11,8 @@ import {RadarChartComponent} from './radar-chart/radar-chart.component';
 import {PieChartComponent} from './pie-chart/pie-chart.component';
 import {DoughnutChartComponent} from './doughnut-chart/doughnut-chart.component';
 import {SmallLineChartComponent} from './small-line-chart/small-line-chart.component';
-
+import {RadialProcessCardComponent} from './radial-process-card/radial-process-card.component';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 @NgModule({
   declarations: [
@@ -23,10 +24,12 @@ import {SmallLineChartComponent} from './small-line-chart/small-line-chart.compo
     RadarChartComponent,
     PieChartComponent,
     DoughnutChartComponent,
-    SmallLineChartComponent
+    SmallLineChartComponent,
+    RadialProcessCardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RoundProgressModule
   ],
   exports: [
     AreaChartComponent,
@@ -37,11 +40,12 @@ import {SmallLineChartComponent} from './small-line-chart/small-line-chart.compo
     RadarChartComponent,
     PieChartComponent,
     DoughnutChartComponent,
-    SmallLineChartComponent
+    SmallLineChartComponent,
+    RadialProcessCardComponent
   ],
   providers:[
     ChartService,
     Colors
-  ]
+  ],schemas:[NO_ERRORS_SCHEMA]
 })
 export class ChartsModule { }

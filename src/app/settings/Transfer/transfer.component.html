@@ -30,7 +30,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Value')" prop="value" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
-           {{row.value | n:3}}
+           {{row.value | commaNumber}}
          
         </ng-template>
       </ngx-datatable-column>

@@ -5,15 +5,14 @@ import { ViewActuallyComponent } from './view-actually/view-actually.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { ActuallyComponent } from './actually.component';
 
-
-
 const routes: Routes = [
-  // {
-  //   path: '', component: ViewActuallyComponent,
-  //   canActivate: [AppRouteGuard]
-  // },
   {
     path: '',
+    component: ViewActuallyComponent,
+    canActivate: [AppRouteGuard]
+  },
+  {
+    path: 'list',
     component: ActuallyComponent,
     canActivate: [AppRouteGuard]
   },

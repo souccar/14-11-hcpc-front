@@ -12,7 +12,7 @@ import { finalize } from 'rxjs';
 })
 export class CreateActuallyDialogComponent extends AppComponentBase {
   saving = false;
-  planProductloaded=false;
+  planProductloaded = false;
   dailyProduction = new CreateDailyProductionDto();
   plans: PlanNameForDropdownDto[] = [];
   planProducts: PlanProductDto[] = [];
@@ -25,31 +25,39 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
+
   ngOnInit(): void {
-    this.dailyProduction.dailyProductionDetails=[]
+    this.dailyProduction.dailyProductionDetails = []
     this.initPlans();
   }
+
   initPlans() {
     this._planService.getNameForDropdown().subscribe((result) => {
       this.plans = result;
-      console.log(this.plans);
     });
   }
-  getProductForPlan(id:number){
 
-    if(id!=null){ 
-      this._planService.get(id).subscribe((result)=>{
-        this.planProducts=result.planProducts;
-        this.planProductloaded=true;
-       });
+  getProductForPlan(id: number) {
+    if (id != null) {
+      this._planService.get(id).subscribe((result) => {
+        this.planProducts = result.planProducts;
+        this.planProducts.forEach(item=>{
+          var dailyProductionDetail =new CreateDailyProductionDetailsDto();
+          dailyProductionDetail.init({productId:item.productId, quantity:0})
+          this.dailyProduction.dailyProductionDetails.push(dailyProductionDetail)
+        })
+        this.planProductloaded = true;
+      });
+    }
   }
 
-   
+  updatedQuantity(args, index){
+    this.dailyProduction.dailyProductionDetails[index].quantity = args.target.value;
   }
 
   save(): void {
+    debugger;
     this.saving = true;
-    console.log(this.dailyProduction)
     this._dailyProductionService.
       create(
         this.dailyProduction
@@ -60,13 +68,9 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response: any) => {
-
-        console.log(response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();
       });
-
   }
-
 }
