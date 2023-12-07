@@ -12815,6 +12815,7 @@ export class PlanProductDto implements IPlanProductDto {
     productId: number | undefined;
     product: ProductDto;
     readonly canProduce: number;
+    itemCost: number;
     totalProduction: number;
     totalCost: number;
     produceCost: number;
@@ -12841,6 +12842,7 @@ export class PlanProductDto implements IPlanProductDto {
             this.productId = _data["productId"];
             this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
             (<any>this).canProduce = _data["canProduce"];
+            this.itemCost = _data["itemCost"];
             this.totalProduction = _data["totalProduction"];
             this.totalCost = _data["totalCost"];
             this.produceCost = _data["produceCost"];
@@ -12871,6 +12873,7 @@ export class PlanProductDto implements IPlanProductDto {
         data["productId"] = this.productId;
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
         data["canProduce"] = this.canProduce;
+        data["itemCost"] = this.itemCost;
         data["totalProduction"] = this.totalProduction;
         data["totalCost"] = this.totalCost;
         data["produceCost"] = this.produceCost;
@@ -12901,6 +12904,7 @@ export interface IPlanProductDto {
     productId: number | undefined;
     product: ProductDto;
     canProduce: number;
+    itemCost: number;
     totalProduction: number;
     totalCost: number;
     produceCost: number;

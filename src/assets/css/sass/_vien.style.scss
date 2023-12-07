@@ -6059,6 +6059,34 @@ div.dataTables_wrapper div.dataTables_filter input {
   }
 }
 
+.progress-bar-circle-lg {
+  width: 200px;
+  height: 200px;
+
+  svg circle:first-of-type {
+    opacity: 0.5;
+  }
+
+  svg path:first-of-type,
+  svg circle:first-of-type {
+    stroke: $separator-color !important;
+  }
+
+  svg path:last-of-type {
+    stroke: $theme-color-1 !important;
+  }
+
+  &.progress-bar-banner {
+    svg path:first-of-type {
+      stroke: mix($theme-color-1, $foreground-color, 80%) !important;
+    }
+
+    svg path:last-of-type {
+      stroke: $button-text-color !important;
+    }
+  }
+}
+
 .progress-banner {
   height: 200px;
   background-image: linear-gradient(to right top, $gradient-color-2, $gradient-color-3, $gradient-color-1) !important;

@@ -2114,6 +2114,13 @@ angular-archwizard@^7.0.0:
   dependencies:
     tslib "^2.0.0"
 
+angular-svg-round-progressbar@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/angular-svg-round-progressbar/-/angular-svg-round-progressbar-12.0.0.tgz#5b8379747a179cddb9cca9343106c778c32604d6"
+  integrity sha512-zf5TLC0goQZgirSp6g72SdN8Vz7a3VuKVqdSnIuAf0Q7Nx55crmlwLWIEYIxrKe5A1wea8fnOF8oFK5v8mCAsA==
+  dependencies:
+    tslib "^2.3.0"
+
 angular2-hotkeys@^16.0.1:
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/angular2-hotkeys/-/angular2-hotkeys-16.0.1.tgz#8fb46c6039240b28481d49d507c9a3d1b1efc957"

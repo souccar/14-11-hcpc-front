@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlanDto, PlanMaterialDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
+import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EditPlanDialogComponent } from '../edit-plan/edit-plan-dialog.component';
 

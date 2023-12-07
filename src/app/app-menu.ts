@@ -22,12 +22,17 @@ const data: IMenuItem[] = [
       {
         label: 'Plan',
         to: `${adminRoot}/plan`,
-        icon: 'simple-icon-notebook',
+        icon: 'iconsminds-address-book-2',
       },
       {
         label: 'Actually',
         to: `${adminRoot}/diallyProduction`,
         icon: 'simple-icon-notebook',
+      },
+      {
+        label: 'Daily Production',
+        to: `${adminRoot}/diallyProduction/list`,
+        icon: 'simple-icon-clock',
       },
     ],
   },

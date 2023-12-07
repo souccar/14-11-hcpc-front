@@ -1,79 +1,80 @@
 <div class="modal-header">
-  <h4 class="font-weight-medium mb-0">{{ data.name }}</h4>
+  <div class="float-left float-none-xs">
+    <div class="d-inline-block">
+      <h4 class="d-inline">{{ data.name }}</h4>
+      <span class="text-muted text-small d-block">{{ data.description }}</span>
+    </div>
+  </div>
+  <!-- <h4 class="font-weight-medium mb-0">{{ data.name }}</h4>
   <p class="text-muted mt-4 mb-0 text-small" style="margin-left: -45px">
     {{ data.description }}
-  </p>
-  <button
-    type="button"
-    class="close pull-right"
-    aria-label="Close"
-    (click)="bsModalRef.hide()"
-  >
+  </p> -->
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body modal-xl" *ngIf="isLoaded">
-  <div class="row">
-    <div class="col-6">
+  <div class="row mb-2">
+    <div class="col-lg-6">
       <h6>
         <i class="iconsminds-calendar-4"></i> Total Quantity :
         {{ data.totalQuantity }}
       </h6>
     </div>
-    <div class="col-3">
-      <h6><i class="simple-icon-user"></i> Supplier :</h6>
-      <table class="table table-sm table-borderless">
+    <div class="col-lg-6">
+      <div class="float-left float-none-xs">
+        <h6 ><i class="simple-icon-user"></i> Supplier :</h6>
+      </div>
+      <div class="float-left float-none-xs mx-3">
+        <table class="table table-sm table-borderless">
+          <tbody>
+            <tr *ngFor="let supplier of data.suppliers">
+              <td>
+                <span [class]="'log-indicator align-middle'"></span>
+              </td>
+              <td>
+                <span class="font-weight-medium">{{supplier.supplier.name}}</span>
+              </td>
+              <td class="text-right">
+                <span class="text-muted">{{ supplier.leadTime }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- tabel -->
+  <div class="row">
+    <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Warehouse</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">code</th>
+            <th scope="col">expiration Date</th>
+            <th scope="col">OutPut Request</th>
+
+          </tr>
+        </thead>
         <tbody>
-          <tr *ngFor="let supplier of data.suppliers">
-            <td>
-              <span [class]="'log-indicator align-middle'"></span>
-            </td>
-            <td>
-              <span class="font-weight-medium">{{
-                supplier.supplier.name
-              }}</span>
-            </td>
-            <td class="text-right">
-              <span class="text-muted">{{ supplier.leadTime }}</span>
-            </td>
+          <tr *ngFor="let warehousematerial of data.warehouseMaterials; let i = index">
+            <td>{{warehousematerial.warehouse.warehouseKeeper}}</td>
+            <td>{{warehousematerial.currentQuantity}} {{warehousematerial.unit?.name}}</td>
+            <td>{{warehousematerial.code}}</td>
+            <td>{{warehousematerial.expirationDate|date:"yyyy/MM/dd"}}</td>
+            <ng-contanier *ngFor="let outputRequest of warehousematerial.OutPutRequest; let wId = index">
+              <td *ngIf="wId == i">{{ outputRequest.quantity }}</td>
+            </ng-contanier>
+
+
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
-  <div class="separator my-5"></div>
-       <!-- tabel -->
-       <div class="row">
-        <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-
-                <th scope="col">Warehouse Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">code</th>
-                <th scope="col">expiration Date</th>
-                <th scope="col">OutPut Request</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let warehousematerial of data.warehouseMaterials; let i = index">
-                <td>{{warehousematerial.warehouse.warehouseKeeper}}</td>
-                <td>{{warehousematerial.currentQuantity}}</td>
-                <td>{{warehousematerial.code}}</td>
-                <td>{{warehousematerial.expirationDate|date:"yyyy/MM/dd"}}</td>
-                <ng-contanier *ngFor="let outputRequest of warehousematerial.OutPutRequest; let wId = index">
-                  <td *ngIf="wId == i">{{ outputRequest.quantity }}</td>
-                </ng-contanier>
-
-
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
   <!-- <div class="row">
     <div class="col-12 list">
       <ngx-datatable

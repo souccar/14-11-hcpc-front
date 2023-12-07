@@ -20,22 +20,15 @@
         {{ "products" | localize }}
       </label>
       <ng-contanier >
-      <div class="col-md-9">
-        <div *ngFor="let planProduct of planProducts">
+      <div class="col-md-12">
+        <div *ngFor="let planProduct of planProducts, index as i">
           <div class="row mt-1">
-            <div class="col-md-6 ">
-              <input
-              type="text"
-              class="form-control"
-              name="product.name"
-              id="product.name"
-              [value]="planProduct.product.name"
-              [readonly]="true"
-            />
+            <div class="col-md-5 ">
+              <label class="" [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
             </div>
-            <div class="col-md-6 ">
-              <input type="number" placeholder="quantitiy" max="{{planProduct.product.ma}}" class="form-control" name="quantitiy" id="quantitiy" required
-              [ngModel]="dailyProduction.dailyProductionDetails[0]" #quantitiyModel="ngModel" #quantitiyEl />
+            <div class="col-md-7 ">
+              <input type="number" placeholder="quantitiy" class="form-control" name="{{'quantity-'+i}}" id="{{'quantity-'+i}}" required
+              (keyup)="updatedQuantity($event,i)"  />
             </div>
           </div>
         </div>
