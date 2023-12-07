@@ -1,11 +1,12 @@
 <!-- <h4>Products</h4>
 <div class="separator my-3"></div> -->
-<div class="row mb-4 h-100">
+<div class="row mb-4 ">
   <div class="col-lg-6 col-md-6" *ngFor="let p of planProducts; let i = index">
-    <div class="card">
+   
+    <div class="card mb-3" style="min-height: 38vh; ">
       <div class="card-body border-bottom pb-2">
         <!-- header -->
-        <div class="float-left float-none-xs">
+        <div class="float-left float-none-xs mb-0">
           <div class="d-inline-block">
             <h5 class="d-inline">{{ p.product.name }}</h5>
             <span class="text-muted text-small d-block">MMT</span>
@@ -82,7 +83,7 @@
               class="scroll"
               [config]="{ suppressScrollX: true, wheelPropagation: false }"
             >
-              <table class="table table-sm table-striped">
+              <table class="table table-sm table-striped ">
                 <thead>
                   <tr>
                     <th>
@@ -136,3 +137,4 @@
     </div>
   </div>
 </div>
+

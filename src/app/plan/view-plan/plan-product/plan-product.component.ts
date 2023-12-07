@@ -9,6 +9,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-plan-product',
   templateUrl: './plan-product.component.html',
+  styleUrls: ['./plan-product.component.scss']
 
 })
 export class PlanProductComponent extends AppComponentBase implements OnInit {
