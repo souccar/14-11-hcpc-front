@@ -47,7 +47,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   }
 
   initProduct() {
-    console.log(this.productId)
+
     this._productService.get(this.productId).subscribe((response: ProductDto) => {
       this.product = response;
       this.product.formulas.forEach(element => {

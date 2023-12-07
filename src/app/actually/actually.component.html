@@ -12,11 +12,11 @@
   [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]" (select)="onSelect($event)"
   [selected]="selected">
 
- 
+
   <ngx-datatable-column [name]="l('Plan')" prop="plan" [flexGrow]="1">
     <ng-template let-row="row" ngx-datatable-cell-template >
-       {{row.plan.title}}
-     
+       {{row.plan?.title}}
+
     </ng-template>
   </ngx-datatable-column>
 

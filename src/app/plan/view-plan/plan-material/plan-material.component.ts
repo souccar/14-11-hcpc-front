@@ -36,15 +36,15 @@ export class PlanMaterialComponent extends AppComponentBase implements OnInit {
     this.chartDataConfig = this._chartService;
   }
   ngOnInit(): void {
-    console.log (this.planMaterials)
+
     this.radarChartData = this.getChartData();
- 
+
   }
   getRowClass(row) {
     return { 'row-color1': row.totalQuantity > row.inventory }
   }
   editMaterial(id:number) {
-    console.log(id)
+
     this._modalService.show(
       MaterialDetailsComponent,
       {

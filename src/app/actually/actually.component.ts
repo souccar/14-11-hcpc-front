@@ -65,7 +65,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
 
 }
 
-  
+
   editButton(id:number): void {
     let editDailyProductionDialog: BsModalRef;
         editDailyProductionDialog = this._modalService.show(
@@ -82,18 +82,18 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
       editDailyProductionDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
     protected delete(entity: DailyProductionDto): void {
-    
+
       abp.message.confirm(
         this.l('DailyProductionDeleteWarningMessage', this.selected.length, 'DailyProductions'),
         undefined,
         (result: boolean) => {
           if (result) {
-           
+
             this._dailyProductionService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
@@ -157,11 +157,11 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
   }
 
   isSelected(p: DailyProductionDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: DailyProductionDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -190,12 +190,12 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
         })
       )
       .subscribe((result: DailyProductionDtoPagedResultDto) => {
-        
+
         this.data = result.items;
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
-        console.log(this.data)
+
       });
   }
 
@@ -236,7 +236,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

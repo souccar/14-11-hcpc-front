@@ -22,7 +22,7 @@ export class ViewActuallyComponent implements OnInit {
 
 getLatestPlan()
 {
-  this._planService.getLastPlan().subscribe((result)=>{
+  this._planService.getLastPlanActual().subscribe((result) => {
     if(result.id > 0){
       this.plan = result;
     }

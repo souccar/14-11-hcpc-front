@@ -184,11 +184,12 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
+    request.Including ="plan,material,warehouse";
     this._OutputRequestService
       .getAll(
         request.keyword,
         request.sort_Field,
-        'material,warehouse',
+        request.Including,
         request.skipCount,
         request.MaxResultCount,
       )

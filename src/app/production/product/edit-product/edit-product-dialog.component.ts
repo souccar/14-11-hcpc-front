@@ -77,7 +77,7 @@ export class EditProductDialogComponent extends AppComponentBase {
       this.notify.error(this.l('Add One formula at least'));
     }
     else {
-      console.log("jjjjjjjjjjj")
+
       this.product.formulas.forEach((element) =>
         element.id = 0
       );
