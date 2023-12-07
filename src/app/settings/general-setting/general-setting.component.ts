@@ -13,7 +13,7 @@ import { CreateGeneralSettingDialogComponent } from './create-general-setting/cr
 
 })
 export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSettingDto> {
-  
+
   displayMode = 'list';
   selectAllState = '';
   selected: GeneralSettingDto[] = [];
@@ -68,7 +68,7 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
 
 }
 
-  
+
   editButton(id:number): void {
     let editGeneralSettingDialog: BsModalRef;
         editGeneralSettingDialog = this._modalService.show(
@@ -85,18 +85,18 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
       editGeneralSettingDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
     protected delete(entity: GeneralSettingDto): void {
-    
+
       abp.message.confirm(
         this.l('GeneralSettingDeleteWarningMessage', this.selected.length, 'GeneralSettings'),
         undefined,
         (result: boolean) => {
           if (result) {
-           
+
             this._GeneralSettingService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
@@ -160,11 +160,11 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
   }
 
   isSelected(p: GeneralSettingDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: GeneralSettingDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -178,7 +178,7 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-  
+
 
     this._GeneralSettingService
       .getAll(
@@ -193,9 +193,9 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
         })
       )
       .subscribe((result: GeneralSettingDtoPagedResultDto) => {
-        
+
         this.data = result.items;
-        console.log(result)
+
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
@@ -239,7 +239,7 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

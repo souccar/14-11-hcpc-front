@@ -24,7 +24,7 @@ export class CreateGeneralSettingDialogComponent  extends AppComponentBase  {
 
   }
 
-  
+
   save(): void {
     this.saving = true;
     this._GeneralSettingService.
@@ -38,7 +38,7 @@ export class CreateGeneralSettingDialogComponent  extends AppComponentBase  {
       )
       .subscribe((response: any) => {
 
-        console.log(response);
+
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();

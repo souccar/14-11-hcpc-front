@@ -57,8 +57,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   }
   initPlan()
   {
-      this._planService.getNameForDropdown().subscribe((result)=>{
-        console.log(result)
+      this._planService.getActualPlansNameForDropdown().subscribe((result)=>{
         this.plans=result
       })
   }

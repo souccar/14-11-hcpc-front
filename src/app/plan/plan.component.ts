@@ -65,7 +65,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
 
 }
 
-  
+
   editButton(id:number): void {
     let editPlanDialog: BsModalRef;
         editPlanDialog = this._modalService.show(
@@ -82,18 +82,18 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
       editPlanDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
     protected delete(entity: PlanDto): void {
-    
+
       abp.message.confirm(
         this.l('PlanDeleteWarningMessage', this.selected.length, 'Plans'),
         undefined,
         (result: boolean) => {
           if (result) {
-           
+
             this._planService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
@@ -157,11 +157,11 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
   }
 
   isSelected(p: PlanDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: PlanDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -175,7 +175,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-    request.Including ="";
+    request.Including ="plan";
     this._planService
       .getAll(
         request.keyword,
@@ -190,7 +190,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
         })
       )
       .subscribe((result: PlanDtoPagedResultDto) => {
-        
+
         this.data = result.items;
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
@@ -235,7 +235,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

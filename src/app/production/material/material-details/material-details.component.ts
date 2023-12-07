@@ -18,7 +18,6 @@ export class MaterialDetailsComponent implements OnInit {
     private _materialService:MaterialServiceProxy){}
 
   ngOnInit(): void {
-
    this.getMaterialDetails()
   }
 
