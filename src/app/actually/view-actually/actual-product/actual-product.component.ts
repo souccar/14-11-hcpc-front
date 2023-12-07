@@ -17,13 +17,14 @@ export class ActualProductComponent implements OnInit{
   @Input() planProducts: PlanProductDto[];
   chartDataConfig: ChartService;
   productionPercent: number;
-  tooltipData = [
-    {requiredQuantity: 'العدد المطلوب انتاجه'},
-    {canProduce: 'العدد الممكن إنتاجه حسب كميات المواد الموجودة في المستودعات'},
-    {totalProduction: 'العدد الذي تم إنتاجه حتى اليوم'},
-    {cost: 'تكلفة إنتاج عبوة واحدة / تكلفة إنتاج العدد الممكن إنتاجه'},
-    {price: 'سعر المنتج'},
-  ]
+  tooltipData = {
+    requiredQuantity: 'العدد المطلوب انتاجه',
+    canProduce: 'العدد الممكن إنتاجه حسب كميات المواد الموجودة في المستودعات',
+    totalProduction: 'العدد الذي تم إنتاجه حتى اليوم',
+    cost: 'تكلفة إنتاج عبوة واحدة / تكلفة إنتاج العدد الممكن إنتاجه',
+    price: 'مبلغ المبيع الإجمالي حسب عدد العبوات المنتجة / سعر المنتج',
+    productArbitrage:'موازنة المنتج'
+  }
   constructor(private chartService: ChartService
     ,private _planService:PlanServiceProxy,
     private _modalService: BsModalService,) {

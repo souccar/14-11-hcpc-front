@@ -29,11 +29,13 @@
                         <div class="d-flex row-flex mt-4">
                             <div class="w-50">
                                 <ul class="mb-0">
-                                    <li class="text-one">Required number <i [tooltip]="tooltipData[0].requiredQuantity" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Can produce <i [tooltip]="tooltipData[1].canProduce" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Number produced <i [tooltip]="tooltipData[2].totalProduction" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Cost <i [tooltip]="tooltipData[3].cost" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Selling price <i [tooltip]="tooltipData[4].price" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">Required number <i [tooltip]="tooltipData.requiredQuantity" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">Can produce <i [tooltip]="tooltipData.canProduce" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">Number produced <i [tooltip]="tooltipData.totalProduction" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">Cost <i [tooltip]="tooltipData.cost" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one pb-3">Selling price <i [tooltip]="tooltipData.price" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                   
+                                    <li class="text-one text-primary">Arbitrage <i [tooltip]="tooltipData.productArbitrage" class="bi bi-question-circle-fill text-primary"></i> :</li>
                                 </ul>
                             </div>
                             <div class="w-50">
@@ -48,10 +50,14 @@
                                         {{p.totalProduction}}
                                     </li>
                                     <li class="text-one">
-                                        {{p.itemCost | commaNumber}} / {{p.totalCost | commaNumber}}
+                                        {{p.itemCost | commaNumber}} | {{p.totalCost | commaNumber}}
                                     </li>
-                                    <li class="text-one">
-                                        {{p.product?.price | commaNumber}}
+                                    <li class="text-one  pb-3">
+                                        {{p.product?.price | commaNumber}} | {{p.totalSalesAmount | commaNumber}}
+                                    </li>
+                                    
+                                    <li class="text-one  text-primary">
+                                        {{p.productArbitrage | commaNumber}}
                                     </li>
                                 </ul>
                             </div>
