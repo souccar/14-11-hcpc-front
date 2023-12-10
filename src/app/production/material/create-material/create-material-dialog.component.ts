@@ -12,48 +12,52 @@ import { finalize } from 'rxjs';
 export class CreateMaterialDialogComponent extends AppComponentBase {
   saving = false;
 
-  material =  new CreateMaterialDto();
+  material = new CreateMaterialDto();
   suppliers: SupplierNameForDropdownDto[] = [];
 
-  materialSuppliers :CreateMaterialSuppliersDto[]=[];
+  materialSuppliers: CreateMaterialSuppliersDto[] = [];
   supplierList: SupplierNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
-   private _materialService:MaterialServiceProxy,
-   private _supplierService:SupplierServiceProxy,
+    private _materialService: MaterialServiceProxy,
+    private _supplierService: SupplierServiceProxy,
     public bsModalRef: BsModalRef,
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
-    this.material.suppliers=[]
-    this. initSupplier();
+    this.material.suppliers = []
+    this.initSupplier();
   }
 
-  initSupplier(){
+  initSupplier() {
 
-   this._supplierService.getNameForDropdown().subscribe((result:SupplierNameForDropdownDto[]) => {
-    this.suppliers = result;
+    this._supplierService.getNameForDropdown().subscribe((result: SupplierNameForDropdownDto[]) => {
+      this.suppliers = result;
 
-  });
+    });
   }
-  addMaterialSupplier(){
+  addMaterialSupplier() {
+    var index = this.material.suppliers.length - 1;
+    if ((this.material.suppliers[index].supplierId == null || this.material.suppliers[index].leadTime == null) && this.material.suppliers.length > 0) {
+      return;
+    }
     let materialSupplier = new CreateMaterialSuppliersDto();
+    console.log(materialSupplier);
     this.material.suppliers.push(materialSupplier);
-     ( this.material.suppliers)
   }
-  removeMaterialSupplier(i:number){
-    this.material.suppliers.splice(i,1);
+  removeMaterialSupplier(i: number) {
+    this.material.suppliers.splice(i, 1);
   }
 
-   save(): void {
+  save(): void {
     this.saving = true;
-     (this. material)
+    (this.material)
 
 
     this._materialService.
-    create(
+      create(
         this.material
       )
       .pipe(
@@ -61,11 +65,11 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
           this.saving = false;
         })
       )
-      .subscribe((result:any) => {
+      .subscribe((result: any) => {
 
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.bsModalRef.hide();
+        this.onSave.emit();
       });
 
   }
