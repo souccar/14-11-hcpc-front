@@ -2,7 +2,7 @@
   <div class="float-left float-none-xs">
     <div class="d-inline-block">
       <h4 class="d-inline">{{ data.name }}</h4>
-      <span class="text-muted text-small d-block">{{ data.description }}</span>
+      <span class="text-muted text-small d-block">{{ data.code }}</span>
     </div>
   </div>
   <!-- <h4 class="font-weight-medium mb-0">{{ data.name }}</h4>
@@ -61,7 +61,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let warehousematerial of data.warehouseMaterials; let i = index">
-            <td>{{warehousematerial.warehouse.warehouseKeeper}}</td>
+            <td>{{warehousematerial.warehouse.name}}</td>
             <td>{{warehousematerial.currentQuantity}} {{warehousematerial.unit?.name}}</td>
             <td>{{warehousematerial.code}}</td>
             <td>{{warehousematerial.expirationDate|date:"yyyy/MM/dd"}}</td>

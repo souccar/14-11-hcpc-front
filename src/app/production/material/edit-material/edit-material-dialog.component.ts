@@ -42,6 +42,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
 
       this.material.id=result.id;
       this.material.name=result.name;
+      this.material.code=result.code;
       this.material.description=result.description;
 
      result.suppliers.forEach((item)=>{
