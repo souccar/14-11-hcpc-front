@@ -8387,6 +8387,7 @@ export interface ICreateGeneralSettingDto {
 
 export class CreateMaterialDto implements ICreateMaterialDto {
     name: string | undefined;
+    code: string | undefined;
     description: string | undefined;
     suppliers: CreateMaterialSuppliersDto[] | undefined;
 
@@ -8402,6 +8403,7 @@ export class CreateMaterialDto implements ICreateMaterialDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.code = _data["code"];
             this.description = _data["description"];
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
@@ -8421,6 +8423,7 @@ export class CreateMaterialDto implements ICreateMaterialDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["code"] = this.code;
         data["description"] = this.description;
         if (Array.isArray(this.suppliers)) {
             data["suppliers"] = [];
@@ -8440,6 +8443,7 @@ export class CreateMaterialDto implements ICreateMaterialDto {
 
 export interface ICreateMaterialDto {
     name: string | undefined;
+    code: string | undefined;
     description: string | undefined;
     suppliers: CreateMaterialSuppliersDto[] | undefined;
 }
@@ -10809,9 +10813,11 @@ export enum LayoutKind {
 export class MaterialDetailDto implements IMaterialDetailDto {
     id: number;
     name: string | undefined;
+    code: string | undefined;
     description: string | undefined;
     readonly totalQuantity: number;
     suppliers: MaterialSuppliersDto[] | undefined;
+    relatedProducts: ProductOfMaterialDto[] | undefined;
     warehouseMaterials: WarehouseMaterialDto[] | undefined;
 
     constructor(data?: IMaterialDetailDto) {
@@ -10827,12 +10833,18 @@ export class MaterialDetailDto implements IMaterialDetailDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.code = _data["code"];
             this.description = _data["description"];
             (<any>this).totalQuantity = _data["totalQuantity"];
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
                 for (let item of _data["suppliers"])
                     this.suppliers.push(MaterialSuppliersDto.fromJS(item));
+            }
+            if (Array.isArray(_data["relatedProducts"])) {
+                this.relatedProducts = [] as any;
+                for (let item of _data["relatedProducts"])
+                    this.relatedProducts.push(ProductOfMaterialDto.fromJS(item));
             }
             if (Array.isArray(_data["warehouseMaterials"])) {
                 this.warehouseMaterials = [] as any;
@@ -10853,12 +10865,18 @@ export class MaterialDetailDto implements IMaterialDetailDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["code"] = this.code;
         data["description"] = this.description;
         data["totalQuantity"] = this.totalQuantity;
         if (Array.isArray(this.suppliers)) {
             data["suppliers"] = [];
             for (let item of this.suppliers)
                 data["suppliers"].push(item.toJSON());
+        }
+        if (Array.isArray(this.relatedProducts)) {
+            data["relatedProducts"] = [];
+            for (let item of this.relatedProducts)
+                data["relatedProducts"].push(item.toJSON());
         }
         if (Array.isArray(this.warehouseMaterials)) {
             data["warehouseMaterials"] = [];
@@ -10879,14 +10897,17 @@ export class MaterialDetailDto implements IMaterialDetailDto {
 export interface IMaterialDetailDto {
     id: number;
     name: string | undefined;
+    code: string | undefined;
     description: string | undefined;
     totalQuantity: number;
     suppliers: MaterialSuppliersDto[] | undefined;
+    relatedProducts: ProductOfMaterialDto[] | undefined;
     warehouseMaterials: WarehouseMaterialDto[] | undefined;
 }
 
 export class MaterialDto implements IMaterialDto {
     name: string | undefined;
+    code: string | undefined;
     description: string | undefined;
     id: number;
     suppliers: MaterialSuppliersDto[] | undefined;
@@ -10903,6 +10924,7 @@ export class MaterialDto implements IMaterialDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.code = _data["code"];
             this.description = _data["description"];
             this.id = _data["id"];
             if (Array.isArray(_data["suppliers"])) {
@@ -10923,6 +10945,7 @@ export class MaterialDto implements IMaterialDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["code"] = this.code;
         data["description"] = this.description;
         data["id"] = this.id;
         if (Array.isArray(this.suppliers)) {
@@ -10943,6 +10966,7 @@ export class MaterialDto implements IMaterialDto {
 
 export interface IMaterialDto {
     name: string | undefined;
+    code: string | undefined;
     description: string | undefined;
     id: number;
     suppliers: MaterialSuppliersDto[] | undefined;
@@ -12817,8 +12841,8 @@ export class PlanProductDto implements IPlanProductDto {
     readonly canProduce: number;
     itemCost: number;
     totalProduction: number;
-    totalCost: number;
-    produceCost: number;
+    readonly totalCost: number;
+    readonly produceCost: number;
     readonly amountWasted: number;
     readonly totalSalesAmount: number;
     readonly productArbitrage: number;
@@ -12844,8 +12868,8 @@ export class PlanProductDto implements IPlanProductDto {
             (<any>this).canProduce = _data["canProduce"];
             this.itemCost = _data["itemCost"];
             this.totalProduction = _data["totalProduction"];
-            this.totalCost = _data["totalCost"];
-            this.produceCost = _data["produceCost"];
+            (<any>this).totalCost = _data["totalCost"];
+            (<any>this).produceCost = _data["produceCost"];
             (<any>this).amountWasted = _data["amountWasted"];
             (<any>this).totalSalesAmount = _data["totalSalesAmount"];
             (<any>this).productArbitrage = _data["productArbitrage"];
@@ -13157,6 +13181,57 @@ export class ProductNameForDropdownDto implements IProductNameForDropdownDto {
 export interface IProductNameForDropdownDto {
     id: number;
     name: string | undefined;
+}
+
+export class ProductOfMaterialDto implements IProductOfMaterialDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+
+    constructor(data?: IProductOfMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): ProductOfMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProductOfMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data;
+    }
+
+    clone(): ProductOfMaterialDto {
+        const json = this.toJSON();
+        let result = new ProductOfMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProductOfMaterialDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
 }
 
 export enum PropertyAttributes {
@@ -15793,6 +15868,7 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
     id: number;
     name: string | undefined;
     description: string | undefined;
+    code: string | undefined;
     suppliers: UpdateMaterialSuppliersDto[] | undefined;
 
     constructor(data?: IUpdateMaterialDto) {
@@ -15809,6 +15885,7 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.description = _data["description"];
+            this.code = _data["code"];
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
                 for (let item of _data["suppliers"])
@@ -15829,6 +15906,7 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["description"] = this.description;
+        data["code"] = this.code;
         if (Array.isArray(this.suppliers)) {
             data["suppliers"] = [];
             for (let item of this.suppliers)
@@ -15849,6 +15927,7 @@ export interface IUpdateMaterialDto {
     id: number;
     name: string | undefined;
     description: string | undefined;
+    code: string | undefined;
     suppliers: UpdateMaterialSuppliersDto[] | undefined;
 }
 
