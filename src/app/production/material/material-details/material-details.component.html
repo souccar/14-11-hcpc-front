@@ -5,10 +5,6 @@
       <span class="text-muted text-small d-block">{{ data.code }}</span>
     </div>
   </div>
-  <!-- <h4 class="font-weight-medium mb-0">{{ data.name }}</h4>
-  <p class="text-muted mt-4 mb-0 text-small" style="margin-left: -45px">
-    {{ data.description }}
-  </p> -->
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -51,19 +47,6 @@
     <span class="badge badge-pill badge-light mb-1 mr-1" *ngFor="let relatedProduct of data.relatedProducts">
       {{relatedProduct.name | localize}}
     </span>
-    <!-- <table class="table table-sm table-borderless">
-      <tbody>
-        <tr *ngFor="let relatedProduct of data.relatedProducts">
-          <td>
-            <span [class]="'log-indicator align-middle'"></span>
-          </td>
-          <td>
-            <span class="font-weight-medium">{{relatedProduct.name}}</span>
-          </td>
-
-        </tr>
-      </tbody>
-    </table> -->
   </div>
 </div>
   <!-- tabel -->
@@ -107,66 +90,4 @@
       </table>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-12 list">
-      <ngx-datatable
-        [rows]="data.warehouseMaterials"
-        [columnMode]="ColumnMode.flex"
-        [headerHeight]="20"
-        [footerHeight]="100"
-        #table
-        [sorts]="[{ prop: 'title', dir: 'asc' }]"
-      >
-        <ngx-datatable-column
-          [name]="'Warehouse Name'"
-          prop="Warehouse"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <a class="c-pointer">
-              <div>
-                {{ row.warehouse.warehouseKeeper }}
-              </div>
-            </a>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column
-          [name]="'Quantity'"
-          prop="currentQuantity"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div>{{ row.currentQuantity }}</div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column [name]="'Code'" prop="code" [flexGrow]="1">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div>{{ row.code }}</div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column
-          [name]="'expiration Date'"
-          prop="expirationDate"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div>{{ row.expirationDate | date : "yyyy-MM-dd" }}</div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column
-          [name]="'OutPutRequest'"
-          prop="unitId"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <ul>
-              <li>reem</li>
-              <li>reem</li>
-              <li>reem</li>
-            </ul>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
-    </div>
-  </div> -->
 </div>
