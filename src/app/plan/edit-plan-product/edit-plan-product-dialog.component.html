@@ -6,14 +6,7 @@
         <div class="col-md-11">
           <!-- Inputs -->
           <div class="row">
-            <div class="col-md-4 required">
-              <label form="numberOfItems">numberOfItems</label>
-              <input type="number" class="form-control" name="numberOfItems" id="numberOfItems" required min="0"  oninput="validity.valid||(value='');"
-              [(ngModel)]="planProduct.numberOfItems" #numberOfItemsModel="ngModel" #numberOfItemsEl  />
-
-
-            </div>
-            <div class="col-md-4 required">
+            <div class="col-md-6 required">
               <label form="productId">Product</label>
               <select aria-placeholder="product" class="form-control" aria-label="Product" #productIdModel="ngModel" required name="productId"
               [(ngModel)]="planProduct.productId"  #productIdEl >
@@ -22,21 +15,19 @@
               </select>
 
             </div>
-            <div class="col-md-4 required">
-              <label form="priority">priority</label>
-              <input type="number" class="form-control" name="priority" id="priority" required
-                [(ngModel)]="planProduct.priority" #priorityModel="ngModel" #priorityEl  />
+            <div class="col-md-6 required">
+              <label form="numberOfItems">numberOfItems</label>
+              <input type="number" class="form-control" name="numberOfItems" id="numberOfItems" required min="0"  oninput="validity.valid||(value='');"
+              [(ngModel)]="planProduct.numberOfItems" #numberOfItemsModel="ngModel" #numberOfItemsEl  />
+
 
             </div>
 
             <!-- <div class="col-md-4 required">
               <label form="priority">priority</label>
-              <select aria-placeholder="priority" class="form-control" aria-label="priority" #priorityModel="ngModel" required name="priority"
-              [(ngModel)]="planProduct.priority"  #priorityEl >
+              <input type="number" class="form-control" name="priority" id="priority" required
+                [(ngModel)]="planProduct.priority" #priorityModel="ngModel" #priorityEl  />
 
-                <option  value="0">Low</option>
-                <option  value="1">High</option>
-              </select>
             </div> -->
 
           </div>
@@ -59,7 +50,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Number Of Items</th>
                 <th scope="col">Product</th>
-                <th scope="col">Priority</th>
+                <!-- <th scope="col">Priority</th> -->
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -70,7 +61,7 @@
                 <!-- <ng-contanier *ngFor="let p of products;let pId=index"> -->
                   <td >{{planProduct.product.name}} </td>
                 <!-- </ng-contanier> -->
-                <td>{{planProduct.priority}}</td>
+                <!-- <td>{{planProduct.priority}}</td> -->
 
                 <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                     (click)="edit(planProduct)">
