@@ -37,16 +37,7 @@
               <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
             </div>
           </div>
-          <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="outputDate">
-              {{ "outputDate" }}
-            </label>
-            <div class="col-md-9">
-              <input type="date" class="form-control" name="outputDate" id="outputDate" required [(ngModel)]="outputRequest.outputDate"
-                #outputDateModel="ngModel" #outputDateEl />
-            <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
-            </div>
-          </div>
+   
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="Plans">
               {{ "Plans" }}
@@ -56,7 +47,6 @@
               [(ngModel)]="outputRequest.planId"  #planIdEl >
                 <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
               </select>
-            <abp-validation-summary [control]="outputDateModel" [controlEl]="outputDateEl"></abp-validation-summary>
             </div>
           </div>
 
