@@ -7,7 +7,7 @@
         {{ "Plan" | localize }}
       </label>
       <div class="col-md-9 ">
-        <select aria-placeholder="plan" (change)="getProductForPlan($event.target.value)" class="form-control"
+        <select aria-placeholder="plan" (change)="getProductFromPlan($event.target.value)" class="form-control"
           aria-label="Plan" #planIdModel="ngModel" required name="plan" [(ngModel)]="dailyProduction.planId" #planIdEl>
           <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
         </select>

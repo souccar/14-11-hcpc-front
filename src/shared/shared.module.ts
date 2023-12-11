@@ -24,12 +24,11 @@ import {SummaryPipe} from '../app/pipes/summury.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommaNumberPipe } from './pipes/comma-number.pipe';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     imports: [
         TabsModule.forRoot(),
-
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -37,7 +36,8 @@ import { CommaNumberPipe } from './pipes/comma-number.pipe';
         NgxPaginationModule,
         NgSelectModule,
         NgxDatatableModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        // BsDatepickerModule.forRoot(),
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -62,7 +62,8 @@ import { CommaNumberPipe } from './pipes/comma-number.pipe';
         CommaNumberPipe,
         NgSelectModule,
         NgxDatatableModule,
-        SummaryPipe
+        SummaryPipe,
+
     ]
 })
 export class SharedModule {

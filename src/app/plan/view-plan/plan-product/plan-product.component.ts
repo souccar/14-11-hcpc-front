@@ -23,8 +23,6 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   numberOfItem:number;
   plan = new UpdatePlanDto();
   index:number;
-
-
   constructor(private chartService: ChartService
     ,private _planService:PlanServiceProxy,
     private _modalService: BsModalService,

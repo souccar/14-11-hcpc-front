@@ -31,8 +31,14 @@
           {{ "Start Date"  }}
         </label>
         <div class="col-md-9">
-          <input type="date" class="form-control" name="startDate" id="startDate" required min="{{date | date:'yyyy-MM-dd'}}"
-            [ngModel]="plan.startDate| date:'yyyy-MM-dd'"   (ngModelChange)="plan.startDate = $event" #startDateModel="ngModel" #startDateEl   />
+            <input type="text" placeholder="Start Date" class="form-control" 
+            bsDatepicker
+            [minDate]="minDate"
+            placement="top"
+            name="startDate" id="startDate" required
+            [(ngModel)]="plan.startDate" #startDateModel="ngModel" #startDateEl 
+            [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
+            #entryDateModel="ngModel" #entryDateEl>
           <abp-validation-summary [control]="startDateModel" [controlEl]="startDateEl"></abp-validation-summary>
         </div>
       </div>

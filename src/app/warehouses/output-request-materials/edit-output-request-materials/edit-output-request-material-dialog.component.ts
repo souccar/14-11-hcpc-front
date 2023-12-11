@@ -51,17 +51,17 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
   initOutputRequestMaterial() {
 
-    this._outputRequest.get(this.outputRequestId).subscribe((response: OutputRequestDto) => {
-      this.outputRequest = response;
-      this.outputRequest.outputRequestMaterials.forEach(element => {
-        this.data.push(element)
-        this.getWarehouseCode(element.warehouseMaterialId)
-        this.getUnitName(element.unitId)
-        this.data = [...this.data]
+    // this._outputRequest.get(this.outputRequestId).subscribe((response) => {
+    //   this.outputRequest = response;
+    //   this.outputRequest.outputRequestMaterials.forEach(element => {
+    //     this.data.push(element)
+    //     this.getWarehouseCode(element.warehouseMaterialId)
+    //     this.getUnitName(element.unitId)
+    //     this.data = [...this.data]
 
 
-      });
-    })
+    //   });
+    // })
 
   }
   getWarehouseCode(id: number) {

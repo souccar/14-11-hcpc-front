@@ -13,7 +13,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
   saving = false;
   id:number;
   loaded=false;
-  date;
+  minDate:Date;
 
   plan = new UpdatePlanDto();
   @Output() onSave = new EventEmitter<any>();
@@ -25,7 +25,8 @@ export class EditPlanDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this.date = new Date().toISOString().slice(0, 10);
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
     this.initPlan()
 
   }

@@ -37,7 +37,7 @@
           <!-- Button -->
 
           <button type="button" class="btn btn-outline-primary mt-4" (click)="addToFormulaList()">
-            <i class="bi bi-plus-lg"> </i>
+            <i class="bi bi-check-lg"> </i>
           </button>
         </div>
       </div>
@@ -48,23 +48,21 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Material</th>
               <th scope="col">Quantity</th>
-              <th scope="col">Unit</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let formula of data;let i=index; ">
-              <td></td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
                 <td *ngIf="mId==i">{{m.name}} </td>
               </ng-contanier>
-              <td>{{formula.quantity}}</td>
-              <ng-contanier *ngFor="let u of units;let uId=index ">
-                <td *ngIf="uId==i">{{u.name}} </td>
-              </ng-contanier>
+              <td>{{formula.quantity }}
+                <ng-contanier *ngFor="let u of unitsNames; let uId = index">
+                 <span *ngIf="uId == i">{{u.name }}</span>
+                </ng-contanier>
+              </td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                   (click)="edit(formula)">
                   <i class="simple-icon-pencil text-primary"></i>
@@ -74,53 +72,11 @@
                   <i class="simple-icon-trash text-primary"></i>
                 </button>
               </td>
-
-
             </tr>
-
           </tbody>
         </table>
       </div>
     </div>
-      <!-- <div class="row">
-          <div class="col-12 list">
-            <ngx-datatable [rows]="data" [columnMode]="ColumnMode.flex"  [headerHeight]="20"
-            [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]"
-           >
-
-            <ngx-datatable-column [name]="('Material')" prop="materialId" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <a class="c-pointer">
-                  <div>
-                    {{ getMaterialName(row.materialId)  }}
-                  </div>
-                </a>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column [name]="('Quantity')" prop="quantity" [flexGrow]="1">
-              <ng-template   let-row="row" ngx-datatable-cell-template >
-                <div > {{row.quantity}}</div>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column [name]="('Unit')" prop="unitId" [flexGrow]="1">
-              <ng-template   let-row="row" ngx-datatable-cell-template >
-                <div > {{getUnitNameById(row.unitId)}}</div>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column [name]="('Action')" prop="action" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary" (click)="edit(row)">
-                  <i class="simple-icon-pencil text-primary"></i>
-                </button>
-                <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"(click)="delete(row)">
-                  <i class="simple-icon-trash text-primary"></i>
-                </button>
-              </ng-template>
-            </ngx-datatable-column>
-
-          </ngx-datatable>
-          </div>
-      </div> -->
     </div>
 
   </form>
