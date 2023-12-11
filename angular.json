@@ -31,6 +31,7 @@
               }
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/vendor/bootstrap.min.css",
               "src/assets/css/vendor/bootstrap.rtl.only.min.css",
               "node_modules/sweetalert2/dist/sweetalert2.css",
@@ -296,14 +297,13 @@
     "@schematics/angular:guard": {
       "skipTests": true
     },
-    
     "@schematics/angular:pipe": {
       "skipTests": true
     },
     "@schematics/angular:service": {
       "skipTests": true
     }
- },
+  },
   "cli": {
     "analytics": "2ebb9fbc-303b-4b12-aaed-0e7bfb749552"
   }

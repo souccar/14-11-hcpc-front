@@ -17,13 +17,9 @@
         </div>
       </div>   &nbsp;&nbsp; &nbsp;&nbsp;
       <app-heading title="{{'New Output Request'|localize}}" ></app-heading>
-
-
     </div>
-
     <div class="separator "></div>
     <br>
-
     <accordion class="mt-2">
       <accordion-group heading="{{'New output Request Material' | localize}}" [panelClass]="'border'" [isOpen]="true">
         <div class="modal-body modal-xl">
@@ -44,17 +40,28 @@
             </label>
             <div class="col-md-9">
               <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
-              [(ngModel)]="outputRequest.planId"  #planIdEl >
+              [(ngModel)]="outputRequest.planId" (change)="getProductFromPlan($event.target.value)"  #planIdEl >
                 <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
               </select>
+            <abp-validation-summary [control]="planIdModel" [controlEl]="planIdEl"></abp-validation-summary>
             </div>
           </div>
-
+          <div class="form-group row required " *ngIf="planProductloaded">
+            <label class="col-md-3 col-form-label " for="planProduct">
+              {{ "products" | localize }}
+            </label>
+            <div class="col-md-9">
+              <ng-select #productsModel="ngModel" required name="planProduct"
+              [(ngModel)]="outputRequest.outputRequestProducts"  #productsEl
+              [items]="planProducts" [multiple]="true" bindLabel="product.name" [closeOnSelect]="false">
+            </ng-select>
+            <abp-validation-summary [control]="productsModel" [controlEl]="planIdEl"></abp-validation-summary>
+          </div>
+          </div>
         </div>
       </accordion-group>
       <accordion-group class="mt-2" heading="{{'Output Request Material' | localize}}" [panelClass]="'border'">
         <create-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></create-output-request-material-dialog>
-
       </accordion-group>
 
     </accordion>

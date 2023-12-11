@@ -20,6 +20,8 @@ import { EditOutputRequestMaterialDialogComponent } from './output-request-mater
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ViewOutputRequestDialogComponent } from './output-request/view-output-request/view-output-request-dialog.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -40,16 +42,16 @@ import { ViewOutputRequestDialogComponent } from './output-request/view-output-r
     CommonModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule,
     LayoutModule,
+    BsDatepickerModule,
+    NgSelectModule,
+    ReactiveFormsModule,
     PaginationModule.forRoot(),
-    CommonModule,
     WarehouseRoutingModule,
     WarehouseMaterialModule,
     CollapseModule.forRoot(),
     AccordionModule.forRoot(),
-
-
+    
   ],
 
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]

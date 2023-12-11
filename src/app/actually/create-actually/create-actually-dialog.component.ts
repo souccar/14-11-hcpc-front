@@ -27,12 +27,10 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
-
   ngOnInit(): void {
     this.dailyProduction.dailyProductionDetails = []
     this.initPlans();
   }
-
   initPlans() {
     this._planService.getActualPlansNameForDropdown().subscribe((result) => {
       this.plans = result;

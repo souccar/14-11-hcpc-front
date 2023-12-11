@@ -19,6 +19,7 @@ import { PlanProductsPercentageComponent } from './view-plan/plan-products/plan-
 import { LogsComponent } from './view-plan/logs/logs.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { LastLoginsComponent } from './view-plan/last-logins/last-logins.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { LastLoginsComponent } from './view-plan/last-logins/last-logins.compone
  
   ],
   imports: [
-  
+    BsDatepickerModule,
     PlanRoutingModule,
     SharedModule,
     FormsModule,

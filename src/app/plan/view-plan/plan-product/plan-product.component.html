@@ -100,7 +100,7 @@
                 <tbody>
                   <tr *ngFor="let f of p.product.formulas">
                     <td>
-                      <a class="btn btn-empty text-muted">
+                      <a class="btn btn-empty text-muted" (click)="editMaterial(f.material.id)">
                         <span
                           class="log-indicator align-middle mx-1"
                           [ngClass]="{
