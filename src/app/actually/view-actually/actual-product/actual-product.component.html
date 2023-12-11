@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="float-right float-none-xs">
-                    <button  type="button" class="btn btn-outline-primary btn-xs" (click)="arbitrageDialog(p)">
+                    <button type="button" class="btn btn-outline-primary btn-xs" (click)="arbitrageDialog(p)">
                         Arbitrage
                     </button>
                 </div>
@@ -26,42 +26,48 @@
                         </app-radial-process-card>
                     </div>
                     <div class="col-md-4 border-right">
-                        <div class="d-flex row-flex mt-4">
-                            <div class="w-50">
-                                <ul class="mb-0">
-                                    <li class="text-one">Required number <i [tooltip]="tooltipData.requiredQuantity" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Can produce <i [tooltip]="tooltipData.canProduce" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Number produced <i [tooltip]="tooltipData.totalProduction" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Cost <i [tooltip]="tooltipData.cost" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one pb-3">Selling price <i [tooltip]="tooltipData.price" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                   
-                                    <li class="text-one text-primary">Arbitrage <i [tooltip]="tooltipData.productArbitrage" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                </ul>
-                            </div>
-                            <div class="w-50">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="text-one">
-                                        {{p.numberOfItems}}
-                                    </li>
-                                    <li class="text-one">
-                                        {{p.canProduce}}
-                                    </li>
-                                    <li class="text-one">
-                                        {{p.totalProduction}}
-                                    </li>
-                                    <li class="text-one">
-                                        {{p.itemCost | commaNumber}} | {{p.totalCost | commaNumber}}
-                                    </li>
-                                    <li class="text-one  pb-3">
-                                        {{p.product?.price | commaNumber}} | {{p.totalSalesAmount | commaNumber}}
-                                    </li>
-                                    
-                                    <li class="text-one  text-primary">
-                                        {{p.productArbitrage | commaNumber}}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><span class=" align-middle">{{'Required number' | localize}} <i
+                                                [tooltip]="tooltipData.requiredQuantity"
+                                                class="bi bi-question-circle-fill text-primary"></i></span></td>
+                                    <td><span class="mx-2 text-muted">{{p.numberOfItems}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-one align-middle">{{'Can produce' | localize}} <i
+                                                [tooltip]="tooltipData.canProduce"
+                                                class="bi bi-question-circle-fill text-primary"></i></span></td>
+                                    <td><span class="mx-2 text-one">{{p.canProduce}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-one align-middle">{{'Number produced' | localize}} <i
+                                                [tooltip]="tooltipData.totalProduction"
+                                                class="bi bi-question-circle-fill text-primary"></i></span></td>
+                                    <td><span class="mx-2 text-one">{{p.totalProduction}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-one align-middle">{{'Cost' | localize}} <i
+                                                [tooltip]="tooltipData.cost"
+                                                class="bi bi-question-circle-fill text-primary"></i></span></td>
+                                    <td><span class="mx-2 text-one">{{p.itemCost | commaNumber}} | {{p.totalCost |
+                                        commaNumber}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-one align-middle">{{'Selling price' | localize}} <i
+                                                [tooltip]="tooltipData.price"
+                                                class="bi bi-question-circle-fill text-primary"></i></span></td>
+                                    <td><span class="mx-2 text-one">{{p.product?.price | commaNumber}} | {{p.totalSalesAmount |
+                                        commaNumber}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-one align-middle">{{'Arbitrage' | localize}} <i
+                                                [tooltip]="tooltipData.productArbitrage"
+                                                class="bi bi-question-circle-fill text-primary"></i></span></td>
+                                    <td><span class="mx-2 text-one">{{p.productArbitrage | commaNumber}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="col-md-6">
                         <!-- <app-bar-chart [shadow]="true" [options]="chartDataConfig.barChartOptions"
