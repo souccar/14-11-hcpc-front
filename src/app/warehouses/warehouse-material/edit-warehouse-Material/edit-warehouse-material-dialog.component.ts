@@ -12,6 +12,8 @@ import { finalize } from 'rxjs';
 export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   saving = false;
   id:number;
+  minDate:Date;
+  maxDate:Date;
   warehouseMaterial = new UpdateWarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
   materials: MaterialNameForDropdownDto[] = [];
@@ -29,7 +31,11 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate()+1);
+    this.maxDate = new Date();
+    this.maxDate.setDate(this.maxDate.getDate() );
     this.initWarehouseMaterial();
     this.initUnits();
     this.initMaterials();

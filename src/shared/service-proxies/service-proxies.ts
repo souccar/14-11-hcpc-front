@@ -12662,6 +12662,7 @@ export class PlanMaterialDto implements IPlanMaterialDto {
     inventoryUnitId: number | undefined;
     materialId: number | undefined;
     planId: number | undefined;
+    reservedQuantities: number;
     produceDays: number;
     unit: UnitDto;
     inventoryUnit: UnitDto;
@@ -12685,6 +12686,7 @@ export class PlanMaterialDto implements IPlanMaterialDto {
             this.inventoryUnitId = _data["inventoryUnitId"];
             this.materialId = _data["materialId"];
             this.planId = _data["planId"];
+            this.reservedQuantities = _data["reservedQuantities"];
             this.produceDays = _data["produceDays"];
             this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
             this.inventoryUnit = _data["inventoryUnit"] ? UnitDto.fromJS(_data["inventoryUnit"]) : <any>undefined;
@@ -12708,6 +12710,7 @@ export class PlanMaterialDto implements IPlanMaterialDto {
         data["inventoryUnitId"] = this.inventoryUnitId;
         data["materialId"] = this.materialId;
         data["planId"] = this.planId;
+        data["reservedQuantities"] = this.reservedQuantities;
         data["produceDays"] = this.produceDays;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>undefined;
         data["inventoryUnit"] = this.inventoryUnit ? this.inventoryUnit.toJSON() : <any>undefined;
@@ -12731,6 +12734,7 @@ export interface IPlanMaterialDto {
     inventoryUnitId: number | undefined;
     materialId: number | undefined;
     planId: number | undefined;
+    reservedQuantities: number;
     produceDays: number;
     unit: UnitDto;
     inventoryUnit: UnitDto;
