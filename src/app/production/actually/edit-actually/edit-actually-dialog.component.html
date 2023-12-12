@@ -1,1 +1,62 @@
-<p>edit-actually-dialog works!</p>
+<form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'EditDailyProduction' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+  
+    <div class="modal-body modal-xl">
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="plan">
+          {{ "Plan" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <select aria-placeholder="plan"  (change)="onSelectPlan($event.target.value)" class="form-control"
+            aria-label="Plan" #planIdModel="ngModel" required name="plan" [(ngModel)]="dailyProduction.planId" #planIdEl>
+            <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
+          </select>
+          <abp-validation-summary [control]="planIdModel" [controlEl]="planIdEl"></abp-validation-summary>
+        </div>
+      </div>
+  
+  
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="plan">
+          {{ "Output Request" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <select aria-placeholder="output request" (change)="onSelectOutputRequest($event.target.value)"
+            class="form-control" aria-label="OutputRequest" #outputRequestIdModel="ngModel" required name="outputRequest"
+            [(ngModel)]="dailyProduction.outputRequestId" #outputRequestIdEl>
+            <option *ngFor="let item of outputRequests" value={{item.id}}>{{item.title}}</option>
+          </select>
+          <abp-validation-summary [control]="outputRequestIdModel"
+            [controlEl]="outputRequestIdEl"></abp-validation-summary>
+        </div>
+      </div>
+  
+  
+      <!--  -->
+      <div class="form-group row  " *ngIf="isLoading">
+        <label class="col-md-3 col-form-label " for="planProduct">
+          {{ "products" | localize }}
+        </label>
+        <ng-contanier>
+          <div class="col-md-12">
+            <div *ngFor="let planProduct of outputRequestsProducts, index as i">
+              <div class="row mt-1">
+                <div class="col-md-3 d-flex align-items-end required">
+                  <label class="" [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
+                </div>
+                <div class="col-md-9 d-flex align-items-end">
+                  <input type="number" placeholder="quantitiy" class="form-control" name="{{'quantity-'+i}}"
+                    id="{{'quantity-'+i}}" [(ngModel)]="dailyProduction.dailyProductionDetails[i].quantity" required />
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-contanier>
+      </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
+      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+  
+  
+  </form>

@@ -51,7 +51,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
   initOutputRequestMaterial() {
 
-    // this._outputRequest.get(this.outputRequestId).subscribe((response) => {
+    // this._outputRequest.get(this.outputRequestId).subscribe((response: OutputRequestDto) => {
     //   this.outputRequest = response;
     //   this.outputRequest.outputRequestMaterials.forEach(element => {
     //     this.data.push(element)

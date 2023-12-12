@@ -2791,6 +2791,69 @@ export class OutputRequestServiceProxy {
     }
 
     /**
+     * @param planId (optional) 
+     * @return Success
+     */
+    getPlanOutputRequests(planId: number | undefined): Observable<OutputRequestDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetPlanOutputRequests?";
+        if (planId === null)
+            throw new Error("The parameter 'planId' cannot be null.");
+        else if (planId !== undefined)
+            url_ += "planId=" + encodeURIComponent("" + planId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlanOutputRequests(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlanOutputRequests(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OutputRequestDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OutputRequestDto[]>;
+        }));
+    }
+
+    protected processGetPlanOutputRequests(response: HttpResponseBase): Observable<OutputRequestDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(OutputRequestDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -8167,6 +8230,7 @@ export interface ICreateDailyProductionDetailsDto {
 
 export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: ICreateDailyProductionDto) {
@@ -8181,6 +8245,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     init(_data?: any) {
         if (_data) {
             this.planId = _data["planId"];
+            this.outputRequestId = _data["outputRequestId"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
                 for (let item of _data["dailyProductionDetails"])
@@ -8199,6 +8264,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["planId"] = this.planId;
+        data["outputRequestId"] = this.outputRequestId;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
             for (let item of this.dailyProductionDetails)
@@ -8217,6 +8283,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
 
 export interface ICreateDailyProductionDto {
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 }
 
@@ -8497,9 +8564,9 @@ export interface ICreateMaterialSuppliersDto {
 
 export class CreateOutputRequestDto implements ICreateOutputRequestDto {
     title: string | undefined;
-    outputDate: string | undefined;
     planId: number | undefined;
     outputRequestMaterials: CreateOutputRequestMaterialDto[] | undefined;
+    outputRequestProducts: CreateOutputRequestProductDto[] | undefined;
 
     constructor(data?: ICreateOutputRequestDto) {
         if (data) {
@@ -8513,12 +8580,16 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
     init(_data?: any) {
         if (_data) {
             this.title = _data["title"];
-            this.outputDate = _data["outputDate"];
             this.planId = _data["planId"];
             if (Array.isArray(_data["outputRequestMaterials"])) {
                 this.outputRequestMaterials = [] as any;
                 for (let item of _data["outputRequestMaterials"])
                     this.outputRequestMaterials.push(CreateOutputRequestMaterialDto.fromJS(item));
+            }
+            if (Array.isArray(_data["outputRequestProducts"])) {
+                this.outputRequestProducts = [] as any;
+                for (let item of _data["outputRequestProducts"])
+                    this.outputRequestProducts.push(CreateOutputRequestProductDto.fromJS(item));
             }
         }
     }
@@ -8533,12 +8604,16 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["title"] = this.title;
-        data["outputDate"] = this.outputDate;
         data["planId"] = this.planId;
         if (Array.isArray(this.outputRequestMaterials)) {
             data["outputRequestMaterials"] = [];
             for (let item of this.outputRequestMaterials)
                 data["outputRequestMaterials"].push(item.toJSON());
+        }
+        if (Array.isArray(this.outputRequestProducts)) {
+            data["outputRequestProducts"] = [];
+            for (let item of this.outputRequestProducts)
+                data["outputRequestProducts"].push(item.toJSON());
         }
         return data;
     }
@@ -8553,9 +8628,9 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
 
 export interface ICreateOutputRequestDto {
     title: string | undefined;
-    outputDate: string | undefined;
     planId: number | undefined;
     outputRequestMaterials: CreateOutputRequestMaterialDto[] | undefined;
+    outputRequestProducts: CreateOutputRequestProductDto[] | undefined;
 }
 
 export class CreateOutputRequestMaterialDto implements ICreateOutputRequestMaterialDto {
@@ -8607,6 +8682,49 @@ export interface ICreateOutputRequestMaterialDto {
     quantity: number;
     unitId: number | undefined;
     warehouseMaterialId: number | undefined;
+}
+
+export class CreateOutputRequestProductDto implements ICreateOutputRequestProductDto {
+    productId: number | undefined;
+
+    constructor(data?: ICreateOutputRequestProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.productId = _data["productId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOutputRequestProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOutputRequestProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["productId"] = this.productId;
+        return data;
+    }
+
+    clone(): CreateOutputRequestProductDto {
+        const json = this.toJSON();
+        let result = new CreateOutputRequestProductDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOutputRequestProductDto {
+    productId: number | undefined;
 }
 
 export class CreatePlanDto implements ICreatePlanDto {
@@ -9494,6 +9612,7 @@ export class DailyProductionDto implements IDailyProductionDto {
     id: number;
     creationTime: string | undefined;
     creatorUserId: number | undefined;
+    outputRequestId: number | undefined;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -9512,6 +9631,7 @@ export class DailyProductionDto implements IDailyProductionDto {
             this.id = _data["id"];
             this.creationTime = _data["creationTime"];
             this.creatorUserId = _data["creatorUserId"];
+            this.outputRequestId = _data["outputRequestId"];
             this.planId = _data["planId"];
             this.plan = _data["plan"] ? PlanDto.fromJS(_data["plan"]) : <any>undefined;
             if (Array.isArray(_data["dailyProductionDetails"])) {
@@ -9534,6 +9654,7 @@ export class DailyProductionDto implements IDailyProductionDto {
         data["id"] = this.id;
         data["creationTime"] = this.creationTime;
         data["creatorUserId"] = this.creatorUserId;
+        data["outputRequestId"] = this.outputRequestId;
         data["planId"] = this.planId;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
         if (Array.isArray(this.dailyProductionDetails)) {
@@ -9556,6 +9677,7 @@ export interface IDailyProductionDto {
     id: number;
     creationTime: string | undefined;
     creatorUserId: number | undefined;
+    outputRequestId: number | undefined;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -12021,9 +12143,11 @@ export class OutputRequestDto implements IOutputRequestDto {
     id: number;
     title: string | undefined;
     outputDate: string | undefined;
+    status: OutputRequestStatus;
     planId: number | undefined;
     plan: PlanNameDto;
     outputRequestMaterials: OutputRequestMaterialDto[] | undefined;
+    outputRequestProducts: ReadOutputRequesProductDto[] | undefined;
 
     constructor(data?: IOutputRequestDto) {
         if (data) {
@@ -12039,12 +12163,18 @@ export class OutputRequestDto implements IOutputRequestDto {
             this.id = _data["id"];
             this.title = _data["title"];
             this.outputDate = _data["outputDate"];
+            this.status = _data["status"];
             this.planId = _data["planId"];
             this.plan = _data["plan"] ? PlanNameDto.fromJS(_data["plan"]) : <any>undefined;
             if (Array.isArray(_data["outputRequestMaterials"])) {
                 this.outputRequestMaterials = [] as any;
                 for (let item of _data["outputRequestMaterials"])
                     this.outputRequestMaterials.push(OutputRequestMaterialDto.fromJS(item));
+            }
+            if (Array.isArray(_data["outputRequestProducts"])) {
+                this.outputRequestProducts = [] as any;
+                for (let item of _data["outputRequestProducts"])
+                    this.outputRequestProducts.push(ReadOutputRequesProductDto.fromJS(item));
             }
         }
     }
@@ -12061,12 +12191,18 @@ export class OutputRequestDto implements IOutputRequestDto {
         data["id"] = this.id;
         data["title"] = this.title;
         data["outputDate"] = this.outputDate;
+        data["status"] = this.status;
         data["planId"] = this.planId;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
         if (Array.isArray(this.outputRequestMaterials)) {
             data["outputRequestMaterials"] = [];
             for (let item of this.outputRequestMaterials)
                 data["outputRequestMaterials"].push(item.toJSON());
+        }
+        if (Array.isArray(this.outputRequestProducts)) {
+            data["outputRequestProducts"] = [];
+            for (let item of this.outputRequestProducts)
+                data["outputRequestProducts"].push(item.toJSON());
         }
         return data;
     }
@@ -12083,9 +12219,11 @@ export interface IOutputRequestDto {
     id: number;
     title: string | undefined;
     outputDate: string | undefined;
+    status: OutputRequestStatus;
     planId: number | undefined;
     plan: PlanNameDto;
     outputRequestMaterials: OutputRequestMaterialDto[] | undefined;
+    outputRequestProducts: ReadOutputRequesProductDto[] | undefined;
 }
 
 export class OutputRequestDtoPagedResultDto implements IOutputRequestDtoPagedResultDto {
@@ -12259,6 +12397,59 @@ export interface IOutputRequestMaterialDto {
     warehouseMaterialId: number | undefined;
     unit: UnitDto;
     warehouseMaterial: WarehouseMaterialNameDto;
+}
+
+export class OutputRequestNameForDropdownDto implements IOutputRequestNameForDropdownDto {
+    id: number;
+    title: string | undefined;
+
+    constructor(data?: IOutputRequestNameForDropdownDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): OutputRequestNameForDropdownDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OutputRequestNameForDropdownDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data;
+    }
+
+    clone(): OutputRequestNameForDropdownDto {
+        const json = this.toJSON();
+        let result = new OutputRequestNameForDropdownDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOutputRequestNameForDropdownDto {
+    id: number;
+    title: string | undefined;
+}
+
+export enum OutputRequestStatus {
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
 }
 
 export enum ParameterAttributes {
@@ -12791,6 +12982,7 @@ export interface IPlanNameDto {
 export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
     id: number;
     title: string | undefined;
+    outputRequests: OutputRequestNameForDropdownDto[] | undefined;
 
     constructor(data?: IPlanNameForDropdownDto) {
         if (data) {
@@ -12805,6 +12997,11 @@ export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
         if (_data) {
             this.id = _data["id"];
             this.title = _data["title"];
+            if (Array.isArray(_data["outputRequests"])) {
+                this.outputRequests = [] as any;
+                for (let item of _data["outputRequests"])
+                    this.outputRequests.push(OutputRequestNameForDropdownDto.fromJS(item));
+            }
         }
     }
 
@@ -12819,6 +13016,11 @@ export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["title"] = this.title;
+        if (Array.isArray(this.outputRequests)) {
+            data["outputRequests"] = [];
+            for (let item of this.outputRequests)
+                data["outputRequests"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -12833,6 +13035,7 @@ export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
 export interface IPlanNameForDropdownDto {
     id: number;
     title: string | undefined;
+    outputRequests: OutputRequestNameForDropdownDto[] | undefined;
 }
 
 export class PlanProductDto implements IPlanProductDto {
@@ -13354,6 +13557,53 @@ export interface IPropertyInfo {
     canWrite: boolean;
     getMethod: MethodInfo;
     setMethod: MethodInfo;
+}
+
+export class ReadOutputRequesProductDto implements IReadOutputRequesProductDto {
+    id: number;
+    product: ProductDto;
+
+    constructor(data?: IReadOutputRequesProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ReadOutputRequesProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReadOutputRequesProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["product"] = this.product ? this.product.toJSON() : <any>undefined;
+        return data;
+    }
+
+    clone(): ReadOutputRequesProductDto {
+        const json = this.toJSON();
+        let result = new ReadOutputRequesProductDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IReadOutputRequesProductDto {
+    id: number;
+    product: ProductDto;
 }
 
 export class RegisterInput implements IRegisterInput {
@@ -15635,6 +15885,7 @@ export interface IUpdateDailyProductionDetailsDto {
 export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
     id: number;
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: IUpdateDailyProductionDto) {
@@ -15650,6 +15901,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         if (_data) {
             this.id = _data["id"];
             this.planId = _data["planId"];
+            this.outputRequestId = _data["outputRequestId"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
                 for (let item of _data["dailyProductionDetails"])
@@ -15669,6 +15921,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["planId"] = this.planId;
+        data["outputRequestId"] = this.outputRequestId;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
             for (let item of this.dailyProductionDetails)
@@ -15688,6 +15941,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
 export interface IUpdateDailyProductionDto {
     id: number;
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 }
 
@@ -16048,9 +16302,9 @@ export interface IUpdateNotificationSettingsInput {
 export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
     planId: number | undefined;
     outputRequestMaterials: UpdateOutputRequestMaterialDto[] | undefined;
+    outputRequestProducts: UpdateOutputRequestProductDto[] | undefined;
 
     constructor(data?: IUpdateOutputRequestDto) {
         if (data) {
@@ -16065,12 +16319,16 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
         if (_data) {
             this.id = _data["id"];
             this.title = _data["title"];
-            this.outputDate = _data["outputDate"];
             this.planId = _data["planId"];
             if (Array.isArray(_data["outputRequestMaterials"])) {
                 this.outputRequestMaterials = [] as any;
                 for (let item of _data["outputRequestMaterials"])
                     this.outputRequestMaterials.push(UpdateOutputRequestMaterialDto.fromJS(item));
+            }
+            if (Array.isArray(_data["outputRequestProducts"])) {
+                this.outputRequestProducts = [] as any;
+                for (let item of _data["outputRequestProducts"])
+                    this.outputRequestProducts.push(UpdateOutputRequestProductDto.fromJS(item));
             }
         }
     }
@@ -16086,12 +16344,16 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["title"] = this.title;
-        data["outputDate"] = this.outputDate;
         data["planId"] = this.planId;
         if (Array.isArray(this.outputRequestMaterials)) {
             data["outputRequestMaterials"] = [];
             for (let item of this.outputRequestMaterials)
                 data["outputRequestMaterials"].push(item.toJSON());
+        }
+        if (Array.isArray(this.outputRequestProducts)) {
+            data["outputRequestProducts"] = [];
+            for (let item of this.outputRequestProducts)
+                data["outputRequestProducts"].push(item.toJSON());
         }
         return data;
     }
@@ -16107,9 +16369,9 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
 export interface IUpdateOutputRequestDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
     planId: number | undefined;
     outputRequestMaterials: UpdateOutputRequestMaterialDto[] | undefined;
+    outputRequestProducts: UpdateOutputRequestProductDto[] | undefined;
 }
 
 export class UpdateOutputRequestMaterialDto implements IUpdateOutputRequestMaterialDto {
@@ -16161,6 +16423,53 @@ export interface IUpdateOutputRequestMaterialDto {
     quantity: number;
     unitId: number | undefined;
     warehouseMaterialId: number | undefined;
+}
+
+export class UpdateOutputRequestProductDto implements IUpdateOutputRequestProductDto {
+    id: number;
+    productId: number | undefined;
+
+    constructor(data?: IUpdateOutputRequestProductDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.productId = _data["productId"];
+        }
+    }
+
+    static fromJS(data: any): UpdateOutputRequestProductDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateOutputRequestProductDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["productId"] = this.productId;
+        return data;
+    }
+
+    clone(): UpdateOutputRequestProductDto {
+        const json = this.toJSON();
+        let result = new UpdateOutputRequestProductDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateOutputRequestProductDto {
+    id: number;
+    productId: number | undefined;
 }
 
 export class UpdatePlanDto implements IUpdatePlanDto {
