@@ -39,7 +39,6 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
     this.currentLanguage = this.localization.currentLanguage;
     if( this.currentLanguage.name=='ar')
     {
-      console.log("arabic squad")
       this.checkForDirectionChange();
     }
     this._layoutStore.sidebarExpanded.subscribe((value) => {
