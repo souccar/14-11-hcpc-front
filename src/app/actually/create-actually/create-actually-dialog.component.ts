@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateDailyProductionDetailsDto, CreateDailyProductionDto, DailyProductionDto, DailyProductionServiceProxy, OutputRequestDto, OutputRequestNameForDropdownDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductDto, ProductNameForDropdownDto, ReadOutputRequesProductDto, UnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
-import { forEach } from 'lodash-es';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -34,44 +33,43 @@ export class CreateActuallyDialogComponent extends AppComponentBase {
   initPlans() {
     this._planService.getActualPlansNameForDropdown().subscribe((result) => {
       this.plans = result;
-      
     });
   }
 
-  getOutputRequestsOfPlan(planId: number){
-      this._outputService.getPlanOutputRequests(planId).subscribe((result)=>{
-        // this.outputRequests=result;
-      });
+  onSelectPlan(planId: number) {
+    var plan = this.plans.find(x => x.id == planId);
+    if (!plan) {
+      this.outputRequests = [];
+      return;
+    }
+    this.outputRequests = plan.outputRequests;
   }
 
-  getProductOutputRequestPlan(id: number) {
-  
+  onSelectOutputRequest(id: number) {
     if (id != null) {
       this._outputService.getPlanOutputRequests(id).subscribe((result) => {
-        result.forEach((item)=>{
-          this.outputRequestsProducts=item.outputRequestProducts;
-          this.planProductloaded=true;
+        result.forEach((item) => {
+          this.dailyProduction.dailyProductionDetails = [];
+          this.outputRequestsProducts = item.outputRequestProducts;
+          //Initial dailyProductionDetails
+          this.outputRequestsProducts.forEach(requestProduct => {
+            var dailyProductionDetail = new CreateDailyProductionDetailsDto();
+            dailyProductionDetail.productId = requestProduct.product.id;
+            dailyProductionDetail.quantity = 0;
+            this.dailyProduction.dailyProductionDetails.push(dailyProductionDetail);
+          })
+          this.planProductloaded = true;
         })
-    
+
       });
     }
   }
 
-  updatedQuantity(args, index){
+  updatedQuantity(args, index) {
     this.dailyProduction.dailyProductionDetails[index].quantity = args.target.value;
   }
 
   save(): void {
-   console.log(this.dailyProduction)
-   console.log(this.outputRequestsProducts)
-   this.outputRequestsProducts.forEach((item)=>{
-    console.log(item);
-     let dailyProduction:CreateDailyProductionDetailsDto=new CreateDailyProductionDetailsDto();
-     dailyProduction.productId=item.id;
-    //  dailyProduction.quantity=item.product.quantitiy;
-   });
-   this.dailyProduction.dailyProductionDetails
-  
     this.saving = true;
     this._dailyProductionService.
       create(
