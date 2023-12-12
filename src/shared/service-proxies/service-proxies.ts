@@ -8167,6 +8167,7 @@ export interface ICreateDailyProductionDetailsDto {
 
 export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: ICreateDailyProductionDto) {
@@ -8181,6 +8182,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     init(_data?: any) {
         if (_data) {
             this.planId = _data["planId"];
+            this.outputRequestId = _data["outputRequestId"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
                 for (let item of _data["dailyProductionDetails"])
@@ -8199,6 +8201,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["planId"] = this.planId;
+        data["outputRequestId"] = this.outputRequestId;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
             for (let item of this.dailyProductionDetails)
@@ -8217,6 +8220,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
 
 export interface ICreateDailyProductionDto {
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 }
 
@@ -9494,6 +9498,7 @@ export class DailyProductionDto implements IDailyProductionDto {
     id: number;
     creationTime: string | undefined;
     creatorUserId: number | undefined;
+    outputRequestId: number | undefined;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -9512,6 +9517,7 @@ export class DailyProductionDto implements IDailyProductionDto {
             this.id = _data["id"];
             this.creationTime = _data["creationTime"];
             this.creatorUserId = _data["creatorUserId"];
+            this.outputRequestId = _data["outputRequestId"];
             this.planId = _data["planId"];
             this.plan = _data["plan"] ? PlanDto.fromJS(_data["plan"]) : <any>undefined;
             if (Array.isArray(_data["dailyProductionDetails"])) {
@@ -9534,6 +9540,7 @@ export class DailyProductionDto implements IDailyProductionDto {
         data["id"] = this.id;
         data["creationTime"] = this.creationTime;
         data["creatorUserId"] = this.creatorUserId;
+        data["outputRequestId"] = this.outputRequestId;
         data["planId"] = this.planId;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
         if (Array.isArray(this.dailyProductionDetails)) {
@@ -9556,6 +9563,7 @@ export interface IDailyProductionDto {
     id: number;
     creationTime: string | undefined;
     creatorUserId: number | undefined;
+    outputRequestId: number | undefined;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -12261,6 +12269,62 @@ export interface IOutputRequestMaterialDto {
     warehouseMaterial: WarehouseMaterialNameDto;
 }
 
+<<<<<<< HEAD
+export class OutputRequestNameForDropdownDto implements IOutputRequestNameForDropdownDto {
+    id: number;
+    title: string | undefined;
+
+    constructor(data?: IOutputRequestNameForDropdownDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): OutputRequestNameForDropdownDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OutputRequestNameForDropdownDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data;
+    }
+
+    clone(): OutputRequestNameForDropdownDto {
+        const json = this.toJSON();
+        let result = new OutputRequestNameForDropdownDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOutputRequestNameForDropdownDto {
+    id: number;
+    title: string | undefined;
+}
+
+export enum OutputRequestStatus {
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+}
+
+=======
+>>>>>>> origin/develop
 export enum ParameterAttributes {
     _0 = 0,
     _1 = 1,
@@ -12791,6 +12855,7 @@ export interface IPlanNameDto {
 export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
     id: number;
     title: string | undefined;
+    outputRequests: OutputRequestNameForDropdownDto[] | undefined;
 
     constructor(data?: IPlanNameForDropdownDto) {
         if (data) {
@@ -12805,6 +12870,11 @@ export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
         if (_data) {
             this.id = _data["id"];
             this.title = _data["title"];
+            if (Array.isArray(_data["outputRequests"])) {
+                this.outputRequests = [] as any;
+                for (let item of _data["outputRequests"])
+                    this.outputRequests.push(OutputRequestNameForDropdownDto.fromJS(item));
+            }
         }
     }
 
@@ -12819,6 +12889,11 @@ export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["title"] = this.title;
+        if (Array.isArray(this.outputRequests)) {
+            data["outputRequests"] = [];
+            for (let item of this.outputRequests)
+                data["outputRequests"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -12833,6 +12908,7 @@ export class PlanNameForDropdownDto implements IPlanNameForDropdownDto {
 export interface IPlanNameForDropdownDto {
     id: number;
     title: string | undefined;
+    outputRequests: OutputRequestNameForDropdownDto[] | undefined;
 }
 
 export class PlanProductDto implements IPlanProductDto {
@@ -15635,6 +15711,7 @@ export interface IUpdateDailyProductionDetailsDto {
 export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
     id: number;
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: IUpdateDailyProductionDto) {
@@ -15650,6 +15727,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         if (_data) {
             this.id = _data["id"];
             this.planId = _data["planId"];
+            this.outputRequestId = _data["outputRequestId"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
                 for (let item of _data["dailyProductionDetails"])
@@ -15669,6 +15747,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["planId"] = this.planId;
+        data["outputRequestId"] = this.outputRequestId;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
             for (let item of this.dailyProductionDetails)
@@ -15688,6 +15767,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
 export interface IUpdateDailyProductionDto {
     id: number;
     planId: number | undefined;
+    outputRequestId: number | undefined;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 }
 
