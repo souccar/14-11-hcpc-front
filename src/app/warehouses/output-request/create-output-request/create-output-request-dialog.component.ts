@@ -47,7 +47,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {
         this.planProducts = result.planProducts;
-        this.planProductloaded=true; 
+        this.planProductloaded=true;
       });
     }
   }

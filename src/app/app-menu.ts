@@ -21,17 +21,17 @@ const data: IMenuItem[] = [
     subs: [
       {
         label: 'Plan',
-        to: `${adminRoot}/plan`,
+        to: `${adminRoot}/production/plan`,
         icon: 'iconsminds-address-book-2',
       },
       {
         label: 'Actually',
-        to: `${adminRoot}/diallyProduction`,
+        to: `${adminRoot}/production/diallyProduction`,
         icon: 'simple-icon-notebook',
       },
       {
         label: 'Daily Production',
-        to: `${adminRoot}/diallyProduction/list`,
+        to: `${adminRoot}/production/diallyProduction/list`,
         icon: 'simple-icon-clock',
       },
     ],
@@ -72,13 +72,13 @@ const data: IMenuItem[] = [
     subs: [
       {
         label: 'Material',
-        to: `${adminRoot}/production/material`,
+        to: `${adminRoot}/settings/material`,
         icon: 'iconsminds-shopping-basket',
 
       },
       {
         label: 'Product',
-        to: `${adminRoot}/production/product`,
+        to: `${adminRoot}/settings/product`,
         icon: 'simple-icon-layers',
 
       },

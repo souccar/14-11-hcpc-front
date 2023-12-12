@@ -55,7 +55,8 @@
               </label>
               <div class="col-md-9">
                 <ng-select #productsModel="ngModel" required name="planProduct"
-                [(ngModel)]="outputRequest.outputRequestProducts"  #productsEl
+                [(ngModel)]="outputRequest"
+                 #productsEl
                 [items]="planProducts" [multiple]="true" bindLabel="product.name" [closeOnSelect]="false">
               </ng-select>
               <abp-validation-summary [control]="productsModel" [controlEl]="planIdEl"></abp-validation-summary>

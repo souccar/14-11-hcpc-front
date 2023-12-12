@@ -28,11 +28,9 @@ import { HotkeyModule } from 'angular2-hotkeys';
 
 import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
-import { SupplierModule } from './supplier/supplier.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
-  import { PlanModule } from './plan/plan.module';
-  import { ActuallyModule } from './actually/actually.module';
+
 
 @NgModule({
   declarations: [
@@ -69,16 +67,14 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     // }),
     ComponentsModule,
     ProductionModule,
-    SupplierModule,
+
     SettingsModule,
     WarehousesModule,
-    PlanModule,
-    ActuallyModule
 
-    
+
   ],
- 
- 
+
+
   schemas: [
     NO_ERRORS_SCHEMA,
     CUSTOM_ELEMENTS_SCHEMA,
@@ -87,7 +83,7 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     // tenants
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
-    
+
   ],
 
 })
