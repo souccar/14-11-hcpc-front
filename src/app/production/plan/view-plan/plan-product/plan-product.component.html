@@ -14,7 +14,7 @@
         </div>
         <div class="float-right float-none-xs">
           <span *ngIf="i !== index" class="p font-weight-semibold mx-1"
-            >Number of items: {{ p.numberOfItems }}</span
+            >{{'NumberOfItems'|localize}}: {{ p.numberOfItems }}</span
           >
           <div class="d-inline-block align-middle">
            <ng-container *ngIf="sendplan.status==0">
@@ -87,13 +87,13 @@
                 <thead>
                   <tr>
                     <th>
-                      <p class="mb-0">Formula</p>
+                      <p class="mb-0">{{'Formula'|localize}}</p>
                     </th>
                     <th>
-                      <p class="mb-0">Can produce</p>
+                      <p class="mb-0">{{'CanProduce'|localize}}</p>
                     </th>
                     <th>
-                      <p class="mb-0">Required quantity</p>
+                      <p class="mb-0">{{'RequiredQuantity'|localize}}</p>
                     </th>
                   </tr>
                 </thead>

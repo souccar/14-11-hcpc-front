@@ -6,9 +6,8 @@
         <div class="col-md-11">
           <!-- Inputs -->
           <div class="row">
-
             <div class="col-md-5 required">
-              <label form="materialId">Material</label>
+              <label form="materialId">{{'Material'|localize}}</label>
               <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
               [(ngModel)]="formula.materialId"  #materialIdEl >
                 <!-- <option  disabled selected hidden >Material</option> -->
@@ -17,13 +16,13 @@
               <!-- <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary> -->
             </div>
             <div class="col-md-4 required">
-              <label form="quantity">Quantity</label>
+              <label form="quantity">{{'Quantity'|localize}}</label>
               <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
                 [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl  />
               <!-- <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary> -->
             </div>
             <div class="col-md-3 required">
-              <label form="unitId">Unit</label>
+              <label form="unitId">{{'Unit'|localize}}</label>
               <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
                 <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
@@ -35,7 +34,6 @@
 
         <div class="col-md-1">
           <!-- Button -->
-
           <button type="button" class="btn btn-outline-primary mt-4" (click)="addToFormulaList()">
             <i class="bi bi-check-lg"> </i>
           </button>
@@ -48,9 +46,9 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Material</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Action</th>
+              <th scope="col">{{'Material'|localize}}</th>
+              <th scope="col">{{'Quantity'|localize}}</th>
+              <th scope="col">{{'Action'|localize}}</th>
             </tr>
           </thead>
           <tbody>

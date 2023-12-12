@@ -35,7 +35,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "output Request"
+  title = this.l("OutputRequest")
 
   outPutRequest: OutputRequestDto[] = [];
 

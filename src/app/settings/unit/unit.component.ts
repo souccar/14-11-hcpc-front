@@ -37,7 +37,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "Unit"
+  title = this.l("Unit")
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(injector: Injector,

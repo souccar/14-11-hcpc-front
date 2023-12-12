@@ -1,10 +1,10 @@
 
 <form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'Add General Setting' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="l('AddGeneralSetting') " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body modal-xl">
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="expiryDurationNotify">
-          {{ "Expiry Duration Notify" | localize }}
+          {{ "ExpiryDurationNotify" | localize }}
         </label>
         <div class="col-md-9 ">
             <input type="number" class="form-control" placeholder="In Days" name="expiryDurationNotify" id="expiryDurationNotify" required
@@ -12,8 +12,6 @@
           <abp-validation-summary [control]="expiryDurationNotifyModel" [controlEl]="expiryDurationNotifyEl"></abp-validation-summary>
         </div>
       </div>
-  
-     
     </div>
     <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
       (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>

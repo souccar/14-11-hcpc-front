@@ -40,7 +40,7 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "Product"
+  title = this.l("Product")
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _productService: ProductServiceProxy,

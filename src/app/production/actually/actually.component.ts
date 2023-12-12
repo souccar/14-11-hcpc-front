@@ -35,7 +35,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="DailyProduction"
+  title=this.l("DailyProduction");
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,

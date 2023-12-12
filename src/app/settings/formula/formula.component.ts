@@ -38,7 +38,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
   advancedFiltersVisible = false;
  
   loading = false;
-  title="Formula"
+  title=this.l("Formula");
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _formulaService:FormulaServiceProxy,

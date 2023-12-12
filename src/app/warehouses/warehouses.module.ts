@@ -8,7 +8,6 @@ import { SharedModule } from '@shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { InputRequestComponent } from './input-request/input-request.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
 import { CreateWarehouseDialogComponent } from './warehouse/create-warehouse/create-warehouse-dialog.component';
 import { EditWarehouseDialogComponent } from './warehouse/edit-warehouse/edit-warehouse-dialog.component';
@@ -26,7 +25,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     WarehousesComponent,
-    InputRequestComponent,
     WarehouseComponent,
     CreateWarehouseDialogComponent,
     EditWarehouseDialogComponent,

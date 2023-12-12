@@ -21,19 +21,19 @@
           {{row.plan?.title}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="l('products')" prop="products" [flexGrow]="1">
+      <ngx-datatable-column [name]="l('Products')" prop="products" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
            <span  *ngFor="let outputRequestProduct of row.outputRequestProducts">{{outputRequestProduct.product.name}} , </span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column  prop="Status" [name]="l('status')" [flexGrow]="1">
+      <ngx-datatable-column  prop="Status" [name]="l('Status')" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span class="badge badge-pill badge-outline-warning  mb-1" *ngIf="row.status==0">{{'Pending'|localize}}</span>
           <span class="badge badge-pill badge-outline-primary  mb-1" *ngIf="row.status==1">{{'InProduction'|localize}}</span>
           <span class="badge badge-pill badge-outline-success  mb-1" *ngIf="row.status==2">{{'Finished'|localize}}</span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="l('Output Date')" prop="Output Date" [flexGrow]="1">
+      <ngx-datatable-column [name]="l('OutputDate')" prop="OutputDate" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{row.outputDate}}
         </ng-template>

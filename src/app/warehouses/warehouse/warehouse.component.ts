@@ -38,7 +38,7 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Warehouse"
+  title=this.l("Warehouse");
 
 
 
