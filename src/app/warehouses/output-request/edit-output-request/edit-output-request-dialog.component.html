@@ -16,7 +16,7 @@
             </a>
           </div>
         </div>   &nbsp;&nbsp; &nbsp;&nbsp;
-        <app-heading title="{{'edit Output Request '|localize}}" ></app-heading>
+        <app-heading title="{{'EditOutputRequest '|localize}}" ></app-heading>
 
 
       </div>
@@ -25,11 +25,11 @@
       <br>
 
       <accordion class="mt-2">
-        <accordion-group heading="{{'edit output Request ' | localize}}" [panelClass]="'border'" [isOpen]="true">
+        <accordion-group heading="{{'EditOutputRequest' | localize}}" [panelClass]="'border'" [isOpen]="true">
           <div class="modal-body modal-xl">
             <div class="form-group row required">
               <label class="col-md-3 col-form-label" for="title">
-                {{ "Title" }}
+                {{ "Title"|localize }}
               </label>
               <div class="col-md-9">
                 <input type="text" class="form-control" name="title" id="title" required [(ngModel)]="outputRequest.title"
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group row required">
               <label class="col-md-3 col-form-label" for="Plans">
-                {{ "Plans" }}
+                {{ "Plans"|localize }}
               </label>
               <div class="col-md-9">
                 <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
@@ -51,7 +51,7 @@
             </div>
             <div class="form-group row required ">
               <label class="col-md-3 col-form-label " for="planProduct">
-                {{ "products" | localize }}
+                {{ "Products" | localize }}
               </label>
               <div class="col-md-9">
                 <ng-select #productsModel="ngModel" required name="planProduct"
@@ -63,7 +63,7 @@
             </div>
           </div>
         </accordion-group>
-        <accordion-group class="mt-2" heading="{{'Output Request Material' | localize}}" [panelClass]="'border'">
+        <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
           <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
 
         </accordion-group>

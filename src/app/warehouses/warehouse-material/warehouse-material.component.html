@@ -17,50 +17,42 @@
              {{row.material?.name}}
           </ng-template>
         </ngx-datatable-column>
-
         <ngx-datatable-column [name]="l('Code')" prop="code" [flexGrow]="1">
           <ng-template let-row="row" ngx-datatable-cell-template >
              {{row.code}}
           </ng-template>
         </ngx-datatable-column>
-
         <ngx-datatable-column [name]="l('Warehouse')" prop="unit" [flexGrow]="1">
           <ng-template let-row="row" ngx-datatable-cell-template >
              {{row.warehouse?.name}}
           </ng-template>
-        </ngx-datatable-column>
-      
+        </ngx-datatable-column>    
       <ngx-datatable-column [name]="l('Quantity')" prop="initialQuantity" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            {{row.initialQuantity}} {{row.unit?.name}}
         </ng-template>
       </ngx-datatable-column>
-
       <ngx-datatable-column [name]="l('Withdrawn')" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            {{row.initialQuantity - row.currentQuantity}} {{row.unit?.name}}
         </ng-template>
       </ngx-datatable-column>
-
       <ngx-datatable-column [name]="l('Price')" prop="price" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            {{row.price}}
         </ng-template>
       </ngx-datatable-column>
-
       <ngx-datatable-column [name]="l('ExpirationDate')" prop="expirationDate" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            <span class="badge badge-pill badge-outline-success mb-1">{{row.expirationDate|date:'dd/MM/yyyy'}}</span>
         </ng-template>
       </ngx-datatable-column>
-
       <ngx-datatable-column [name]="l('Supplier')" prop="supplier" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            {{row.supplier?.name}}
         </ng-template>
       </ngx-datatable-column>
-
-      <ngx-datatable-column [sortable]="false" [name]="l('')" prop="Action"  [flexGrow]="1">
+      <ngx-datatable-column [sortable]="false" [name]="l('Action')" prop="Action"  [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
           <button id="button-basic" type="button" id="edit" class="btn btn-empty text-primary align-self-center " (click)="editButton(row.id)">
             <i class=" text-primary simple-icon-pencil"></i>
@@ -73,8 +65,6 @@
           </button>
         </ng-template>
       </ngx-datatable-column>
-
-
       <ngx-datatable-footer *ngIf="true">
         <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
           let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset" let-limit="limit">

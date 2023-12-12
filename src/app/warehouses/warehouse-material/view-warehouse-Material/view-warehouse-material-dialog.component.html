@@ -1,7 +1,5 @@
 <abp-modal-header [title]="'View More Details'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
 <div class="modal-body my-custom-scrollbar" *ngIf="loaded">
-
-
     <div class="form-group row ">
         <label class="col-md-3 col-form-label" for="material">
             {{ "Material" | localize }}
@@ -37,7 +35,6 @@
             {{ "code" | localize }}
         </label>
         <div class="col-md-9 ">
-
             <label class="form-control" name="code" id="code">
                 {{warehouseMaterial.code}}
             </label>
@@ -45,7 +42,7 @@
     </div>
     <div class="form-group row ">
         <label class="col-md-3 col-form-label" for="entryDate">
-            {{ "entryDate" }}
+            {{ "EntryDate"|localize }}
         </label>
         <div class="col-md-9">
             <label class="form-control" name="entryDate" id="entryDate">
@@ -56,7 +53,7 @@
 
     <div class="form-group row ">
         <label class="col-md-3 col-form-label" for="expirationDate">
-            {{ "Expiration Date" }}
+            {{ "ExpirationDate"|localize }}
         </label>
         <div class="col-md-9">
             <label class="form-control" name="expirationDate" id="expirationDate">
@@ -66,7 +63,7 @@
     </div>
     <div class="form-group row ">
         <label class="col-md-3 col-form-label" for="quantity">
-            {{ "Initial Quantity" }}
+            {{ "InitialQuantity"|localize }}
         </label>
         <div class="col-md-4">
             <label class="form-control" name="quantity" id="quantity">
@@ -74,7 +71,7 @@
             </label>
         </div>
         <label class="col-md-1 col-form-label" for="unit">
-            {{ "Unit" }}
+            {{ "Unit"|localize }}
         </label>
         <div class="col-md-4 ">
             <label class="form-control" name="unit" id="unit">
@@ -84,7 +81,7 @@
     </div>
     <div class="form-group row ">
         <label class="col-md-3 col-form-label" for="currentQuantity">
-            {{ "Current Quantity" }}
+            {{ "CurrentQuantity"|localize }}
         </label>
         <div class="col-md-4">
             <label class="form-control" name="currentQuantity" id="currentQuantity">
@@ -92,7 +89,7 @@
             </label>
         </div>
         <label class="col-md-1 col-form-label" for="unit">
-            {{ "Unit" }}
+            {{ "Unit"|localize }}
         </label>
         <div class="col-md-4 ">
             <label class="form-control" name="unit" id="unit">
@@ -103,23 +100,20 @@
 
     <div class="form-group row ">
         <label class="col-md-3 col-form-label" for="price">
-            {{ "Price" }}
+            {{ "Price"|localize }}
         </label>
         <div class="col-md-4">
-
-
             <label class="form-control" name="price" id="price">
                 {{warehouseMaterial.price}}
             </label>
         </div>
         <label class="col-md-1 col-form-label" for="unitPriceId">
-            {{ "Price Unit" }}
+            {{ "PriceUnit"|localize }}
         </label>
         <div class="col-md-4 ">
             <label class="form-control" name="unitPrice" id="unitPrice">
                 {{warehouseMaterial.unitPrice?.name}}
             </label>
-
         </div>
     </div>
 

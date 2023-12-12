@@ -17,13 +17,13 @@
   <div class="row mb-2">
     <div class="col-lg-6">
       <h6>
-        <i class="iconsminds-calendar-4"></i> Total Quantity :
+        <i class="iconsminds-calendar-4"></i>{{'TotalQuantity'|localize}} :
         {{ data.totalQuantity }}
       </h6>
     </div>
     <div class="col-lg-6">
       <div class="float-left float-none-xs">
-        <h6 ><i class="simple-icon-user"></i> Supplier :</h6>
+        <h6 ><i class="simple-icon-user"></i> {{'Supplier'|localize}}:</h6>
       </div>
       <div class="float-left float-none-xs mx-3">
         <table class="table table-sm table-borderless">
@@ -44,19 +44,17 @@
       </div>
     </div>
   </div>
-
   <!-- tabel -->
   <div class="row">
     <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">Warehouse</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">code</th>
-            <th scope="col">expiration Date</th>
-            <th scope="col">OutPut Request</th>
-
+            <th scope="col">{{'Warehouse'|localize}}</th>
+            <th scope="col">{{'Quantity'|localize}}</th>
+            <th scope="col">{{'Code'|localize}}</th>
+            <th scope="col">{{'ExpirationDate'|localize}}</th>
+            <th scope="col">{{'OutPutRequest'|localize}}</th>
           </tr>
         </thead>
         <tbody>
@@ -68,73 +66,9 @@
             <ng-contanier *ngFor="let outputRequest of warehousematerial.OutPutRequest; let wId = index">
               <td *ngIf="wId == i">{{ outputRequest.quantity }}</td>
             </ng-contanier>
-
-
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-12 list">
-      <ngx-datatable
-        [rows]="data.warehouseMaterials"
-        [columnMode]="ColumnMode.flex"
-        [headerHeight]="20"
-        [footerHeight]="100"
-        #table
-        [sorts]="[{ prop: 'title', dir: 'asc' }]"
-      >
-        <ngx-datatable-column
-          [name]="'Warehouse Name'"
-          prop="Warehouse"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <a class="c-pointer">
-              <div>
-                {{ row.warehouse.warehouseKeeper }}
-              </div>
-            </a>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column
-          [name]="'Quantity'"
-          prop="currentQuantity"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div>{{ row.currentQuantity }}</div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column [name]="'Code'" prop="code" [flexGrow]="1">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div>{{ row.code }}</div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column
-          [name]="'expiration Date'"
-          prop="expirationDate"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div>{{ row.expirationDate | date : "yyyy-MM-dd" }}</div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column
-          [name]="'OutPutRequest'"
-          prop="unitId"
-          [flexGrow]="1"
-        >
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <ul>
-              <li>reem</li>
-              <li>reem</li>
-              <li>reem</li>
-            </ul>
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
-    </div>
-  </div> -->
 </div>

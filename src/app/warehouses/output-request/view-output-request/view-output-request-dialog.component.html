@@ -6,7 +6,7 @@
       <div class="modal-body">
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="title">
-      {{ "Title" }}
+      {{ "Title"|localize }}
     </label>
     <div class="col-md-9">
       <input
@@ -22,7 +22,7 @@
 
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="outputDate">
-      {{ "Output Date" }}
+      {{ "OutputDate"|localize  }}
     </label>
     <div class="col-md-9">
       <input
@@ -37,7 +37,7 @@
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="plan">
-      {{ "Plan" }}
+      {{ "Plan"|localize  }}
     </label>
     <div class="col-md-9">
       <input
@@ -57,12 +57,9 @@
       <table class="table table-hover ">
         <thead>
           <tr>
-
-
-            <th scope="col">Quantity</th>
-            <th scope="col">Unit</th>
-            <th scope="col">Warehouse</th>
-
+            <th scope="col">{{'Quantity'|localize }}</th>
+            <th scope="col">{{'Unit'|localize }}</th>
+            <th scope="col">{{'Warehouse'|localize }}</th>
           </tr>
         </thead>
         <tbody>
