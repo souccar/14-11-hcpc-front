@@ -44,7 +44,7 @@ const data: IMenuItem[] = [
     icon: 'iconsminds-factory-1',
     subs: [
       {
-        label: 'Stok',
+        label: 'Stock',
         to: `${adminRoot}/warehouses/warehouseMaterial`,
         icon: 'iconsminds-shopping-basket',
 

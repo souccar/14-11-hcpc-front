@@ -26,10 +26,12 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
      private _userService: UserServiceProxy,
      private rendererFactory: RendererFactory2,
      ) {
+      
     super(injector);
   }
 
   ngOnInit(): void {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
     this.languages = _filter(
       this.localization.languages,
       (l) => !l.isDisabled
@@ -63,7 +65,7 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
     this.renderer.addClass(document.body,'rtl');
     this.renderer.setAttribute(
       document.documentElement,
-      'dir',
+      'direction',
       'rtl'
     );
   }
