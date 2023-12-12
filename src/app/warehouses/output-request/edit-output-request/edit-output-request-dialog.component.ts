@@ -45,10 +45,10 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   }
   initOutputRequest()
   {
-    // this._outputRequestService.get(this.id).subscribe((result)=>{
-    //   this.outputRequest=result;
-    //   console.log(result)
-    // });
+    this._outputRequestService.get(this.id).subscribe((result)=>{
+      this.outputRequest=result;
+      console.log(result)
+    });
   }
   initPlan()
   {

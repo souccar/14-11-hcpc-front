@@ -1,61 +1,82 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ArbitrageDialogComponent } from './actually/view-actually/actual-product/arbitrage-dialog/arbitrage-dialog.component';
+import { ActuallyComponent } from './actually/actually.component';
+import { LogsComponent } from './plan/view-plan/logs/logs.component';
+import { PlanProductsPercentageComponent } from './plan/view-plan/plan-products/plan-products-percentage.component';
+import { PlanMaterialComponent } from './plan/view-plan/plan-material/plan-material.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductionComponent } from './production.component';
 import { ProductionRoutingModule } from './production-routing.module';
-import { MaterialComponent } from './material/material.component';
+
 import { SharedModule } from '@shared/shared.module';
 import { LayoutModule } from '@app/layout/layout.module';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { CreateMaterialDialogComponent } from './material/create-material/create-material-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditMaterialDialogComponent } from './material/edit-material/edit-material-dialog.component';
-import { ViewMaterialDialogComponent } from './material/view-material/view-material-dialog.component';
-import { ProductComponent } from './product/product.component';
-import { CreateProductDialogComponent } from './product/create-product/create-product-dialog.component';
-import { EditProductDialogComponent } from './product/edit-product/edit-product-dialog.component';
-import { ViewProductDialogComponent } from './product/view-product/view-product-dialog.component';
-import { FormulaComponent } from './formula/formula.component';
-import { CreateFormulaDialogComponent } from './formula/create-formula/create-formula-dialog.component';
-import { EditFormulaDialogComponent } from './formula/edit-formula/edit-formula-dialog.component';
-import { ViewFormulaDialogComponent } from './formula/view-formula/view-formula-dialog.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { MaterialDetailsComponent } from './material/material-details/material-details.component';
+import { ChartsModule } from '@app/@components/charts/charts.module';
+import {  BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PlanComponent } from './plan/plan.component';
+import { CreatePlanDialogComponent } from './plan/create-plan/create-plan-dialog.component';
+import { EditPlanDialogComponent } from './plan/edit-plan/edit-plan-dialog.component';
+import { PlanProductComponent } from './plan/view-plan/plan-product/plan-product.component';
+import { ViewPlanComponent } from './plan/view-plan/view-plan.component';
+import { CreatePlanProductDialogComponent } from './plan/create-plan-product/create-plan-product-dialog.component';
+import { EditPlanProductDialogComponent } from './plan/edit-plan-product/edit-plan-product-dialog.component';
+import { LastLoginsComponent } from './plan/view-plan/last-logins/last-logins.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { CreateActuallyDialogComponent } from './actually/create-actually/create-actually-dialog.component';
+import { EditActuallyDialogComponent } from './actually/edit-actually/edit-actually-dialog.component';
+import { ViewActuallyComponent } from './actually/view-actually/view-actually.component';
+import { ActualMaterialComponent } from './actually/view-actually/actual-material/actual-material.component';
+import { ActualProductComponent } from './actually/view-actually/actual-product/actual-product.component';
+
+
 @NgModule({
   declarations: [
     ProductionComponent,
-    MaterialComponent,
-    CreateMaterialDialogComponent,
-    EditMaterialDialogComponent,
-    ViewMaterialDialogComponent,
-    ProductComponent,
-    CreateProductDialogComponent,
-    EditProductDialogComponent,
-    ViewProductDialogComponent,
-    FormulaComponent,
-    CreateFormulaDialogComponent,
-    EditFormulaDialogComponent,
-    ViewFormulaDialogComponent,
-    MaterialDetailsComponent,
-
+    PlanComponent,
+    CreatePlanDialogComponent,
+    EditPlanDialogComponent,
+    PlanProductComponent,
+    CreatePlanProductDialogComponent,
+    EditPlanProductDialogComponent,
+    ViewPlanComponent,
+    PlanMaterialComponent,
+    PlanProductsPercentageComponent,
+    LogsComponent,
+    LastLoginsComponent,
+    ActuallyComponent,
+    CreateActuallyDialogComponent,
+    EditActuallyDialogComponent,
+    ViewActuallyComponent,
+    ActualMaterialComponent,
+    ActualProductComponent,
+    ArbitrageDialogComponent
 
   ],
   imports: [
     ProductionRoutingModule,
     CommonModule,
     SharedModule,
+    ChartsModule,
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
-    PaginationModule.forRoot(),
     CollapseModule.forRoot(),
-    AccordionModule.forRoot(),
+    TooltipModule.forRoot(),
+    PaginationModule.forRoot(),
+    BsDropdownModule,
+    BsDatepickerModule.forRoot()
 
-  
-  
-   
+
+
+
+
+
 
   ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+
+  schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
 })
 export class ProductionModule { }
