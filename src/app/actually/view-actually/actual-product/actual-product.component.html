@@ -29,10 +29,10 @@
                         <table class="table table-sm">
                             <tbody>
                                 <tr>
-                                    <td><span class=" align-middle">{{'Required number' | localize}} <i
+                                    <td><span class="text-one align-middle">{{'Required number' | localize}} <i
                                                 [tooltip]="tooltipData.requiredQuantity"
                                                 class="bi bi-question-circle-fill text-primary"></i></span></td>
-                                    <td><span class="mx-2 text-muted">{{p.numberOfItems}}</span></td>
+                                    <td><span class="mx-2 text-one">{{p.numberOfItems}}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span class="text-one align-middle">{{'Can produce' | localize}} <i
@@ -61,10 +61,10 @@
                                         commaNumber}}</span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="text-one align-middle">{{'Arbitrage' | localize}} <i
+                                    <td><span class="text-one align-middle" [ngClass]="{'text-danger':p.productArbitrage < 0, 'text-primary':p.productArbitrage >= 0}">{{'Arbitrage' | localize}} <i
                                                 [tooltip]="tooltipData.productArbitrage"
                                                 class="bi bi-question-circle-fill text-primary"></i></span></td>
-                                    <td><span class="mx-2 text-one">{{p.productArbitrage | commaNumber}}</span></td>
+                                    <td><span class="mx-2 text-one" [ngClass]="{'text-danger':p.productArbitrage < 0, 'text-primary':p.productArbitrage >= 0}" >{{p.productArbitrage | commaNumber}}</span></td>
                                 </tr>
                             </tbody>
                         </table>

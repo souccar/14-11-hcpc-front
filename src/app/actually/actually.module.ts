@@ -16,6 +16,7 @@ import { ChartsModule } from '@app/@components/charts/charts.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ArbitrageDialogComponent } from './view-actually/actual-product/arbitrage-dialog/arbitrage-dialog.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ActualDetailDialogComponent } from './view-actually/actual-detail-dialog/actual-detail-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ViewActuallyComponent,
     ActualMaterialComponent,
     ActualProductComponent,
-    ArbitrageDialogComponent
+    ArbitrageDialogComponent,
+    ActualDetailDialogComponent
   ],
   imports: [
     SharedModule,

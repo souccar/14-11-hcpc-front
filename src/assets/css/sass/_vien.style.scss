@@ -6031,6 +6031,18 @@ div.dataTables_wrapper div.dataTables_filter input {
   color: $primary-color !important;
 }
 
+@media (max-width: 800px){
+  .progressbar-text {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    top: 25%;
+    transform: translateY(-50%);
+    color: $primary-color !important;
+  }
+}
+
 .progress-bar-circle {
   width: 54px;
   height: 54px;
