@@ -37,7 +37,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         NgSelectModule,
         NgxDatatableModule,
         ModalModule.forRoot(),
-        // BsDatepickerModule.forRoot(),
+        BsDatepickerModule.forRoot(),
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -78,7 +78,7 @@ export class SharedModule {
                 LayoutStoreService,
                 SidebarService,
                 SharedService,
-                
+
             ]
         };
     }

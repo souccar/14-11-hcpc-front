@@ -9,7 +9,6 @@ import { state } from '@angular/animations';
 @Component({
   selector: 'create-output-request-dialog',
   templateUrl: './create-output-request-dialog.component.html',
-  styleUrls: ['./create-output-request-dialog.component.scss']
 })
 export class CreateOutputRequestDialogComponent extends AppComponentBase {
   saving = false;
@@ -47,7 +46,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {
         this.planProducts = result.planProducts;
-        this.planProductloaded=true; 
+        this.planProductloaded=true;
       });
     }
   }

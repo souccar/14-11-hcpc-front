@@ -1,0 +1,39 @@
+<abp-modal-header
+  [title]="'View More Details'|localize"
+  (onCloseClick)="bsModalRef.hide()"
+></abp-modal-header>
+<div class="modal-body my-custom-scrollbar">
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="name">
+      {{ "Name"|localize }}
+    </label>
+    <div class="col-md-9">
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="name"
+        [value]="data.name"
+        [readonly]="!editable"
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="description">
+      {{ "Description"|localize }}
+    </label>
+    <div class="col-md-9">
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        id="description"
+        [value]="data.description"
+        [readonly]="!editable"
+      ></textarea>
+    </div>
+  </div>
+
+
+  </div>
+
