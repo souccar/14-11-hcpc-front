@@ -7,7 +7,7 @@
         {{ "Plan" | localize }}
       </label>
       <div class="col-md-9 ">
-        <select aria-placeholder="plan" (change)="getProductOutputRequestPlan($event.target.value)" class="form-control"
+        <select aria-placeholder="plan" (change)="getOutputRequestsOfPlan($event.target.value)" class="form-control"
           aria-label="Plan" #planIdModel="ngModel" required name="plan" [(ngModel)]="dailyProduction.planId" #planIdEl>
           <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
         </select>
@@ -40,11 +40,12 @@
         <div *ngFor="let planProduct of outputRequestsProducts, index as i">
           <div class="row mt-1">
             <div class="col-md-5 d-flex align-items-end">
-              <label class="" [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
+              <label class="" [for]="'quantitiy-'+i" >{{planProduct.product.name}}</label>
             </div>
             <div class="col-md-7 d-flex align-items-end">
               <input type="number" placeholder="quantitiy" class="form-control" name="{{'quantity-'+i}}" id="{{'quantity-'+i}}" required
-              (keyup)="updatedQuantity($event,i)"  />
+              
+              />
             </div>
           </div>
         </div>
