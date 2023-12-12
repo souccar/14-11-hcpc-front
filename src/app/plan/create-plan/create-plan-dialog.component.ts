@@ -11,7 +11,7 @@ import { finalize } from 'rxjs';
 })
 export class CreatePlanDialogComponent extends AppComponentBase {
   saving = false;
-  date;
+  minDate:Date
   plan = new CreatePlanDto();
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -23,8 +23,8 @@ export class CreatePlanDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this.date = new Date().toISOString().slice(0, 10);
-
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
   }
 
   addPlan(items: PlanProductDto[]) {

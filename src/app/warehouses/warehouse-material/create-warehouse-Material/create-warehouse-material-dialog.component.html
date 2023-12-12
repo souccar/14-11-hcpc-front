@@ -50,11 +50,17 @@
       </div>
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="entryDate">
-          {{ "entryDate"  }}
+          {{ "Entry Date"  }}
         </label>
         <div class="col-md-9">
-          <input type="date" class="form-control" name="entryDate" id="entryDate" required
-            [(ngModel)]="warehouseMaterial.entryDate" #entryDateModel="ngModel" #entryDateEl   />
+          <input type="text" placeholder="Entry Date" class="form-control" name="entryDate"id="entryDate"
+          bsDatepicker
+          [maxDate]="maxDate"
+          placement="top"
+          [(ngModel)]="warehouseMaterial.entryDate "
+          required
+          [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY' }"
+          #entryDateModel="ngModel" #entryDateEl>
           <abp-validation-summary [control]="entryDateModel" [controlEl]="entryDateEl"></abp-validation-summary>
         </div>
       </div>
@@ -64,9 +70,15 @@
           {{ "Expiration Date"  }}
         </label>
         <div class="col-md-9">
-          <input type="date" class="form-control" name="expirationDate" id="expirationDate" required
-            [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl   />
-          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary>
+          <input type="text" placeholder="Expiration Date" class="form-control" 
+          bsDatepicker
+          [minDate]="minDate"
+          placement="top"
+          name="expirationDate" id="expirationDate" required
+          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl 
+          [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
+          #entryDateModel="ngModel" #entryDateEl>
+          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary> 
         </div>
       </div>
       <div class="form-group row required">

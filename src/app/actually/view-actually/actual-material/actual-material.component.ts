@@ -36,7 +36,6 @@ export class ActualMaterialComponent extends AppComponentBase implements OnInit 
     this.chartDataConfig = this._chartService;
   }
   ngOnInit(): void {
-    console.log (this.planMaterials)
     this.radarChartData = this.getChartData();
  
   }

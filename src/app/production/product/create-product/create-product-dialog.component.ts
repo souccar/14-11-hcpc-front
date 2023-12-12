@@ -37,18 +37,14 @@ export class CreateProductDialogComponent extends AppComponentBase  {
 
   backToAllProduct(){
     this._location.back();
-
   }
 
   save(): void {
-
-
     if (this.product.formulas.length < 1) {
       this.notify.error(this.l('Add One formula at least'));
     }
     else {
       this.saving = true;
-       (this.product)
       this._productService
         .create(
           this.product
@@ -60,7 +56,7 @@ export class CreateProductDialogComponent extends AppComponentBase  {
         )
         .subscribe((response: any) => {
           this.notify.info(this.l('SavedSuccessfully'));
-          location.reload();
+          this.backToAllProduct()
           this.onSave.emit();
         });
     }
