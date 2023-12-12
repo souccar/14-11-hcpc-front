@@ -1,44 +1,3 @@
-<!-- <form class="form-horizontal " autocomplete="off" #editProductModal="ngForm" (ngSubmit)="save()">
-  <abp-modal-header [title]="'Edit Product' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
-  <tabset>
-    <tab heading=" Product ">
-      <div class="modal-body modal-xl">
-        <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="name">
-            {{ "Name" }}
-          </label>
-          <div class="col-md-9">
-            <input type="text" class="form-control" name="name" id="name" required [(ngModel)]="product.name"
-              #nameModel="ngModel" #nameEl />
-
-            <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
-          </div>
-        </div>
-
-        <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="description">
-            {{ "Description" }}
-          </label>
-          <div class="col-md-9">
-            <textarea type="text" class="form-control" name="description" id="description"
-              [(ngModel)]="product.description" #descriptionModel="ngModel" #descriptionEl>
-              </textarea>
-            <abp-validation-summary [control]="descriptionModel" [controlEl]="descriptionEl"></abp-validation-summary>
-          </div>
-        </div>
-
-      </div>
-      <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editProductModal.form.valid || saving"
-    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
-    </tab>
-
-    <tab heading="Formula" *ngIf="loaded" >
-      <edit-formula-dialog [productId]="product.id" (saveFormulaList)="addFormula($event)"   ></edit-formula-dialog>
-
-    </tab>
-  </tabset>
-
-</form> -->
 
 <div class="row">
   <div class="col-12">
@@ -58,7 +17,7 @@
           </a>
         </div>
       </div>   &nbsp;&nbsp; &nbsp;&nbsp;
-      <app-heading title="{{'edit Product'|localize}}" ></app-heading>
+      <app-heading title="{{'EditProduct'|localize}}" ></app-heading>
 
 
     </div>
@@ -67,11 +26,11 @@
     <br>
 
     <accordion class="mt-2">
-      <accordion-group heading="{{'edit Product' | localize}}" [panelClass]="'border'" [isOpen]="true">
+      <accordion-group heading="{{'EditProduct' | localize}}" [panelClass]="'border'" [isOpen]="true">
         <div class="modal-body modal-xl">
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="name">
-              {{ "Name" }}
+              {{ "Name"|localize }}
             </label>
             <div class="col-md-9">
               <input type="text" class="form-control" name="name" id="name" required [(ngModel)]="product.name"
@@ -81,7 +40,7 @@
           </div>
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="price">
-              {{ "Price" }}
+              {{ "Price"|localize }}
             </label>
             <div class="col-md-9">
               <input type="number" class="form-control" price="price" id="price" required [(ngModel)]="product.price"
@@ -92,7 +51,7 @@
 
           <div class="form-group row ">
             <label class="col-md-3 col-form-label" for="description">
-              {{ "Description" }}
+              {{ "Description"|localize }}
             </label>
             <div class="col-md-9">
               <textarea type="text" class="form-control" name="description" id="description"
@@ -106,10 +65,7 @@
       </accordion-group>
       <accordion-group class="mt-2" heading="{{'Formula' | localize}}" [panelClass]="'border'">
         <edit-formula-dialog (saveFormulaList)="addFormula($event)"></edit-formula-dialog>
-
       </accordion-group>
-
     </accordion>
-
   </div>
 </div>

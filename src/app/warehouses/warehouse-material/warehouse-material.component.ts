@@ -36,7 +36,7 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "Stock"
+  title = this.l("Stock");
   materials: MaterialDto[] = [];
   units: UnitDto[] = [];
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;

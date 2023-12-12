@@ -1,4 +1,4 @@
-<app-list-page-header [title]="title" [itemOrder]="itemOrder" [itemOptionsOrders]="itemOptionsOrders"
+<app-list-page-header [title]="title|localize" [itemOrder]="itemOrder" [itemOptionsOrders]="itemOptionsOrders"
   [displayMode]="displayMode" [itemOptionsPerPage]="[5,10,20]" [itemsPerPage]="itemsPerPage"
   [selectAllState]="selectAllState" (changeDisplayMode)="changeDisplayMode($event)" (addNewItem)="showAddNewModal()"
   (deleteItem)="deleteItem()" [selectedCount]="selectedCount" (selectAllChange)="selectAllChange($event)"

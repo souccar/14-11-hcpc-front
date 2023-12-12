@@ -1,6 +1,6 @@
 
 <form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'Add New Warehouse' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="'AddNewWarehouse'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body modal-xl">
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="name">
@@ -15,7 +15,7 @@
       </div>
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="WarehouseKeeper">
-          {{ "StoreKeeper" | localize }}
+          {{ "Storekeeper" | localize }}
         </label>
         <div class="col-md-9 ">
             <input type="text" class="form-control" name="WarehouseKeeper" id="WarehouseKeeper" required 

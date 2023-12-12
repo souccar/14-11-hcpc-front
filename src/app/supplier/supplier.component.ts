@@ -39,28 +39,16 @@ export class SupplierComponent extends PagedListingComponentBase<SupplierDto> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Supplier"
-
-
-
-
-
-
-
+  title=this.l("Supplier");
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
-
   constructor(    injector: Injector,
     private _modalService: BsModalService,
     private _supplierService:SupplierServiceProxy) {
     super(injector);
   }
-
-
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
-
-
   viewButton(id:number)
 {
   this._modalService.show(

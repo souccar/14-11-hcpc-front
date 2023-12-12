@@ -39,7 +39,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Material"
+  title=this.l("Material");
 
 
 

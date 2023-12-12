@@ -7,7 +7,7 @@
         <div class="row">
 
           <div class="col-md-4">
-            <label form="materialId">Material</label>
+            <label form="materialId">{{'Material'|localize}}</label>
             <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
               required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl>
               <!-- <option  disabled selected hidden >Material</option> -->
@@ -16,13 +16,13 @@
 
           </div>
           <div class="col-md-2">
-            <label form="quantity">quantity</label>
+            <label form="quantity">{{'quantity'|localize}}</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required
               [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl />
 
           </div>
           <div class="col-md-2">
-            <label form="unitId">Unit</label>
+            <label form="unitId">{{'Unit'|localize}}</label>
             <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
               <option *ngFor="let item of unitDropdown" value={{item.id}}>{{item.name}}</option>
@@ -34,7 +34,6 @@
 
       <div class="col-md-1">
         <!-- Button -->
-
         <button type="button" class="btn btn-outline-primary mt-4" (click)="addToFormulaList()">
           <i class="bi bi-plus-lg"> </i>
         </button>
@@ -48,10 +47,10 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Material</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Unit</th>
-              <th scope="col">Action</th>
+              <th scope="col">{{'Material'|localize}}</th>
+              <th scope="col">{{'Quantity'|localize}}</th>
+              <th scope="col">{{'Unit'|localize}}</th>
+              <th scope="col">{{'Action'|localize}}</th>
             </tr>
           </thead>
           <tbody>
@@ -73,10 +72,7 @@
                   <i class="simple-icon-trash text-primary"></i>
                 </button>
               </td>
-
-
             </tr>
-
           </tbody>
         </table>
       </div>

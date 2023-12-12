@@ -35,7 +35,7 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Plan"
+  title=this.l("Plan");
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,

@@ -45,7 +45,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
   }
   removeMaterialSupplier(i:number){
     this.material.suppliers.splice(i,1);
-  }
+  }r
 
    save(): void {
     this.saving = true;
