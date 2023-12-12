@@ -1,6 +1,6 @@
 
 <form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'Add New Item in Warehouse' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="'AddNewItemInWarehouse'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body modal-xl">
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="material">
@@ -40,7 +40,7 @@
       </div>
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="code">
-          {{ "code" | localize }}
+          {{ "Code" | localize }}
         </label>
         <div class="col-md-9 ">
           <input type="text" class="form-control" name="code" id="code" required
@@ -50,28 +50,40 @@
       </div>
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="entryDate">
-          {{ "entryDate"  }}
+          {{ "EntryDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="date" class="form-control" name="entryDate" id="entryDate" required
-            [(ngModel)]="warehouseMaterial.entryDate" #entryDateModel="ngModel" #entryDateEl   />
+          <input type="text" placeholder="Entry Date" class="form-control" name="entryDate"id="entryDate"
+          bsDatepicker
+          [maxDate]="maxDate"
+          placement="top"
+          [(ngModel)]="warehouseMaterial.entryDate "
+          required
+          [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY' }"
+          #entryDateModel="ngModel" #entryDateEl>
           <abp-validation-summary [control]="entryDateModel" [controlEl]="entryDateEl"></abp-validation-summary>
         </div>
       </div>
 
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="expirationDate">
-          {{ "Expiration Date"  }}
+          {{ "ExpirationDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="date" class="form-control" name="expirationDate" id="expirationDate" required
-            [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl   />
-          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary>
+          <input type="text" placeholder="Expiration Date" class="form-control" 
+          bsDatepicker
+          [minDate]="minDate"
+          placement="top"
+          name="expirationDate" id="expirationDate" required
+          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl 
+          [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
+          #entryDateModel="ngModel" #entryDateEl>
+          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary> 
         </div>
       </div>
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="quantity">
-          {{ "Quantity"  }}
+          {{ "Quantity"|localize  }}
         </label>
         <div class="col-md-4">
           <input type="number" class="form-control" name="quantity" id="quantity" required min="0"
@@ -79,7 +91,7 @@
           <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
         </div>
         <label class="col-md-1 col-form-label" for="unit">
-          {{ "Unit"  }}
+          {{ "Unit"|localize  }}
         </label>
         <div class="col-md-4 ">
           <select class="form-control" aria-label="unit" #unitModel="ngModel" required name="unit"
@@ -92,7 +104,7 @@
 
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="price">
-          {{ "Price"  }}
+          {{ "Price"|localize  }}
         </label>
         <div class="col-md-9">
           <input type="number" class="form-control" name="price" id="price" required min="0"

@@ -2,9 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { OutputRequestDto, OutputRequestDtoPagedResultDto, OutputRequestServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { EditOutputRequestDialogComponent } from './edit-output-request/edit-output-request-dialog.component';
-import { CreateOutputRequestDialogComponent } from './create-output-request/create-output-request-dialog.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
@@ -12,7 +10,6 @@ import { ViewOutputRequestDialogComponent } from './view-output-request/view-out
 @Component({
   selector: 'output-request',
   templateUrl: './output-request.component.html',
-  styleUrls: ['./output-request.component.scss']
 })
 export class OutputRequestComponent extends PagedListingComponentBase<OutputRequestDto> {
   ColumnMode = ColumnMode;
@@ -38,7 +35,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title = "output Request"
+  title = this.l("OutputRequest")
 
   outPutRequest: OutputRequestDto[] = [];
 
@@ -53,19 +50,12 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     private _modalService: BsModalService,
     private _OutputRequestService: OutputRequestServiceProxy,
     private _router:Router
-
   ) {
     super(injector);
   }
-
-
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
-
-
   }
-
-
   viewButton(id: number) {
     this._modalService.show(
       ViewOutputRequestDialogComponent,
@@ -131,8 +121,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     request.skipCount = (currentPage - 1) * pageSize;
     request.maxResultCount = this.itemsPerPage;
     this.list(request, this.pageNumber, () => { });
-
-
   }
   deleteItem(): void {
     if (this.selected.length == 0) {
@@ -184,7 +172,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-    request.Including ="plan,material,warehouse";
+    request.Including ="Plan,OutputRequestProducts";
     this._OutputRequestService
       .getAll(
         request.keyword,
@@ -199,11 +187,9 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
         })
       )
       .subscribe((result: OutputRequestDtoPagedResultDto) => {
-
         this.data = result.items;
-         (this.data)
+         console.log(this.data)
         this.totalItem = result.totalCount;
-
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
 

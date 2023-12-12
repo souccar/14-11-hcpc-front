@@ -1,53 +1,40 @@
+import { ViewPlanComponent } from './plan/view-plan/view-plan.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductionComponent } from './production.component';
-import { MaterialComponent } from './material/material.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
-import { ProductComponent } from './product/product.component';
-import { FormulaComponent } from './formula/formula.component';
-import { CreateProductDialogComponent } from './product/create-product/create-product-dialog.component';
-import { EditProductDialogComponent } from './product/edit-product/edit-product-dialog.component';
+import { PlanComponent } from './plan/plan.component';
+import { ViewActuallyComponent } from './actually/view-actually/view-actually.component';
+import { ActuallyComponent } from './actually/actually.component';
+
+
 
 
 const routes: Routes = [{
   path: '', component: ProductionComponent ,
   children:[
     {
-      path: 'material',
-      component: MaterialComponent,
-
-      //data: { permission : 'Pages.Products' },
+      path: 'plan', component: ViewPlanComponent,
       canActivate: [AppRouteGuard]
     },
     {
-      path: 'product',
-      component: ProductComponent,
+      path: 'displayAllPlan',
+      component: PlanComponent,
+      canActivate: [AppRouteGuard]
+    },
 
-      //data: { permission : 'Pages.Products' },
+    {
+      path: 'diallyProduction',
+      component: ViewActuallyComponent,
       canActivate: [AppRouteGuard]
     },
     {
-      path: 'formula/:id',
-      component: FormulaComponent,
-
-      //data: { permission : 'Pages.Products' },
+      path: 'diallyProduction/list',
+      component: ActuallyComponent,
       canActivate: [AppRouteGuard]
     },
-    {
-      path: 'newproduct',
-      component: CreateProductDialogComponent,
 
-      //data: { permission : 'Pages.Products' },
-      canActivate: [AppRouteGuard]
-    },
-    {
-      path: 'editproduct/:id',
-      component: EditProductDialogComponent,
 
-      //data: { permission : 'Pages.Products' },
-      canActivate: [AppRouteGuard]
-    }
   ]
 }];
 

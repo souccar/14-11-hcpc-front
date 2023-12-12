@@ -35,7 +35,7 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="GeneralSetting"
+  title=this.l("GeneralSetting");
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,

@@ -3,14 +3,13 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { esLocale } from 'ngx-bootstrap/locale';
 
 @Component({
   selector: 'create-warehouse-material-dialog',
   templateUrl: './create-warehouse-material-dialog.component.html',
-
 })
-
-
 export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   saving = false;
   warehouseMaterial = new CreateWarehouseMaterialDto();
@@ -18,6 +17,8 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   materials: MaterialNameForDropdownDto[] = [];
   suppliers: SupplierNameForDropdownDto[] = [];
   warehouses: WarehouseNameForDropdownDto[] = [];
+  minDate:Date;
+  maxDate:Date;
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
@@ -29,8 +30,13 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
 
   ) {
     super(injector);
+    
   }
   ngOnInit(): void {
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate()+1);
+    this.maxDate = new Date();
+    this.maxDate.setDate(this.maxDate.getDate() );
     this.initUnits();
     this.initMaterials();
     this. initWarehouses();

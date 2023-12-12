@@ -7,7 +7,7 @@
           <!-- Inputs -->
           <div class="row">
             <div class="col-md-3 required">
-              <label form="warehouseMaterialId">warehouseMaterial</label>
+              <label form="warehouseMaterialId">{{'WarehouseMaterial'|localize}}</label>
               <select class="form-control" aria-label="unit" #warehouseMaterialIdModel="ngModel" required name="warehouseMaterialId"
               [(ngModel)]="outputRequestMaterial.warehouseMaterialId" #warehouseMaterialIdEl>
                 <option *ngFor="let item of warehouseMaterialCodes" value={{item.id}}>{{item.code}}</option>
@@ -15,14 +15,14 @@
 
             </div>
             <div class="col-md-5 required">
-              <label form="unitId">Unit</label>
+              <label form="unitId">{{'Unit'|localize}}</label>
               <select aria-placeholder="material" class="form-control" aria-label="Material" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="outputRequestMaterial.unitId"  #unitIdEl >
                 <option *ngFor="let item of units" value={{item.id}}>{{item.name}}</option>
               </select>
             </div>
             <div class="col-md-4 required">
-              <label form="quantity">Quantity</label>
+              <label form="quantity">{{'Quantity'|localize}}</label>
               <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
                 [(ngModel)]="outputRequestMaterial.quantity" #quantityModel="ngModel" #quantityEl  />
 
@@ -30,10 +30,8 @@
 
           </div>
         </div>
-
         <div class="col-md-1">
           <!-- Button -->
-
           <button type="button" class="btn btn-outline-primary mt-4" (click)="addToOutputRequestMaterialList()">
             <i class="bi bi-plus-lg"> </i>
           </button>
@@ -46,11 +44,10 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-
-                    <th scope="col">Warehouse Code</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">{{'WarehouseCode'|localize}}</th>
+                    <th scope="col">{{'Quantity'|localize}}</th>
+                    <th scope="col">{{'Unit'|localize}}</th>
+                    <th scope="col">{{'Action'|localize}}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -89,5 +86,4 @@
             </div>
           </div>
     </div>
-
   </form>

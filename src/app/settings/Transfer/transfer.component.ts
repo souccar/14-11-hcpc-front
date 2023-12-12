@@ -36,7 +36,7 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title="Transfer"
+  title=this.l('Transfer')
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
   constructor(    injector: Injector,
