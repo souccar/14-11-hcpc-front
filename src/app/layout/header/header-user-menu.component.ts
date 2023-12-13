@@ -117,7 +117,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
         }
       }
 
-      self.unreadNotificationCount.unreadCount -= 1;
+      self.unreadNotificationCount -= 1;
     }
 
     abp.event.on('app.notifications.read', userNotificationId => {
