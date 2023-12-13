@@ -3307,6 +3307,123 @@ export class OutputRequestServiceProxy {
     }
 
     /**
+     * @param status (optional) 
+     * @param id (optional) 
+     * @return Success
+     */
+    changeStatus(status: number | undefined, id: number | undefined): Observable<OutputRequestDto> {
+        let url_ = this.baseUrl + "/api/services/app/OutputRequest/ChangeStatus?";
+        if (status === null)
+            throw new Error("The parameter 'status' cannot be null.");
+        else if (status !== undefined)
+            url_ += "status=" + encodeURIComponent("" + status) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processChangeStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processChangeStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OutputRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OutputRequestDto>;
+        }));
+    }
+
+    protected processChangeStatus(response: HttpResponseBase): Observable<OutputRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OutputRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getForEdit(id: number | undefined): Observable<UpdateOutputRequestDto> {
+        let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<UpdateOutputRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<UpdateOutputRequestDto>;
+        }));
+    }
+
+    protected processGetForEdit(response: HttpResponseBase): Observable<UpdateOutputRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UpdateOutputRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -9076,6 +9193,7 @@ export interface ICreateDailyProductionDetailsDto {
 export class CreateDailyProductionDto implements ICreateDailyProductionDto {
     planId: number | undefined;
     outputRequestId: number | undefined;
+    note: string | undefined;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: ICreateDailyProductionDto) {
@@ -9091,6 +9209,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
         if (_data) {
             this.planId = _data["planId"];
             this.outputRequestId = _data["outputRequestId"];
+            this.note = _data["note"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
                 for (let item of _data["dailyProductionDetails"])
@@ -9110,6 +9229,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
         data = typeof data === 'object' ? data : {};
         data["planId"] = this.planId;
         data["outputRequestId"] = this.outputRequestId;
+        data["note"] = this.note;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
             for (let item of this.dailyProductionDetails)
@@ -9129,6 +9249,7 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
 export interface ICreateDailyProductionDto {
     planId: number | undefined;
     outputRequestId: number | undefined;
+    note: string | undefined;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 }
 
@@ -16730,6 +16851,7 @@ export interface IUpdateDailyProductionDetailsDto {
 export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
     id: number;
     planId: number | undefined;
+    note: string | undefined;
     outputRequestId: number | undefined;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 
@@ -16746,6 +16868,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         if (_data) {
             this.id = _data["id"];
             this.planId = _data["planId"];
+            this.note = _data["note"];
             this.outputRequestId = _data["outputRequestId"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
@@ -16766,6 +16889,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["planId"] = this.planId;
+        data["note"] = this.note;
         data["outputRequestId"] = this.outputRequestId;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
@@ -16786,6 +16910,7 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
 export interface IUpdateDailyProductionDto {
     id: number;
     planId: number | undefined;
+    note: string | undefined;
     outputRequestId: number | undefined;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 }

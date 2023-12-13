@@ -70,11 +70,6 @@ import { ActualProductComponent } from './actually/view-actually/actual-product/
     BsDatepickerModule.forRoot()
 
 
-
-
-
-
-
   ],
 
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
