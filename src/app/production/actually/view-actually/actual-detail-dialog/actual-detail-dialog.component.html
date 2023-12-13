@@ -1,7 +1,7 @@
 
 <div class="container">
     <div class="mb-3" *ngFor="let outputRequest of outputRequests">
-        <span class="badge badge-primary mb-1 p-2 text-one">{{outputRequest.outputDate | date:'EEEE MMM dd , yyyy'}}</span>
+        <span class="badge badge-primary mb-1 p-2 text-one">{{outputRequest.outputDate}}</span>
         <ul class=" list-unstyled pt-1">
             <li *ngFor="let outputRequestProduct of outputRequest.outputRequestProducts">
                 <div class="card mb-2">
