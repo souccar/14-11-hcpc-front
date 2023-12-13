@@ -45,17 +45,22 @@
             <i class="iconsminds-suitcase d-block"></i>
             <span>Tasks</span>
           </a>
+
         </div>
       </div>
     </div>
-    
+
     <!-- Notification -->
+
     <div class="position-relative d-inline-block">
       <div dropdown>
+
         <button id="button-basic" dropdownToggle type="button" id="notificationButton"
           class="header-icon btn btn-empty">
           <i class="simple-icon-bell"></i>
-          <span class="count">{{unreadNotificationCount}}</span>
+
+          <span class="count">{{unreadNotificationCount.unreadCount}}</span>
+
         </button>
         <div id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3"
           id="notificationDropdown" style="width: 350px;">

@@ -1,11 +1,12 @@
 import { Component, ChangeDetectionStrategy, HostListener, OnInit, Injector, NgZone } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AppAuthService } from '@shared/auth/app-auth.service';
-import { NotificationServiceProxy, UserNotification } from '@shared/service-proxies/service-proxies';
+import { GetNotificationsOutput, NotificationServiceProxy, UserNotification } from '@shared/service-proxies/service-proxies';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { getThemeColor, setThemeColor } from 'app/utils/util';
 import * as _ from 'lodash';
 import { IFormattedUserNotification, UserNotificationHelper } from '../notification/UserNotificationHelper';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'header-user-menu',
@@ -17,7 +18,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   isFullScreen = false;
   displayName = "";
   notifications: IFormattedUserNotification[] = [];
-  public unreadNotificationCount = 0;
+ public  unreadNotificationCount:any|undefined;
+  unSeenMsgChange: Subject<number> = new Subject<number>();
 
   constructor(
     private _authService: AppAuthService,
@@ -33,7 +35,10 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   }
   ngOnInit(): void {
     this.displayName = this.displayName = this._session.user.name;
+
     this.loadNotifications();
+
+
   }
   onDarkModeChange(event): void {
     let color = getThemeColor();
@@ -69,8 +74,10 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   }
 
   loadNotifications(): void {
-    this._notificationService.getUserNotifications(undefined, 3, 0).subscribe(result => {
-      this.unreadNotificationCount = result.unreadCount;
+    this._notificationService.getUserNotifications(undefined, 3, 0).subscribe((result:GetNotificationsOutput) => {
+      console.log(result)
+
+      this.unreadNotificationCount = result;
       this.notifications = [];
       _.forEach(result.items, (item: UserNotification) => {
         this.notifications.push(this._userNotificationHelper.format(<any>item));
@@ -109,7 +116,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
         }
       }
 
-      self.unreadNotificationCount -= 1;
+      self.unreadNotificationCount.unreadCount -= 1;
     }
 
     abp.event.on('app.notifications.read', userNotificationId => {
@@ -134,4 +141,9 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   test(){
     alert(this.unreadNotificationCount);
   }
+}
+export class Notifications{
+  totalCount:number;
+  unreadCount:number;
+  notifications:UserNotification[];
 }

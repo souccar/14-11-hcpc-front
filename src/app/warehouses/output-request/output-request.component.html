@@ -13,7 +13,9 @@
       [selected]="selected">
       <ngx-datatable-column [name]="l('Title')" prop="title" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{row.title}}
+          <a type="button" (click)="changeStatus(row.id)">
+            {{row.title}}</a>
+
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Plan')" prop="palnId" [flexGrow]="1">
@@ -33,11 +35,11 @@
           <span class="badge badge-pill badge-outline-success  mb-1" *ngIf="row.status==2">{{'Finished'|localize}}</span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="l('OutputDate')" prop="OutputDate" [flexGrow]="1">
+      <!-- <ngx-datatable-column [name]="l('OutputDate')" prop="OutputDate" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{row.outputDate}}
+          {{row.outputDate|date:"yyyy-MM-dd"}}
         </ng-template>
-      </ngx-datatable-column>
+      </ngx-datatable-column> -->
       <ngx-datatable-column [sortable]="false" [name]="l('Action')" prop="Action" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <button id="button-basic" type="button" id="edit" class="btn btn-empty text-primary align-self-center "
@@ -48,6 +50,21 @@
             (click)="delete(row)">
             <i class="  text-primary simple-icon-trash"></i>
           </button>
+          <span *ngIf="row.status!=2" id="anchorDropdownContainer">
+            <span dropdown container="#anchorDropdownContainer"
+          >
+              <a href id="basic-link" dropdownToggle (click)="false" aria-controls="basic-link-dropdown">
+              <i class="text-primary simple-icon-options-vertical" [tooltip]="tooltipData.changeStatus"
+              ></i></a>
+              <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="basic-link">
+                <a *ngIf="row.status!=1" class="dropdown-item" (click)=" onchangeStatusToInProduction(row.id)">In Production</a>
+                <a class="dropdown-item" (click)="onchangeStatusToFinish(row.id)">Finish</a>
+
+              </ul>
+            </span>
+          </span>
+
+
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-footer *ngIf="true">
