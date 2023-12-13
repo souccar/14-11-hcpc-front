@@ -30,6 +30,7 @@ import { EditActuallyDialogComponent } from './actually/edit-actually/edit-actua
 import { ViewActuallyComponent } from './actually/view-actually/view-actually.component';
 import { ActualMaterialComponent } from './actually/view-actually/actual-material/actual-material.component';
 import { ActualProductComponent } from './actually/view-actually/actual-product/actual-product.component';
+import { ActualDetailDialogComponent } from './actually/view-actually/actual-detail-dialog/actual-detail-dialog.component';
 
 
 @NgModule({
@@ -52,8 +53,8 @@ import { ActualProductComponent } from './actually/view-actually/actual-product/
     ViewActuallyComponent,
     ActualMaterialComponent,
     ActualProductComponent,
-    ArbitrageDialogComponent
-
+    ArbitrageDialogComponent,
+    ActualDetailDialogComponent
   ],
   imports: [
     ProductionRoutingModule,

@@ -22,7 +22,6 @@ export class ActualDetailDialogComponent extends AppComponentBase implements OnI
     super(injector);
   }
   ngOnInit(): void {
-    this.planId = this._activatedRoute.snapshot.params.id;
     this.initialOutputRequestDetail();
   }
 
@@ -30,8 +29,7 @@ export class ActualDetailDialogComponent extends AppComponentBase implements OnI
     this._outputRequestService.getWithDetail(this.planId)
     .subscribe((result: OutputRequestWithDetailDto[])=>{
       this.outputRequests = result;
-      console.log(this.outputRequests)
-    })
+    });
   }
 
 }

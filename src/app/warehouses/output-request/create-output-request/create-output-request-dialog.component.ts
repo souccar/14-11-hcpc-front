@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateOutputRequestDto, CreateProductDto, OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductNameForDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOutputRequestDto, CreateOutputRequestProductDto, CreateProductDto, OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductNameForDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
 import { state } from '@angular/animations';
+import { forEach } from 'lodash-es';
 @Component({
   selector: 'create-output-request-dialog',
   templateUrl: './create-output-request-dialog.component.html',
@@ -29,6 +30,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   }
   ngOnInit(): void {
     this.outputRequest.outputRequestMaterials = [];
+    this.outputRequest.outputRequestProducts = [];
     this.initPlan();
   }
   backToAlloutputRequest() {
@@ -49,6 +51,14 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
         this.planProductloaded=true;
       });
     }
+  }
+  onChangeOutputRequestProduct(items: PlanProductDto[]){
+    this.outputRequest.outputRequestProducts = [];
+    items.forEach(item=>{
+      var outputRequestProduct = new CreateOutputRequestProductDto();
+      outputRequestProduct.init({productId: item.productId});
+      this.outputRequest.outputRequestProducts.push(outputRequestProduct);
+    });
   }
   save(): void {
     if (this.outputRequest.outputRequestMaterials.length < 1) {
