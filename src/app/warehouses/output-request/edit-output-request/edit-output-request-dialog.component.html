@@ -43,7 +43,7 @@
               </label>
               <div class="col-md-9">
                 <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
-                [(ngModel)]="outputRequest.planId" (change)="getProductFromPlan($event.target.value)"  #planIdEl >
+                [(ngModel)]="outputRequest.planId" (change)="onChangePlan($event.target.value)"  #planIdEl >
                   <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
                 </select>
               <abp-validation-summary [control]="planIdModel" [controlEl]="planIdEl"></abp-validation-summary>
@@ -55,7 +55,7 @@
               </label>
               <div class="col-md-9">
                 <ng-select #productsModel="ngModel" required name="planProduct"
-                [(ngModel)]="outputRequest"
+                [(ngModel)]="outputRequest.outputRequestProducts"
                  #productsEl
                 [items]="planProducts" [multiple]="true" bindLabel="product.name" [closeOnSelect]="false">
               </ng-select>
@@ -67,7 +67,7 @@
         <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
           <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
 
-        </accordion-group>
+        </accordion-group>  
 
       </accordion>
 

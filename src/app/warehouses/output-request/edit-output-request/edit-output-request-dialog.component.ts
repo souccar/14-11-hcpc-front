@@ -18,6 +18,8 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   planProducts: PlanProductDto[] = [];
   id:number;
   showItemIndex = 0;
+  selectedProducts:PlanProductDto[] = [];
+  ids=[];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _outputRequestService: OutputRequestServiceProxy,
@@ -29,6 +31,10 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
+
+  
+
+
   ngOnInit(): void {
     this.outputRequest.outputRequestMaterials = [];
     this._router.params.subscribe((params: Params) => {
@@ -41,15 +47,19 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     this._location.back();
   }
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
+    console.log(this.outputRequest.outputRequestMaterials)
     this.outputRequest.outputRequestMaterials = [...items];
   }
   initOutputRequest()
   {
-    // this._outputRequestService.get(this.id).subscribe((result)=>{
-
-    //   this.outputRequest=result;
-
-    // })
+    this._outputRequestService.getForEdit(this.id).subscribe((result)=>{
+      this.outputRequest=result;
+      if (this.outputRequest.planId != null) {
+        this._planService.get(this.outputRequest.planId).subscribe((result) => {
+          this.planProducts = result.planProducts;
+        });
+      }
+    })
   }
   initPlan()
   {
@@ -57,7 +67,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
         this.plans=result
       })
   }
-  getProductFromPlan(id: number) {
+  onChangePlan(id: number) {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {
         this.planProducts = result.planProducts;
