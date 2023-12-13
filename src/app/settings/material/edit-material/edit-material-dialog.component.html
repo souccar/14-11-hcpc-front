@@ -15,7 +15,7 @@
 
         <div class="form-group row required">
           <label class="col-md-3 col-form-label" for="code">
-            {{ "Code"  }}
+            {{ "Code"|localize  }}
           </label>
           <div class="col-md-9">
             <input type="text" class="form-control" name="code" id="code" required
@@ -41,7 +41,7 @@
           <div class="col-md-9">
             <button type="button" class="btn btn-primary btn-md mb-1" (click)="addMaterialSupplier()"><i
                 class="iconsminds-add"></i>
-             {{' AddSupplier'|localize}}</button>
+             {{'AddSupplier'|localize}}</button>
           </div>
           <div class="col-md-3"></div>
           <div class="col-md-9">
