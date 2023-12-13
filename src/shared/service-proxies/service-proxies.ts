@@ -29,7 +29,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     isTenantAvailable(body: IsTenantAvailableInput | undefined): Observable<IsTenantAvailableOutput> {
@@ -85,7 +85,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     register(body: RegisterInput | undefined): Observable<RegisterOutput> {
@@ -153,7 +153,7 @@ export class ConfigurationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changeUiTheme(body: ChangeUiThemeInput | undefined): Observable<void> {
@@ -217,7 +217,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<DailyProductionDto> {
@@ -273,11 +273,11 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param including (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
@@ -349,7 +349,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateDailyProductionDto | undefined): Observable<DailyProductionDto> {
@@ -405,7 +405,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateDailyProductionDto | undefined): Observable<DailyProductionDto> {
@@ -461,7 +461,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getAllProductionsCountForPlan(planId: number | undefined): Observable<{ [key: string]: number; }> {
@@ -526,7 +526,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateDailyProductionDto> {
@@ -582,63 +582,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param id (optional)
-     * @return Success
-     */
-    getForEdit(id: number | undefined): Observable<UpdateDailyProductionDto> {
-        let url_ = this.baseUrl + "/api/services/app/DailyProduction/GetForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<UpdateDailyProductionDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<UpdateDailyProductionDto>;
-        }));
-    }
-
-    protected processGetForEdit(response: HttpResponseBase): Observable<UpdateDailyProductionDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UpdateDailyProductionDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -702,7 +646,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<EmployeeDto> {
@@ -758,7 +702,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateEmployeeDto> {
@@ -814,11 +758,11 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param filtering (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param filtering (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, filtering: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
@@ -890,7 +834,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateEmployeeDto | undefined): Observable<EmployeeDto> {
@@ -946,7 +890,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateEmployeeDto | undefined): Observable<EmployeeDto> {
@@ -1002,7 +946,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -1066,7 +1010,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<FormulaDto> {
@@ -1122,7 +1066,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateFormulaDto> {
@@ -1178,10 +1122,10 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<FormulaDtoPagedResultDto> {
@@ -1249,7 +1193,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateFormulaDto | undefined): Observable<FormulaDto> {
@@ -1305,7 +1249,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateFormulaDto | undefined): Observable<FormulaDto> {
@@ -1361,7 +1305,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -1425,7 +1369,7 @@ export class GeneralSettingServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<GeneralSettingDto> {
@@ -1481,7 +1425,7 @@ export class GeneralSettingServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateGeneralSettingDto> {
@@ -1537,10 +1481,10 @@ export class GeneralSettingServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<GeneralSettingDtoPagedResultDto> {
@@ -1608,7 +1552,7 @@ export class GeneralSettingServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateGeneralSettingDto | undefined): Observable<GeneralSettingDto> {
@@ -1664,7 +1608,7 @@ export class GeneralSettingServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateGeneralSettingDto | undefined): Observable<GeneralSettingDto> {
@@ -1720,7 +1664,7 @@ export class GeneralSettingServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -1842,7 +1786,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<MaterialDto> {
@@ -1898,7 +1842,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param materialId (optional)
+     * @param materialId (optional) 
      * @return Success
      */
     getMaterialDetails(materialId: number | undefined): Observable<MaterialDetailDto> {
@@ -1954,7 +1898,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateMaterialDto> {
@@ -2010,10 +1954,10 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialDtoPagedResultDto> {
@@ -2081,7 +2025,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateMaterialDto | undefined): Observable<MaterialDto> {
@@ -2137,7 +2081,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateMaterialDto | undefined): Observable<MaterialDto> {
@@ -2193,7 +2137,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -2257,7 +2201,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<MaterialSuppliersDto> {
@@ -2313,7 +2257,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateMaterialSuppliersDto> {
@@ -2369,10 +2313,10 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
@@ -2440,7 +2384,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateMaterialSuppliersDto | undefined): Observable<MaterialSuppliersDto> {
@@ -2496,7 +2440,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateMaterialSuppliersDto | undefined): Observable<MaterialSuppliersDto> {
@@ -2552,7 +2496,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -2616,9 +2560,9 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param state (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param state (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getUserNotifications(state: UserNotificationState | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<GetNotificationsOutput> {
@@ -2729,7 +2673,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     setNotificationAsRead(body: GuidEntityDto | undefined): Observable<void> {
@@ -2832,7 +2776,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateNotificationSettings(body: UpdateNotificationSettingsInput | undefined): Observable<void> {
@@ -2884,7 +2828,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteNotification(id: string | undefined): Observable<void> {
@@ -2995,7 +2939,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<OutputRequestDto> {
@@ -3051,7 +2995,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateOutputRequestDto | undefined): Observable<OutputRequestDto> {
@@ -3107,11 +3051,11 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param including (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OutputRequestDtoPagedResultDto> {
@@ -3183,7 +3127,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getPlanOutputRequests(planId: number | undefined): Observable<OutputRequestDto[]> {
@@ -3246,7 +3190,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getWithDetail(planId: number | undefined): Observable<OutputRequestWithDetailDto[]> {
@@ -3309,8 +3253,8 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param status (optional)
-     * @param id (optional)
+     * @param status (optional) 
+     * @param id (optional) 
      * @return Success
      */
     changeStatus(status: number | undefined, id: number | undefined): Observable<OutputRequestDto> {
@@ -3370,7 +3314,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateOutputRequestDto> {
@@ -3426,7 +3370,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateOutputRequestDto | undefined): Observable<OutputRequestDto> {
@@ -3482,7 +3426,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -3662,7 +3606,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreatePlanDto | undefined): Observable<PlanDto> {
@@ -3718,7 +3662,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdatePlanDto | undefined): Observable<PlanDto> {
@@ -3774,7 +3718,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<PlanDto> {
@@ -3932,7 +3876,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     changeStatusToActual(id: number | undefined): Observable<PlanDto> {
@@ -3988,7 +3932,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     changeStatusToArchive(id: number | undefined): Observable<PlanDto> {
@@ -4044,7 +3988,70 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param planId (optional) 
+     * @return Success
+     */
+    getProductsOfPlan(planId: number | undefined): Observable<ProductNameForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetProductsOfPlan?";
+        if (planId === null)
+            throw new Error("The parameter 'planId' cannot be null.");
+        else if (planId !== undefined)
+            url_ += "planId=" + encodeURIComponent("" + planId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProductsOfPlan(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProductsOfPlan(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ProductNameForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ProductNameForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetProductsOfPlan(response: HttpResponseBase): Observable<ProductNameForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ProductNameForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdatePlanDto> {
@@ -4100,11 +4107,11 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param including (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlanDtoPagedResultDto> {
@@ -4176,7 +4183,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4298,7 +4305,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<ProductDto> {
@@ -4354,7 +4361,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateProductDto> {
@@ -4410,10 +4417,10 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
@@ -4481,7 +4488,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateProductDto | undefined): Observable<ProductDto> {
@@ -4537,7 +4544,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateProductDto | undefined): Observable<ProductDto> {
@@ -4593,7 +4600,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4657,7 +4664,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateRoleDto | undefined): Observable<RoleDto> {
@@ -4713,7 +4720,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param permission (optional)
+     * @param permission (optional) 
      * @return Success
      */
     getRoles(permission: string | undefined): Observable<RoleListDtoListResultDto> {
@@ -4769,7 +4776,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: RoleDto | undefined): Observable<RoleDto> {
@@ -4825,7 +4832,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4928,7 +4935,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getRoleForEdit(id: number | undefined): Observable<GetRoleForEditOutput> {
@@ -4984,7 +4991,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<RoleDto> {
@@ -5040,9 +5047,9 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<RoleDtoPagedResultDto> {
@@ -5239,7 +5246,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<SupplierDto> {
@@ -5295,7 +5302,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateSupplierDto> {
@@ -5351,10 +5358,10 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SupplierDtoPagedResultDto> {
@@ -5422,7 +5429,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateSupplierDto | undefined): Observable<SupplierDto> {
@@ -5478,7 +5485,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateSupplierDto | undefined): Observable<SupplierDto> {
@@ -5534,7 +5541,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -5598,7 +5605,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateTenantDto | undefined): Observable<TenantDto> {
@@ -5654,7 +5661,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -5706,7 +5713,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<TenantDto> {
@@ -5762,10 +5769,10 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param isActive (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, isActive: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TenantDtoPagedResultDto> {
@@ -5833,7 +5840,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: TenantDto | undefined): Observable<TenantDto> {
@@ -5901,7 +5908,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authenticate(body: AuthenticateModel | undefined): Observable<AuthenticateResultModel> {
@@ -5969,7 +5976,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     convertTo(body: ConvertToInputDto | undefined): Observable<ConvertToOutputDto> {
@@ -6025,7 +6032,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<TransferDto> {
@@ -6081,7 +6088,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateTransferDto> {
@@ -6137,11 +6144,11 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param including (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TransferDtoPagedResultDto> {
@@ -6213,7 +6220,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateTransferDto | undefined): Observable<TransferDto> {
@@ -6269,7 +6276,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateTransferDto | undefined): Observable<TransferDto> {
@@ -6325,7 +6332,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -6447,7 +6454,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<UnitDto> {
@@ -6503,7 +6510,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateUnitDto> {
@@ -6559,10 +6566,10 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UnitDtoPagedResultDto> {
@@ -6630,7 +6637,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateUnitDto | undefined): Observable<UnitDto> {
@@ -6686,7 +6693,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateUnitDto | undefined): Observable<UnitDto> {
@@ -6742,7 +6749,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -6806,7 +6813,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateUserDto | undefined): Observable<UserDto> {
@@ -6862,7 +6869,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UserDto | undefined): Observable<UserDto> {
@@ -6918,7 +6925,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -6970,7 +6977,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     activate(body: Int64EntityDto | undefined): Observable<void> {
@@ -7022,7 +7029,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     deActivate(body: Int64EntityDto | undefined): Observable<void> {
@@ -7125,7 +7132,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changeLanguage(body: ChangeUserLanguageDto | undefined): Observable<void> {
@@ -7177,7 +7184,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changePassword(body: ChangePasswordDto | undefined): Observable<boolean> {
@@ -7222,7 +7229,7 @@ export class UserServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -7234,7 +7241,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     resetPassword(body: ResetPasswordDto | undefined): Observable<boolean> {
@@ -7279,7 +7286,7 @@ export class UserServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -7291,7 +7298,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<UserDto> {
@@ -7347,10 +7354,10 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param isActive (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, isActive: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UserDtoPagedResultDto> {
@@ -7488,7 +7495,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WarehouseDto> {
@@ -7544,7 +7551,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWarehouseDto> {
@@ -7600,11 +7607,11 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param including (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseDtoPagedResultDto> {
@@ -7676,7 +7683,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWarehouseDto | undefined): Observable<WarehouseDto> {
@@ -7732,7 +7739,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWarehouseDto | undefined): Observable<WarehouseDto> {
@@ -7788,7 +7795,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -7852,7 +7859,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WarehouseMaterialDto> {
@@ -8013,7 +8020,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWarehouseMaterialDto> {
@@ -8069,11 +8076,11 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param including (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
@@ -8145,7 +8152,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWarehouseMaterialDto | undefined): Observable<WarehouseMaterialDto> {
@@ -8201,7 +8208,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWarehouseMaterialDto | undefined): Observable<WarehouseMaterialDto> {
@@ -8257,7 +8264,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
