@@ -19,7 +19,7 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
   renderer: Renderer2;
   currentLanguage: abp.localization.ILanguageInfo;
   languages: abp.localization.ILanguageInfo[];
-
+  customLanguage=[];
 
   constructor(injector: Injector, private _layoutStore: LayoutStoreService
     ,private sidebarService: SidebarService,
@@ -36,6 +36,7 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
       this.localization.languages,
       (l) => !l.isDisabled
     );
+    this.customLanguage.push(this.languages.find(z=>z.name=='en'),this.languages.find(z=> z.name=='ar'));
     this.currentLanguage = this.localization.currentLanguage;
     if( this.currentLanguage.name=='ar')
     {
@@ -54,13 +55,7 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
     );
 
   }
-  switchLang(lang:string)
-  {
-     
-  }
   checkForDirectionChange(): void {
-    // this.renderer.removeClass(document.body, 'ltr');
-    // this.renderer.removeClass(document.body, 'rtl');
     this.renderer.addClass(document.body,'rtl');
     this.renderer.setAttribute(
       document.documentElement,
