@@ -5586,13 +5586,6 @@ ngx-bootstrap@10.3.0:
   dependencies:
     tslib "^2.3.0"
 
-ngx-contextmenu@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-contextmenu/-/ngx-contextmenu-6.0.0.tgz#d06235eff42a0808c5b61df00aaadd1d19fa601c"
-  integrity sha512-y/v++xVNccz5C1NydtL5sHVZwACsKTgXbmZ76CPierv/nPAstr6rrTX37Zlwal3OnbN5XGTSKRcXZSuWUC5Z1Q==
-  dependencies:
-    tslib "^2.1.0"
-
 ngx-filesaver@14.0.0:
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/ngx-filesaver/-/ngx-filesaver-14.0.0.tgz#619ce81413f751b04e8b423ea4ee760836ab13cc"

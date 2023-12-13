@@ -1,12 +1,11 @@
 import { Component, ChangeDetectionStrategy, HostListener, OnInit, Injector, NgZone } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AppAuthService } from '@shared/auth/app-auth.service';
-import { NotificationServiceProxy, UserNotification } from '@shared/service-proxies/service-proxies';
+import { GetNotificationsOutput, NotificationServiceProxy, UserNotification } from '@shared/service-proxies/service-proxies';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { getThemeColor, setThemeColor } from 'app/utils/util';
 import * as _ from 'lodash';
 import { IFormattedUserNotification, UserNotificationHelper } from '../notification/UserNotificationHelper';
-import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 
 @Component({
   selector: 'header-user-menu',
@@ -37,6 +36,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     //SignalRAspNetCoreHelper.initSignalR();
     this.registerToEvents();
     this.loadNotifications();
+
+
   }
   onDarkModeChange(event): void {
     let color = getThemeColor();
@@ -58,7 +59,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     }
   }
 
-  
+
 
   @HostListener('document:fullscreenchange', ['$event'])
   handleFullscreen(event): void {
@@ -73,8 +74,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     this._authService.logout();
   }
 
-  
-  
+
+
   loadNotifications(): void {
     this._notificationService.getUserNotifications(0, 10, 0).subscribe(result => {
       this.unreadNotificationCount = result.unreadCount;
@@ -143,4 +144,9 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
         location.href = url;
     }
   }
+}
+export class Notifications{
+  totalCount:number;
+  unreadCount:number;
+  notifications:UserNotification[];
 }

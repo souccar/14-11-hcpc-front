@@ -21,6 +21,9 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ViewOutputRequestDialogComponent } from './output-request/view-output-request/view-output-request-dialog.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ChangeStatusComponent } from './output-request/change-status/change-status.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CreateOutputRequestMaterialDialogComponent,
     EditOutputRequestMaterialDialogComponent,
     ViewOutputRequestDialogComponent,
+    ChangeStatusComponent,
 
   ],
   imports: [
@@ -45,11 +49,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgSelectModule,
     ReactiveFormsModule,
     PaginationModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
     WarehouseRoutingModule,
     WarehouseMaterialModule,
     CollapseModule.forRoot(),
     AccordionModule.forRoot(),
-    
+
+
   ],
 
   schemas:[NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA]
