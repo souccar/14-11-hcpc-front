@@ -36,10 +36,9 @@
       <span class="caret"></span>
     </button>
     <ul *dropdownMenu class="dropdown-menu" role="menu">
-      <!-- <li role="menuitem" *ngFor="let item of translate.getLangs()" (click)="switchLang(item)"><a class="dropdown-item"
-          href="javascript:;">{{item}}</a></li> -->
-          <li role="menuitem" *ngFor="let item of languages" (click)="changeLanguage(item.name)"><a class="text-muted dropdown-item"
+          <li role="menuitem" *ngFor="let item of customLanguage" (click)="changeLanguage(item.name)"><a class="text-muted dropdown-item"
             href="javascript:;">{{item.displayName }}</a></li>
+      
     </ul>
   </div>
 </div>
