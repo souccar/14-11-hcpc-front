@@ -42,6 +42,9 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       this.plans = result;
     })
   }
+  onChangeOutputRequestProducts(items){
+    console.log(items)
+  }
   getProductFromPlan(id: number) {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {

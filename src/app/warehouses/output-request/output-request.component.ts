@@ -69,11 +69,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     );
 
   }
-
-
   editButton(id: number): void {
-
-
     this._router.navigate(['app/warehouses/editOutputRequest',id])
     // let editOutputRequestDialog: BsModalRef;
     // editOutputRequestDialog = this._modalService.show(

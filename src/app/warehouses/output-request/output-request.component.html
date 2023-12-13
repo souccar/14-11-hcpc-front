@@ -48,6 +48,9 @@
             (click)="delete(row)">
             <i class="  text-primary simple-icon-trash"></i>
           </button>
+          <button id="button-basic" type="button" id="view" class=" btn btn-empty text-primary align-self-center "(click)="viewButton(row.id)">
+            <i class="  text-primary simple-icon-eye"></i>
+          </button>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-footer *ngIf="true">
