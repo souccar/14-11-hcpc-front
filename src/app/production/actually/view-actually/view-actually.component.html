@@ -29,7 +29,19 @@
                 <i
                   class="iconsminds-inbox-into glyph-icon text-primary mr-1"
                 ></i
-                >{{ "Archive Plan" | localize }}
+                >{{ "ArchivePlan" | localize }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <a
+                class="dropdown-item"
+                type="button"
+                (click)="actualyDetailDialog(plan.id)"
+              >
+                <i
+                  class="simple-icon-clock glyph-icon text-primary mr-1"
+                ></i
+                >{{ "DailyProduction" | localize }}
               </a>
             </li>
           </ul>

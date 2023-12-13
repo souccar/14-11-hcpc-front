@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ActualDetailDialogComponent } from './actual-detail-dialog/actual-detail-dialog.component';
 
 @Component({
   selector: 'view-actually',
@@ -27,6 +28,19 @@ getLatestPlan()
       this.plan = result;
     }
   })
+}
+actualyDetailDialog(planId){
+  this._modalService.show(
+    ActualDetailDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      initialState: {
+        planId: planId,
+      },
+      class:'modal-xl'
+    }
+  );
 }
 changePlanStatusToActually(){
   this._planService.changeStatusToActual(this.plan.id).subscribe((result)=>{
