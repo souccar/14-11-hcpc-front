@@ -1,0 +1,22 @@
+<abp-modal-header [title]="'Daily Production' " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<div class="modal-body">
+  <table class="table table-sm table-striped">
+    <tbody>
+      <tr *ngFor="let item of outputRequests">
+        <!-- Output request -->
+        <td>
+          <div class="btn btn-empty text-muted">
+            <span class="log-indicator align-middle mx-1"></span>
+            <span class="font-weight-medium">Title: {{item.title}}</span>
+          </div>
+          <div class="btn btn-empty text-muted">
+            <span class="log-indicator align-middle mx-1"></span>
+            <span class="font-weight-medium">Request date: {{item.outputDate}}</span>
+          </div>
+        </td>
+        <!-- Daily production -->
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

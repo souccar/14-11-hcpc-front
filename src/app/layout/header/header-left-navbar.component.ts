@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, Injector, HostListener, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Injector, HostListener, Renderer2, AfterViewInit, RendererFactory2 } from '@angular/core';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
 import { ISidebar, SidebarService } from '@shared/services/sidebar/sidebar.service';
 import { Subscription } from 'rxjs';
@@ -16,23 +16,32 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
   sidebar: ISidebar;
   subscription: Subscription;
   searchKey = '';
+  renderer: Renderer2;
   currentLanguage: abp.localization.ILanguageInfo;
   languages: abp.localization.ILanguageInfo[];
-
+  customLanguage=[];
 
   constructor(injector: Injector, private _layoutStore: LayoutStoreService
     ,private sidebarService: SidebarService,
-     private _userService: UserServiceProxy
+     private _userService: UserServiceProxy,
+     private rendererFactory: RendererFactory2,
      ) {
+      
     super(injector);
   }
 
   ngOnInit(): void {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
     this.languages = _filter(
       this.localization.languages,
       (l) => !l.isDisabled
     );
+    this.customLanguage.push(this.languages.find(z=>z.name=='en'),this.languages.find(z=> z.name=='ar'));
     this.currentLanguage = this.localization.currentLanguage;
+    if( this.currentLanguage.name=='ar')
+    {
+      this.checkForDirectionChange();
+    }
     this._layoutStore.sidebarExpanded.subscribe((value) => {
       this.sidebarExpanded = value;
     });
@@ -46,14 +55,18 @@ export class HeaderLeftNavbarComponent extends AppComponentBase implements OnIni
     );
 
   }
-  switchLang(lang:string)
-  {
-     (lang);
+  checkForDirectionChange(): void {
+    this.renderer.addClass(document.body,'rtl');
+    this.renderer.setAttribute(
+      document.documentElement,
+      'direction',
+      'rtl'
+    );
   }
+
   changeLanguage(languageName: string): void {
     const input = new ChangeUserLanguageDto();
     input.languageName = languageName;
-
     this._userService.changeLanguage(input).subscribe(() => {
       abp.utils.setCookieValue(
         'Abp.Localization.CultureName',

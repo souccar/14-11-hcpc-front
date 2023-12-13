@@ -64,18 +64,30 @@
         </button>
         <div id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3"
           id="notificationDropdown" style="width: 350px;">
+          <!-- <div class="d-flex justify-content-between">
+            <a class="text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"SetAllAsRead" | localize}}</a>
+            <a class="text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"Settings" | localize}}</a>
+          </div> -->
           <perfect-scrollbar>
-            <div class="d-flex flex-row mb-3 pb-3 border-bottom" *ngFor="let item of notifications">
-              <a href="javascript:;">
-                <span [class]="item.icon" style="font-size: xx-large;"></span>
-              </a>
-              <div class="pl-3">
+            <ng-container *ngFor="let item of notifications">
+              <div class="d-flex flex-row mb-3 pb-3 border-bottom" *ngIf="item.isUnread">
                 <a href="javascript:;">
-                  <p class="font-weight-medium mb-1">{{item.text}}</p>
-                  <p class="text-muted mb-0 text-small">{{item.creationTime | date: 'dd.MM.yyyy - hh:mm'}}</p>
+                  <span [class]="item.icon" style="font-size: xx-large;"></span>
                 </a>
+                <div class="pl-3">
+                  <div >
+                    <a href="javascript:;" ><p class="font-weight-medium mb-1">{{item.text}}</p></a>
+                    <span class="mb-0">
+                      <span class="text-muted text-small">{{item.creationTime | date: 'dd.MM.yyyy - hh:mm'}}</span>
+                      <span >
+                        <a href="javascript:;" *ngIf="item.state=='UNREAD'" class="btn btn-link ml-1 text-small" (click)="setNotificationAsRead(item); $event.preventDefault(); $event.stopPropagation();">{{"SetAsRead" | localize}}</a>
+                    </span>
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            </ng-container>
+            
           </perfect-scrollbar>
           <div class="text-center"><a class="p-4 text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"See All Notifications" | localize}}</a></div>
         </div>

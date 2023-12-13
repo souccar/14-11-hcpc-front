@@ -44,7 +44,7 @@ const data: IMenuItem[] = [
     icon: 'iconsminds-factory-1',
     subs: [
       {
-        label: 'Stok',
+        label: 'Stock',
         to: `${adminRoot}/warehouses/warehouseMaterial`,
         icon: 'iconsminds-shopping-basket',
 
@@ -56,7 +56,7 @@ const data: IMenuItem[] = [
 
     },
     {
-      label: 'Output Requests',
+      label: 'OutputRequest',
       to: `${adminRoot}/warehouses/outputRequest`,
       icon: 'iconsminds-check',
 
@@ -83,7 +83,7 @@ const data: IMenuItem[] = [
 
       },
       {
-        label: 'supplier',
+        label: 'Supplier',
         to: `${adminRoot}/settings/supplier`,
         icon: 'simple-icon-user',
       },
@@ -98,7 +98,7 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-synchronize',
       },
       {
-        label: 'general Setting',
+        label: 'GeneralSetting',
         to: `${adminRoot}/settings/generalsetting`,
         icon: 'simple-icon-globe',
       },

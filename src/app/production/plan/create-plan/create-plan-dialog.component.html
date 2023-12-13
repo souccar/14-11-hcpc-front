@@ -2,7 +2,7 @@
 <form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()" >
     <abp-modal-header [title]="'CreateNewPlan'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <tabset>
-      <tab heading="Plan">
+      <tab heading="{{'Plan'|localize}}">
     <div class="modal-body modal-xl">
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="title">
@@ -46,7 +46,7 @@
     <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
     </tab>
-    <tab heading="Plan Product">
+    <tab heading="{{'PlanProduct'|localize}}">
       <create-plan-product-dialog  (savePlanProductList)="addPlan($event)"  ></create-plan-product-dialog>
     </tab>
 
