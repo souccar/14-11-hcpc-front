@@ -71,11 +71,6 @@ import { ActualDetailDialogComponent } from './actually/view-actually/actual-det
     BsDatepickerModule.forRoot()
 
 
-
-
-
-
-
   ],
 
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
