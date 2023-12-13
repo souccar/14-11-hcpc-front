@@ -39,7 +39,7 @@ export class AppComponent extends AppComponentBase implements OnInit {
       // Desktop notification
       Push.create('AbpZeroTemplate', {
         body: userNotification.notification.data.message,
-        icon: abp.appPath + 'assets/app-logo-small.png',
+        icon: abp.appPath + 'assets/img/logo.png',
         timeout: 6000,
         onClick: function () {
           window.focus();

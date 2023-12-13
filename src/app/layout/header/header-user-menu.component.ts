@@ -6,6 +6,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { getThemeColor, setThemeColor } from 'app/utils/util';
 import * as _ from 'lodash';
 import { IFormattedUserNotification, UserNotificationHelper } from '../notification/UserNotificationHelper';
+import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 
 @Component({
   selector: 'header-user-menu',
@@ -17,7 +18,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   isFullScreen = false;
   displayName = "";
   notifications: IFormattedUserNotification[] = [];
-  public unreadNotificationCount = 0;
+  public unreadNotificationCount: number = 0;
 
   constructor(
     private _authService: AppAuthService,
@@ -33,6 +34,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   }
   ngOnInit(): void {
     this.displayName = this.displayName = this._session.user.name;
+    //SignalRAspNetCoreHelper.initSignalR();
+    this.registerToEvents();
     this.loadNotifications();
   }
   onDarkModeChange(event): void {
@@ -55,6 +58,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     }
   }
 
+  
+
   @HostListener('document:fullscreenchange', ['$event'])
   handleFullscreen(event): void {
     if (document.fullscreenElement) {
@@ -68,8 +73,10 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     this._authService.logout();
   }
 
+  
+  
   loadNotifications(): void {
-    this._notificationService.getUserNotifications(undefined, 3, 0).subscribe(result => {
+    this._notificationService.getUserNotifications(0, 10, 0).subscribe(result => {
       this.unreadNotificationCount = result.unreadCount;
       this.notifications = [];
       _.forEach(result.items, (item: UserNotification) => {
@@ -80,7 +87,6 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
 
   registerToEvents() {
     let self = this;
-
     function onNotificationReceived(userNotification) {
       self._userNotificationHelper.show(userNotification);
       self.loadNotifications();
@@ -103,6 +109,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     });
 
     function onNotificationsRead(userNotificationId) {
+      self.loadNotifications();
       for (let i = 0; i < self.notifications.length; i++) {
         if (self.notifications[i].userNotificationId === userNotificationId) {
           self.notifications[i].state = 'READ';
@@ -131,7 +138,9 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     this._userNotificationHelper.setAsRead(userNotification.userNotificationId);
   }
 
-  test(){
-    alert(this.unreadNotificationCount);
+  gotoUrl(url): void {
+    if (url) {
+        location.href = url;
+    }
   }
 }
