@@ -59,7 +59,7 @@
           class="header-icon btn btn-empty">
           <i class="simple-icon-bell"></i>
 
-          <span class="count">{{unreadNotificationCount.unreadCount}}</span>
+          <span class="count">{{unreadNotificationCount}}</span>
 
         </button>
         <div id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3"
@@ -87,7 +87,7 @@
                 </div>
               </div>
             </ng-container>
-            
+
           </perfect-scrollbar>
           <div class="text-center"><a class="p-4 text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"See All Notifications" | localize}}</a></div>
         </div>
