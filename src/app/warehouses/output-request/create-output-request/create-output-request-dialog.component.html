@@ -51,11 +51,11 @@
               {{ "Products" | localize }}
             </label>
             <div class="col-md-9">
-              <ng-select #productsModel="ngModel" required name="planProduct"
-              [(ngModel)]="outputRequest.outputRequestMaterials"  #productsEl
-              [items]="planProducts" [multiple]="true" bindLabel="product.name" [closeOnSelect]="false">
+              <ng-select required name="outputRequestProducts"
+              (change)="onChangeOutputRequestProduct($event)"  #productsEl
+              [items]="planProducts" [multiple]="true" bindLabel="product.name" bindValue="product.productId" [closeOnSelect]="false">
             </ng-select>
-            <abp-validation-summary [control]="productsModel" [controlEl]="planIdEl"></abp-validation-summary>
+            <!-- <abp-validation-summary [controlEl]="planIdEl"></abp-validation-summary> -->
           </div>
           </div>
         </div>
