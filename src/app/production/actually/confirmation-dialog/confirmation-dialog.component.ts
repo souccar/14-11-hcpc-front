@@ -28,6 +28,9 @@ export class ConfirmationDialogComponent extends AppComponentBase{
       this._planService.changeStatusToArchive(this.id).subscribe((result)=>{
         this.bsModalRef.hide();
         this.notify.info(this.l('SavedSuccessfully'));
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
       })
     }
 
