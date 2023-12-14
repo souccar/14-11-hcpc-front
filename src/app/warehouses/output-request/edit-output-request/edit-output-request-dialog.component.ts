@@ -70,7 +70,6 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     }
     else {
       this.saving = true;
-      console.log (this.outputRequest)
       this._outputRequestService
         .update(
           this.outputRequest
