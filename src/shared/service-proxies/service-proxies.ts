@@ -30,6 +30,7 @@ export class AccountServiceProxy {
 
     /**
      * @param body (optional) 
+     * @param body (optional) 
      * @return Success
      */
     isTenantAvailable(body: IsTenantAvailableInput | undefined): Observable<IsTenantAvailableOutput> {
