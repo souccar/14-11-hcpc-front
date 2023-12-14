@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductNameForDropdownDto, ProductServiceProxy, UpdateOutputRequestDto } from '@shared/service-proxies/service-proxies';
+import { OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanProductMaterialDto, PlanServiceProxy, ProductDto, ProductNameForDropdownDto, ProductServiceProxy, UpdateOutputRequestDto, UpdateOutputRequestProductDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
+import { element } from 'protractor';
 @Component({
   selector: 'edit-output-request-dialog',
   templateUrl: './edit-output-request-dialog.component.html',
@@ -12,19 +13,20 @@ import { Location } from '@angular/common';
 })
 export class EditOutputRequestDialogComponent extends AppComponentBase {
   saving = false;
-  planProductloaded=false;
+  planProductloaded = false;
   outputRequest: UpdateOutputRequestDto = new UpdateOutputRequestDto();
-  plans:PlanNameForDropdownDto[]=[];
-  planProducts: PlanProductDto[] = [];
-  id:number;
+  plans: PlanNameForDropdownDto[] = [];
+  selectedOutputRequestProducts: ProductNameForDropdownDto[] = [];
+  planProducts: ProductNameForDropdownDto[] = [];
+  id: number;
   showItemIndex = 0;
-  selectedOutputRequestProducts:PlanProductDto[] = [];
-  ids=[];
+  products: ProductDto[] = [];
+  allProducts :  ProductNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _outputRequestService: OutputRequestServiceProxy,
     public bsModalRef: BsModalRef,
-    private _planService:PlanServiceProxy,
+    private _planService: PlanServiceProxy,
     private _productService: ProductServiceProxy,
     private _router: ActivatedRoute,
     private _location: Location
@@ -33,46 +35,88 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   }
   ngOnInit(): void {
     this.outputRequest.outputRequestMaterials = [];
+    this.allProducts=[]
     this._router.params.subscribe((params: Params) => {
       this.id = params['id'];
-    })
-    this.initOutputRequest();
+    });
+    this.initProduct();
     this.initPlan();
+    this.initOutputRequest(this.id);
   }
-  backToAlloutputRequest(){
+  backToAlloutputRequest() {
     this._location.back();
   }
-  onChangeOutputRequestProducts(items){
-    this.selectedOutputRequestProducts=[];
-    this.selectedOutputRequestProducts=items;
+  onChangeOutputRequestProducts(items) {
+    
+    this.selectedOutputRequestProducts = items;
+   
   }
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
-    console.log(this.outputRequest.outputRequestMaterials)
     this.outputRequest.outputRequestMaterials = [...items];
   }
-  initOutputRequest()
-  {
-    this._outputRequestService.getForEdit(this.id).subscribe((result)=>{
-      this.outputRequest=result;
-      if (this.outputRequest.planId != null) {
-        this._planService.get(this.outputRequest.planId).subscribe((result) => {
-          this.planProducts = result.planProducts;
-          this.selectedOutputRequestProducts=this.planProducts;
-        });
-      }
-    })
+
+  initOutputRequest(id) {
+    this.selectedOutputRequestProducts = [];
+    this._outputRequestService.getForEdit(id).subscribe((result) => {
+     
+      this.outputRequest = result;
+      this.onChangePlan(result.planId);
+      result.outputRequestProducts.forEach(element => {
+      this.getSelectedProduct(element.productId); 
+     
+      });
+      this.planProductloaded=true;
+    });
+   
   }
-  initPlan()
-  {
-      this._planService.getActualPlansNameForDropdown().subscribe((result)=>{
-        this.plans=result
-      })
+  initPlan() {
+    this._planService.getActualPlansNameForDropdown().subscribe((result) => {
+      this.plans = result;
+    });
   }
+  getSelectedProduct(id){
+    const prod = this.allProducts.find(x => x.id == id);
+  
+    if (prod) {
+      var selectedProduct = new ProductNameForDropdownDto();
+       selectedProduct.init({ id: prod.id, name: prod.name });
+      this.selectedOutputRequestProducts.push(selectedProduct);
+     
+    }
+  }
+    initProduct(){
+    this._productService.getNameForDropdown().subscribe((result) => {
+    this.allProducts=result;
+  
+    });
+}
+
+
   onChangePlan(id: number) {
     if (id != null) {
-      this._planService.get(id).subscribe((result) => {
-        this.planProducts = result.planProducts;
+      this._planService.getProductsOfPlan(id).subscribe((result) => {
+        this.planProducts = result;
       });
+    }
+  }
+
+ addProduct(product) {
+    const tempObj = this.selectedOutputRequestProducts.find(x => x.id == product.id);
+    if (!tempObj ) {
+      this.selectedOutputRequestProducts.push(product);
+    }
+  }
+  onRemoveallProducts()
+  {
+    this.selectedOutputRequestProducts = [];
+    
+  }
+  onRemoveProduct(product){
+    
+    const tempObj = this.selectedOutputRequestProducts.findIndex(x => x.id == product.id);
+    if (tempObj!=-1 ) {
+      this.selectedOutputRequestProducts.splice(tempObj,1);
+    
     }
   }
   save(): void {
@@ -81,7 +125,12 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     }
     else {
       this.saving = true;
-     
+      this.outputRequest.outputRequestProducts=[]
+      this.selectedOutputRequestProducts.forEach(obj1 => {
+          var selectProduct=new UpdateOutputRequestProductDto()
+          selectProduct.init({id:0,productId:obj1.id})
+          this.outputRequest.outputRequestProducts.push(selectProduct);
+      });
       this._outputRequestService
         .update(
           this.outputRequest
@@ -93,8 +142,8 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
         )
         .subscribe((response: any) => {
           this.notify.info(this.l('SavedSuccessfully'));
-          location.reload();
           this.onSave.emit();
+          this.backToAlloutputRequest();
         });
     }
 

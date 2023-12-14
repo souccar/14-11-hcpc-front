@@ -1,75 +1,71 @@
 <div class="row">
-    <div class="col-12">
-      <div class="top-right-button-container ">
-        <div class="d-flex justify-content-center ">
-          <div class="home-text d-flex justify-content-center  ">
-            <a class=" top-right-button btn btn-primary btn-sm mr-2 " (click)="save()">
-              {{'Save'|localize}}
-            </a>
-          </div>
+  <div class="col-12">
+    <div class="top-right-button-container ">
+      <div class="d-flex justify-content-center ">
+        <div class="home-text d-flex justify-content-center  ">
+          <a class=" top-right-button btn btn-primary btn-sm mr-2 " (click)="save()">
+            {{'Save'|localize}}
+          </a>
         </div>
       </div>
-      <div class="d-flex justify-content-right   ">
-        <div class="simple-line-icons">
-          <div>
-            <a class="glyph-icon simple-icon-action-undo btn-md text-primary" (click)="backToAlloutputRequest()"   data-bs-toggle="tooltip" data-bs-placement="right" title="back to all product" >
-            </a>
-          </div>
-        </div>   &nbsp;&nbsp; &nbsp;&nbsp;
-        <app-heading title="{{'EditOutputRequest '|localize}}" ></app-heading>
-
-
-      </div>
-
-      <div class="separator "></div>
-      <br>
-
-      <accordion class="mt-2">
-        <accordion-group heading="{{'EditOutputRequest' | localize}}" [panelClass]="'border'" [isOpen]="true">
-          <div class="modal-body modal-xl">
-            <div class="form-group row required">
-              <label class="col-md-3 col-form-label" for="title">
-                {{ "Title"|localize }}
-              </label>
-              <div class="col-md-9">
-                <input type="text" class="form-control" name="title" id="title" required [(ngModel)]="outputRequest.title"
-                  #titleModel="ngModel" #titleEl />
-                <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
-              </div>
-            </div>
-            <div class="form-group row required">
-              <label class="col-md-3 col-form-label" for="Plans">
-                {{ "Plans"|localize }}
-              </label>
-              <div class="col-md-9">
-                <select aria-placeholder="material" class="form-control" aria-label="Plan" #planIdModel="ngModel" required name="planId"
-                [(ngModel)]="outputRequest.planId" (change)="onChangePlan($event.target.value)"  #planIdEl >
-                  <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
-                </select>
-              <abp-validation-summary [control]="planIdModel" [controlEl]="planIdEl"></abp-validation-summary>
-              </div>
-            </div>
-            <div class="form-group row required ">
-              <label class="col-md-3 col-form-label " for="planProduct">
-                {{ "Products" | localize }}
-              </label>
-              <div class="col-md-9">
-                <ng-select required name="planProduct"
-                 (change)="onChangeOutputRequestProducts($event)"
-                 #productsEl  [(ngModel)]="selectedOutputRequestProducts"
-                [items]="planProducts" [multiple]="true" bindLabel="product.name" [closeOnSelect]="false">
-              </ng-select>
-              <abp-validation-summary  [controlEl]="planIdEl"></abp-validation-summary>
-            </div>
-            </div>
-          </div>
-        </accordion-group>
-        <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
-          <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
-
-        </accordion-group>  
-
-      </accordion>
-
     </div>
+    <div class="d-flex justify-content-right   ">
+      <div class="simple-line-icons">
+        <div>
+          <a class="glyph-icon simple-icon-action-undo btn-md text-primary" (click)="backToAlloutputRequest()"   data-bs-toggle="tooltip" data-bs-placement="right" title="back to all product" >
+          </a>
+        </div>
+      </div>   &nbsp;&nbsp; &nbsp;&nbsp;
+      <app-heading title="{{'EditOutputRequest'|localize}}" ></app-heading>
+    </div>
+    <div class="separator "></div>
+    <br>
+    <accordion class="mt-2">
+      <accordion-group heading="{{'EditOutputRequest' | localize}}" [panelClass]="'border'" [isOpen]="true">
+        <div class="modal-body modal-xl">
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="title">
+              {{ "Title"|localize }}
+            </label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="title" id="title" required 
+              [(ngModel)]="outputRequest.title"
+                #titleModel="ngModel" #titleEl />
+              <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="plans">
+              {{ "Plans" | localize }}
+            </label>
+            <div class="col-md-9 ">
+              <select class="form-control" aria-label="plans" #planModel="ngModel" required name="plans" 
+              [(ngModel)]="outputRequest.planId" (change)="onChangePlan($event.target.value)" #planEl>
+              <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
+               
+              </select>
+              <abp-validation-summary [control]="planModel" [controlEl]="planEl"></abp-validation-summary>
+            </div>
+          </div>
+          <div class="form-group row required ">
+            <label class="col-md-3 col-form-label " for="planProduct">
+              {{ "Products" | localize }}
+            </label>
+            <div class="col-md-9" *ngIf="planProductloaded">
+            <ng-select [items]="planProducts" [multiple]="true" bindLabel="name" [closeOnSelect]="false"
+            [(ngModel)]="selectedOutputRequestProducts"   name="planProduct" 
+            (clear)="onRemoveallProducts()" (remove)="onRemoveProduct($event)"
+             (add)="addProduct($event)"  >
+            </ng-select>
+            <!-- <abp-validation-summary  [controlEl]="productsEl"></abp-validation-summary> -->
+          </div>
+          </div>
+        </div>
+      </accordion-group>
+      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
+        <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
+      </accordion-group>  
+    </accordion>
   </div>
+</div>
+

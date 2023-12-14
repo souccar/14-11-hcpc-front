@@ -50,12 +50,14 @@
                     <th scope="col">{{'Action'|localize}}</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  >
                   <tr *ngFor="let outputRequestMaterial of data; let i = index">
 
                     <ng-contanier *ngFor="let w of warehouseCodes; let wId = index">
                       <td *ngIf="wId == i">{{ w.code }}</td>
                     </ng-contanier>
+                    <!-- <td >{{getWarehouseCodeNameById(outputRequestMaterial?.warehouseMaterialId)}}</td> -->
+
                     <td>{{ outputRequestMaterial.quantity }}</td>
                     <ng-contanier *ngFor="let u of unitsNames; let uId = index">
                       <td *ngIf="uId == i">{{ u.name }}</td>
