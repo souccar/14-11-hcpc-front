@@ -102,12 +102,19 @@ $info-color: #3195a5;
 $success-color: #3e884f;
 $warning-color: #b69329;
 $error-color: #c43d4b;
+$font-cairo: 'cairoFont';
 
 /* 01.Base */
 html {
   width: 100%;
   height: 100%;
   background: $background-color;
+
+}
+@font-face {
+  font-family: 'cairoFont';
+  src: url('../../fonts/cairo/fonts/Cairo-Regular.ttf');
+  font-style: normal;
 }
 
 :root {
@@ -130,7 +137,7 @@ html {
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: $font-cairo;
   font-size: 0.8rem;
   font-weight: 400;
   color: $primary-color;
@@ -3448,11 +3455,11 @@ body.default-transition main {
     line-height: 1rem;
     }
   }
-  
+
     .fc-toolbar.fc-header-toolbar .fc-prev-button {
       margin-right: 0;
     }
-  
+
     .fc-toolbar.fc-header-toolbar .fc-next-button {
       margin-right: 5px;
     }
@@ -6275,12 +6282,12 @@ rating span {
 
   .modal-header {
     border-bottom: 1px solid $separator-color;
-    
+
   }
 
   .modal-footer {
     border-top: 1px solid $separator-color;
-    
+
   }
 
   .close {
@@ -7830,7 +7837,7 @@ app-profile-who-to-follow app-user-follow:last-of-type > div {
     border-radius: $border-radius;
   }
 
-  
+
 
   .input-group-append .btn + .btn,
   .input-group-append .btn + .input-group-text,
@@ -10851,7 +10858,7 @@ footer.page-footer {
 }
 
 ///////Souccar////////
-  
+
 .two-list {
   min-height: 60px;
   border-radius: 0.75rem;
@@ -10883,7 +10890,7 @@ footer.page-footer {
   border: 1px solid;
   display: flex;
   flex-direction: row;
-  
+
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
@@ -10933,7 +10940,7 @@ footer.page-footer {
   border-radius:0.75rem;
 }
 .glyph-icon{
-  
+
   font-size: 1.5rem;
   font-weight: 800;
 }

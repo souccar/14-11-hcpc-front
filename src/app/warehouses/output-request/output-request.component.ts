@@ -2,11 +2,10 @@ import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { OutputRequestDto, OutputRequestDtoPagedResultDto, OutputRequestServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
-
 @Component({
   selector: 'output-request',
   templateUrl: './output-request.component.html',
@@ -36,8 +35,10 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   advancedFiltersVisible = false;
   loading = false;
   title = this.l("OutputRequest")
-
   outPutRequest: OutputRequestDto[] = [];
+  tooltipData = {
+    changeStatus:"change Status"
+  };
 
 
 
@@ -49,7 +50,8 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _OutputRequestService: OutputRequestServiceProxy,
-    private _router:Router
+    private _router:Router,
+    public bsModalRef: BsModalRef,
   ) {
     super(injector);
   }
@@ -71,21 +73,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
   editButton(id: number): void {
     this._router.navigate(['app/warehouses/editOutputRequest',id])
-    // let editOutputRequestDialog: BsModalRef;
-    // editOutputRequestDialog = this._modalService.show(
-    //   EditOutputRequestDialogComponent,
-    //   {
-    //     backdrop: true,
-    //     ignoreBackdropClick: true,
-    //     initialState: {
-    //       id: id,
-    //     },
-    //     class: 'modal-lg',
-    //   }
-    // );
-    // editOutputRequestDialog.content.onSave.subscribe(() => {
-    //   this.refresh();
-    // });
 
 
   }
@@ -184,7 +171,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       )
       .subscribe((result: OutputRequestDtoPagedResultDto) => {
         this.data = result.items;
-         console.log(this.data)
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
@@ -193,6 +179,28 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       });
   }
 
+
+  onchangeStatusToInProduction(id:number)
+{
+    this._OutputRequestService.changeStatus(1,id).subscribe((result)=>{
+
+      this.notify.info(this.l('changeSuccessfully'));
+      this.bsModalRef.hide();
+      location.reload();
+
+    })
+}
+
+onchangeStatusToFinish(id:number)
+{
+    this._OutputRequestService.changeStatus(2,id).subscribe((result)=>{
+
+      this.notify.info(this.l('changeSuccessfully'));
+      this.bsModalRef.hide();
+      location.reload();
+
+    })
+}
 
   setSelectAllState(): void {
     if (this.selected.length === this.data.length) {
@@ -204,6 +212,8 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     }
   }
 
+
+
   selectAllChange($event): void {
     if ($event.target.checked) {
       this.selected = [...this.data];
@@ -212,6 +222,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     }
     this.setSelectAllState();
   }
+ 
 
   pageChanged(event: any): void {
     this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
