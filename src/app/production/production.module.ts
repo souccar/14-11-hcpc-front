@@ -31,6 +31,7 @@ import { ViewActuallyComponent } from './actually/view-actually/view-actually.co
 import { ActualMaterialComponent } from './actually/view-actually/actual-material/actual-material.component';
 import { ActualProductComponent } from './actually/view-actually/actual-product/actual-product.component';
 import { ActualDetailDialogComponent } from './actually/view-actually/actual-detail-dialog/actual-detail-dialog.component';
+import { ConfirmationDialogComponent } from './actually/confirmation-dialog/confirmation-dialog.component';
 import { DailyProductionDoughnutComponent } from './actually/view-actually/actual-product/daily-production-doughnut/daily-production-doughnut.component';
 
 @NgModule({
@@ -55,6 +56,7 @@ import { DailyProductionDoughnutComponent } from './actually/view-actually/actua
     ActualProductComponent,
     ArbitrageDialogComponent,
     ActualDetailDialogComponent,
+    ConfirmationDialogComponent,
     DailyProductionDoughnutComponent
   ],
   imports: [

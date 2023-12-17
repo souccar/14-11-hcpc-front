@@ -66,7 +66,6 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     }
     else {
       this.saving = true;
-      console.log(this.outputRequest)
       this._outputRequestService
         .create(
           this.outputRequest

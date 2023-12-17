@@ -30,7 +30,6 @@ export class AccountServiceProxy {
 
     /**
      * @param body (optional) 
-     * @param body (optional) 
      * @return Success
      */
     isTenantAvailable(body: IsTenantAvailableInput | undefined): Observable<IsTenantAvailableOutput> {
@@ -3131,7 +3130,7 @@ export class OutputRequestServiceProxy {
      * @param planId (optional) 
      * @return Success
      */
-    getPlanOutputRequests(planId: number | undefined): Observable<OutputRequestDto[]> {
+    getPlanOutputRequests(planId: number | undefined): Observable<OutputRequestNameForDropdownDto[]> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetPlanOutputRequests?";
         if (planId === null)
             throw new Error("The parameter 'planId' cannot be null.");
@@ -3154,14 +3153,14 @@ export class OutputRequestServiceProxy {
                 try {
                     return this.processGetPlanOutputRequests(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<OutputRequestDto[]>;
+                    return _observableThrow(e) as any as Observable<OutputRequestNameForDropdownDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<OutputRequestDto[]>;
+                return _observableThrow(response_) as any as Observable<OutputRequestNameForDropdownDto[]>;
         }));
     }
 
-    protected processGetPlanOutputRequests(response: HttpResponseBase): Observable<OutputRequestDto[]> {
+    protected processGetPlanOutputRequests(response: HttpResponseBase): Observable<OutputRequestNameForDropdownDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3175,7 +3174,7 @@ export class OutputRequestServiceProxy {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200.push(OutputRequestDto.fromJS(item));
+                    result200.push(OutputRequestNameForDropdownDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
