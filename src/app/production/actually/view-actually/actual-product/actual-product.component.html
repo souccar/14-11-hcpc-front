@@ -20,10 +20,13 @@
             <div class="card-body pt-0">
                 <!-- content -->
                 <div class="row">
-                    <div class="col-md-2 border-right">
-                        <app-radial-process-card [title]="'Production percentage' | localize"
+                    <div class="col-md-3 border-right">
+                        <!-- <app-radial-process-card [title]="'Production percentage' | localize"
                             [totalProduction]="p.totalProduction" [canProduce]="p.canProduce" [isSortable]="true">
-                        </app-radial-process-card>
+                        </app-radial-process-card> -->
+                        <div class="pt-3">
+                            <daily-production-doughnut [canProduce]="p.canProduce" [totalProduction]="p.totalProduction"></daily-production-doughnut>
+                        </div>
                     </div>
                     <div class="col-md-4 border-right">
                         <div class="d-flex row-flex mt-4">
@@ -63,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <!-- <app-bar-chart [shadow]="true" [options]="chartDataConfig.barChartOptions"
                             [data]="getChartData(p)"></app-bar-chart> -->
                         <perfect-scrollbar class="scroll " [config]="{suppressScrollX: true, wheelPropagation: false}">
