@@ -10649,6 +10649,7 @@ export class DailyProductionDto implements IDailyProductionDto {
     creationTime: string | undefined;
     creatorUserId: number | undefined;
     outputRequestId: number | undefined;
+    outputRequest: OutputRequestNameForDropdownDto;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -10669,6 +10670,7 @@ export class DailyProductionDto implements IDailyProductionDto {
             this.creationTime = _data["creationTime"];
             this.creatorUserId = _data["creatorUserId"];
             this.outputRequestId = _data["outputRequestId"];
+            this.outputRequest = _data["outputRequest"] ? OutputRequestNameForDropdownDto.fromJS(_data["outputRequest"]) : <any>undefined;
             this.planId = _data["planId"];
             this.plan = _data["plan"] ? PlanDto.fromJS(_data["plan"]) : <any>undefined;
             if (Array.isArray(_data["dailyProductionDetails"])) {
@@ -10697,6 +10699,7 @@ export class DailyProductionDto implements IDailyProductionDto {
         data["creationTime"] = this.creationTime;
         data["creatorUserId"] = this.creatorUserId;
         data["outputRequestId"] = this.outputRequestId;
+        data["outputRequest"] = this.outputRequest ? this.outputRequest.toJSON() : <any>undefined;
         data["planId"] = this.planId;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
         if (Array.isArray(this.dailyProductionDetails)) {
@@ -10725,6 +10728,7 @@ export interface IDailyProductionDto {
     creationTime: string | undefined;
     creatorUserId: number | undefined;
     outputRequestId: number | undefined;
+    outputRequest: OutputRequestNameForDropdownDto;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;

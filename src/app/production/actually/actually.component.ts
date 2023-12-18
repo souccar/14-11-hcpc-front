@@ -35,13 +35,13 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
-  title=this.l("DailyProduction");
+  title = this.l("DailyProduction");
   // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
-  constructor(    injector: Injector,
+  constructor(injector: Injector,
     private _modalService: BsModalService,
-    private _dailyProductionService:DailyProductionServiceProxy,
-   ) {
+    private _dailyProductionService: DailyProductionServiceProxy,
+  ) {
     super(injector);
   }
 
@@ -50,70 +50,69 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
 
-  viewButton(id:number)
-{
-  // this._modalService.show(
-  //   ActuallyProductComponent,
-  //   {
-  //     backdrop: true,
-  //     ignoreBackdropClick: true,
-  //     initialState: {
-  //       id: id,
-  //     },
-  //   }
-  // );
+  viewButton(id: number) {
+    // this._modalService.show(
+    //   ActuallyProductComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //   }
+    // );
 
-}
+  }
 
 
-  editButton(id:number): void {
+  editButton(id: number): void {
     let editDailyProductionDialog: BsModalRef;
-        editDailyProductionDialog = this._modalService.show(
-          EditActuallyDialogComponent,
-        {
-          backdrop: true,
-          ignoreBackdropClick: true,
-          initialState: {
-            id: id,
-          },
-          class: 'modal-lg',
+    editDailyProductionDialog = this._modalService.show(
+      EditActuallyDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: id,
+        },
+        class: 'modal-lg',
+      }
+    );
+    editDailyProductionDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+
+
+  }
+
+  protected delete(entity: DailyProductionDto): void {
+
+    abp.message.confirm(
+      this.l('DailyProductionDeleteWarningMessage', this.selected.length, 'DailyProductions'),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+
+          this._dailyProductionService.delete(entity.id).subscribe((recponce) => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            this.refresh();
+          });
         }
-      );
-      editDailyProductionDialog.content.onSave.subscribe(() => {
-        this.refresh();
-      });
-
-
-    }
-
-    protected delete(entity: DailyProductionDto): void {
-
-      abp.message.confirm(
-        this.l('DailyProductionDeleteWarningMessage', this.selected.length, 'DailyProductions'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-
-            this._dailyProductionService.delete(entity.id).subscribe((recponce) => {
-              abp.notify.success(this.l('SuccessfullyDeleted'));
-              this.refresh();
-            });
-          }
-        }
-      );
-    }
-    loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-      let request: PagedProductsRequestDto = new PagedProductsRequestDto();
-      this.itemsPerPage = pageSize;
-      this.currentPage = currentPage;
-      this.search = search;
-      request.keyword = search;
-      request.sort_Field = sort_Field;
-      request.sort_Desc = sort_Desc;
-      request.skipCount = (currentPage - 1) * pageSize;
-      request.maxResultCount = this.itemsPerPage;
-      this.list(request, this.pageNumber, () => { });
-    }
+      }
+    );
+  }
+  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
+    let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+    this.itemsPerPage = pageSize;
+    this.currentPage = currentPage;
+    this.search = search;
+    request.keyword = search;
+    request.sort_Field = sort_Field;
+    request.sort_Desc = sort_Desc;
+    request.skipCount = (currentPage - 1) * pageSize;
+    request.maxResultCount = this.itemsPerPage;
+    this.list(request, this.pageNumber, () => { });
+  }
   deleteItem(): void {
     if (this.selected.length == 0) {
       abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
@@ -175,7 +174,7 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-    request.Including ="plan";
+    request.Including = "plan,outputRequest";
     this._dailyProductionService
       .getAll(
         request.keyword,
@@ -192,9 +191,9 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
       .subscribe((result: DailyProductionDtoPagedResultDto) => {
         this.data = result.items;
         this.totalItem = result.totalCount;
-        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
-      
+
       });
   }
 
@@ -240,8 +239,8 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
-  Including:string;
+  Including: string;
   sort_Desc: boolean;
-  MaxResultCount:number
+  MaxResultCount: number
 }
 
