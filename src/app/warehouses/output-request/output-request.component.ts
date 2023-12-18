@@ -6,7 +6,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
-import { ChangeStatusComponent } from './change-status/change-status.component';
+
 
 @Component({
   selector: 'output-request',
@@ -23,6 +23,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   search = '';
   orderBy = '';
   isLoading: boolean;
+  changeStatus:boolean=false;
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
@@ -193,8 +194,12 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       this.notify.info(this.l('changeSuccessfully'));
       this.bsModalRef.hide();
       location.reload();
+      this.changeStatus=true;
+      console.log(this.changeStatus)
+
 
     })
+
 }
 
 onchangeStatusToFinish(id:number)
@@ -204,8 +209,12 @@ onchangeStatusToFinish(id:number)
       this.notify.info(this.l('changeSuccessfully'));
       this.bsModalRef.hide();
       location.reload();
+      this.changeStatus=true;
+      console.log(this.changeStatus)
+
 
     })
+
 }
 
   setSelectAllState(): void {
@@ -228,26 +237,6 @@ onchangeStatusToFinish(id:number)
     }
     this.setSelectAllState();
   }
-  changeStatus(id:number)
-  {
-    let changeStatusOutputRequestDialog: BsModalRef;
-    changeStatusOutputRequestDialog = this._modalService.show(
-      ChangeStatusComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
-
-        class:'modal-sm'
-
-      }
-    );
-
-
-  }
-
   pageChanged(event: any): void {
     this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
   }
