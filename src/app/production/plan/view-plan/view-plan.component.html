@@ -20,7 +20,7 @@
             role="menu"
             aria-labelledby="button-basic"
           >
-            <li role="menuitem">
+            <li *ngIf="plan.status!=2" role="menuitem">
               <a
                 class="dropdown-item"
                 (click)="changePlanStatusToActually()"

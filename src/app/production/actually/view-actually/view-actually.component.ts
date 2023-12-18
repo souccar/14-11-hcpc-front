@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ActualDetailDialogComponent } from './actual-detail-dialog/actual-detail-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'view-actually',
@@ -42,14 +43,24 @@ actualyDetailDialog(planId){
     }
   );
 }
-changePlanStatusToActually(){
-  this._planService.changeStatusToActual(this.plan.id).subscribe((result)=>{
-    this.changeStatus=true;
-  })
-}
+
 changePlanStatusToArchive(){
   this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
   })
+}
+
+showConfirmationModal(){
+  this._modalService.show(
+    ConfirmationDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      class:'modal-md',
+      initialState: {
+        id: this.plan.id,
+      },
+    }
+  );
 }
 
 }

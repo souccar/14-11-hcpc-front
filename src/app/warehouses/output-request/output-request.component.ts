@@ -74,11 +74,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     );
 
   }
-
-
   editButton(id: number): void {
-
-
     this._router.navigate(['app/warehouses/editOutputRequest',id])
 
 

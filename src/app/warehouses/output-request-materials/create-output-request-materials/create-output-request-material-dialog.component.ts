@@ -72,9 +72,8 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       return;
     }
     else {
-      this.data.push(this.outputRequestMaterial)
-
-      this.data = [...this.data]
+      this.data.push(this.outputRequestMaterial);
+      this.data = [...this.data];
       this.saveoutputRequestMaterialList.emit(this.data);
       this.saving = true;
       this.getUnitName(this.outputRequestMaterial.unitId);
@@ -103,9 +102,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
 
   edit(row: CreateOutputRequestMaterialDto) {
     this.outputRequestMaterial = row
-
     const index = this.data.indexOf(row);
-
     if (index !== -1) {
       this.data.splice(index, 1);
     }

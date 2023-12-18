@@ -33,7 +33,7 @@
         <div class="col-md-1">
           <!-- Button -->
           <button type="button" class="btn btn-outline-primary mt-4" (click)="addToOutputRequestMaterialList()">
-            <i class="bi bi-plus-lg"> </i>
+            <i class="bi bi-check-lg"> </i>
           </button>
         </div>
       </div>
@@ -50,12 +50,14 @@
                     <th scope="col">{{'Action'|localize}}</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  >
                   <tr *ngFor="let outputRequestMaterial of data; let i = index">
 
                     <ng-contanier *ngFor="let w of warehouseCodes; let wId = index">
                       <td *ngIf="wId == i">{{ w.code }}</td>
                     </ng-contanier>
+                    <!-- <td >{{getWarehouseCodeNameById(outputRequestMaterial?.warehouseMaterialId)}}</td> -->
+
                     <td>{{ outputRequestMaterial.quantity }}</td>
                     <ng-contanier *ngFor="let u of unitsNames; let uId = index">
                       <td *ngIf="uId == i">{{ u.name }}</td>
