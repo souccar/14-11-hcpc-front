@@ -12,6 +12,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
   saving = false;
+  editable:boolean=false;
   units: UnitNameForDropdownDto[] = [];
   data: UpdateOutputRequestMaterialDto[] = [];
   outputRequestMaterial = new UpdateOutputRequestMaterialDto();
@@ -39,6 +40,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
+
     this._route.params.subscribe((params: Params) => {
       this.outputRequestId = params['id'];
 
@@ -69,6 +71,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
     this._warehouseMaterialService.get(id).subscribe((result) => {
       this.warehouseCodes.push(result);
+      console.log(this.warehouseCodes)
     });
 
 
@@ -90,6 +93,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
     this._unitService.get(id).subscribe((response) => {
       this.unitsNames.push(response);
+      console.log(this.unitsNames);
     });
   }
   addToOutputRequestMaterialList() {
@@ -103,9 +107,20 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
       this.data = [...this.data]
       this.saveoutputRequestMaterialList.emit(this.data);
       this.saving = true;
-      this.getUnitName(this.outputRequestMaterial.unitId);
-      this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
-      this.outputRequestMaterial = new UpdateOutputRequestMaterialDto()
+      console.log(this.outputRequestMaterial.unitId)
+
+
+
+        this.getUnitName(this.outputRequestMaterial.unitId);
+        this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
+        this.outputRequestMaterial = new UpdateOutputRequestMaterialDto()
+        console.log(this.data)
+
+        console.log(this.editable)
+
+
+
+
     }
 
 
@@ -115,13 +130,16 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
 
   edit(row: UpdateOutputRequestMaterialDto) {
+
     this.outputRequestMaterial = row
 
     const index = this.data.indexOf(row);
-
+     console.log(index)
     if (index !== -1) {
       this.data.splice(index, 1);
     }
+    this.editable=true;
+    console.log(this.editable);
   }
 
   delete(row: UpdateOutputRequestMaterialDto) {

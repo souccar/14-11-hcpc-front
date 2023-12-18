@@ -191,7 +191,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       this.bsModalRef.hide();
       location.reload();
       this.changeStatus=true;
-      console.log(this.changeStatus)
 
 
     })
@@ -206,7 +205,7 @@ onchangeStatusToFinish(id:number)
       this.bsModalRef.hide();
       location.reload();
       this.changeStatus=true;
-      console.log(this.changeStatus)
+
 
 
     })
