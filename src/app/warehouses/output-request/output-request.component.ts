@@ -6,8 +6,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
-import { ChangeStatusComponent } from './change-status/change-status.component';
-
 @Component({
   selector: 'output-request',
   templateUrl: './output-request.component.html',
@@ -73,11 +71,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
     );
 
   }
-
-
   editButton(id: number): void {
-
-
     this._router.navigate(['app/warehouses/editOutputRequest',id])
 
 
@@ -228,25 +222,7 @@ onchangeStatusToFinish(id:number)
     }
     this.setSelectAllState();
   }
-  changeStatus(id:number)
-  {
-    let changeStatusOutputRequestDialog: BsModalRef;
-    changeStatusOutputRequestDialog = this._modalService.show(
-      ChangeStatusComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
-
-        class:'modal-sm'
-
-      }
-    );
-
-
-  }
+ 
 
   pageChanged(event: any): void {
     this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);

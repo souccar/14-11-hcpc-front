@@ -1,4 +1,4 @@
-import { Component, Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostListener, Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AbpSessionService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
@@ -11,7 +11,12 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 })
 export class LoginComponent extends AppComponentBase implements OnInit, OnDestroy{
   submitting = false;
-
+  innerWidth;
+  @HostListener('window:resize', ['$event'])
+onResize(event) {
+  this.innerWidth = window.innerWidth;
+  console.log( this.innerWidth)
+}
   constructor(
     injector: Injector,
     private renderer:  Renderer2,

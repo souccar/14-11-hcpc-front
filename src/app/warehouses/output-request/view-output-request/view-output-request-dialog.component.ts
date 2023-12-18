@@ -17,13 +17,13 @@ export class ViewOutputRequestDialogComponent  implements OnInit {
     private _outputService:OutputRequestServiceProxy){}
   ngOnInit(): void {
     this.initOutputRequest()
-
   }
 
   initOutputRequest()
   {
      this._outputService.get(this.id).subscribe((response:OutputRequestDto)=>{
       this.data=response;
+      console.log(this.data)
       this.loaded=true;
      })
   }
