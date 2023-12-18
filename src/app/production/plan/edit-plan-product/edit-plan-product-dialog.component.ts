@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { PagedRequestDto } from '@shared/paged-listing-component-base';
 import { PlanDto, PlanProductDto, PlanServiceProxy, ProductDto, ProductDtoPagedResultDto, ProductNameForDropdownDto, ProductServiceProxy, UpdatePlanDto, UpdatePlanProductDto } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -16,10 +15,10 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   products: ProductDto[] = [];
   productsForDropDown: ProductNameForDropdownDto[] = [];
   productId: number;
-  product:ProductDto=new ProductDto();
-  planProduct:PlanProductDto=new PlanProductDto();
+  product: ProductDto = new ProductDto();
+  planProduct: PlanProductDto = new PlanProductDto();
   data: PlanProductDto[] = [];
-  plan:PlanDto=new PlanDto ();
+  plan: PlanDto = new PlanDto();
   ColumnMode = ColumnMode;
 
   @Input() planId: number;
@@ -27,7 +26,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
 
   constructor(injector: Injector,
     private _productService: ProductServiceProxy,
-    private _planService:PlanServiceProxy,
+    private _planService: PlanServiceProxy,
     public bsModalRef: BsModalRef,
 
 
@@ -46,81 +45,64 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
       this.productsForDropDown = response;
     });
   }
-  initProducts(){
+  initProducts() {
 
-  this._productService.getAll("","",0,1000).subscribe((response ) => {
-    var result = response as ProductDtoPagedResultDto;
-    this.products = result.items;
+    this._productService.getAll("", "", 0, 1000).subscribe((response) => {
+      var result = response as ProductDtoPagedResultDto;
+      this.products = result.items;
 
     });
 
   }
   initPlan() {
-    this._planService.get(this.planId ).subscribe((response: PlanDto) => {
+    this._planService.get(this.planId).subscribe((response: PlanDto) => {
       this.plan = response;
-       (this.plan)
-
-      // this.plan.planProducts.forEach(element => {
-      // this.data.push(element);
-      //  this.getProductName(element.productId);
-      //   this.data = [...this.data]
-      // });
     })
 
   }
 
-  getProductName(id:number){
-    this._productService.get(id).subscribe((response)=>{
+  getProductName(id: number) {
+    this._productService.get(id).subscribe((response) => {
       this.products.push(response);
     });
 
   }
 
-  addToProductList()
-  {
-
-
-    if(this.planProduct.numberOfItems ==null || this.planProduct.productId == null){
+  addToProductList() {
+    if (this.planProduct.numberOfItems == null || this.planProduct.productId == null) {
       return;
     }
+    else {
+      if (this.planProduct.id == null) {
+        this.planProduct.planId = this.planId;
+        var product = this.products.filter(x => x.id == this.planProduct.productId)[0];
+        this.planProduct.product = product;
+        if (this.plan.planProducts.filter(x => x.product.name == this.planProduct.product.name).length > 0) {
+          this.notify.error(this.l('Product is Already Exist'));
+          return;
+        }
+        this.plan.planProducts.push(this.planProduct)
 
-
-    else{
-
-    if(this.planProduct.id==null){
-    // this.getProductName(this.planProduct.productId)
-    // this.planProduct.productId=this.planProduct.productId;
-    // this.data.push(this.planProduct)
-    //  (this.planId)
-    this.planProduct.planId = this.planId;
-    var product =this.products.filter(x=>x.id ==this.planProduct.productId)[0];
-    this.planProduct.product= product;
-    if(this.plan.planProducts.filter(x=>x.product.name ==this.planProduct.product.name).length >0){
-      this.notify.error(this.l('Product is Already Exist'));
-      return;
-    }
-    this.plan.planProducts.push(this.planProduct)
-
-    this.planProduct = new PlanProductDto()
-    this.plan.planProducts = [...this.plan.planProducts]
-    // this.data = [...this.data]
-    this.savePlanProductList.emit(this.plan.planProducts);
-    this.saving = true;
-
+        this.planProduct = new PlanProductDto()
+        this.plan.planProducts = [...this.plan.planProducts];
+        this.savePlanProductList.emit(this.plan.planProducts);
+        this.saving = true;
       }
-      else{
-        let product=this.productsForDropDown.filter(x=>x.id==this.planProduct.productId)[0];
+      else {
+        if (this.plan.planProducts.filter(x => x.product.id == this.planProduct.productId).length > 0) {
+          this.notify.error(this.l('Product is Already Exist'));
+          return;
+        }
+        let product = this.productsForDropDown.filter(x => x.id == this.planProduct.productId)[0];
 
         this.planProduct.product.id = product.id;
         this.planProduct.product.name = product.name;
         this.plan.planProducts.push(this.planProduct)
         this.data.push(this.planProduct)
-        this.planProduct = new PlanProductDto()
-
-        // this.data = [...this.data]
+        this.planProduct = new PlanProductDto();
         this.plan.planProducts = [...this.plan.planProducts]
         this.savePlanProductList.emit(this.plan.planProducts);
-         (    this.savePlanProductList)
+        (this.savePlanProductList)
         this.saving = true;
       }
     }
@@ -128,8 +110,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
 
 
   edit(row: PlanProductDto) {
-
-    this.planProduct=new PlanProductDto();
+    this.planProduct = new PlanProductDto();
     this.planProduct = row
     const index = this.plan.planProducts.indexOf(row);
 
@@ -144,7 +125,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
     const index = this.plan.planProducts.indexOf(row);
     if (index !== -1) {
       this.plan.planProducts.splice(index, 1);
-       (this.plan.planProducts)
+      (this.plan.planProducts)
       this.savePlanProductList.emit(this.plan.planProducts);
     }
 
