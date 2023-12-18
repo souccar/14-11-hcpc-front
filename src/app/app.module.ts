@@ -30,7 +30,7 @@ import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
-
+import { SecurityModule } from './security/security.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     EditTenantDialogComponent,
   ],
   imports: [
+
 
   CommonModule,
     FormsModule,
@@ -69,6 +70,7 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     ProductionModule,
 
     SettingsModule,
+    SecurityModule,
     WarehousesModule,
 
 

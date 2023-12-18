@@ -19,7 +19,7 @@ import { TenantsComponent } from './tenants/tenants.component';
                     { path: 'production', loadChildren: () => import('./production/production.module').then(m => m.ProductionModule) },
                     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
                     { path: 'warehouses', loadChildren: () => import('./warehouses/warehouses.module').then(m => m.WarehousesModule) },
-                    // { path: 'diallyProduction', loadChildren: () => import('./actually/actually.module').then(m => m.ActuallyModule) },
+                    { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
 
 
                 ]

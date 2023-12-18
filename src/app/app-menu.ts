@@ -114,7 +114,7 @@ const data: IMenuItem[] = [
     subs: [
       {
         label: 'Role',
-        to: `${adminRoot}/security/roles`,
+        to: `${adminRoot}/security/role`,
         icon: 'iconsminds-lock-2',
       },
       {
