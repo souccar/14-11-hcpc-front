@@ -6,6 +6,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ViewOutputRequestDialogComponent } from './view-output-request/view-output-request-dialog.component';
+
+
 @Component({
   selector: 'output-request',
   templateUrl: './output-request.component.html',
@@ -57,6 +59,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+
   }
   viewButton(id: number) {
     this._modalService.show(
@@ -188,7 +191,10 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       this.bsModalRef.hide();
       location.reload();
 
+
+
     })
+
 }
 
 onchangeStatusToFinish(id:number)
@@ -200,6 +206,7 @@ onchangeStatusToFinish(id:number)
       location.reload();
 
     })
+
 }
 
   setSelectAllState(): void {
@@ -222,8 +229,6 @@ onchangeStatusToFinish(id:number)
     }
     this.setSelectAllState();
   }
- 
-
   pageChanged(event: any): void {
     this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
   }

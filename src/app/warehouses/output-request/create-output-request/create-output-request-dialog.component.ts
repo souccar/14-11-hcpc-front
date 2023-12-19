@@ -44,9 +44,6 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       this.plans = result;
     })
   }
-  onChangeOutputRequestProducts(items){
-    console.log(items)
-  }
   getProductFromPlan(id: number) {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {
@@ -67,7 +64,12 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     if (this.outputRequest.outputRequestMaterials.length < 1) {
       this.notify.error(this.l('Add One output Request Material at least'));
     }
-    else {
+      else if(this.outputRequest.title==null || this.outputRequest.planId==null || this.outputRequest.outputRequestProducts.length<1 )
+      {
+        this.notify.error(this.l('Please Enter the required filed !!!!'));
+      }
+
+      else{
       this.saving = true;
       this._outputRequestService
         .create(
@@ -85,7 +87,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
         });
     }
 
-
   }
+
 
 }

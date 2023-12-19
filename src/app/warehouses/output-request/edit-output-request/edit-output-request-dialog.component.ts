@@ -34,7 +34,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this.outputRequest.outputRequestMaterials = [];
+    // this.outputRequest.outputRequestMaterials = [];
     this.allProducts=[]
     this._router.params.subscribe((params: Params) => {
       this.id = params['id'];
@@ -47,9 +47,9 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     this._location.back();
   }
   onChangeOutputRequestProducts(items) {
-    
+
     this.selectedOutputRequestProducts = items;
-   
+
   }
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
     this.outputRequest.outputRequestMaterials = [...items];
@@ -58,16 +58,16 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   initOutputRequest(id) {
     this.selectedOutputRequestProducts = [];
     this._outputRequestService.getForEdit(id).subscribe((result) => {
-     
+
       this.outputRequest = result;
       this.onChangePlan(result.planId);
       result.outputRequestProducts.forEach(element => {
-      this.getSelectedProduct(element.productId); 
-     
+      this.getSelectedProduct(element.productId);
+
       });
       this.planProductloaded=true;
     });
-   
+
   }
   initPlan() {
     this._planService.getActualPlansNameForDropdown().subscribe((result) => {
@@ -76,18 +76,18 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   }
   getSelectedProduct(id){
     const prod = this.allProducts.find(x => x.id == id);
-  
+
     if (prod) {
       var selectedProduct = new ProductNameForDropdownDto();
        selectedProduct.init({ id: prod.id, name: prod.name });
       this.selectedOutputRequestProducts.push(selectedProduct);
-     
+
     }
   }
     initProduct(){
     this._productService.getNameForDropdown().subscribe((result) => {
     this.allProducts=result;
-  
+
     });
 }
 
@@ -109,21 +109,28 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   onRemoveallProducts()
   {
     this.selectedOutputRequestProducts = [];
-    
+
   }
   onRemoveProduct(product){
-    
+
     const tempObj = this.selectedOutputRequestProducts.findIndex(x => x.id == product.id);
     if (tempObj!=-1 ) {
       this.selectedOutputRequestProducts.splice(tempObj,1);
-    
+
     }
   }
   save(): void {
-    if (this.outputRequest.outputRequestMaterials.length < 1) {
+
+    console.log(this.outputRequest)
+      if (this.outputRequest.outputRequestMaterials.length < 1) {
       this.notify.error(this.l('Add One output Request Material at least'));
-    }
-    else {
+      }
+      else if(this.outputRequest.title==null || this.outputRequest.planId==null || this.outputRequest.outputRequestProducts.length<1 )
+      {
+        this.notify.error(this.l('Please Enter the required filed !!!!'));
+      }
+      else{
+      console.log(this.outputRequest)
       this.saving = true;
       this.outputRequest.outputRequestProducts=[]
       this.selectedOutputRequestProducts.forEach(obj1 => {
@@ -146,8 +153,9 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
           this.backToAlloutputRequest();
         });
     }
-
-
   }
+
+
+
 
 }
