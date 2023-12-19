@@ -17,9 +17,9 @@
             </div>
             <div class="col-md-4 required">
               <label form="quantity">{{'Quantity'|localize}}</label>
-              <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');"
-                [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl  />
-              <!-- <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary> -->
+              <input type="number" class="form-control" name="quantity" id="quantity" required min="0" oninput="validity.valid||(value='');" 
+                [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl  /> 
+              <!-- <abp-validation-summary [customValidationErrors]="QuantityValidationErrors()" [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary> -->
             </div>
             <div class="col-md-3 required">
               <label form="unitId">{{'Unit'|localize}}</label>
@@ -58,7 +58,7 @@
               </ng-contanier>
               <td>{{formula.quantity }}
                 <ng-contanier *ngFor="let u of unitsNames; let uId = index">
-                 <span *ngIf="uId == i">{{u.name }}</span>
+                 <span *ngIf="uId == i">{{u }}</span>
                 </ng-contanier>
               </td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"

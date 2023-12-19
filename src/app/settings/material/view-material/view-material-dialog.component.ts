@@ -23,6 +23,7 @@ export class ViewMaterialDialogComponent implements OnInit {
   {
      this._materialService.get(this.id).subscribe((response)=>{
       this.data=response;
+      console.log(response)
       // this.initSupplier(this.data.supplierId)
      })
   }

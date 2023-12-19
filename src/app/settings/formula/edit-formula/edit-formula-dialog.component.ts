@@ -106,6 +106,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
 
     if (index !== -1) {
       this.data.splice(index, 1);
+      this.units.splice(index, 1);
     }
 
   }

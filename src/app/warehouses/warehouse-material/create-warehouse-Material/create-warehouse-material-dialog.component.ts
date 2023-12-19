@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 
 @Component({
   selector: 'create-warehouse-material-dialog',
@@ -20,6 +21,12 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   minDate:Date;
   maxDate:Date;
   @Output() onSave = new EventEmitter<any>();
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'PriceCanNotBeNegativeOrZero',
+    },
+  ];
   constructor(injector: Injector,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -52,6 +59,10 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
     this._supplierService.getNameForDropdown().subscribe((result) => {
       this.suppliers = result;
     });
+  }
+  priceValidationErrors(){
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];
+    return errors;
   }
   initMaterials() {
     this._materialService.getNameForDropdown().subscribe((result) => {

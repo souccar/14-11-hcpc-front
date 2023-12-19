@@ -4,6 +4,7 @@ import { CreateFormulaDto, FormulaDto, FormulaServiceProxy, MaterialNameForDropd
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 
 
 @Component({
@@ -27,7 +28,12 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
 
 
   @Output() saveFormulaList = new EventEmitter<CreateFormulaDto[]>();
-
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'QuantityCanNotBeNegativeOrZero',
+    },
+  ];
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -43,7 +49,11 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     this.initUnits();
 
   }
+  QuantityValidationErrors(){
 
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'QuantityCanNotBeNegativeOrZero',propertyKey:'QuantityCanNotBeNegativeOrZero'}];
+    return errors;
+  }
   initMaterials() {
     this._materialService.getNameForDropdown().subscribe((response: MaterialNameForDropdownDto[]) => {
       this.materials = response;
@@ -100,6 +110,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
 
     if (index !== -1) {
       this.data.splice(index, 1);
+      this.unitsNames.splice(index, 1);
     }
   }
 

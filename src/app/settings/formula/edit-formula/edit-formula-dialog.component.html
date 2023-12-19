@@ -6,7 +6,7 @@
         <!-- Inputs -->
         <div class="row">
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <label form="materialId">{{'Material'|localize}}</label>
             <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
               required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl>
@@ -15,13 +15,13 @@
             </select>
 
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label form="quantity">{{'quantity'|localize}}</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required
               [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl />
 
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label form="unitId">{{'Unit'|localize}}</label>
             <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
@@ -49,20 +49,21 @@
               <th scope="col">#</th>
               <th scope="col">{{'Material'|localize}}</th>
               <th scope="col">{{'Quantity'|localize}}</th>
-              <th scope="col">{{'Unit'|localize}}</th>
               <th scope="col">{{'Action'|localize}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let formula of data;let i=index; ">
-              <td></td>
+              <td>{{i+1}}</td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
                 <td *ngIf="mId==i">{{m.name}} </td>
               </ng-contanier>
-              <td>{{formula.quantity}}</td>
-              <ng-contanier *ngFor="let u of units;let uId=index ">
-                <td *ngIf="uId==i">{{u.name}} </td>
-              </ng-contanier>
+              <td>{{formula.quantity }}
+                <ng-contanier *ngFor="let u of units; let uId = index">
+                 <span *ngIf="uId == i">{{u.name }}</span>
+                </ng-contanier>
+              </td>
+   
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                   (click)="edit(formula)">
                   <i class="simple-icon-pencil text-primary"></i>

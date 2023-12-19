@@ -108,9 +108,9 @@
           {{ "Price"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="number" class="form-control" name="price" id="price" required min="0"
+          <input type="number" class="form-control"  min="1" name="price" id="price" required 
             [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
-          <abp-validation-summary [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
+          <abp-validation-summary [customValidationErrors]="priceValidationErrors()" [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
         </div>
 
       </div>

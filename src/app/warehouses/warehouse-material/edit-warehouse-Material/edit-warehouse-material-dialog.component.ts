@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, SupplierDto, SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
@@ -20,6 +21,12 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   suppliers: SupplierNameForDropdownDto[] = [];
   warehouses: WarehouseNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'PriceCanNotBeNegativeOrZero',
+    },
+  ];
   constructor(injector: Injector,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -59,6 +66,13 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
       this.suppliers = result;
     });
   }
+
+  priceValidationErrors(){
+
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];
+    return errors;
+  }
+
   initMaterials() {
     this._materialService.getNameForDropdown().subscribe((result) => {
       this.materials = result;
