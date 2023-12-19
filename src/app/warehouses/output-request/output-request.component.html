@@ -24,16 +24,98 @@
         <table class="table table-hover table-striped  ">
           <thead>
             <tr>
+              <th></th>
               <th scope="col">{{'Title'|localize}}</th>
               <th scope="col">{{'Plan'|localize}}</th>
               <th scope="col">{{'Product'|localize}}</th>
               <th scope="col">{{'Status'|localize}}</th>
               <th scope="col">{{'OutputDate'|localize}}</th>
-              <th scope="col">{{'Action'|localize}}</th>
+
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let outputRequestMaterial of data; let i = index">
+              <td>
+
+
+                <span  id="anchorDropdownContainer">
+                  <span dropdown container="#anchorDropdownContainer">
+                    <a
+                      href
+                      id="basic-link"
+                      dropdownToggle
+                      (click)="(false)"
+                      aria-controls="basic-link-dropdown"
+                    >
+                      <i
+                        class="text-primary simple-icon-options-vertical"
+                      ></i
+                    ></a>
+                    <ul
+                      id="basic-link-dropdown"
+                      *dropdownMenu
+                      class="dropdown-menu dropdown-menu-left"
+                      role="menu"
+                      aria-labelledby="basic-link"
+                    >
+                    <ng-conatiner *ngIf="outputRequestMaterial.status == 0">
+                      <a
+                        id="button-basic"
+                        type="button"
+                        id="edit"
+                        class="btn btn-empty dropdown-item text-primary align-self-center"
+                        (click)="editButton(outputRequestMaterial.id)"
+                      >
+
+                        <i class="text-primary simple-icon-pencil">
+
+                        </i>&nbsp;&nbsp;
+                        <span>{{'Edit'|localize}}</span>
+                      </a>
+                      <a
+                        id="button-basic"
+                        type="button"
+                        id="delete"
+                        class="btn btn-empty dropdown-item text-primary align-self-center"
+                        (click)="delete(outputRequestMaterial)"
+                      >
+                        <i class="text-primary simple-icon-trash"></i>
+                        &nbsp;&nbsp;
+                        <span>{{'Delete'|localize}}</span>
+                      </a>
+                    </ng-conatiner>
+                      <a
+                      id="button-basic"
+                      type="button"
+                      id="delete"
+                      class="btn btn-empty dropdown-item text-primary align-self-center"
+                      (click)="viewButton(outputRequestMaterial.id)"
+                    >
+                      <i class="text-primary simple-icon-eye "></i>
+                      &nbsp;&nbsp;
+                        <span>{{'View'|localize}}</span>
+                    </a>
+
+                    <li class="divider dropdown-divider"></li>
+                      <a
+                        *ngIf="outputRequestMaterial.status == 0"
+                        class="dropdown-item"
+                        (click)="onchangeStatusToInProduction(outputRequestMaterial.id)"
+                        >{{ "InProduction" | localize }}</a
+                      >
+                      <a *ngIf="outputRequestMaterial.status == 1"
+                        class="dropdown-item"
+                        (click)="onchangeStatusToFinish(outputRequestMaterial.id)"
+                        >{{ "Finished" | localize }}</a
+                      >
+
+
+
+                    </ul>
+                  </span>
+                </span>
+
+            </td>
               <td>{{outputRequestMaterial.title}}</td>
               <td>{{outputRequestMaterial.plan?.title}}</td>
               <ng-conatiner *ngFor="let outputRequestProduct of outputRequestMaterial.outputRequestProducts">
@@ -56,79 +138,9 @@
             >
           </td>
             <td >{{outputRequestMaterial.outputDate|date:"yyyy-MM-dd"}}</td>
-              <td>
-
-
-                  <span  id="anchorDropdownContainer">
-                    <span dropdown container="#anchorDropdownContainer">
-                      <a
-                        href
-                        id="basic-link"
-                        dropdownToggle
-                        (click)="(false)"
-                        aria-controls="basic-link-dropdown"
-                      >
-                        <i
-                          class="text-primary simple-icon-options-vertical"
-                          [tooltip]="tooltipData.changeStatus"
-                        ></i
-                      ></a>
-                      <ul
-                        id="basic-link-dropdown"
-                        *dropdownMenu
-                        class="dropdown-menu dropdown-menu-right"
-                        role="menu"
-                        aria-labelledby="basic-link"
-                      >
-                      <ng-conatiner *ngIf="outputRequestMaterial.status == 0">
-                        <a
-                          id="button-basic"
-                          type="button"
-                          id="edit"
-                          class="btn btn-empty dropdown-item text-primary align-self-center"
-                          (click)="editButton(outputRequestMaterial.id)"
-                        >
-                          <i class="text-primary simple-icon-pencil"></i>
-                        </a>
-                        <a
-                          id="button-basic"
-                          type="button"
-                          id="delete"
-                          class="btn btn-empty dropdown-item text-primary align-self-center"
-                          (click)="delete(outputRequestMaterial)"
-                        >
-                          <i class="text-primary simple-icon-trash"></i>
-                        </a>
-                      </ng-conatiner>
-                        <a
-                        id="button-basic"
-                        type="button"
-                        id="delete"
-                        class="btn btn-empty dropdown-item text-primary align-self-center"
-                        (click)="viewButton(outputRequestMaterial.id)"
-                      >
-                        <i class="text-primary simple-icon-eye"></i>
-                      </a>
-
-                        <a
-                          *ngIf="outputRequestMaterial.status != 1"
-                          class="dropdown-item"
-                          (click)="onchangeStatusToInProduction(outputRequestMaterial.id)"
-                          >In Production</a
-                        >
-                        <a
-                          class="dropdown-item"
-                          (click)="onchangeStatusToFinish(outputRequestMaterial.id)"
-                          >Finish</a
-                        >
 
 
 
-                      </ul>
-                    </span>
-                  </span>
-
-              </td>
 
             </tr>
           </tbody>
