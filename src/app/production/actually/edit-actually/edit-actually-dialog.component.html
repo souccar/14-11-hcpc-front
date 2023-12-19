@@ -16,7 +16,7 @@
     </div>
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="plan">
-        {{ "Output Request" | localize }}
+        {{ "OutputRequest" | localize }}
       </label>
       <div class="col-md-9 ">
         <select aria-placeholder="output request" (change)="onSelectOutputRequest($event.target.value)"
@@ -31,7 +31,7 @@
     <!--  -->
     <div class="form-group row  " *ngIf="isLoading">
       <label class="col-md-3 col-form-label " for="planProduct">
-        {{ "products" | localize }}
+        {{ "Products" | localize }}
       </label>
       <ng-contanier>
         <div class="col-md-12">
@@ -41,7 +41,7 @@
                 <label class="" [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
               </div>
               <div class="col-md-9 d-flex align-items-end">
-                <input type="number" placeholder="quantitiy" class="form-control" name="{{'quantity-'+i}}"
+                <input type="number" placeholder="{{'Quantitiy'|localize}}" class="form-control" name="{{'quantity-'+i}}"
                   id="{{'quantity-'+i}}" [(ngModel)]="dailyProduction.dailyProductionDetails[i].quantity" required />
 
               </div>
