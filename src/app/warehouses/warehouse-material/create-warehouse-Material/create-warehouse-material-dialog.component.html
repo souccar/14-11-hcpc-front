@@ -70,15 +70,15 @@
           {{ "ExpirationDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Expiration Date" class="form-control" 
+          <input type="text" placeholder="Expiration Date" class="form-control"
           bsDatepicker
           [minDate]="minDate"
           placement="top"
           name="expirationDate" id="expirationDate" required
-          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl 
+          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl
           [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
           #entryDateModel="ngModel" #entryDateEl>
-          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary> 
+          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary>
         </div>
       </div>
       <div class="form-group row required">

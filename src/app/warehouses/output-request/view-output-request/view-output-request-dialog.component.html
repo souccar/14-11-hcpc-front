@@ -1,12 +1,12 @@
 <abp-modal-header
-  [title]="'View More Details'|localize"
+  [title]="'ViewMoreDetails' | localize"
   (onCloseClick)="bsModalRef.hide()"
 ></abp-modal-header>
 
-      <div class="modal-body">
+<div class="modal-body">
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="title">
-      {{ "Title"|localize }}
+      {{ "Title" | localize }}
     </label>
     <div class="col-md-9">
       <input
@@ -22,7 +22,7 @@
 
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="outputDate">
-      {{ "OutputDate"|localize  }}
+      {{ "OutputDate" | localize }}
     </label>
     <div class="col-md-9">
       <input
@@ -37,7 +37,7 @@
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="plan">
-      {{ "Plan"|localize  }}
+      {{ "Plan" | localize }}
     </label>
     <div class="col-md-9">
       <input
@@ -45,44 +45,50 @@
         class="form-control"
         name="plan"
         id="plan"
-        [value]="data.plan?.title  "
+        [value]="data.plan?.title"
         [readonly]="!editable"
       />
     </div>
   </div>
 
   <div class="separator my-5"></div>
+
   <div class="row">
     <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-hover ">
+      <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">{{'Quantity'|localize }}</th>
-            <th scope="col">{{'Unit'|localize }}</th>
-            <th scope="col">{{'Warehouse'|localize }}</th>
+            <th>{{ "Quantity" | localize }}</th>
+            <th>{{ "Unit" | localize }}</th>
+            <th></th>
+            <th>{{ "Warehouse" | localize }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let outputRequestMaterial of data; let i = index">
-
-            <!-- <ng-contanier *ngFor="let w of warehouseCodes; let wId = index">
-              <td *ngIf="wId == i">{{ w.code }}</td>
-            </ng-contanier>
+          <tr
+            *ngFor="
+              let outputRequestMaterial of data.outputRequestMaterials;
+              let i = index
+            "
+          >
             <td>{{ outputRequestMaterial.quantity }}</td>
-            <ng-contanier *ngFor="let u of unitsNames; let uId = index">
-              <td *ngIf="uId == i">{{ u.name }}</td>
-            </ng-contanier> -->
-
+            <ng-conatiner *ngFor="let unitName of unitNames; let uId = index">
+              <td *ngIf="uId == i">{{ unitName.name }}</td>
+            </ng-conatiner>
+            <td></td>
+            <ng-conatiner
+              *ngFor="let warehouseName of warehouseNames; let wId = index"
+            >
+              <td *ngIf="wId == i">
+                <span>{{ warehouseName.name }}</span>
+              </td>
+            </ng-conatiner>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
 </div>
 <div *ngIf="loaded">
-
   <view-formula-dialog [productId]="data.id"></view-formula-dialog>
 </div>
-
-

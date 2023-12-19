@@ -34,7 +34,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    this.outputRequest.outputRequestMaterials = [];
+    // this.outputRequest.outputRequestMaterials = [];
     this.allProducts=[]
     this._router.params.subscribe((params: Params) => {
       this.id = params['id'];

@@ -12,28 +12,28 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
   saving = false;
-  editable:boolean=false;
+  editable: boolean = false;
   units: UnitNameForDropdownDto[] = [];
   data: UpdateOutputRequestMaterialDto[] = [];
   outputRequestMaterial = new UpdateOutputRequestMaterialDto();
-  outputRequest=new UpdateOutputRequestDto();
+  outputRequest = new UpdateOutputRequestDto();
   ColumnMode = ColumnMode;
-  warehouseMaterialCodes:WarehouseMaterialNameForDropdownDto[]=[]
+  warehouseMaterialCodes: WarehouseMaterialNameForDropdownDto[] = []
   saveDisabled = true
   unitsNames: UnitNameForDropdownDto[] = [];
   materialNames: string[] = [];
-  outputRequestId:number;
+  outputRequestId: number;
   warehouseCodes: WarehouseMaterialNameForDropdownDto[] = [];
 
   @Output() saveoutputRequestMaterialList = new EventEmitter<UpdateOutputRequestMaterialDto[]>();
 
   constructor(injector: Injector,
-    private _warehouseMaterialService:WarehouseMaterialServiceProxy,
+    private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
-    private _planService:PlanServiceProxy,
+    private _planService: PlanServiceProxy,
     public bsModalRef: BsModalRef,
-    private _route:ActivatedRoute,
-    private _outputRequest:OutputRequestServiceProxy
+    private _route: ActivatedRoute,
+    private _outputRequest: OutputRequestServiceProxy
 
 
   ) {
@@ -71,7 +71,6 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
     this._warehouseMaterialService.get(id).subscribe((result) => {
       this.warehouseCodes.push(result);
-      console.log(this.warehouseCodes)
     });
 
 
@@ -82,10 +81,9 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
       this.units = response;
     });
   }
-  initWarehouseCode()
-  {
-    this._warehouseMaterialService.getNameForDropdown().subscribe((result:WarehouseMaterialNameForDropdownDto[])=>{
-      this.warehouseMaterialCodes=result;
+  initWarehouseCode() {
+    this._warehouseMaterialService.getNameForDropdown().subscribe((result: WarehouseMaterialNameForDropdownDto[]) => {
+      this.warehouseMaterialCodes = result;
     })
   }
 
@@ -93,7 +91,6 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
     this._unitService.get(id).subscribe((response) => {
       this.unitsNames.push(response);
-      console.log(this.unitsNames);
     });
   }
   addToOutputRequestMaterialList() {
@@ -107,19 +104,9 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
       this.data = [...this.data]
       this.saveoutputRequestMaterialList.emit(this.data);
       this.saving = true;
-      console.log(this.outputRequestMaterial.unitId)
-
-
-
-        this.getUnitName(this.outputRequestMaterial.unitId);
-        this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
-        this.outputRequestMaterial = new UpdateOutputRequestMaterialDto()
-        console.log(this.data)
-
-        console.log(this.editable)
-
-
-
+      this.getUnitName(this.outputRequestMaterial.unitId);
+      this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
+      this.outputRequestMaterial = new UpdateOutputRequestMaterialDto()
 
     }
 
@@ -130,16 +117,14 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
 
   edit(row: UpdateOutputRequestMaterialDto) {
-
     this.outputRequestMaterial = row
-
     const index = this.data.indexOf(row);
-     console.log(index)
     if (index !== -1) {
       this.data.splice(index, 1);
+      this.unitsNames.splice(index, 1);
+      this.warehouseCodes.splice(index, 1)
     }
-    this.editable=true;
-    console.log(this.editable);
+
   }
 
   delete(row: UpdateOutputRequestMaterialDto) {

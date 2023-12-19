@@ -23,7 +23,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   search = '';
   orderBy = '';
   isLoading: boolean;
-  changeStatus:boolean=false;
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
@@ -60,6 +59,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+
   }
   viewButton(id: number) {
     this._modalService.show(
@@ -190,7 +190,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
       this.notify.info(this.l('changeSuccessfully'));
       this.bsModalRef.hide();
       location.reload();
-      this.changeStatus=true;
+
 
 
     })
@@ -204,9 +204,6 @@ onchangeStatusToFinish(id:number)
       this.notify.info(this.l('changeSuccessfully'));
       this.bsModalRef.hide();
       location.reload();
-      this.changeStatus=true;
-
-
 
     })
 
