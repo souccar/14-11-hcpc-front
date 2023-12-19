@@ -38,7 +38,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate()+1);
     this.maxDate = new Date();
@@ -52,7 +52,8 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   initWarehouseMaterial(){
     this._warehouseMaterialService.get(this.id).subscribe((result) => {
       this.warehouseMaterial = result;
-       (result)
+       console.log(result)
+       console.log( this.warehouseMaterial)
     });
   }
 

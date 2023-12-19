@@ -16,6 +16,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { NotificationComponent } from './notification/notification.component';
+import { NotificationRoutingModule } from './notification/notification-routing.module';
 import { UserNotificationHelper } from './notification/UserNotificationHelper';
 import { NotificationSettingsModalComponent } from './notification/notification-settings-modal/notification-settings-modal.component';
 @NgModule({
@@ -39,6 +40,7 @@ import { NotificationSettingsModalComponent } from './notification/notification-
     ContentTemplateModule,
     SharedModule,
     PerfectScrollbarModule,
+    NotificationRoutingModule,
     CollapseModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),

@@ -25,12 +25,12 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { HotkeyModule } from 'angular2-hotkeys';
-
 import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
-
+// notification
+import {NotificationModule} from './layout/notification/notification.module'
 
 @NgModule({
   declarations: [
@@ -67,7 +67,7 @@ import { WarehousesModule } from './warehouses/warehouses.module';
     // }),
     ComponentsModule,
     ProductionModule,
-
+    NotificationModule,
     SettingsModule,
     WarehousesModule,
 
