@@ -34,7 +34,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
 
   initPlan()
   {
-    this._planService.get(this.id).subscribe((response)=>{
+    this._planService.getForEdit(this.id).subscribe((response)=>{
       this.plan=response;
       this.startDate = new Date(this.plan.startDate);
       this.loaded=true;
