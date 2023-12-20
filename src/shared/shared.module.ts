@@ -25,6 +25,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommaNumberPipe } from './pipes/comma-number.pipe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DateFormattedPipe } from './pipes/date-formatted.pipe';
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         BusyDirective,
         EqualValidator,
         SummaryPipe,
-        CommaNumberPipe
+        CommaNumberPipe,
+        DateFormattedPipe
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -63,6 +65,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe,
+        DateFormattedPipe
 
     ]
 })

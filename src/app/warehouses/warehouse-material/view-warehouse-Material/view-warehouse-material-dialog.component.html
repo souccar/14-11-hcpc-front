@@ -46,7 +46,7 @@
         </label>
         <div class="col-md-9">
             <label class="form-control" name="entryDate" id="entryDate">
-                {{warehouseMaterial.entryDate| date:'yyyy-MM-dd'}}
+                {{warehouseMaterial.entryDate| format}}
             </label>
         </div>
     </div>
@@ -57,7 +57,7 @@
         </label>
         <div class="col-md-9">
             <label class="form-control" name="expirationDate" id="expirationDate">
-                {{warehouseMaterial.expirationDate| date:'yyyy-MM-dd'}}
+                {{warehouseMaterial.expirationDate| format}}
             </label>
         </div>
     </div>
