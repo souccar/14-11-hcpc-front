@@ -48,8 +48,8 @@ export class EditFormulaDialogComponent extends AppComponentBase {
 
   initProduct() {
 
-    this._productService.get(this.productId).subscribe((response: ProductDto) => {
-      this.product = response;
+    this._productService.get(this.productId).subscribe((result: ProductDto) => {
+      this.product = result;
       this.product.formulas.forEach(element => {
         this.data.push(element)
         this.getMaterialsName(element.materialId)
@@ -63,26 +63,27 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   }
 
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((response) => {
-      this.materialDropdown = response
+    this._materialService.getNameForDropdown().subscribe((result) => {
+      this.materialDropdown = result
 
     });
   }
   initUnits() {
-    this._unitService.getNameForDropdown().subscribe((response) => {
-      this.unitDropdown = response;
+    this._unitService.getNameForDropdown().subscribe((result) => {
+      this.unitDropdown = result;
 
     });
   }
   getMaterialsName(id) {
-    this._materialService.get(id).subscribe((response) => {
-      this.materials.push ( response);
-
+    this._materialService.get(id).subscribe((result) => {
+      this.materials.push ( result);
+      console.log( this.materials)
     });
   }
   getUnitName(id) {
-    this._unitService.get(id).subscribe((response) => {
-      this.units.push ( response);
+    this._unitService.get(id).subscribe((result) => {
+      this.units.push ( result);
+
 
     });
   }
@@ -92,13 +93,15 @@ export class EditFormulaDialogComponent extends AppComponentBase {
       return;
     }
     else{
+    this.data.push(this.formula);
+    this.data = [...this.data];
     this.getMaterialsName(this.formula.materialId);
     this.getUnitName(this.formula.unitId);
-    this.data.push(this.formula)
+    this.saveFormulaList.emit(this.data);
+   
+   
     this.formula = new FormulaDto();
-    this.data = [...this.data]
-    this.saveFormulaList.emit(this.data);}
-
+  }
   }
   edit(row: FormulaDto) {
     this.formula = row
@@ -107,6 +110,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
     if (index !== -1) {
       this.data.splice(index, 1);
       this.units.splice(index, 1);
+      this.materials.splice(index, 1);
     }
 
   }

@@ -111,6 +111,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     if (index !== -1) {
       this.data.splice(index, 1);
       this.unitsNames.splice(index, 1);
+      this.materialNames.splice(index, 1);
     }
   }
 

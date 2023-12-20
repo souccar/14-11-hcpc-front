@@ -35,7 +35,7 @@
       <div class="col-md-1">
         <!-- Button -->
         <button type="button" class="btn btn-outline-primary mt-4" (click)="addToFormulaList()">
-          <i class="bi bi-plus-lg"> </i>
+          <i class="bi bi-check-lg"> </i>
         </button>
       </div>
     </div>
@@ -54,13 +54,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let formula of data;let i=index; ">
-              <td>{{i+1}}</td>
+              <!-- <td>{{i+1}}</td> -->
+              <td></td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
-                <td *ngIf="mId==i">{{m.name}} </td>
+          
+                <td *ngIf="mId==i">  {{m.id}}//{{mId}}//{{i}} ///{{m.name}} </td>
               </ng-contanier>
               <td>{{formula.quantity }}
                 <ng-contanier *ngFor="let u of units; let uId = index">
-                 <span *ngIf="uId == i">{{u.name }}</span>
+                  <span *ngIf="uId == i">{{u.name }}</span>
                 </ng-contanier>
               </td>
    
