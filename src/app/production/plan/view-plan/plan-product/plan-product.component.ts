@@ -53,7 +53,7 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
 
   initPlan()
   {
-    this._planService.get(this.planProducts[0].planId).subscribe((response)=>{
+    this._planService.getForEdit(this.planProducts[0].planId).subscribe((response)=>{
       this.plan=response;
     });
   }
