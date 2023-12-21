@@ -110,8 +110,8 @@
 <div
   class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
   *ngIf="plan == undefined || plan.id == 0">
-  <p>There is no plan, please add a new plan</p>
+  <p>{{'ThereIsNoPlan,PleaseAddANewPlan'|localize}}</p>
   <a class="btn btn-link btn-empty btn-lg" href="/app/production/displayAllPlan"
-    >Go to Plan List <i class="simple-icon-arrow-right"></i
+    >{{'GoToPlansList'|localize}} <i class="simple-icon-arrow-right"></i
   ></a>
 </div>

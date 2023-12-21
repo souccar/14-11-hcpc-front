@@ -44,7 +44,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column [name]="l('ExpirationDate')" prop="expirationDate" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
-           <span class="badge badge-pill badge-outline-success mb-1">{{row.expirationDate|date:'dd/MM/yyyy'}}</span>
+           <span class="badge badge-pill badge-outline-success mb-1">{{row.expirationDate|format}}</span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Supplier')" prop="supplier" [flexGrow]="1">

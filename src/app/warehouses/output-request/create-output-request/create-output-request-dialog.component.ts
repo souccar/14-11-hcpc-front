@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Injector, Output, Renderer2, RendererFactory2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateOutputRequestDto, CreateOutputRequestProductDto, CreateProductDto, OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductNameForDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -13,26 +13,32 @@ import { forEach } from 'lodash-es';
 })
 export class CreateOutputRequestDialogComponent extends AppComponentBase {
   saving = false;
+
   planProductloaded=false;
   outputRequest: CreateOutputRequestDto = new CreateOutputRequestDto();
   plans: PlanNameForDropdownDto[] = [];
   planProducts: PlanProductDto[] = [];
   showItemIndex = 0;
+  renderer: Renderer2;
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _outputRequestService: OutputRequestServiceProxy,
     public bsModalRef: BsModalRef,
     private _planService: PlanServiceProxy,
-    private _productService: ProductServiceProxy,
-    private _location: Location
+    private _location: Location,
+    private el: ElementRef,  
+    private rendererFactory: RendererFactory2
   ) {
-    super(injector);
+    super(injector);   
   }
   ngOnInit(): void {
+
     this.outputRequest.outputRequestMaterials = [];
     this.outputRequest.outputRequestProducts = [];
     this.initPlan();
+
   }
+
   backToAlloutputRequest() {
     this._location.back();
   }

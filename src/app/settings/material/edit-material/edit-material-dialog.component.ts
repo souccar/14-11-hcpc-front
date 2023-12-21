@@ -39,7 +39,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
 
   initMaterial(){
     this._materialService.get(this.id).subscribe((result:MaterialDto) => {
-
+      console.log(result )
       this.material.id=result.id;
       this.material.name=result.name;
       this.material.code=result.code;
@@ -67,41 +67,66 @@ export class EditMaterialDialogComponent extends AppComponentBase {
    }
 
    addMaterialSupplier (){
-    let MaterialSuppliers  = new UpdateMaterialSuppliersDto ();
-    MaterialSuppliers.materialId=this.material.id;
-     this.material.suppliers.push(MaterialSuppliers );
 
+
+    const index = this.material.suppliers.length ;
+    //list have one element at least
+    if(index>0)
+    {
+      if ((this.material.suppliers[index-1].supplierId == null || this.material.suppliers[index-1].leadTime == null) ) {
+        this.notify.error(this.l('FillSupplierAndLeadTimeFieldBefoe'));
+      }
+      else{
+        let materialSupplier = new UpdateMaterialSuppliersDto();
+        materialSupplier.materialId=this.material.id;
+        this.material.suppliers.push(materialSupplier);
+      }
+    }
+    //if the list empty 
+    else
+    {
+      let materialSupplier = new UpdateMaterialSuppliersDto();
+      materialSupplier.materialId=this.material.id;
+      this.material.suppliers.push(materialSupplier);
+    }
   }
-  removeMaterialSupplier (i:number){
-      this.material.suppliers.splice(i,1);
-
-
+  removeMaterialSupplier (materialsupplier:UpdateMaterialSuppliersDto){
+    const index =  this.material.suppliers.indexOf(materialsupplier, 0);
+    if (index > -1) {
+      this.material.suppliers.splice(index, 1);
+    }
   }
-
    save(): void {
-    this.saving = true;
-    // this.supplierIds.forEach((item)=>{
-    //   let supplier =new UpdateMaterialSuppliersDto();
-    //   supplier.id=item;
 
-    // })
-
-    this._materialService
-      .update(
-        this.material
-      )
-      .pipe(
-        finalize(() => {
-          this.saving = false;
-        })
-      )
-      .subscribe((response:any) => {
+    if (this.material.suppliers.length < 1) {
+      this.notify.error(this.l('AddOneSupplierAtLeast'));
+    }
+    else {
+      this.saving = true;
+      this.material.suppliers.forEach((element) =>
+      element.id = 0
+    );
+      this._materialService.
+      update(
+          this.material
+        )
+        .pipe(
+          finalize(() => {
+            this.saving = false;
+          })
+        )
+        .subscribe((result: any) => {
 
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
           this.onSave.emit();
-      });
+        });
+    }
 
+    this.saving = true;
+
+
+   
   }
 
 }
