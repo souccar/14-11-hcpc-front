@@ -12,7 +12,7 @@ export class ViewPlanComponent implements OnInit{
 
 
   canProduce:boolean=false;
-  plan:PlanDto=new PlanDto();
+  plans:PlanDto[]=[];
   changeStatus=false;
 
   constructor( private _modalService: BsModalService,
@@ -23,21 +23,22 @@ export class ViewPlanComponent implements OnInit{
 
 getLatestPlan()
 {
-  this._planService.getLastPlan().subscribe((result)=>{
-      this.plan = result;
+  this._planService.getPendingPlans().subscribe((result)=>{
+    console.log(result)
+      this.plans = result;
 
   })
 }
-changePlanStatusToActually(){
-  this._planService.changeStatusToActual(this.plan.id).subscribe((result)=>{
+changePlanStatusToActually(id:number){
+  this._planService.changeStatusToActual(id).subscribe((result)=>{
     this.changeStatus=true;
     location.reload()
   })
 }
 changePlanStatusToArchive(){
-  this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
-    location.reload()
-  })
+  // this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
+  //   location.reload()
+  // })
 }
 
 editButton(id:number): void {

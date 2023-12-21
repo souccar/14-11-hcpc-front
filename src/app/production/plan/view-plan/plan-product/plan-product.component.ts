@@ -59,8 +59,10 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   }
   getTotalQuentity(planProduct: PlanProductDto, materialId){
     return planProduct.planProductMaterials.find(x=>x.materialId == materialId).requiredQuantity;
+
   }
   getNumberOfItem(planProduct: PlanProductDto, materialId){
+
     return planProduct.planProductMaterials.find(x=>x.materialId == materialId).canProduce;
   }
   checkBalanceIsSufficient(planProduct: PlanProductDto, materialId): boolean{

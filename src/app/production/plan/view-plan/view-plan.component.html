@@ -1,8 +1,10 @@
+<ng-container *ngFor="let plan of plans">
+
 <div class="row" *ngIf="plan != undefined && plan.id > 0">
   <div class="col-lg-12 col-md-12">
     <div class="top-right-button-container mb-5">
       <div class="row">
-        <div class="btn-group mr-1" dropdown placement="bottom right">
+        <div class="btn-group mr-1 mt-5" dropdown placement="bottom right">
           <button
             id="button-basic"
             dropdownToggle
@@ -23,7 +25,7 @@
             <li *ngIf="plan.status!=2" role="menuitem">
               <a
                 class="dropdown-item"
-                (click)="changePlanStatusToActually()"
+                (click)="changePlanStatusToActually(plan.id)"
               >
                 <i class="iconsminds-factory glyph-icon text-primary mr-1"></i
                 >{{ "TransferToImplementation" | localize }}
@@ -43,7 +45,8 @@
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-right">
+
+    <div class="d-flex justify-content-right mt-5">
       <i
         *ngIf="plan.lack"
         class="text-success glyph-icon simple-icon-check mt-2 mr-1"
@@ -58,9 +61,8 @@
         data-bs-placement="right"
         title=" Plan Can't Produce"
       ></i>
-
       &nbsp;&nbsp;
-      <app-heading title="{{ plan.title }}"></app-heading>
+      <app-heading  title="{{ plan.title }}"></app-heading>
       &nbsp;
       <h1 class="text-primary">&nbsp;#{{ plan.id }}</h1>
     </div>
@@ -93,6 +95,8 @@
     </div>
     <div class="separator mt-1"></div>
     <br />
+    <div class="card">
+      <div class="card-body">
     <ng-container *ngIf="plan.planMaterials">
       <app-plan-material
         [planMaterials]="plan.planMaterials"
@@ -106,7 +110,8 @@
     </ng-container>
   </div>
 </div>
-
+</div>
+</div>
 <div
   class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
   *ngIf="plan == undefined || plan.id == 0">
@@ -115,3 +120,5 @@
     >Go to Plan List <i class="simple-icon-arrow-right"></i
   ></a>
 </div>
+
+</ng-container>
