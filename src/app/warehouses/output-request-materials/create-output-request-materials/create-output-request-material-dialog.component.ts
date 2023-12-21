@@ -46,7 +46,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       })
    }
    getWarehouseCode(id: number) {
-    this._warehouseMaterialService.get(id).subscribe((result) => {
+    this._warehouseMaterialService.getForEdit(id).subscribe((result) => {
       this.warehouseCodes.push(result);
     });
 
@@ -63,6 +63,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
     });
 
  }
+
   addToOutputRequestMaterialList() {
 
     if (this.outputRequestMaterial.warehouseMaterialId == null || this.outputRequestMaterial.quantity == null || this.outputRequestMaterial.unitId == null) {
@@ -77,9 +78,6 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.saving = true;
       this.outputRequestMaterial = new CreateOutputRequestMaterialDto()
     }
-
-
-
   }
 
   edit(row: CreateOutputRequestMaterialDto) {
@@ -91,6 +89,8 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.warehouseCodes.splice(index,1)
     }
   }
+
+
 
   delete(row: CreateOutputRequestMaterialDto) {
     const index = this.data.indexOf(row);

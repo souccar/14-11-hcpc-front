@@ -10,18 +10,18 @@ import { AbpValidationError } from '@shared/components/validation/abp-validation
 @Component({
   selector: 'create-formula-dialog',
   templateUrl: './create-formula-dialog.component.html',
-
+  styleUrls: ['./create-formula-dialog.component.scss']
 })
 export class CreateFormulaDialogComponent extends AppComponentBase {
   saving = false;
   materials: MaterialNameForDropdownDto[] = [];
+  materialsForDropDown: MaterialNameForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
   products: ProductNameForDropdownDto[] = [];
   productId: number;
   data: CreateFormulaDto[] = [];
   formula = new CreateFormulaDto();
   ColumnMode = ColumnMode;
-
   saveDisabled = true
   unitsNames: string[] = [];
   materialNames: string[] = [];
@@ -56,7 +56,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   }
   initMaterials() {
     this._materialService.getNameForDropdown().subscribe((response: MaterialNameForDropdownDto[]) => {
-      this.materials = response;
+      this.materialsForDropDown = response;
     });
   }
   initUnits() {
@@ -66,35 +66,40 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   }
   getUnitName(id: number) {
 
-    this._unitService.get(id).subscribe((response) => {
+    this._unitService.getForEdit(id).subscribe((response) => {
       this.unitsNames.push(response.name);
     });
   }
 
-  getMaterialName(id: number) {
-    const material = this.materials.find(x => x.id == id);
-    if (material) {
-      return material.name;
-    }
-    return '';
+  // getMaterialName(id: number) {
+  //   const material = this.materials.find(x => x.id == id);
+  //   if (material) {
+  //     return material.name;
+  //   }
+  //   return '';
 
+  // }
+
+  getMaterialName(id: number) {
+    this._materialService.getForEdit(id).subscribe((result) => {
+      this.materials.push(result);
+    });
   }
   addToFormulaList() {
 
+   
     if (this.formula.materialId == null || this.formula.quantity == null || this.formula.unitId == null) {
       return;
     }
     else {
-      this.data.push(this.formula)
-
-      this.data = [...this.data]
+      this.getUnitName(this.formula.unitId);
+      this.getMaterialName(this.formula.materialId)
+      this.data.push(this.formula);
+      this.data = [...this.data];
       this.saveFormulaList.emit(this.data);
       this.saving = true;
-      this.getUnitName(this.formula.unitId);
-      this.getMaterialName(this.formula.materialId);
       this.formula = new FormulaDto()
     }
-
 
 
   }
@@ -113,6 +118,8 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.unitsNames.splice(index, 1);
       this.materialNames.splice(index, 1);
     }
+
+  
   }
 
   delete(row: FormulaDto) {

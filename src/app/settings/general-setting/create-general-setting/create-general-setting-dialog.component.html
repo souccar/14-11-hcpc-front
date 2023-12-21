@@ -7,7 +7,7 @@
           {{ "ExpiryDurationNotify" | localize }}
         </label>
         <div class="col-md-9 ">
-            <input type="number" class="form-control" placeholder="In Days" name="expiryDurationNotify" id="expiryDurationNotify" required
+            <input type="number" class="form-control" placeholder="{{'InDays'|localize}}" name="expiryDurationNotify" id="expiryDurationNotify" required
             [(ngModel)]="generalSetting.expiryDurationNotify " min="1" #expiryDurationNotifyModel="ngModel" #expiryDurationNotifyEl   />
           <abp-validation-summary [control]="expiryDurationNotifyModel" [customValidationErrors]="expiryDurationNotifyValidationErrors()" [controlEl]="expiryDurationNotifyEl"></abp-validation-summary>
         </div>

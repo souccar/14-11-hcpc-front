@@ -8,7 +8,7 @@
 
           <div class="col-md-6">
             <label form="materialId">{{'Material'|localize}}</label>
-            <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
+            <select aria-placeholder="Material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
               required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl>
               <!-- <option  disabled selected hidden >Material</option> -->
               <option *ngFor="let item of materialDropdown" value={{item.id}}>{{item.name}}</option>
@@ -54,18 +54,16 @@
           </thead>
           <tbody>
             <tr *ngFor="let formula of data;let i=index; ">
-              <!-- <td>{{i+1}}</td> -->
               <td></td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
-          
-                <td *ngIf="mId==i">  {{m.id}}//{{mId}}//{{i}} ///{{m.name}} </td>
+                <td *ngIf="mId==i"> {{m.name}} </td>
               </ng-contanier>
               <td>{{formula.quantity }}
                 <ng-contanier *ngFor="let u of units; let uId = index">
                   <span *ngIf="uId == i">{{u.name }}</span>
                 </ng-contanier>
               </td>
-   
+
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                   (click)="edit(formula)">
                   <i class="simple-icon-pencil text-primary"></i>

@@ -95,20 +95,17 @@ export class EditMaterialDialogComponent extends AppComponentBase {
     if (index > -1) {
       this.material.suppliers.splice(index, 1);
     }
-  
- 
   }
-
    save(): void {
 
     if (this.material.suppliers.length < 1) {
       this.notify.error(this.l('AddOneSupplierAtLeast'));
     }
     else {
-      console.log(this.material)
-
-
       this.saving = true;
+      this.material.suppliers.forEach((element) =>
+      element.id = 0
+    );
       this._materialService.
       update(
           this.material

@@ -53,7 +53,7 @@
           {{ "EntryDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Entry Date" class="form-control" name="entryDate"id="entryDate"
+          <input type="text" placeholder="{{'EntryDate'|localize}}" class="form-control" name="entryDate"id="entryDate"
           bsDatepicker
           [maxDate]="maxDate"
           placement="top"
@@ -70,7 +70,7 @@
           {{ "ExpirationDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Expiration Date" class="form-control"
+          <input type="text" placeholder="{{'ExpirationDate'|localize}}" class="form-control"
           bsDatepicker
           [minDate]="minDate"
           placement="top"

@@ -7,7 +7,7 @@
         {{ "Plan" | localize }}
       </label>
       <div class="col-md-9 ">
-        <select aria-placeholder="plan" (change)="onSelectPlan($event.target.value)" class="form-control"
+        <select aria-placeholder="{{ 'Plan' | localize }}"  (change)="onSelectPlan($event.target.value)" class="form-control"
           aria-label="Plan" #planIdModel="ngModel" required name="plan" [(ngModel)]="dailyProduction.planId" #planIdEl>
           <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
         </select>
@@ -19,7 +19,7 @@
         {{ "OutputRequest" | localize }}
       </label>
       <div class="col-md-9 ">
-        <select aria-placeholder="output request" (change)="onSelectOutputRequest($event.target.value)"
+        <select  aria-placeholder="{{ 'OutputRequest' | localize }}" (change)="onSelectOutputRequest($event.target.value)"
           class="form-control" aria-label="OutputRequest" #outputRequestIdModel="ngModel" required name="outputRequest"
           [(ngModel)]="dailyProduction.outputRequestId" #outputRequestIdEl>
           <option *ngFor="let item of outputRequests" value={{item.id}}>{{item.title}}</option>

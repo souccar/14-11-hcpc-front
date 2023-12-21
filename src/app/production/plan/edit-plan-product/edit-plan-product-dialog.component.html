@@ -10,7 +10,6 @@
               <label form="productId">{{'Product'|localize}}</label>
               <select aria-placeholder="{{'Product'|localize}}" class="form-control" aria-label="Product" #productIdModel="ngModel" required name="productId"
               [(ngModel)]="planProduct.productId"  #productIdEl >
-                <!-- <option  disabled selected hidden >Material</option> -->
                 <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.name}}</option>
               </select>
 

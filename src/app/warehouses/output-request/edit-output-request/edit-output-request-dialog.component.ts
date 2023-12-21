@@ -120,8 +120,6 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     }
   }
   save(): void {
-
-    console.log(this.outputRequest)
       if (this.outputRequest.outputRequestMaterials.length < 1) {
       this.notify.error(this.l('Add One output Request Material at least'));
       }
@@ -130,7 +128,6 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
         this.notify.error(this.l('Please Enter the required filed !!!!'));
       }
       else{
-      console.log(this.outputRequest)
       this.saving = true;
       this.outputRequest.outputRequestProducts=[]
       this.selectedOutputRequestProducts.forEach(obj1 => {

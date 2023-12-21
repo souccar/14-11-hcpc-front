@@ -77,7 +77,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   getMaterialsName(id) {
     this._materialService.get(id).subscribe((result) => {
       this.materials.push ( result);
-      console.log( this.materials)
+
     });
   }
   getUnitName(id) {
