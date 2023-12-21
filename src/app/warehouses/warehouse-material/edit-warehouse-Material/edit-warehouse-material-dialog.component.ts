@@ -43,7 +43,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
     this.initSuppliers()
   }
   initWarehouseMaterial(){
-    this._warehouseMaterialService.get(this.id).subscribe((result) => {
+    this._warehouseMaterialService.getForEdit(this.id).subscribe((result) => {
       this.warehouseMaterial = result;
        console.log(result)
        console.log( this.warehouseMaterial)
