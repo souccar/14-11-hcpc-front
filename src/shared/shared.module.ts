@@ -25,6 +25,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommaNumberPipe } from './pipes/comma-number.pipe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { DateFormattedPipe } from './pipes/date-formatted.pipe';
 
 @NgModule({
@@ -50,6 +51,7 @@ import { DateFormattedPipe } from './pipes/date-formatted.pipe';
         EqualValidator,
         SummaryPipe,
         CommaNumberPipe,
+        SafeHtmlPipe,
         DateFormattedPipe
     ],
     exports: [
@@ -65,8 +67,8 @@ import { DateFormattedPipe } from './pipes/date-formatted.pipe';
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe,
+        SafeHtmlPipe,
         DateFormattedPipe
-
     ]
 })
 export class SharedModule {
