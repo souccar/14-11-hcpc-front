@@ -10851,7 +10851,7 @@ export interface IDailyProductionDtoPagedResultDto {
 export class DailyProductionNoteDto implements IDailyProductionNoteDto {
     id: number;
     note: string | undefined;
-    creationTime: moment.Moment;
+    creationTime: string | undefined;
     creatorUserId: number | undefined;
 
     constructor(data?: IDailyProductionNoteDto) {
@@ -10867,7 +10867,7 @@ export class DailyProductionNoteDto implements IDailyProductionNoteDto {
         if (_data) {
             this.id = _data["id"];
             this.note = _data["note"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creationTime = _data["creationTime"];
             this.creatorUserId = _data["creatorUserId"];
         }
     }
@@ -10883,7 +10883,7 @@ export class DailyProductionNoteDto implements IDailyProductionNoteDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["note"] = this.note;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime;
         data["creatorUserId"] = this.creatorUserId;
         return data;
     }
@@ -10899,7 +10899,7 @@ export class DailyProductionNoteDto implements IDailyProductionNoteDto {
 export interface IDailyProductionNoteDto {
     id: number;
     note: string | undefined;
-    creationTime: moment.Moment;
+    creationTime: string | undefined;
     creatorUserId: number | undefined;
 }
 

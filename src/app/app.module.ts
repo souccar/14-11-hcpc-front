@@ -13,12 +13,9 @@ import { AppComponent } from './app.component';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-// tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
 import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
-
-// layout
 import {WidgetsModule} from './widgets/widgets.module';
 import {LayoutModule} from './layout/layout.module';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -29,7 +26,8 @@ import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
-// notification
+import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { PersonnelModule } from './personnel/personnel.module';// notification
 import {NotificationModule} from './layout/notification/notification.module'
 
 @NgModule({
@@ -37,11 +35,10 @@ import {NotificationModule} from './layout/notification/notification.module'
     AppComponent,
     TenantsComponent,
     CreateTenantDialogComponent,
-    EditTenantDialogComponent,
+    EditTenantDialogComponent
   ],
   imports: [
-
-  CommonModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -70,21 +67,17 @@ import {NotificationModule} from './layout/notification/notification.module'
     NotificationModule,
     SettingsModule,
     WarehousesModule,
-
-
+    PersonnelModule
   ],
-
 
   schemas: [
     NO_ERRORS_SCHEMA,
     CUSTOM_ELEMENTS_SCHEMA,
   ],
   entryComponents: [
-    // tenants
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
-
   ],
-
+  
 })
 export class AppModule {}
