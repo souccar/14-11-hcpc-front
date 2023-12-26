@@ -26,7 +26,7 @@
           <ng-template let-row="row" ngx-datatable-cell-template >
              {{row.warehouse?.name}}
           </ng-template>
-        </ngx-datatable-column>    
+        </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Quantity')" prop="initialQuantity" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
            {{row.initialQuantity}} {{row.unit?.name}}
@@ -44,7 +44,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column [name]="l('ExpirationDate')" prop="expirationDate" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
-           <span class="badge badge-pill badge-outline-success mb-1">{{row.expirationDate|date:'dd/MM/yyyy'}}</span>
+           <span class="badge badge-pill badge-outline-success mb-1">{{row.expirationDate|format}}</span>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Supplier')" prop="supplier" [flexGrow]="1">
@@ -52,7 +52,7 @@
            {{row.supplier?.name}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [sortable]="false" [name]="l('Action')" prop="Action"  [flexGrow]="1">
+      <ngx-datatable-column [sortable]="false" [name]="l('Action')" prop="Action"   [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template >
           <button id="button-basic" type="button" id="edit" class="btn btn-empty text-primary align-self-center " (click)="editButton(row.id)">
             <i class=" text-primary simple-icon-pencil"></i>

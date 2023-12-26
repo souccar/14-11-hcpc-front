@@ -27,7 +27,8 @@ import { ProductionModule } from './production/production.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
 import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
-import { PersonnelModule } from './personnel/personnel.module';
+import { PersonnelModule } from './personnel/personnel.module';// notification
+import {NotificationModule} from './layout/notification/notification.module'
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PersonnelModule } from './personnel/personnel.module';
     // }),
     ComponentsModule,
     ProductionModule,
+    NotificationModule,
     SettingsModule,
     WarehousesModule,
     PersonnelModule

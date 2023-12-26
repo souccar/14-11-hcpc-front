@@ -14,6 +14,7 @@ export class CreatePlanDialogComponent extends AppComponentBase {
   minDate:Date
   plan = new CreatePlanDto();
   @Output() onSave = new EventEmitter<any>();
+
   constructor(injector: Injector,
     private _planService: PlanServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -31,11 +32,11 @@ export class CreatePlanDialogComponent extends AppComponentBase {
     this.plan.planProducts = [...items];
   }
 
-
   save(): void {
-    this.saving = true;
+    if (!this.plan.planProducts || this.plan.planProducts.length <= 0) {
+      this.notify.error(this.l('Add One Plan Product at least'));      
+    }else{   
     this.plan.startDate.toString();
-
     this._planService.
       create(
         this.plan
@@ -46,13 +47,11 @@ export class CreatePlanDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response: any) => {
-
-         (response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();
       });
-
+    }
   }
 
 }

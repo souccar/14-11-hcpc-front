@@ -6,6 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 @Component({
   selector: 'edit-product-dialog',
   templateUrl: './edit-product-dialog.component.html',
@@ -20,6 +21,12 @@ export class EditProductDialogComponent extends AppComponentBase {
   id:number
   loaded=false;
   @Output() onSave = new EventEmitter<any>();
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'PriceCanNotBeNegativeOrZero',
+    },
+  ];
   constructor(injector: Injector,
     private _productService:ProductServiceProxy,
     public bsModalRef: BsModalRef,
@@ -52,6 +59,10 @@ export class EditProductDialogComponent extends AppComponentBase {
     })
 
   }
+  priceValidationErrors(){
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];
+    return errors;
+  }
   backToAllProduct(){
     this._location.back();
 
@@ -77,26 +88,30 @@ export class EditProductDialogComponent extends AppComponentBase {
       this.notify.error(this.l('Add One formula at least'));
     }
     else {
-
-      this.product.formulas.forEach((element) =>
+      if(this.product.name && this.product.name){
+        this.saving = true;
+        this.product.formulas.forEach((element) =>
         element.id = 0
       );
-      this.saving = true;
-       (this.product)
-      this._productService
-        .update(
-          this.product
-        )
-        .pipe(
-          finalize(() => {
-            this.saving = false;
-          })
-        )
-        .subscribe((response: any) => {
-          this.notify.info(this.l('SavedSuccessfully'));
-          location.reload();
-          this.onSave.emit();
-        });
+        this._productService
+          .update(
+            this.product
+          )
+          .pipe(
+            finalize(() => {
+              this.saving = false;
+            })
+          )
+          .subscribe((response: any) => {
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.backToAllProduct()
+            this.onSave.emit();
+          });
+      }
+      else
+      {
+        this.notify.error(this.l('FillRequiredFieldPleas'));
+      }
     }
 
 

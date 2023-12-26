@@ -26,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommaNumberPipe } from './pipes/comma-number.pipe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { DateFormattedPipe } from './pipes/date-formatted.pipe';
 
 @NgModule({
     imports: [
@@ -50,7 +51,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
         EqualValidator,
         SummaryPipe,
         CommaNumberPipe,
-        SafeHtmlPipe
+        SafeHtmlPipe,
+        DateFormattedPipe
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -65,7 +67,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe,
-        SafeHtmlPipe
+        SafeHtmlPipe        DateFormattedPipe
+
     ]
 })
 export class SharedModule {

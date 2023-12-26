@@ -24,9 +24,7 @@ export class ViewPlanComponent implements OnInit{
 getLatestPlan()
 {
   this._planService.getLastPlan().subscribe((result)=>{
-    if(result.id > 0){
       this.plan = result;
-    }
 
   })
 }

@@ -40,7 +40,8 @@ export class AbpValidationSummaryComponent extends AppComponentBase implements O
     {
       name: 'validateEqual',
       localizationKey: 'PairsDoNotMatch',
-    },
+    }
+    
   ];
   validationErrors = <AbpValidationError[]>this.defaultValidationErrors;
 

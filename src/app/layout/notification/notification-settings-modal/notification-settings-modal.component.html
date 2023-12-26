@@ -1,4 +1,4 @@
-<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal"
+<!-- <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal"
      aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -10,7 +10,8 @@
                     <button type="button" class="close" (click)="close()" [attr.aria-label]="l('Close')">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                </div> -->
+                <abp-modal-header [title]="'NotificationSettings'|localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
                 <div class="modal-body" *ngIf="settings">
                     <h4>{{"ReceiveNotifications" | localize}}</h4>
                     <div>
@@ -37,11 +38,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <abp-modal-footer [cancelDisabled]="saving"
+                (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+                <!-- <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{"Cancel" | localize}}</button>
                     <button type="submit" class="btn btn-primary" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
                 </div>
             </form>
         </div>
     </div>
-</div>
+</div> -->

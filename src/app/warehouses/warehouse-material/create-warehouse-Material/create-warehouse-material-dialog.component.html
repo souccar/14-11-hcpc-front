@@ -53,7 +53,7 @@
           {{ "EntryDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Entry Date" class="form-control" name="entryDate"id="entryDate"
+          <input type="text" placeholder="{{'EntryDate'|localize}}" class="form-control" name="entryDate"id="entryDate"
           bsDatepicker
           [maxDate]="maxDate"
           placement="top"
@@ -70,15 +70,15 @@
           {{ "ExpirationDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Expiration Date" class="form-control" 
+          <input type="text" placeholder="{{'ExpirationDate'|localize}}" class="form-control"
           bsDatepicker
           [minDate]="minDate"
           placement="top"
           name="expirationDate" id="expirationDate" required
-          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl 
+          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl
           [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
           #entryDateModel="ngModel" #entryDateEl>
-          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary> 
+          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary>
         </div>
       </div>
       <div class="form-group row required">
@@ -107,9 +107,9 @@
           {{ "Price"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="number" class="form-control" name="price" id="price" required min="0"
+          <input type="number" class="form-control" min=1 name="price" id="price" required 
             [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
-          <abp-validation-summary [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
+          <abp-validation-summary [control]="priceModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="priceEl"></abp-validation-summary>
         </div>
 
       </div>

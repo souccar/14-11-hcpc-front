@@ -73,7 +73,7 @@
       >
         <i class="glyph-icon iconsminds-calendar-4"> </i>
         <span class="mt-2 text-one">{{
-          plan.startDate | date : "yyyy-MM-dd"
+          plan.startDate | format
         }}</span>
       </div>
       &nbsp; &nbsp;
@@ -110,8 +110,8 @@
 <div
   class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
  >
-  <p>There is no plan, please add a new plan</p>
-  <a class="btn btn-link btn-empty btn-lg" href="/app/plan/displayAllPlan"
-    >Go to Plan List <i class="simple-icon-arrow-right"></i
+  <p>{{'ThereIsNoPlan,PleaseAddANewPlan'|localize}}</p>
+  <a class="btn btn-link btn-empty btn-lg" href="/app/production/displayAllPlan"
+    >{{'GoToPlansList'|localize}} <i class="simple-icon-arrow-right"></i
   ></a>
 </div>

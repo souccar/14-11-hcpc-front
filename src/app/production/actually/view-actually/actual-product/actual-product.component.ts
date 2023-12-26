@@ -74,7 +74,7 @@ export class ActualProductComponent implements OnInit{
       labels: materials,
       datasets: [
         {
-          label: 'Requied quantity',
+          label: 'RequiedQuantity',
           borderColor: Colors.getColors().themeColor1,
           backgroundColor: Colors.getColors().themeColor1_10,
           data: data,
