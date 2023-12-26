@@ -18,10 +18,10 @@ export class ViewPlanComponent implements OnInit{
   constructor( private _modalService: BsModalService,
     private _planService:PlanServiceProxy){}
   ngOnInit(): void {
-  this.getLatestPlan()
+  this.getPendingPlans()
 }
 
-getLatestPlan()
+getPendingPlans()
 {
   this._planService.getPendingPlans().subscribe((result)=>{
     console.log(result)
