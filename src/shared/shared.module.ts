@@ -67,8 +67,8 @@ import { DateFormattedPipe } from './pipes/date-formatted.pipe';
         NgSelectModule,
         NgxDatatableModule,
         SummaryPipe,
-        SafeHtmlPipe        DateFormattedPipe
-
+        SafeHtmlPipe,
+        DateFormattedPipe
     ]
 })
 export class SharedModule {
