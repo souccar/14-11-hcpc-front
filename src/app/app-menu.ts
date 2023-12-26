@@ -30,7 +30,7 @@ const data: IMenuItem[] = [
         icon: 'simple-icon-notebook',
       },
       {
-        label: 'Daily Production',
+        label: 'DailyProduction',
         to: `${adminRoot}/production/diallyProduction/list`,
         icon: 'simple-icon-clock',
       },

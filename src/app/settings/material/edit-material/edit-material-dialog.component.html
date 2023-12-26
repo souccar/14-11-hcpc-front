@@ -20,7 +20,7 @@
           <div class="col-md-9">
             <input type="text" class="form-control" name="code" id="code" required
               [(ngModel)]="material.code" #codeModel="ngModel" #codeEl   />
-            <!-- <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary> -->
+            <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
           </div>
         </div>
         <div class="form-group row ">
@@ -67,10 +67,10 @@
                   <div class="col-md-6">
                     <input type="number" class="form-control" name="leadTime{{i}}" id="leadTime{{i}}" required min="0"
                       oninput="validity.valid||(value='');" [(ngModel)]="materialsupplier.leadTime" #leadTimeModel="ngModel"
-                      #leadTimeEl placeholder="in days" />
+                      #leadTimeEl placeholder="{{'InDays'|localize}}" />
                   </div>
                   <div class="col-md-3">
-                    <button type="button" class="btn btn-outline-danger mb-1" (click)="removeMaterialSupplier(i)"><i
+                    <button type="button" class="btn btn-outline-danger mb-1" (click)="removeMaterialSupplier(materialsupplier)"><i
                         class="iconsminds-remove"></i></button>
                   </div>
               </div>

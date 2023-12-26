@@ -64,7 +64,6 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   getProductName(id: number) {
     this._productService.get(id).subscribe((response) => {
       this.products.push(response);
-      console.log(this.products)
     });
 
   }
