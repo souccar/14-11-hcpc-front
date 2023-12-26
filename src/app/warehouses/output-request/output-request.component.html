@@ -95,6 +95,7 @@
                       &nbsp;&nbsp;
                         <span>{{'View'|localize}}</span>
                     </a>
+
                     <li class="divider dropdown-divider"></li>
                       <a
                         *ngIf="outputRequestMaterial.status == 0"
@@ -107,9 +108,13 @@
                         (click)="onchangeStatusToFinish(outputRequestMaterial.id)"
                         >{{ "Finished" | localize }}</a
                       >
+
+
+
                     </ul>
                   </span>
                 </span>
+
             </td>
               <td>{{outputRequestMaterial.title}}</td>
               <td>{{outputRequestMaterial.plan?.title}}</td>
