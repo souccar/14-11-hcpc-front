@@ -55,7 +55,7 @@ editButton(id:number): void {
       }
     );
     editPlanDialog.content.onSave.subscribe(() => {
-      this.getLatestPlan()
+      this.getPendingPlans()
     });
 
 
