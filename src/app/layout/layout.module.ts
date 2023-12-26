@@ -8,7 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {ContentTemplateModule} from './content-template/content-template.module';
 import { SharedModule } from '@shared/shared.module';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -18,6 +18,8 @@ import { FormsModule } from '@angular/forms';
 import { NotificationComponent } from './notification/notification.component';
 import { UserNotificationHelper } from './notification/UserNotificationHelper';
 import { NotificationSettingsModalComponent } from './notification/notification-settings-modal/notification-settings-modal.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
 @NgModule({
   declarations: [
     HeaderComponent,

@@ -5,8 +5,6 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { HomeComponent } from './home/home.component';
 import { TenantsComponent } from './tenants/tenants.component';
 
-
-
 @NgModule({
     imports: [
         RouterModule.forChild([
@@ -19,12 +17,9 @@ import { TenantsComponent } from './tenants/tenants.component';
                     { path: 'production', loadChildren: () => import('./production/production.module').then(m => m.ProductionModule) },
                     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
                     { path: 'warehouses', loadChildren: () => import('./warehouses/warehouses.module').then(m => m.WarehousesModule) },
-                    // { path: 'diallyProduction', loadChildren: () => import('./actually/actually.module').then(m => m.ActuallyModule) },
-
-
+                    { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) },
                 ]
             },
-
         ])
     ],
     exports: [RouterModule]
