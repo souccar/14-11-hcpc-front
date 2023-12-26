@@ -50,6 +50,18 @@
         </div>
       </ng-contanier>
     </div>
+        <!-- Note -->
+        <div class="form-group row required ">
+          <label class="col-md-3 col-form-label" for="note">
+            {{ "Note"|localize }}
+          </label>
+          <div class="col-md-9">
+            <textarea type="text" class="form-control" name="note" id="note" required
+              [(ngModel)]="dailyProduction.note" #noteModel="ngModel" #noteEl>
+                  </textarea>
+            <abp-validation-summary [control]="noteModel" [controlEl]="noteEl"></abp-validation-summary>
+          </div>
+        </div>
   </div>
   <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
