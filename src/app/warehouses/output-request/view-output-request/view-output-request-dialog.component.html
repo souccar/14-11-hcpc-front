@@ -9,14 +9,9 @@
       {{ "Title" | localize }}
     </label>
     <div class="col-md-9">
-      <input
-        type="text"
-        class="form-control"
-        name="title"
-        id="title"
-        [value]="data.title"
-        [readonly]="!editable"
-      />
+      <label class="form-control" name="title" id="title">
+        {{ data.title }}
+      </label>
     </div>
   </div>
 
@@ -25,14 +20,9 @@
       {{ "OutputDate" | localize }}
     </label>
     <div class="col-md-9">
-      <input
-        type="text"
-        class="form-control"
-        name="outputDate"
-        id="outputDate"
-        [value]="data.outputDate"
-        [readonly]="!editable"
-      />
+      <label class="form-control" name="outputDate" id="outputDate">
+        {{ data.outputDate | format }}
+      </label>
     </div>
   </div>
   <div class="form-group row">
@@ -40,14 +30,9 @@
       {{ "Plan" | localize }}
     </label>
     <div class="col-md-9">
-      <input
-        type="text"
-        class="form-control"
-        name="plan"
-        id="plan"
-        [value]="data.plan?.title"
-        [readonly]="!editable"
-      />
+      <label class="form-control" name="plan" id="plan">
+        {{ data.plan?.title }}
+      </label>
     </div>
   </div>
 
@@ -59,8 +44,8 @@
         <thead>
           <tr>
             <th>{{ "Quantity" | localize }}</th>
-            <th>{{ "Unit" | localize }}</th>
             <th></th>
+            <th>{{ "Material" | localize }}</th>
             <th>{{ "Warehouse" | localize }}</th>
           </tr>
         </thead>
@@ -71,11 +56,14 @@
               let i = index
             "
           >
-            <td>{{ outputRequestMaterial.quantity }}</td>
+            <!-- <td>{{ outputRequestMaterial.quantity }}</td> -->
             <ng-conatiner *ngFor="let unitName of unitNames; let uId = index">
-              <td *ngIf="uId == i">{{ unitName.name }}</td>
+              <td *ngIf="uId == i">
+                {{ outputRequestMaterial.quantity }}{{ unitName.name }}
+              </td>
             </ng-conatiner>
             <td></td>
+            <td>{{ material.name }}</td>
             <ng-conatiner
               *ngFor="let warehouseName of warehouseNames; let wId = index"
             >
