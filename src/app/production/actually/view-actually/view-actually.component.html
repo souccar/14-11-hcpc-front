@@ -39,9 +39,23 @@
                 (click)="actualyDetailDialog(plan.id)"
               >
                 <i
-                  class="simple-icon-clock glyph-icon text-primary mr-1"
+                  class="
+                  iconsminds-clock-back
+                   glyph-icon text-primary mr-1"
                 ></i
                 >{{ "DailyProduction" | localize }}
+              </a>
+            </li>
+            <li role="menuitem">
+              <a
+                class="dropdown-item"
+                type="button"
+                (click)="actualyDetailDialog(plan.id)"
+              >
+                <i
+                  class="iconsminds-upload-1 glyph-icon text-primary mr-1 "
+                ></i
+                >{{ "UploadReport" | localize }}
               </a>
             </li>
           </ul>
