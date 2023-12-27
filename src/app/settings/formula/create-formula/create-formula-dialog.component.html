@@ -53,17 +53,14 @@
             </tr>
           </thead>
           <tbody>
-
             <tr *ngFor="let formula of data;let i=index; ">
-              <td></td>
+               <td></td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
                 <td *ngIf="mId==i">{{m.name}} </td>
               </ng-contanier>
               <td>{{formula.quantity }}
                 <ng-contanier *ngFor="let u of unitsNames; let uId = index">
-                  <span *ngIf="uId == i">{{u }}</span>
-
-
+                 <span *ngIf="uId == i">{{u }}</span>
                 </ng-contanier>
               </td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"

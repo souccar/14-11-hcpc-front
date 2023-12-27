@@ -44,7 +44,7 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
     if(index>0)
     {
       if ((this.material.suppliers[index-1].supplierId == null || this.material.suppliers[index-1].leadTime == null) ) {
-        this.notify.error(this.l('FillSupplierAndLeadTimeFieldBefoe'));
+        this.notify.error(this.l('FillSupplierAndLeadTimeFieldFirst'));
       }
       else{
         let materialSupplier = new CreateMaterialSuppliersDto();
