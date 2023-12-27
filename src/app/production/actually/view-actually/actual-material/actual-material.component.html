@@ -23,7 +23,7 @@
                   </ng-template>
                 </ngx-datatable-column>
                 <!--  -->
-                <ngx-datatable-column [name]="l('TotalQuentity')" prop="totalQuantity" [flexGrow]="1">
+                <ngx-datatable-column [name]="l('TotalQuantity')" prop="totalQuantity" [flexGrow]="1">
                   <ng-template let-row="row" ngx-datatable-cell-template >
                      {{row.totalQuantity}} {{row.unit?.name}}
                   </ng-template>
@@ -34,7 +34,7 @@
                      {{row.inventory}} {{row.unit?.name}}
                   </ng-template>
                 </ngx-datatable-column>
-                
+
               </ngx-datatable>
             </perfect-scrollbar>
           </div>
