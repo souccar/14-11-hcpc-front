@@ -131,7 +131,6 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
         class: 'modal-lg',
       }
     );
-
   }
 
   delete(row: FormulaDto) {

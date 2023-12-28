@@ -28,7 +28,9 @@ getPendingPlans()
   //     this.plans = result;
 
   // })
-  // })
+
+
+
 }
 changePlanStatusToActually(id:number){
   this._planService.changeStatusToActual(id).subscribe((result)=>{
