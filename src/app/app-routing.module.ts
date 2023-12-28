@@ -1,11 +1,10 @@
+import { LayoutModule } from '@app/layout/layout.module';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { HomeComponent } from './home/home.component';
 import { TenantsComponent } from './tenants/tenants.component';
-
-
 
 @NgModule({
     imports: [
@@ -22,9 +21,10 @@ import { TenantsComponent } from './tenants/tenants.component';
                     { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
 
 
+                    { path: 'notifications', loadChildren: () => import('../app/layout/notification/notification.module').then(m => m.NotificationModule) },
+                    { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) },
                 ]
             },
-
         ])
     ],
     exports: [RouterModule]

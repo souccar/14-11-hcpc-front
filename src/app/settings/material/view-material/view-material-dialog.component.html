@@ -1,74 +1,52 @@
 <abp-modal-header
-  [title]="'View More Details'"
+  [title]="'ViewMoreDetails' | localize"
   (onCloseClick)="bsModalRef.hide()"
 ></abp-modal-header>
 <div class="modal-body my-custom-scrollbar">
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="name">
-      {{ "Name" }}
+      {{ "Name" | localize }}
     </label>
     <div class="col-md-9">
-      <input
-        type="text"
-        class="form-control"
-        name="name"
-        id="name"
-        [value]="data.name"
-        [readonly]="!editable"
-      />
+      <label class="form-control" name="name" id="name">
+        {{ data.name }}
+      </label>
     </div>
   </div>
 
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="code">
-      {{ "Code" }}
+      {{ "Code" | localize }}
     </label>
     <div class="col-md-9">
-      <input
-        type="text"
-        class="form-control"
-        name="code"
-        id="code"
-        [value]="data.code"
-        [readonly]="!editable"
-      />
+      <label class="form-control" name="code" id="code">
+        {{ data.code }}
+      </label>
     </div>
   </div>
 
-  <!-- <div class="form-group row">
+  <div class="form-group row">
     <label class="col-md-3 col-form-label" for="supplier">
-      {{ "Supplier" }}
+      {{ "Suppliers" | localize }}
     </label>
-    <div class="col-md-9">
-      <input
-        type="text"
-        class="form-control"
-        name="supplier"
-        id="supplier"
-        [value]="supplier.name"
-        [readonly]="!editable"
-      />
-    </div>
-  </div> -->
+    <ng-container *ngFor="let materialSupplier of data.suppliers">
+      <div class="col-md-9 mt-1">
+        <label class="form-control" name="supplier" id="supplier">
+          {{ materialSupplier.supplier.name }}
+        </label>
+      </div>
+      <div class="col-md-3 mt-1"></div>
+    </ng-container>
+  </div>
 
   <div class="form-group row">
     <label class="col-md-3 col-form-label" for="description">
-      {{ "Description" }}
+      {{ "Description" | localize }}
     </label>
     <div class="col-md-9">
-      <textarea
-        type="text"
-        class="form-control"
-        name="description"
-        id="description"
-        [value]="data.description"
-        [readonly]="!editable"
-      ></textarea>
+      <label class="form-control" name="description" id="description">
+        {{ data.description }}
+      </label>
     </div>
   </div>
-
-
-
-
-  </div>
-
+</div>

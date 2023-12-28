@@ -14,6 +14,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
   id:number;
   loaded=false;
   minDate:Date;
+  startDate: Date;
 
   plan = new UpdatePlanDto();
   @Output() onSave = new EventEmitter<any>();
@@ -33,8 +34,9 @@ export class EditPlanDialogComponent extends AppComponentBase {
 
   initPlan()
   {
-    this._planService.get(this.id).subscribe((response)=>{
+    this._planService.getForEdit(this.id).subscribe((response)=>{
       this.plan=response;
+      this.startDate = new Date(this.plan.startDate);
       this.loaded=true;
 
     });
@@ -46,7 +48,8 @@ export class EditPlanDialogComponent extends AppComponentBase {
 
   save(): void {
 
-    this.plan.startDate.toString();
+    
+    this.plan.startDate = this.startDate.toLocaleString();
 
     if (this.plan.planProducts.length < 1) {
       this.notify.error(this.l('Add One Plan Product at least'));

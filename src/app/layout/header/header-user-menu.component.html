@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="position-relative d-none d-sm-inline-block">
+    <!-- <div class="position-relative d-none d-sm-inline-block">
       <div dropdown>
         <button dropdownToggle type="button" class="header-icon btn btn-empty">
           <i class="simple-icon-grid"></i>
@@ -48,7 +48,7 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Notification -->
 
@@ -89,7 +89,12 @@
             </ng-container>
 
           </perfect-scrollbar>
-          <div class="text-center"><a class="p-4 text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"See All Notifications" | localize}}</a></div>
+          <div>
+            <a class="p-4 text-primary" routerLink="/app/notifications/notifications" style="cursor: pointer;">
+              {{"Show All Notifications" | localize}}</a>
+              <a class="ml-3 p-4 text-primary"   (click)="showSettingModal()" style="cursor: pointer;">
+                {{"Setting" | localize}}</a>
+            </div>
         </div>
       </div>
     </div>
@@ -106,7 +111,7 @@
     <button class="btn btn-empty p-0" type="button" dropdownToggle>
       <span class="name">{{displayName}}</span>
       <span>
-        <img alt="Profile Picture" src="/assets/img/profiles/l-1.jpg" />
+        <img alt="Profile Picture" src="/assets/img/profiles/person.png" />
       </span>
     </button>
 

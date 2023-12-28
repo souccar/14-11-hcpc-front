@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 
 @Component({
   selector: 'create-warehouse-material-dialog',
@@ -19,7 +20,14 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   warehouses: WarehouseNameForDropdownDto[] = [];
   minDate:Date;
   maxDate:Date;
+  loaded:boolean=false;
   @Output() onSave = new EventEmitter<any>();
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'PriceCanNotBeNegativeOrZero',
+    },
+  ];
   constructor(injector: Injector,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -30,9 +38,10 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
 
   ) {
     super(injector);
-    
+
   }
   ngOnInit(): void {
+    this.suppliers=[]
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate()+1);
     this.maxDate = new Date();
@@ -40,7 +49,7 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
     this.initUnits();
     this.initMaterials();
     this. initWarehouses();
-    this.initSuppliers()
+
   }
 
   initUnits() {
@@ -48,16 +57,28 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
       this.units = result;
     });
   }
-  initSuppliers() {
-    this._supplierService.getNameForDropdown().subscribe((result) => {
+  initSuppliers(id:number) {
+    this._supplierService.getSuppliersByMaterialIdForDropdown(id).subscribe((result) => {
       this.suppliers = result;
     });
+  }
+  priceValidationErrors(){
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];
+    return errors;
   }
   initMaterials() {
     this._materialService.getNameForDropdown().subscribe((result) => {
       this.materials = result;
     });
   }
+
+  getsupplierByMaterial(id: number) {
+    if (id != null) {
+      this.initSuppliers(id);
+        this.loaded=true;
+      }
+    }
+
   initWarehouses() {
     this._warehouseService.getNameForDropdown().subscribe((result) => {
       this.warehouses = result;

@@ -21,7 +21,6 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   unitsNames: UnitNameForDropdownDto[] = [];
   warehouseCodes: WarehouseMaterialNameForDropdownDto[] = [];
   warehouseCode: WarehouseMaterialNameForDropdownDto[] = [];
-
   @Output() saveoutputRequestMaterialList = new EventEmitter<CreateOutputRequestMaterialDto[]>();
 
   constructor(injector: Injector,
@@ -47,7 +46,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       })
    }
    getWarehouseCode(id: number) {
-    this._warehouseMaterialService.get(id).subscribe((result) => {
+    this._warehouseMaterialService.getForEdit(id).subscribe((result) => {
       this.warehouseCodes.push(result);
     });
 
@@ -58,13 +57,12 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.units = result;
     });
   }
-  getUnitName(id: number) {
-
+  getUnitName(id: any) {
     this._unitService.get(id).subscribe((result) => {
       this.unitsNames.push(result);
     });
-  }
 
+ }
 
   addToOutputRequestMaterialList() {
 
@@ -72,32 +70,14 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       return;
     }
     else {
+      this.getUnitName(this.outputRequestMaterial.unitId);
+      this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
       this.data.push(this.outputRequestMaterial);
       this.data = [...this.data];
       this.saveoutputRequestMaterialList.emit(this.data);
       this.saving = true;
-      this.getUnitName(this.outputRequestMaterial.unitId);
-      this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
       this.outputRequestMaterial = new CreateOutputRequestMaterialDto()
     }
-
-
-
-  }
-
-  getUnitNameById(unitId) {
-    return this.units.find(t => t.id == unitId).name;
-  }
-  getWarehouseMaterialByCode(warehouseMaterialId)
-  {
-
-    // return this.warehouseCode.find(t => t.id == warehouseMaterialId).code;
-       const warehouseCode = this.warehouseCode.find(x => x.id == warehouseMaterialId);
-    if (warehouseCode) {
-
-      return warehouseCode.code;
-    }
-    return '';
   }
 
   edit(row: CreateOutputRequestMaterialDto) {
@@ -105,8 +85,12 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
     const index = this.data.indexOf(row);
     if (index !== -1) {
       this.data.splice(index, 1);
+      this.unitsNames.splice(index,1);
+      this.warehouseCodes.splice(index,1)
     }
   }
+
+
 
   delete(row: CreateOutputRequestMaterialDto) {
     const index = this.data.indexOf(row);

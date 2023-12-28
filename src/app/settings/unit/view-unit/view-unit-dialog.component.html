@@ -4,9 +4,10 @@
         <label class="col-md-3 col-form-label" for="name">
             {{ "Name" | localize }}
         </label>
-        <div class="col-md-9" >
-            <input type="text" class="form-control" name="name" id="unit" [value]="unit.name"
-                [readonly]="!editable" />
+        <div class="col-md-9 ">
+            <label class="form-control" name="name" id="name">
+                {{unit.name}}
+            </label>
         </div>
     </div>
 </div>

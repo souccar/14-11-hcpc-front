@@ -2,7 +2,7 @@ import { Component, Injector, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { GetNotificationSettingsOutput, NotificationServiceProxy, NotificationSubscriptionDto, UpdateNotificationSettingsInput } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
-import { ModalDirective } from 'ngx-bootstrap/modal';
+import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -11,15 +11,13 @@ import { finalize } from 'rxjs';
   styleUrls: ['./notification-settings-modal.component.scss']
 })
 export class NotificationSettingsModalComponent extends AppComponentBase {
-
   @ViewChild('modal') modal: ModalDirective;
-
   saving = false;
-
   settings: GetNotificationSettingsOutput;
 
   constructor(
       injector: Injector,
+      public bsModalRef: BsModalRef,
       private _notificationService: NotificationServiceProxy
   ) {
       super(injector);
@@ -57,6 +55,7 @@ export class NotificationSettingsModalComponent extends AppComponentBase {
 
   private getSettings(callback: () => void) {
       this._notificationService.getNotificationSettings().subscribe((result: GetNotificationSettingsOutput) => {
+        console.log(result)
           this.settings = result;
           callback();
       });

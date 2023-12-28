@@ -13,29 +13,32 @@
                 </div>
                 <div class="float-right float-none-xs">
                     <button  type="button" class="btn btn-outline-primary btn-xs" (click)="arbitrageDialog(p)">
-                        Arbitrage
+                        {{'Arbitrage'|localize}}
                     </button>
                 </div>
             </div>
             <div class="card-body pt-0">
                 <!-- content -->
                 <div class="row">
-                    <div class="col-md-2 border-right">
-                        <app-radial-process-card [title]="'Production percentage' | localize"
+                    <div class="col-md-3 border-right">
+                        <!-- <app-radial-process-card [title]="'Production percentage' | localize"
                             [totalProduction]="p.totalProduction" [canProduce]="p.canProduce" [isSortable]="true">
-                        </app-radial-process-card>
+                        </app-radial-process-card> -->
+                        <div class="pt-3">
+                            <daily-production-doughnut [canProduce]="p.canProduce" [totalProduction]="p.totalProduction"></daily-production-doughnut>
+                        </div>
                     </div>
                     <div class="col-md-4 border-right">
                         <div class="d-flex row-flex mt-4">
                             <div class="w-50">
                                 <ul class="mb-0">
-                                    <li class="text-one">Required number <i [tooltip]="tooltipData.requiredQuantity" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Can produce <i [tooltip]="tooltipData.canProduce" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Number produced <i [tooltip]="tooltipData.totalProduction" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one">Cost <i [tooltip]="tooltipData.cost" class="bi bi-question-circle-fill text-primary"></i> :</li>
-                                    <li class="text-one pb-3">Selling price <i [tooltip]="tooltipData.price" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">{{'RequiredNumber'|localize}} <i [tooltip]="tooltipData.requiredQuantity" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">{{'CanProduce'|localize}} <i [tooltip]="tooltipData.canProduce" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">{{'NumberProduced'|localize}} <i [tooltip]="tooltipData.totalProduction" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one">{{'Cost'|localize}} <i [tooltip]="tooltipData.cost" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one pb-3">{{'SellingPrice'|localize}} <i [tooltip]="tooltipData.price" class="bi bi-question-circle-fill text-primary"></i> :</li>
 
-                                    <li class="text-one text-primary">Arbitrage <i [tooltip]="tooltipData.productArbitrage" class="bi bi-question-circle-fill text-primary"></i> :</li>
+                                    <li class="text-one text-primary">{{'Arbitrage'|localize}} <i [tooltip]="tooltipData.productArbitrage" class="bi bi-question-circle-fill text-primary"></i> :</li>
                                 </ul>
                             </div>
                             <div class="w-50">
@@ -63,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <!-- <app-bar-chart [shadow]="true" [options]="chartDataConfig.barChartOptions"
                             [data]="getChartData(p)"></app-bar-chart> -->
                         <perfect-scrollbar class="scroll " [config]="{suppressScrollX: true, wheelPropagation: false}">
@@ -71,13 +74,13 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <p class="mb-0">Formula</p>
+                                            <p class="mb-0">{{'Formula'|localize}}</p>
                                         </th>
                                         <th>
-                                            <p class="mb-0">Can produce</p>
+                                            <p class="mb-0">{{'CanProduce'|localize}}</p>
                                         </th>
                                         <th>
-                                            <p class="mb-0">Required quantity</p>
+                                            <p class="mb-0">{{'RequiredQuantity'|localize}}</p>
                                         </th>
                                     </tr>
                                 </thead>

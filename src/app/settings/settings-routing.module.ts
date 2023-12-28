@@ -12,6 +12,7 @@ import { EditProductDialogComponent } from './product/edit-product/edit-product-
 import { ProductComponent } from './product/product.component';
 import { MaterialComponent } from './material/material.component';
 import { FormulaComponent } from './formula/formula.component';
+import { NotificationComponent } from '@app/layout/notification/notification.component';
 
 
 
@@ -83,7 +84,12 @@ const routes: Routes = [{
 
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
+    },
+    {
+      path: 'notifications', component: NotificationComponent ,
+      canActivate: [AppRouteGuard]
     }
+
 
   ]
 

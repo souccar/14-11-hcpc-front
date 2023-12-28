@@ -1,117 +1,122 @@
-<div class="row" *ngIf="plan != undefined && plan.id > 0">
-  <div class="col-lg-12 col-md-12">
-    <div class="top-right-button-container mb-5">
-      <div class="row">
-        <div class="btn-group mr-1" dropdown placement="bottom right">
-          <button
-            id="button-basic"
-            dropdownToggle
-            type="button"
-            class="btn btn-primary dropdown-toggle"
-            aria-controls="dropdown-basic"
-          >
-            <i class="simple-icon-menu text-light mx-1"></i>
-            <span class="caret"></span>
-          </button>
-          <ul
-            id="dropdown-basic"
-            *dropdownMenu
-            class="dropdown-menu dropdown-menu-right"
-            role="menu"
-            aria-labelledby="button-basic"
-          >
-            <li *ngIf="plan.status!=2" role="menuitem">
-              <a
-                class="dropdown-item"
-                (click)="changePlanStatusToActually()"
-              >
-                <i class="iconsminds-factory glyph-icon text-primary mr-1"></i
-                >{{ "TransferToImplementation" | localize }}
-              </a>
-            </li>
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <div class="btn-group mb-3" dropdown placement="bottom right">
+      <button
+        id="button-basic"
+        dropdownToggle
+        type="button"
+        class="btn btn-primary dropdown-toggle"
+        aria-controls="dropdown-basic"
+      >
+        <i class="simple-icon-menu text-light mx-1"></i>
+        <span class="caret"></span>
+      </button>
+      <ul
+        id="dropdown-basic"
+        *dropdownMenu
+        class="dropdown-menu dropdown-menu-right"
+        role="menu"
+        aria-labelledby="button-basic"
+      >
+        <li role="menuitem ">
+          <a class="dropdown-item" routerLink="/app/production/displayAllPlan">
+            <i
+              class="iconsminds-align-justify-all glyph-icon text-primary mr-1"
+            ></i>
 
-            <li role="menuitem ">
-              <a class="dropdown-item" routerLink="/app/production/displayAllPlan">
+            {{ "GoToPlansList" | localize }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let plan of plans">
+    <ng-container *ngIf="plan != undefined && plan.id > 0">
+      <div class="col-lg-12 col-md-12">
+        <div class="card mt-2">
+          <div class="d-flex justify-content-between mt-3 ml-5">
+            <div>
+              <div class="row">
                 <i
-                  class="iconsminds-align-justify-all glyph-icon text-primary mr-1"
+                  *ngIf="plan.lack"
+                  class="text-success glyph-icon simple-icon-check mr-1"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title="Plan Can Produce"
                 ></i>
+                <i
+                  *ngIf="!plan.lack"
+                  class="text-danger glyph-icon simple-icon-close mr-1"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  title=" Plan Can't Produce"
+                ></i>
+                &nbsp;&nbsp;
+                <div class="text-one">
+                  {{ plan.title }}
+                </div>
 
-                {{ "GoToPlansList" | localize }}
-              </a>
-            </li>
-          </ul>
+                &nbsp;
+                <h3 class="text-primary">&nbsp;#{{ plan.id }}</h3>
+              </div>
+
+              <div class="">
+                <span class="mt-2">
+                  <i class="iconsminds-calendar-4"> </i
+                  >{{ plan.startDate | format }}</span
+                >
+                |
+
+                <span class="mt-3"> {{ plan.duration }} day</span>
+              </div>
+            </div>
+
+            <div
+              class="mr-5 mb-5 text-muted text-small"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Start Date"
+            >
+              <div class="row">
+                <button
+                  *ngIf="plan.status != 2"
+                  class="btn btn-outline-primary btn-xs"
+                  (click)="changePlanStatusToActually(plan.id)"
+                >
+                  <i class="iconsminds-factory mr-1"></i
+                  >{{ "TransferToImplementation" | localize }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body mb-5">
+            <ng-container *ngIf="plan.planMaterials">
+              <app-plan-material
+                [planMaterials]="plan.planMaterials"
+              ></app-plan-material>
+            </ng-container>
+            <ng-container *ngIf="plan.planProducts">
+              <app-plan-product
+                [planProducts]="plan.planProducts"
+                [sendplan]="plan"
+              ></app-plan-product>
+            </ng-container>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="d-flex justify-content-right">
-      <i
-        *ngIf="plan.lack"
-        class="text-success glyph-icon simple-icon-check mt-2 mr-1"
-        data-bs-toggle="tooltip"
-        data-bs-placement="right"
-        title="Plan Can Produce"
-      ></i>
-      <i
-        *ngIf="!plan.lack"
-        class="text-danger glyph-icon simple-icon-close mt-2 mr-1"
-        data-bs-toggle="tooltip"
-        data-bs-placement="right"
-        title=" Plan Can't Produce"
-      ></i>
-
-      &nbsp;&nbsp;
-      <app-heading title="{{ plan.title }}"></app-heading>
-      &nbsp;
-      <h1 class="text-primary">&nbsp;#{{ plan.id }}</h1>
-    </div>
-    <div class="ml-2 d-flex justify-content-right text-muted">
-      <div
-        class="d-flex justify-content-center"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="Start Date"
-      >
-        <i class="glyph-icon iconsminds-calendar-4"> </i>
-        <span class="mt-2 text-one">{{
-          plan.startDate | date : "yyyy-MM-dd"
-        }}</span>
-      </div>
-      &nbsp; &nbsp;
-      <div
-        class="my-1"
-        style="border-right: 1px solid; background-color: gray"
-      ></div>
-      &nbsp; &nbsp;
-      <div
-        class="d-flex justify-content-center"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        title="Duration"
-      >
-        <span class="mt-2 text-one"> {{ plan.duration }} day</span>
-      </div>
-    </div>
-    <div class="separator mt-1"></div>
-    <br />
-    <ng-container *ngIf="plan.planMaterials">
-      <app-plan-material
-        [planMaterials]="plan.planMaterials"
-      ></app-plan-material>
     </ng-container>
-    <ng-container *ngIf="plan.planProducts">
-      <app-plan-product
-        [planProducts]="plan.planProducts"
-        [sendplan]="plan"
-      ></app-plan-product>
-    </ng-container>
-  </div>
-</div>
-
-<div
-  class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
-  *ngIf="plan == undefined || plan.id == 0">
-  <p>There is no plan, please add a new plan</p>
-  <a class="btn btn-link btn-empty btn-lg" href="/app/plan/displayAllPlan"
-    >Go to Plan List <i class="simple-icon-arrow-right"></i
-  ></a>
+    <div
+      class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
+      *ngIf="plan == undefined || plan.id == 0"
+    >
+      <p>There is no plan, please add a new plan</p>
+      <a
+        class="btn btn-link btn-empty btn-lg"
+        href="/app/production/displayAllPlan"
+        >Go to Plan List <i class="simple-icon-arrow-right"></i
+      ></a>
+    </div>
+  </ng-container>
 </div>

@@ -32,7 +32,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
-    { label: this.l("price"), value: "price" },
+   
 
   ];
   selectedCount = 0;
@@ -200,7 +200,6 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-
     this._materialService
       .getAll(
         request.keyword,
@@ -216,7 +215,6 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
       .subscribe((result: MaterialDtoPagedResultDto) => {
 
         this.data = result.items;
-
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();

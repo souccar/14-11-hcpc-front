@@ -1959,6 +1959,62 @@ export class MaterialServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: UpdateMaterialDto | undefined): Observable<MaterialDto> {
+        let url_ = this.baseUrl + "/api/services/app/Material/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialDto>;
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<MaterialDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MaterialDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -2120,62 +2176,6 @@ export class MaterialServiceProxy {
     }
 
     protected processCreate(response: HttpResponseBase): Observable<MaterialDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = MaterialDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    update(body: UpdateMaterialDto | undefined): Observable<MaterialDto> {
-        let url_ = this.baseUrl + "/api/services/app/Material/Update";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdate(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<MaterialDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<MaterialDto>;
-        }));
-    }
-
-    protected processUpdate(response: HttpResponseBase): Observable<MaterialDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3540,6 +3540,70 @@ export class OutputRequestServiceProxy {
 }
 
 @Injectable()
+export class PdfServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param planId (optional) 
+     * @return Success
+     */
+    generateDailyProductionsReport(planId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Pdf/GenerateDailyProductionsReport?";
+        if (planId === null)
+            throw new Error("The parameter 'planId' cannot be null.");
+        else if (planId !== undefined)
+            url_ += "planId=" + encodeURIComponent("" + planId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGenerateDailyProductionsReport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGenerateDailyProductionsReport(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processGenerateDailyProductionsReport(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class PlanServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -4038,6 +4102,64 @@ export class PlanServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = PlanDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getPendingPlans(): Observable<PlanDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetPendingPlans";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPendingPlans(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPendingPlans(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PlanDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PlanDto[]>;
+        }));
+    }
+
+    protected processGetPendingPlans(response: HttpResponseBase): Observable<PlanDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(PlanDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -5278,6 +5400,69 @@ export class SupplierServiceProxy {
     }
 
     protected processGetNameForDropdown(response: HttpResponseBase): Observable<SupplierNameForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(SupplierNameForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param materialId (optional) 
+     * @return Success
+     */
+    getSuppliersByMaterialIdForDropdown(materialId: number | undefined): Observable<SupplierNameForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/GetSuppliersByMaterialIdForDropdown?";
+        if (materialId === null)
+            throw new Error("The parameter 'materialId' cannot be null.");
+        else if (materialId !== undefined)
+            url_ += "materialId=" + encodeURIComponent("" + materialId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSuppliersByMaterialIdForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSuppliersByMaterialIdForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SupplierNameForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SupplierNameForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetSuppliersByMaterialIdForDropdown(response: HttpResponseBase): Observable<SupplierNameForDropdownDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9215,7 +9400,7 @@ export interface ICreateChildDto {
 
 export class CreateDailyProductionDetailsDto implements ICreateDailyProductionDetailsDto {
     quantity: number;
-    productId: number | undefined;
+    productId: number;
 
     constructor(data?: ICreateDailyProductionDetailsDto) {
         if (data) {
@@ -9257,13 +9442,13 @@ export class CreateDailyProductionDetailsDto implements ICreateDailyProductionDe
 
 export interface ICreateDailyProductionDetailsDto {
     quantity: number;
-    productId: number | undefined;
+    productId: number;
 }
 
 export class CreateDailyProductionDto implements ICreateDailyProductionDto {
-    planId: number | undefined;
-    outputRequestId: number | undefined;
-    note: string | undefined;
+    planId: number;
+    outputRequestId: number;
+    note: string;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: ICreateDailyProductionDto) {
@@ -9317,9 +9502,9 @@ export class CreateDailyProductionDto implements ICreateDailyProductionDto {
 }
 
 export interface ICreateDailyProductionDto {
-    planId: number | undefined;
-    outputRequestId: number | undefined;
-    note: string | undefined;
+    planId: number;
+    outputRequestId: number;
+    note: string;
     dailyProductionDetails: CreateDailyProductionDetailsDto[] | undefined;
 }
 
@@ -9392,8 +9577,8 @@ export interface ICreateEmployeeDto {
 
 export class CreateFormulaDto implements ICreateFormulaDto {
     quantity: number;
-    materialId: number | undefined;
-    unitId: number | undefined;
+    materialId: number;
+    unitId: number;
     productId: number | undefined;
 
     constructor(data?: ICreateFormulaDto) {
@@ -9440,8 +9625,8 @@ export class CreateFormulaDto implements ICreateFormulaDto {
 
 export interface ICreateFormulaDto {
     quantity: number;
-    materialId: number | undefined;
-    unitId: number | undefined;
+    materialId: number;
+    unitId: number;
     productId: number | undefined;
 }
 
@@ -9489,8 +9674,8 @@ export interface ICreateGeneralSettingDto {
 }
 
 export class CreateMaterialDto implements ICreateMaterialDto {
-    name: string | undefined;
-    code: string | undefined;
+    name: string;
+    code: string;
     description: string | undefined;
     suppliers: CreateMaterialSuppliersDto[] | undefined;
 
@@ -9545,8 +9730,8 @@ export class CreateMaterialDto implements ICreateMaterialDto {
 }
 
 export interface ICreateMaterialDto {
-    name: string | undefined;
-    code: string | undefined;
+    name: string;
+    code: string;
     description: string | undefined;
     suppliers: CreateMaterialSuppliersDto[] | undefined;
 }
@@ -9599,8 +9784,8 @@ export interface ICreateMaterialSuppliersDto {
 }
 
 export class CreateOutputRequestDto implements ICreateOutputRequestDto {
-    title: string | undefined;
-    planId: number | undefined;
+    title: string;
+    planId: number;
     outputRequestMaterials: CreateOutputRequestMaterialDto[] | undefined;
     outputRequestProducts: CreateOutputRequestProductDto[] | undefined;
 
@@ -9663,16 +9848,16 @@ export class CreateOutputRequestDto implements ICreateOutputRequestDto {
 }
 
 export interface ICreateOutputRequestDto {
-    title: string | undefined;
-    planId: number | undefined;
+    title: string;
+    planId: number;
     outputRequestMaterials: CreateOutputRequestMaterialDto[] | undefined;
     outputRequestProducts: CreateOutputRequestProductDto[] | undefined;
 }
 
 export class CreateOutputRequestMaterialDto implements ICreateOutputRequestMaterialDto {
     quantity: number;
-    unitId: number | undefined;
-    warehouseMaterialId: number | undefined;
+    unitId: number;
+    warehouseMaterialId: number;
 
     constructor(data?: ICreateOutputRequestMaterialDto) {
         if (data) {
@@ -9716,12 +9901,12 @@ export class CreateOutputRequestMaterialDto implements ICreateOutputRequestMater
 
 export interface ICreateOutputRequestMaterialDto {
     quantity: number;
-    unitId: number | undefined;
-    warehouseMaterialId: number | undefined;
+    unitId: number;
+    warehouseMaterialId: number;
 }
 
 export class CreateOutputRequestProductDto implements ICreateOutputRequestProductDto {
-    productId: number | undefined;
+    productId: number;
 
     constructor(data?: ICreateOutputRequestProductDto) {
         if (data) {
@@ -9760,13 +9945,13 @@ export class CreateOutputRequestProductDto implements ICreateOutputRequestProduc
 }
 
 export interface ICreateOutputRequestProductDto {
-    productId: number | undefined;
+    productId: number;
 }
 
 export class CreatePlanDto implements ICreatePlanDto {
-    title: string | undefined;
+    title: string;
     duration: number;
-    startDate: string | undefined;
+    startDate: string;
     planProducts: CreatePlanProductDto[] | undefined;
 
     constructor(data?: ICreatePlanDto) {
@@ -9820,16 +10005,16 @@ export class CreatePlanDto implements ICreatePlanDto {
 }
 
 export interface ICreatePlanDto {
-    title: string | undefined;
+    title: string;
     duration: number;
-    startDate: string | undefined;
+    startDate: string;
     planProducts: CreatePlanProductDto[] | undefined;
 }
 
 export class CreatePlanProductDto implements ICreatePlanProductDto {
     numberOfItems: number;
     priority: PriorityInPlan;
-    productId: number | undefined;
+    productId: number;
     planId: number | undefined;
 
     constructor(data?: ICreatePlanProductDto) {
@@ -9877,12 +10062,12 @@ export class CreatePlanProductDto implements ICreatePlanProductDto {
 export interface ICreatePlanProductDto {
     numberOfItems: number;
     priority: PriorityInPlan;
-    productId: number | undefined;
+    productId: number;
     planId: number | undefined;
 }
 
 export class CreateProductDto implements ICreateProductDto {
-    name: string | undefined;
+    name: string;
     description: string | undefined;
     price: number;
     formulas: CreateFormulaDto[] | undefined;
@@ -9938,7 +10123,7 @@ export class CreateProductDto implements ICreateProductDto {
 }
 
 export interface ICreateProductDto {
-    name: string | undefined;
+    name: string;
     description: string | undefined;
     price: number;
     formulas: CreateFormulaDto[] | undefined;
@@ -10012,7 +10197,7 @@ export interface ICreateRoleDto {
 }
 
 export class CreateSupplierDto implements ICreateSupplierDto {
-    name: string | undefined;
+    name: string;
     description: string | undefined;
 
     constructor(data?: ICreateSupplierDto) {
@@ -10054,7 +10239,7 @@ export class CreateSupplierDto implements ICreateSupplierDto {
 }
 
 export interface ICreateSupplierDto {
-    name: string | undefined;
+    name: string;
     description: string | undefined;
 }
 
@@ -10169,7 +10354,7 @@ export interface ICreateTransferDto {
 }
 
 export class CreateUnitDto implements ICreateUnitDto {
-    name: string | undefined;
+    name: string;
 
     constructor(data?: ICreateUnitDto) {
         if (data) {
@@ -10208,7 +10393,7 @@ export class CreateUnitDto implements ICreateUnitDto {
 }
 
 export interface ICreateUnitDto {
-    name: string | undefined;
+    name: string;
 }
 
 export class CreateUserDto implements ICreateUserDto {
@@ -10287,9 +10472,9 @@ export interface ICreateUserDto {
 }
 
 export class CreateWarehouseDto implements ICreateWarehouseDto {
-    name: string | undefined;
-    place: string | undefined;
-    warehouseKeeper: string | undefined;
+    name: string;
+    place: string;
+    warehouseKeeper: string;
 
     constructor(data?: ICreateWarehouseDto) {
         if (data) {
@@ -10332,22 +10517,22 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
 }
 
 export interface ICreateWarehouseDto {
-    name: string | undefined;
-    place: string | undefined;
-    warehouseKeeper: string | undefined;
+    name: string;
+    place: string;
+    warehouseKeeper: string;
 }
 
 export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
-    entryDate: string | undefined;
+    entryDate: string;
     initialQuantity: number;
-    expirationDate: string | undefined;
-    code: string | undefined;
+    expirationDate: string;
+    code: string;
     price: number;
-    unitId: number | undefined;
+    unitId: number;
     unitPriceId: number | undefined;
-    materialId: number | undefined;
-    supplierId: number | undefined;
-    warehouseId: number | undefined;
+    materialId: number;
+    supplierId: number;
+    warehouseId: number;
 
     constructor(data?: ICreateWarehouseMaterialDto) {
         if (data) {
@@ -10404,16 +10589,16 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
 }
 
 export interface ICreateWarehouseMaterialDto {
-    entryDate: string | undefined;
+    entryDate: string;
     initialQuantity: number;
-    expirationDate: string | undefined;
-    code: string | undefined;
+    expirationDate: string;
+    code: string;
     price: number;
-    unitId: number | undefined;
+    unitId: number;
     unitPriceId: number | undefined;
-    materialId: number | undefined;
-    supplierId: number | undefined;
-    warehouseId: number | undefined;
+    materialId: number;
+    supplierId: number;
+    warehouseId: number;
 }
 
 export class CustomAttributeData implements ICustomAttributeData {
@@ -10646,9 +10831,10 @@ export interface IDailyProductionDetailsDto {
 
 export class DailyProductionDto implements IDailyProductionDto {
     id: number;
-    creationTime: string | undefined;
+    creationTime: moment.Moment;
     creatorUserId: number | undefined;
     outputRequestId: number | undefined;
+    outputRequest: OutputRequestNameForDropdownDto;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -10666,9 +10852,10 @@ export class DailyProductionDto implements IDailyProductionDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.creationTime = _data["creationTime"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
             this.outputRequestId = _data["outputRequestId"];
+            this.outputRequest = _data["outputRequest"] ? OutputRequestNameForDropdownDto.fromJS(_data["outputRequest"]) : <any>undefined;
             this.planId = _data["planId"];
             this.plan = _data["plan"] ? PlanDto.fromJS(_data["plan"]) : <any>undefined;
             if (Array.isArray(_data["dailyProductionDetails"])) {
@@ -10694,9 +10881,10 @@ export class DailyProductionDto implements IDailyProductionDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["creationTime"] = this.creationTime;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         data["outputRequestId"] = this.outputRequestId;
+        data["outputRequest"] = this.outputRequest ? this.outputRequest.toJSON() : <any>undefined;
         data["planId"] = this.planId;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
         if (Array.isArray(this.dailyProductionDetails)) {
@@ -10722,9 +10910,10 @@ export class DailyProductionDto implements IDailyProductionDto {
 
 export interface IDailyProductionDto {
     id: number;
-    creationTime: string | undefined;
+    creationTime: moment.Moment;
     creatorUserId: number | undefined;
     outputRequestId: number | undefined;
+    outputRequest: OutputRequestNameForDropdownDto;
     planId: number | undefined;
     plan: PlanDto;
     dailyProductionDetails: DailyProductionDetailsDto[] | undefined;
@@ -10789,7 +10978,7 @@ export interface IDailyProductionDtoPagedResultDto {
 export class DailyProductionNoteDto implements IDailyProductionNoteDto {
     id: number;
     note: string | undefined;
-    creationTime: string | undefined;
+    creationTime: moment.Moment;
     creatorUserId: number | undefined;
 
     constructor(data?: IDailyProductionNoteDto) {
@@ -10805,7 +10994,7 @@ export class DailyProductionNoteDto implements IDailyProductionNoteDto {
         if (_data) {
             this.id = _data["id"];
             this.note = _data["note"];
-            this.creationTime = _data["creationTime"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
         }
     }
@@ -10821,7 +11010,7 @@ export class DailyProductionNoteDto implements IDailyProductionNoteDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["note"] = this.note;
-        data["creationTime"] = this.creationTime;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         return data;
     }
@@ -10837,7 +11026,7 @@ export class DailyProductionNoteDto implements IDailyProductionNoteDto {
 export interface IDailyProductionNoteDto {
     id: number;
     note: string | undefined;
-    creationTime: string | undefined;
+    creationTime: moment.Moment;
     creatorUserId: number | undefined;
 }
 
@@ -13245,7 +13434,7 @@ export interface INotificationSubscriptionWithDisplayNameDto {
 export class OutputRequestDto implements IOutputRequestDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
+    outputDate: moment.Moment;
     status: OutputRequestStatus;
     planId: number | undefined;
     plan: PlanNameDto;
@@ -13265,7 +13454,7 @@ export class OutputRequestDto implements IOutputRequestDto {
         if (_data) {
             this.id = _data["id"];
             this.title = _data["title"];
-            this.outputDate = _data["outputDate"];
+            this.outputDate = _data["outputDate"] ? moment(_data["outputDate"].toString()) : <any>undefined;
             this.status = _data["status"];
             this.planId = _data["planId"];
             this.plan = _data["plan"] ? PlanNameDto.fromJS(_data["plan"]) : <any>undefined;
@@ -13293,7 +13482,7 @@ export class OutputRequestDto implements IOutputRequestDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["title"] = this.title;
-        data["outputDate"] = this.outputDate;
+        data["outputDate"] = this.outputDate ? this.outputDate.toISOString() : <any>undefined;
         data["status"] = this.status;
         data["planId"] = this.planId;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
@@ -13321,7 +13510,7 @@ export class OutputRequestDto implements IOutputRequestDto {
 export interface IOutputRequestDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
+    outputDate: moment.Moment;
     status: OutputRequestStatus;
     planId: number | undefined;
     plan: PlanNameDto;
@@ -13387,7 +13576,7 @@ export interface IOutputRequestDtoPagedResultDto {
 export class OutputRequestForWarehouseMaterialDto implements IOutputRequestForWarehouseMaterialDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
+    outputDate: moment.Moment;
     quantity: number;
 
     constructor(data?: IOutputRequestForWarehouseMaterialDto) {
@@ -13403,7 +13592,7 @@ export class OutputRequestForWarehouseMaterialDto implements IOutputRequestForWa
         if (_data) {
             this.id = _data["id"];
             this.title = _data["title"];
-            this.outputDate = _data["outputDate"];
+            this.outputDate = _data["outputDate"] ? moment(_data["outputDate"].toString()) : <any>undefined;
             this.quantity = _data["quantity"];
         }
     }
@@ -13419,7 +13608,7 @@ export class OutputRequestForWarehouseMaterialDto implements IOutputRequestForWa
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["title"] = this.title;
-        data["outputDate"] = this.outputDate;
+        data["outputDate"] = this.outputDate ? this.outputDate.toISOString() : <any>undefined;
         data["quantity"] = this.quantity;
         return data;
     }
@@ -13435,7 +13624,7 @@ export class OutputRequestForWarehouseMaterialDto implements IOutputRequestForWa
 export interface IOutputRequestForWarehouseMaterialDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
+    outputDate: moment.Moment;
     quantity: number;
 }
 
@@ -13621,7 +13810,7 @@ export enum OutputRequestStatus {
 export class OutputRequestWithDetailDto implements IOutputRequestWithDetailDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
+    outputDate: moment.Moment;
     planId: number | undefined;
     status: OutputRequestStatus;
     plan: PlanNameDto;
@@ -13642,7 +13831,7 @@ export class OutputRequestWithDetailDto implements IOutputRequestWithDetailDto {
         if (_data) {
             this.id = _data["id"];
             this.title = _data["title"];
-            this.outputDate = _data["outputDate"];
+            this.outputDate = _data["outputDate"] ? moment(_data["outputDate"].toString()) : <any>undefined;
             this.planId = _data["planId"];
             this.status = _data["status"];
             this.plan = _data["plan"] ? PlanNameDto.fromJS(_data["plan"]) : <any>undefined;
@@ -13675,7 +13864,7 @@ export class OutputRequestWithDetailDto implements IOutputRequestWithDetailDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["title"] = this.title;
-        data["outputDate"] = this.outputDate;
+        data["outputDate"] = this.outputDate ? this.outputDate.toISOString() : <any>undefined;
         data["planId"] = this.planId;
         data["status"] = this.status;
         data["plan"] = this.plan ? this.plan.toJSON() : <any>undefined;
@@ -13708,7 +13897,7 @@ export class OutputRequestWithDetailDto implements IOutputRequestWithDetailDto {
 export interface IOutputRequestWithDetailDto {
     id: number;
     title: string | undefined;
-    outputDate: string | undefined;
+    outputDate: moment.Moment;
     planId: number | undefined;
     status: OutputRequestStatus;
     plan: PlanNameDto;
@@ -13948,7 +14137,7 @@ export class PlanDto implements IPlanDto {
     id: number;
     title: string | undefined;
     duration: number;
-    startDate: string | undefined;
+    startDate: moment.Moment;
     status: number;
     readonly totalItems: number;
     readonly planAmountWasted: number;
@@ -13972,7 +14161,7 @@ export class PlanDto implements IPlanDto {
             this.id = _data["id"];
             this.title = _data["title"];
             this.duration = _data["duration"];
-            this.startDate = _data["startDate"];
+            this.startDate = _data["startDate"] ? moment(_data["startDate"].toString()) : <any>undefined;
             this.status = _data["status"];
             (<any>this).totalItems = _data["totalItems"];
             (<any>this).planAmountWasted = _data["planAmountWasted"];
@@ -14008,7 +14197,7 @@ export class PlanDto implements IPlanDto {
         data["id"] = this.id;
         data["title"] = this.title;
         data["duration"] = this.duration;
-        data["startDate"] = this.startDate;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["status"] = this.status;
         data["totalItems"] = this.totalItems;
         data["planAmountWasted"] = this.planAmountWasted;
@@ -14044,7 +14233,7 @@ export interface IPlanDto {
     id: number;
     title: string | undefined;
     duration: number;
-    startDate: string | undefined;
+    startDate: moment.Moment;
     status: number;
     totalItems: number;
     planAmountWasted: number;
@@ -17099,7 +17288,7 @@ export interface IUpdateChildDto {
 export class UpdateDailyProductionDetailsDto implements IUpdateDailyProductionDetailsDto {
     id: number;
     quantity: number;
-    productId: number | undefined;
+    productId: number;
 
     constructor(data?: IUpdateDailyProductionDetailsDto) {
         if (data) {
@@ -17144,14 +17333,14 @@ export class UpdateDailyProductionDetailsDto implements IUpdateDailyProductionDe
 export interface IUpdateDailyProductionDetailsDto {
     id: number;
     quantity: number;
-    productId: number | undefined;
+    productId: number;
 }
 
 export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
     id: number;
-    planId: number | undefined;
-    note: string | undefined;
-    outputRequestId: number | undefined;
+    planId: number;
+    outputRequestId: number;
+    note: string;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 
     constructor(data?: IUpdateDailyProductionDto) {
@@ -17167,8 +17356,8 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         if (_data) {
             this.id = _data["id"];
             this.planId = _data["planId"];
-            this.note = _data["note"];
             this.outputRequestId = _data["outputRequestId"];
+            this.note = _data["note"];
             if (Array.isArray(_data["dailyProductionDetails"])) {
                 this.dailyProductionDetails = [] as any;
                 for (let item of _data["dailyProductionDetails"])
@@ -17188,8 +17377,8 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["planId"] = this.planId;
-        data["note"] = this.note;
         data["outputRequestId"] = this.outputRequestId;
+        data["note"] = this.note;
         if (Array.isArray(this.dailyProductionDetails)) {
             data["dailyProductionDetails"] = [];
             for (let item of this.dailyProductionDetails)
@@ -17208,9 +17397,9 @@ export class UpdateDailyProductionDto implements IUpdateDailyProductionDto {
 
 export interface IUpdateDailyProductionDto {
     id: number;
-    planId: number | undefined;
-    note: string | undefined;
-    outputRequestId: number | undefined;
+    planId: number;
+    outputRequestId: number;
+    note: string;
     dailyProductionDetails: UpdateDailyProductionDetailsDto[] | undefined;
 }
 
@@ -17288,9 +17477,9 @@ export interface IUpdateEmployeeDto {
 export class UpdateFormulaDto implements IUpdateFormulaDto {
     id: number;
     quantity: number;
-    materialId: number | undefined;
-    unitId: number | undefined;
-    productId: number | undefined;
+    materialId: number;
+    unitId: number;
+    productId: number;
 
     constructor(data?: IUpdateFormulaDto) {
         if (data) {
@@ -17339,9 +17528,9 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
 export interface IUpdateFormulaDto {
     id: number;
     quantity: number;
-    materialId: number | undefined;
-    unitId: number | undefined;
-    productId: number | undefined;
+    materialId: number;
+    unitId: number;
+    productId: number;
 }
 
 export class UpdateGeneralSettingDto implements IUpdateGeneralSettingDto {
@@ -17393,9 +17582,9 @@ export interface IUpdateGeneralSettingDto {
 
 export class UpdateMaterialDto implements IUpdateMaterialDto {
     id: number;
-    name: string | undefined;
+    name: string;
+    code: string;
     description: string | undefined;
-    code: string | undefined;
     suppliers: UpdateMaterialSuppliersDto[] | undefined;
 
     constructor(data?: IUpdateMaterialDto) {
@@ -17411,8 +17600,8 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
-            this.description = _data["description"];
             this.code = _data["code"];
+            this.description = _data["description"];
             if (Array.isArray(_data["suppliers"])) {
                 this.suppliers = [] as any;
                 for (let item of _data["suppliers"])
@@ -17432,8 +17621,8 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
-        data["description"] = this.description;
         data["code"] = this.code;
+        data["description"] = this.description;
         if (Array.isArray(this.suppliers)) {
             data["suppliers"] = [];
             for (let item of this.suppliers)
@@ -17452,9 +17641,9 @@ export class UpdateMaterialDto implements IUpdateMaterialDto {
 
 export interface IUpdateMaterialDto {
     id: number;
-    name: string | undefined;
+    name: string;
+    code: string;
     description: string | undefined;
-    code: string | undefined;
     suppliers: UpdateMaterialSuppliersDto[] | undefined;
 }
 
@@ -17570,8 +17759,8 @@ export interface IUpdateNotificationSettingsInput {
 
 export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
     id: number;
-    title: string | undefined;
-    planId: number | undefined;
+    title: string;
+    planId: number;
     outputRequestMaterials: UpdateOutputRequestMaterialDto[] | undefined;
     outputRequestProducts: UpdateOutputRequestProductDto[] | undefined;
 
@@ -17637,16 +17826,16 @@ export class UpdateOutputRequestDto implements IUpdateOutputRequestDto {
 
 export interface IUpdateOutputRequestDto {
     id: number;
-    title: string | undefined;
-    planId: number | undefined;
+    title: string;
+    planId: number;
     outputRequestMaterials: UpdateOutputRequestMaterialDto[] | undefined;
     outputRequestProducts: UpdateOutputRequestProductDto[] | undefined;
 }
 
 export class UpdateOutputRequestMaterialDto implements IUpdateOutputRequestMaterialDto {
     quantity: number;
-    unitId: number | undefined;
-    warehouseMaterialId: number | undefined;
+    unitId: number;
+    warehouseMaterialId: number;
 
     constructor(data?: IUpdateOutputRequestMaterialDto) {
         if (data) {
@@ -17690,13 +17879,13 @@ export class UpdateOutputRequestMaterialDto implements IUpdateOutputRequestMater
 
 export interface IUpdateOutputRequestMaterialDto {
     quantity: number;
-    unitId: number | undefined;
-    warehouseMaterialId: number | undefined;
+    unitId: number;
+    warehouseMaterialId: number;
 }
 
 export class UpdateOutputRequestProductDto implements IUpdateOutputRequestProductDto {
     id: number;
-    productId: number | undefined;
+    productId: number;
 
     constructor(data?: IUpdateOutputRequestProductDto) {
         if (data) {
@@ -17738,14 +17927,14 @@ export class UpdateOutputRequestProductDto implements IUpdateOutputRequestProduc
 
 export interface IUpdateOutputRequestProductDto {
     id: number;
-    productId: number | undefined;
+    productId: number;
 }
 
 export class UpdatePlanDto implements IUpdatePlanDto {
     id: number;
-    title: string | undefined;
+    title: string;
     duration: number;
-    startDate: string | undefined;
+    startDate: string;
     planProducts: UpdatePlanProductDto[] | undefined;
 
     constructor(data?: IUpdatePlanDto) {
@@ -17802,9 +17991,9 @@ export class UpdatePlanDto implements IUpdatePlanDto {
 
 export interface IUpdatePlanDto {
     id: number;
-    title: string | undefined;
+    title: string;
     duration: number;
-    startDate: string | undefined;
+    startDate: string;
     planProducts: UpdatePlanProductDto[] | undefined;
 }
 
@@ -17812,8 +18001,8 @@ export class UpdatePlanProductDto implements IUpdatePlanProductDto {
     id: number;
     numberOfItems: number;
     priority: PriorityInPlan;
-    productId: number | undefined;
-    planId: number | undefined;
+    productId: number;
+    planId: number;
 
     constructor(data?: IUpdatePlanProductDto) {
         if (data) {
@@ -17863,13 +18052,13 @@ export interface IUpdatePlanProductDto {
     id: number;
     numberOfItems: number;
     priority: PriorityInPlan;
-    productId: number | undefined;
-    planId: number | undefined;
+    productId: number;
+    planId: number;
 }
 
 export class UpdateProductDto implements IUpdateProductDto {
     id: number;
-    name: string | undefined;
+    name: string;
     description: string | undefined;
     price: number;
     formulas: UpdateFormulaDto[] | undefined;
@@ -17928,16 +18117,16 @@ export class UpdateProductDto implements IUpdateProductDto {
 
 export interface IUpdateProductDto {
     id: number;
-    name: string | undefined;
+    name: string;
     description: string | undefined;
     price: number;
     formulas: UpdateFormulaDto[] | undefined;
 }
 
 export class UpdateSupplierDto implements IUpdateSupplierDto {
-    name: string | undefined;
-    description: string | undefined;
     id: number;
+    name: string;
+    description: string | undefined;
 
     constructor(data?: IUpdateSupplierDto) {
         if (data) {
@@ -17950,9 +18139,9 @@ export class UpdateSupplierDto implements IUpdateSupplierDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.name = _data["name"];
             this.description = _data["description"];
-            this.id = _data["id"];
         }
     }
 
@@ -17965,9 +18154,9 @@ export class UpdateSupplierDto implements IUpdateSupplierDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["name"] = this.name;
         data["description"] = this.description;
-        data["id"] = this.id;
         return data;
     }
 
@@ -17980,16 +18169,16 @@ export class UpdateSupplierDto implements IUpdateSupplierDto {
 }
 
 export interface IUpdateSupplierDto {
-    name: string | undefined;
-    description: string | undefined;
     id: number;
+    name: string;
+    description: string | undefined;
 }
 
 export class UpdateTransferDto implements IUpdateTransferDto {
+    id: number;
     fromId: number;
     toId: number;
     value: number;
-    id: number;
 
     constructor(data?: IUpdateTransferDto) {
         if (data) {
@@ -18002,10 +18191,10 @@ export class UpdateTransferDto implements IUpdateTransferDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.fromId = _data["fromId"];
             this.toId = _data["toId"];
             this.value = _data["value"];
-            this.id = _data["id"];
         }
     }
 
@@ -18018,10 +18207,10 @@ export class UpdateTransferDto implements IUpdateTransferDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["fromId"] = this.fromId;
         data["toId"] = this.toId;
         data["value"] = this.value;
-        data["id"] = this.id;
         return data;
     }
 
@@ -18034,15 +18223,15 @@ export class UpdateTransferDto implements IUpdateTransferDto {
 }
 
 export interface IUpdateTransferDto {
+    id: number;
     fromId: number;
     toId: number;
     value: number;
-    id: number;
 }
 
 export class UpdateUnitDto implements IUpdateUnitDto {
-    name: string | undefined;
     id: number;
+    name: string;
 
     constructor(data?: IUpdateUnitDto) {
         if (data) {
@@ -18055,8 +18244,8 @@ export class UpdateUnitDto implements IUpdateUnitDto {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
             this.id = _data["id"];
+            this.name = _data["name"];
         }
     }
 
@@ -18069,8 +18258,8 @@ export class UpdateUnitDto implements IUpdateUnitDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
         data["id"] = this.id;
+        data["name"] = this.name;
         return data;
     }
 
@@ -18083,15 +18272,15 @@ export class UpdateUnitDto implements IUpdateUnitDto {
 }
 
 export interface IUpdateUnitDto {
-    name: string | undefined;
     id: number;
+    name: string;
 }
 
 export class UpdateWarehouseDto implements IUpdateWarehouseDto {
     id: number;
-    name: string | undefined;
-    place: string | undefined;
-    warehouseKeeper: string | undefined;
+    name: string;
+    place: string;
+    warehouseKeeper: string;
 
     constructor(data?: IUpdateWarehouseDto) {
         if (data) {
@@ -18137,23 +18326,23 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
 
 export interface IUpdateWarehouseDto {
     id: number;
-    name: string | undefined;
-    place: string | undefined;
-    warehouseKeeper: string | undefined;
+    name: string;
+    place: string;
+    warehouseKeeper: string;
 }
 
 export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
     id: number;
-    entryDate: string | undefined;
+    entryDate: string;
     initialQuantity: number;
-    expirationDate: string | undefined;
-    code: string | undefined;
+    expirationDate: string;
+    code: string;
     price: number;
-    unitId: number | undefined;
-    unitPriceId: number | undefined;
-    materialId: number | undefined;
-    supplierId: number | undefined;
-    warehouseId: number | undefined;
+    unitId: number;
+    unitPriceId: number;
+    materialId: number;
+    supplierId: number;
+    warehouseId: number;
 
     constructor(data?: IUpdateWarehouseMaterialDto) {
         if (data) {
@@ -18213,16 +18402,16 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
 
 export interface IUpdateWarehouseMaterialDto {
     id: number;
-    entryDate: string | undefined;
+    entryDate: string;
     initialQuantity: number;
-    expirationDate: string | undefined;
-    code: string | undefined;
+    expirationDate: string;
+    code: string;
     price: number;
-    unitId: number | undefined;
-    unitPriceId: number | undefined;
-    materialId: number | undefined;
-    supplierId: number | undefined;
-    warehouseId: number | undefined;
+    unitId: number;
+    unitPriceId: number;
+    materialId: number;
+    supplierId: number;
+    warehouseId: number;
 }
 
 export class UserDto implements IUserDto {
@@ -18618,10 +18807,10 @@ export interface IWarehouseDtoPagedResultDto {
 
 export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     id: number;
-    entryDate: string | undefined;
+    entryDate: moment.Moment;
     initialQuantity: number;
     currentQuantity: number;
-    expirationDate: string | undefined;
+    expirationDate: moment.Moment;
     code: string | undefined;
     price: number;
     unitId: number | undefined;
@@ -18648,10 +18837,10 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.entryDate = _data["entryDate"];
+            this.entryDate = _data["entryDate"] ? moment(_data["entryDate"].toString()) : <any>undefined;
             this.initialQuantity = _data["initialQuantity"];
             this.currentQuantity = _data["currentQuantity"];
-            this.expirationDate = _data["expirationDate"];
+            this.expirationDate = _data["expirationDate"] ? moment(_data["expirationDate"].toString()) : <any>undefined;
             this.code = _data["code"];
             this.price = _data["price"];
             this.unitId = _data["unitId"];
@@ -18682,10 +18871,10 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["entryDate"] = this.entryDate;
+        data["entryDate"] = this.entryDate ? this.entryDate.toISOString() : <any>undefined;
         data["initialQuantity"] = this.initialQuantity;
         data["currentQuantity"] = this.currentQuantity;
-        data["expirationDate"] = this.expirationDate;
+        data["expirationDate"] = this.expirationDate ? this.expirationDate.toISOString() : <any>undefined;
         data["code"] = this.code;
         data["price"] = this.price;
         data["unitId"] = this.unitId;
@@ -18716,10 +18905,10 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
 
 export interface IWarehouseMaterialDto {
     id: number;
-    entryDate: string | undefined;
+    entryDate: moment.Moment;
     initialQuantity: number;
     currentQuantity: number;
-    expirationDate: string | undefined;
+    expirationDate: moment.Moment;
     code: string | undefined;
     price: number;
     unitId: number | undefined;

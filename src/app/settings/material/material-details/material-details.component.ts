@@ -25,7 +25,7 @@ export class MaterialDetailsComponent implements OnInit {
   {
     this._materialService.getMaterialDetails(this.id).subscribe((result:MaterialDetailDto)=>{
       this.data=result;
-      console.log(this.data)
+
       this.isLoaded=true;
     })
   }

@@ -1,0 +1,23 @@
+<app-page-header [title]="title | localize" [pageSize]="pageSize" [fields]="columns" (addNewItem)="showAddNewModal()"
+  (onChangePage)="onChangePage($event)" (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)">
+</app-page-header>
+<div class="row">
+  <div class="col-12 mb-4 data-table-rows">
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns">{{column.label}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data">
+              <td *ngFor="let column of columns">{{getDataField(column.name, item[column.name])}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

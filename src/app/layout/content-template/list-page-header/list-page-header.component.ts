@@ -36,8 +36,6 @@ export class ListPageHeaderComponent extends AppComponentBase {
     super(injector);
    }
 
-
-
   onSelectDisplayMode(mode: string): void {
     this.changeDisplayMode.emit(mode);
   }

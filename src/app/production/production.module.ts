@@ -32,7 +32,7 @@ import { ActualMaterialComponent } from './actually/view-actually/actual-materia
 import { ActualProductComponent } from './actually/view-actually/actual-product/actual-product.component';
 import { ActualDetailDialogComponent } from './actually/view-actually/actual-detail-dialog/actual-detail-dialog.component';
 import { ConfirmationDialogComponent } from './actually/confirmation-dialog/confirmation-dialog.component';
-
+import { DailyProductionDoughnutComponent } from './actually/view-actually/actual-product/daily-production-doughnut/daily-production-doughnut.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,8 @@ import { ConfirmationDialogComponent } from './actually/confirmation-dialog/conf
     ActualProductComponent,
     ArbitrageDialogComponent,
     ActualDetailDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    DailyProductionDoughnutComponent
   ],
   imports: [
     ProductionRoutingModule,

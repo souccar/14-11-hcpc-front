@@ -7,7 +7,7 @@
         {{ "Plan" | localize }}
       </label>
       <div class="col-md-9 ">
-        <select aria-placeholder="plan" (change)="onSelectPlan($event.target.value)" class="form-control"
+        <select aria-placeholder="{{ 'Plan' | localize }}" (change)="onSelectPlan($event.target.value)" class="form-control"
           aria-label="Plan" #planIdModel="ngModel" required name="plan" [(ngModel)]="dailyProduction.planId" #planIdEl>
           <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
         </select>
@@ -18,10 +18,10 @@
 
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="plan">
-        {{ "Output Request" | localize }}
+        {{ "OutputRequest" | localize }}
       </label>
       <div class="col-md-9 ">
-        <select aria-placeholder="output request" (change)="onSelectOutputRequest($event.target.value)"
+        <select  aria-placeholder="{{ 'OutputRequest' | localize }}" (change)="onSelectOutputRequest($event.target.value)"
           class="form-control" aria-label="OutputRequest" #outputRequestIdModel="ngModel" required name="outputRequest"
           [(ngModel)]="dailyProduction.outputRequestId" #outputRequestIdEl>
           <option *ngFor="let item of outputRequests" value={{item.id}}>{{item.title}}</option>
@@ -35,7 +35,7 @@
     <!--  -->
     <div class="form-group row  " *ngIf="planProductloaded">
       <label class="col-md-3 col-form-label " for="planProduct">
-        {{ "products" | localize }}
+        {{ "Products" | localize }}
       </label>
       <ng-contanier>
         <div class="col-md-12">
@@ -45,8 +45,8 @@
                 <label class="" [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
               </div>
               <div class="col-md-9 d-flex align-items-end">
-                <input type="number" placeholder="quantitiy" class="form-control" name="{{'quantity-'+i}}"
-                  id="{{'quantity-'+i}}" [(ngModel)]="dailyProduction.dailyProductionDetails[i].quantity" required />
+                <input type="number"   placeholder="{{ 'Quantitiy' | localize }}" class="form-control" name="{{'quantity-'+i}}"
+                  id="{{'quantity-'+i}}" [(ngModel)]="dailyProduction.dailyProductionDetails[i].quantity" required  />
 
               </div>
             </div>
@@ -55,12 +55,12 @@
       </ng-contanier>
     </div>
     <!-- Note -->
-    <div class="form-group row ">
+    <div class="form-group row required ">
       <label class="col-md-3 col-form-label" for="note">
         {{ "Note"|localize }}
       </label>
       <div class="col-md-9">
-        <textarea type="text" class="form-control" name="note" id="note"
+        <textarea type="text" class="form-control" name="note" id="note" required
           [(ngModel)]="dailyProduction.note" #noteModel="ngModel" #noteEl>
               </textarea>
         <abp-validation-summary [control]="noteModel" [controlEl]="noteEl"></abp-validation-summary>

@@ -9,6 +9,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PageHeaderComponent } from './page-header/page-header.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     HeadingComponent,
     ApplicationMenuComponent,
     BreadcrumbComponent,
+    PageHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
   ],
   exports:[
     ListPageHeaderComponent,
+    PageHeaderComponent,
     HeadingComponent,
     ApplicationMenuComponent,
     BreadcrumbComponent,

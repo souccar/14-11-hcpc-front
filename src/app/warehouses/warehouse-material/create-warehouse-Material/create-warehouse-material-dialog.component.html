@@ -8,9 +8,10 @@
         </label>
         <div class="col-md-9 ">
           <select class="form-control" aria-label="material" #materialModel="ngModel" required name="material"
-          [(ngModel)]="warehouseMaterial.materialId" #materialEl>
+          [(ngModel)]="warehouseMaterial.materialId"  (change)="getsupplierByMaterial($event.target.value)"  #materialEl>
             <option *ngFor="let item of materials" value={{item.id}}>{{item.name}}</option>
           </select>
+
           <abp-validation-summary [control]="materialModel" [controlEl]="materialEl"></abp-validation-summary>
         </div>
       </div>
@@ -26,7 +27,7 @@
           <abp-validation-summary [control]="materialModel" [controlEl]="materialEl"></abp-validation-summary>
         </div>
       </div>
-         <div class="form-group row required">
+         <div class="form-group row required"  *ngIf="loaded">
         <label class="col-md-3 col-form-label" for="supplier">
           {{ "Supplier" | localize }}
         </label>
@@ -53,7 +54,7 @@
           {{ "EntryDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Entry Date" class="form-control" name="entryDate"id="entryDate"
+          <input type="text" placeholder="{{'EntryDate'|localize}}" class="form-control" name="entryDate"id="entryDate"
           bsDatepicker
           [maxDate]="maxDate"
           placement="top"
@@ -70,15 +71,15 @@
           {{ "ExpirationDate"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="text" placeholder="Expiration Date" class="form-control" 
+          <input type="text" placeholder="{{'ExpirationDate'|localize}}" class="form-control"
           bsDatepicker
           [minDate]="minDate"
           placement="top"
           name="expirationDate" id="expirationDate" required
-          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl 
+          [(ngModel)]="warehouseMaterial.expirationDate " #expirationDateModel="ngModel" #expirationDateEl
           [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
           #entryDateModel="ngModel" #entryDateEl>
-          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary> 
+          <abp-validation-summary [control]="expirationDateModel" [controlEl]="expirationDateEl"></abp-validation-summary>
         </div>
       </div>
       <div class="form-group row required">
@@ -88,7 +89,7 @@
         <div class="col-md-4">
           <input type="number" class="form-control" name="quantity" id="quantity" required min="0"
             [(ngModel)]="warehouseMaterial.initialQuantity" #quantityModel="ngModel" #quantityEl   />
-          <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
+            <abp-validation-summary [control]="quantityModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="quantityEl"></abp-validation-summary>
         </div>
         <label class="col-md-1 col-form-label" for="unit">
           {{ "Unit"|localize  }}
@@ -107,9 +108,9 @@
           {{ "Price"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="number" class="form-control" name="price" id="price" required min="0"
+          <input type="number" class="form-control" min=1 name="price" id="price" required
             [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
-          <abp-validation-summary [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
+          <abp-validation-summary [control]="priceModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="priceEl"></abp-validation-summary>
         </div>
 
       </div>

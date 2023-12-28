@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 import { GeneralSettingServiceProxy, UpdateGeneralSettingDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
@@ -14,6 +15,12 @@ export class EditGeneralSettingDialogComponent extends AppComponentBase {
   id: number;
   generalSetting = new UpdateGeneralSettingDto();
   @Output() onSave = new EventEmitter<any>();
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'ExpiryDurationNotifyCanNotBeNegativeOrZero',
+    },
+  ];
   constructor(injector: Injector,
     private _GeneralSettingService: GeneralSettingServiceProxy,
     public bsModalRef: BsModalRef,
@@ -28,6 +35,11 @@ export class EditGeneralSettingDialogComponent extends AppComponentBase {
     this._GeneralSettingService.get(this.id).subscribe((result) => {
       this.generalSetting = result;
     });
+  }
+  
+  expiryDurationNotifyValidationErrors(){
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'ExpiryDurationNotifyCanNotBeNegativeOrZero',propertyKey:'ExpiryDurationNotifyCanNotBeNegativeOrZero'}];
+    return errors;
   }
   save(): void {
     this.saving = true;

@@ -39,38 +39,53 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
     });
   }
   addMaterialSupplier() {
-    // var index = this.material.suppliers.length - 1;
-    // console.log(index)
-    // if ((this.material.suppliers[index].supplierId == null || this.material.suppliers[index].leadTime == null) && this.material.suppliers.length > 0) {
-    //   return;
-    // }
-    let materialSupplier = new CreateMaterialSuppliersDto();
-    this.material.suppliers.push(materialSupplier);
+    const index = this.material.suppliers.length ;
+    //list have one element at least
+    if(index>0)
+    {
+      if ((this.material.suppliers[index-1].supplierId == null || this.material.suppliers[index-1].leadTime == null) ) {
+        this.notify.error(this.l('FillSupplierAndLeadTimeFieldBefoe'));
+      }
+      else{
+        let materialSupplier = new CreateMaterialSuppliersDto();
+        this.material.suppliers.push(materialSupplier);
+      }
+    }
+    //if the list empty 
+    else
+    {
+      let materialSupplier = new CreateMaterialSuppliersDto();
+      this.material.suppliers.push(materialSupplier);
+    }
   }
   removeMaterialSupplier(i: number) {
     this.material.suppliers.splice(i, 1);
   }
 
   save(): void {
-    this.saving = true;
-    (this.material)
 
+    if (this.material.suppliers.length < 1) {
+      this.notify.error(this.l('AddOneSupplierAtLeast'));
+    }
+    else {
+      this.saving = true;
+      this._materialService.
+        create(
+          this.material
+        )
+        .pipe(
+          finalize(() => {
+            this.saving = false;
+          })
+        )
+        .subscribe((result: any) => {
 
-    this._materialService.
-      create(
-        this.material
-      )
-      .pipe(
-        finalize(() => {
-          this.saving = false;
-        })
-      )
-      .subscribe((result: any) => {
+          this.notify.info(this.l('SavedSuccessfully'));
+          this.bsModalRef.hide();
+          this.onSave.emit();
+        });
+    }
 
-        this.notify.info(this.l('SavedSuccessfully'));
-        this.bsModalRef.hide();
-        this.onSave.emit();
-      });
 
   }
 
