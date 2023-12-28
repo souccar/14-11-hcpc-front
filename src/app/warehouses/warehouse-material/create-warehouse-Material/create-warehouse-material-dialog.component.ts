@@ -20,6 +20,7 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   warehouses: WarehouseNameForDropdownDto[] = [];
   minDate:Date;
   maxDate:Date;
+  loaded:boolean=false;
   @Output() onSave = new EventEmitter<any>();
   defaultValidationErrors: Partial<AbpValidationError>[] = [
     {
@@ -37,9 +38,10 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
 
   ) {
     super(injector);
-    
+
   }
   ngOnInit(): void {
+    this.suppliers=[]
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate()+1);
     this.maxDate = new Date();
@@ -47,7 +49,7 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
     this.initUnits();
     this.initMaterials();
     this. initWarehouses();
-    this.initSuppliers()
+
   }
 
   initUnits() {
@@ -55,8 +57,8 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
       this.units = result;
     });
   }
-  initSuppliers() {
-    this._supplierService.getNameForDropdown().subscribe((result) => {
+  initSuppliers(id:number) {
+    this._supplierService.getSuppliersByMaterialIdForDropdown(id).subscribe((result) => {
       this.suppliers = result;
     });
   }
@@ -69,6 +71,14 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
       this.materials = result;
     });
   }
+
+  getsupplierByMaterial(id: number) {
+    if (id != null) {
+      this.initSuppliers(id);
+        this.loaded=true;
+      }
+    }
+
   initWarehouses() {
     this._warehouseService.getNameForDropdown().subscribe((result) => {
       this.warehouses = result;

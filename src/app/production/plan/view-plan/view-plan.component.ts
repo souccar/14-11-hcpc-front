@@ -24,8 +24,10 @@ export class ViewPlanComponent implements OnInit{
 getPendingPlans()
 {
   // this._planService.getPendingPlans().subscribe((result)=>{
+  //   console.log(result)
   //     this.plans = result;
 
+  // })
   // })
 }
 changePlanStatusToActually(id:number){

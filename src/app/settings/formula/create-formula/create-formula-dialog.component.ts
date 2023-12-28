@@ -89,7 +89,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   }
   addToFormulaList() {
 
-   
+
     if (this.formula.materialId == null || this.formula.quantity == null || this.formula.unitId == null) {
       return;
     }
@@ -116,7 +116,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     if (index !== -1) {
       this.data.splice(index, 1);
       this.unitsNames.splice(index, 1);
-      this.materialNames.splice(index, 1);
+      this.materials.splice(index, 1);
     }
   }
   view(row: FormulaDto) {

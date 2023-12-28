@@ -3540,6 +3540,70 @@ export class OutputRequestServiceProxy {
 }
 
 @Injectable()
+export class PdfServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param planId (optional) 
+     * @return Success
+     */
+    generateDailyProductionsReport(planId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Pdf/GenerateDailyProductionsReport?";
+        if (planId === null)
+            throw new Error("The parameter 'planId' cannot be null.");
+        else if (planId !== undefined)
+            url_ += "planId=" + encodeURIComponent("" + planId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGenerateDailyProductionsReport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGenerateDailyProductionsReport(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processGenerateDailyProductionsReport(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class PlanServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -5278,6 +5342,69 @@ export class SupplierServiceProxy {
     }
 
     protected processGetNameForDropdown(response: HttpResponseBase): Observable<SupplierNameForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(SupplierNameForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param materialId (optional) 
+     * @return Success
+     */
+    getSuppliersByMaterialIdForDropdown(materialId: number | undefined): Observable<SupplierNameForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Supplier/GetSuppliersByMaterialIdForDropdown?";
+        if (materialId === null)
+            throw new Error("The parameter 'materialId' cannot be null.");
+        else if (materialId !== undefined)
+            url_ += "materialId=" + encodeURIComponent("" + materialId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSuppliersByMaterialIdForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSuppliersByMaterialIdForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SupplierNameForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SupplierNameForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetSuppliersByMaterialIdForDropdown(response: HttpResponseBase): Observable<SupplierNameForDropdownDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9216,6 +9343,7 @@ export interface ICreateChildDto {
 export class CreateDailyProductionDetailsDto implements ICreateDailyProductionDetailsDto {
     quantity: number;
     productId: number;
+    productId: number;
 
     constructor(data?: ICreateDailyProductionDetailsDto) {
         if (data) {
@@ -9829,8 +9957,8 @@ export interface ICreatePlanDto {
 export class CreatePlanProductDto implements ICreatePlanProductDto {
     numberOfItems: number;
     priority: PriorityInPlan;
-    productId: number;
-    planId: number;
+    productId: number | undefined;
+    planId: number | undefined;
 
     constructor(data?: ICreatePlanProductDto) {
         if (data) {
@@ -9877,8 +10005,8 @@ export class CreatePlanProductDto implements ICreatePlanProductDto {
 export interface ICreatePlanProductDto {
     numberOfItems: number;
     priority: PriorityInPlan;
-    productId: number;
-    planId: number;
+    productId: number | undefined;
+    planId: number | undefined;
 }
 
 export class CreateProductDto implements ICreateProductDto {
