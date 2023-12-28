@@ -13,18 +13,18 @@
   <div class="row mb-2">
     <div class="col-lg-6">
       <h6>
-        <i class="iconsminds-calendar-4"></i> Total Quantity :
+        <i class="iconsminds-calendar-4"></i>{{'TotalQuantity'|localize}} :
         {{ data.totalQuantity }}
       </h6>
     </div>
     <div class="col-lg-6">
-      <div class="float-left float-none-xs">
-        <h6 ><i class="simple-icon-user"></i> Supplier :</h6>
+      <div class="float-left float-none-xs mt-1">
+        <h6 ><i class="simple-icon-user"></i>  &nbsp;{{'Suppliers'|localize}} : </h6>
       </div>
 
-      <div class="float-left float-none-xs mx-3">
+      <div class="float-left float-none-xs mx-3 ">
         <table class="table table-sm table-borderless">
-          <tbody>
+          <tbody >
             <tr *ngFor="let supplier of data.suppliers">
               <td>
                 <span [class]="'log-indicator align-middle'"></span>
@@ -33,7 +33,10 @@
                 <span class="font-weight-medium">{{supplier.supplier.name}}</span>
               </td>
               <td class="text-right">
-                <span class="text-muted">{{ supplier.leadTime }}</span>
+                <span class="text-muted"    
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="{{'leadTime'|localize}}">{{ supplier.leadTime }}</span>
               </td>
             </tr>
           </tbody>
@@ -41,25 +44,27 @@
       </div>
     </div>
   </div>
+  <div class="separator mb-4"></div>
   <div class="row ml-2">
-  <h6>  <i class="simple-icon-layers"></i> Related Product :</h6>
+  <h6>  <i class="simple-icon-layers"></i>  {{'RelatedProduct'|localize}}:</h6>
   <div class="float-left float-none-xs mx-3">
     <span class="badge badge-pill badge-light mb-1 mr-1" *ngFor="let relatedProduct of data.relatedProducts">
       {{relatedProduct.name | localize}}
     </span>
   </div>
 </div>
+<div class="separator my-4"></div>
   <!-- tabel -->
   <div class="row">
     <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-hover">
-        <thead>
+  <table class="table table-hover table-borderless">
+    <thead class="border-bottom">
           <tr>
-            <th scope="col">Warehouse</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">code</th>
-            <th scope="col">expiration Date</th>
-            <th scope="col">OutPut Request</th>
+            <th scope="col">{{'Warehouse'|localize}}</th>
+            <th scope="col">{{'Quantity'|localize}}</th>
+            <th scope="col">{{"Code"|localize}}</th>
+            <th scope="col">{{'ExpirationDate'|localize}}</th>
+            <th scope="col">{{'OutputRequest'|localize}}</th>
 
           </tr>
         </thead>
@@ -74,7 +79,7 @@
 
               <td >
                 <span class="text-muted">
-                  quantity : {{ outputRequest.quantity }}
+                  {{'Quantity'|localize}} : {{ outputRequest.quantity }}
                 </span>
                 &nbsp;|
                 <span class="text-muted">

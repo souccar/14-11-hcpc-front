@@ -37,14 +37,14 @@
       <label class="col-md-3 col-form-label " for="planProduct">
         {{ "Products" | localize }}
       </label>
-      <ng-contanier>
-        <div class="col-md-12">
+    
+        <div class="col-md-9">
           <div *ngFor="let planProduct of outputRequestsProducts, index as i">
             <div class="row mt-1">
-              <div class="col-md-3 d-flex align-items-end required">
-                <label class="" [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
+              <div class="col-md-4 d-flex align-items-end required">
+                <label  [for]="'quantitiy-'+i">{{planProduct.product.name}}</label>
               </div>
-              <div class="col-md-9 d-flex align-items-end">
+              <div class="col-md-6 d-flex align-items-end">
                 <input type="number"   placeholder="{{ 'Quantitiy' | localize }}" class="form-control" name="{{'quantity-'+i}}"
                   id="{{'quantity-'+i}}" [(ngModel)]="dailyProduction.dailyProductionDetails[i].quantity" required  />
 
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-      </ng-contanier>
+
     </div>
     <!-- Note -->
     <div class="form-group row required ">

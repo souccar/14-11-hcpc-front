@@ -64,9 +64,11 @@
                 {{ "leadTime"|localize }}
               </label>
               <div class="col-md-6">
-                <input type="number" class="form-control" name="leadTime{{i}}" id="leadTime{{i}}" required min="0"
-                  oninput="validity.valid||(value='');" [(ngModel)]="materialsupplier.leadTime" #leadTimeModel="ngModel"
-                  #leadTimeEl placeholder="{{'InDays'|localize}}" />
+                <input type="number" class="form-control" name="leadTime{{i}}" id="leadTime{{i}}" required min="1"
+                 [(ngModel)]="materialsupplier.leadTime" #leadTimeModel="ngModel"
+                  #leadTimeEl placeholder="{{'InDays'|localize}}" />              
+                  <abp-validation-summary [control]="leadTimeModel" [customValidationErrors]="leadTimeValidationErrors()" [controlEl]="leadTimeEl"></abp-validation-summary>
+
               </div>
               <div class="col-md-3">
                 <button type="button" class="btn btn-outline-danger mb-1" (click)="removeMaterialSupplier(i)"><i
