@@ -19,8 +19,6 @@ import { TenantsComponent } from './tenants/tenants.component';
                     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
                     { path: 'warehouses', loadChildren: () => import('./warehouses/warehouses.module').then(m => m.WarehousesModule) },
                     { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
-
-
                     { path: 'notifications', loadChildren: () => import('../app/layout/notification/notification.module').then(m => m.NotificationModule) },
                     { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) },
                 ]
