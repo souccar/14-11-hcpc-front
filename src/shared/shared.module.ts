@@ -27,7 +27,7 @@ import { CommaNumberPipe } from './pipes/comma-number.pipe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { DateFormattedPipe } from './pipes/date-formatted.pipe';
-
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 @NgModule({
     imports: [
         TabsModule.forRoot(),
@@ -40,6 +40,7 @@ import { DateFormattedPipe } from './pipes/date-formatted.pipe';
         NgxDatatableModule,
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
+        PerfectScrollbarModule,
     ],
     declarations: [
         AbpPaginationControlsComponent,
