@@ -7,13 +7,13 @@ import { AppComponentBase } from '@shared/app-component-base';
   styleUrls: ['./page-header.component.scss']
 })
 export class PageHeaderComponent extends AppComponentBase {
+  
   displayOptionsCollapsed = false;
 
   @Input() title = "Unknown";
   @Input() showOrderBy = true;
   @Input() showSearch = true;
   @Input() showItemsPerPage = true;
-  @Input() selectAllState = '';
   @Input() pageSize = 10;
   @Input() itemOptionsPerPage = [10, 50, 100];
   @Input() itemOrder ;
