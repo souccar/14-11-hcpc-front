@@ -27,6 +27,7 @@ import { CommaNumberPipe } from './pipes/comma-number.pipe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { DateFormattedPipe } from './pipes/date-formatted.pipe';
+import { BtSortableHeader } from './directives/bt-sortable-header.directive';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import { DateFormattedPipe } from './pipes/date-formatted.pipe';
         SummaryPipe,
         CommaNumberPipe,
         SafeHtmlPipe,
-        DateFormattedPipe
+        DateFormattedPipe,
+        BtSortableHeader
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -68,7 +70,8 @@ import { DateFormattedPipe } from './pipes/date-formatted.pipe';
         NgxDatatableModule,
         SummaryPipe,
         SafeHtmlPipe,
-        DateFormattedPipe
+        DateFormattedPipe,
+        BtSortableHeader
     ]
 })
 export class SharedModule {

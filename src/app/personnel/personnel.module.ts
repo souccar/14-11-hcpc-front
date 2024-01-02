@@ -29,10 +29,11 @@ import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
     LayoutModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
-    PaginationModule.forRoot(),
+    
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    PersonnelRoutingModule
+    PersonnelRoutingModule,
+    
   ],
   providers:[
     EmployeeServiceProxy,
