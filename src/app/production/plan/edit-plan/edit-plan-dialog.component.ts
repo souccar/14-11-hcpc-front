@@ -48,11 +48,11 @@ export class EditPlanDialogComponent extends AppComponentBase {
 
   save(): void {
 
-    
+
     this.plan.startDate = this.startDate.toLocaleString();
 
     if (this.plan.planProducts.length < 1) {
-      this.notify.error(this.l('Add One Plan Product at least'));
+      this.notify.error(this.l('AddOnePlanProductAtLeast'));
     }
     else{
       this.saving = true;

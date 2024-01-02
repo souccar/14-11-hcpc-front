@@ -85,7 +85,7 @@ export class EditProductDialogComponent extends AppComponentBase {
 
 
     if (this.product.formulas.length < 1) {
-      this.notify.error(this.l('Add One formula at least'));
+      this.notify.error(this.l('AddOneFormulaAtLeast'));
     }
     else {
       if(this.product.name && this.product.name){
