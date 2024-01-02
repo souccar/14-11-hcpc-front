@@ -26,7 +26,7 @@ import { ComponentsModule } from './@components/components.module';
 import { ProductionModule } from './production/production.module';
 import { SettingsModule } from './settings/settings.module';
 import { WarehousesModule } from './warehouses/warehouses.module';
-import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { SecurityModule } from './security/security.module';import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PersonnelModule } from './personnel/personnel.module';// notification
 import {NotificationModule} from './layout/notification/notification.module'
 
@@ -66,6 +66,7 @@ import {NotificationModule} from './layout/notification/notification.module'
     ProductionModule,
     NotificationModule,
     SettingsModule,
+    SecurityModule,
     WarehousesModule,
     PersonnelModule
   ],
