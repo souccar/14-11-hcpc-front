@@ -28,7 +28,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { DateFormattedPipe } from './pipes/date-formatted.pipe';
 import { BtSortableHeader } from './directives/bt-sortable-header.directive';
-
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 @NgModule({
     imports: [
         TabsModule.forRoot(),
@@ -41,6 +41,7 @@ import { BtSortableHeader } from './directives/bt-sortable-header.directive';
         NgxDatatableModule,
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
+        PerfectScrollbarModule,
     ],
     declarations: [
         AbpPaginationControlsComponent,

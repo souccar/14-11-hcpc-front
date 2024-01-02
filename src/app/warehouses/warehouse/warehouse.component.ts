@@ -8,6 +8,7 @@ import { CreateWarehouseDto, UnitDto, UnitServiceProxy, WarehouseDto, WarehouseD
 import { finalize } from 'rxjs';
 import { forEach } from 'lodash-es';
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import { ViewWarehouseDialogComponent } from './view-warehouse/view-warehouse-dialog.component';
 
 @Component({
   selector: 'warehouse',
@@ -31,8 +32,8 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   itemOrder = { label: this.l("Name"), value: "name" };
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
-  
-   
+
+
   ];
   selectedCount = 0;
   isActive: boolean | null = true;
@@ -47,7 +48,7 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   constructor(    injector: Injector,
     private _modalService: BsModalService,
     private _warehouseService:WarehouseServiceProxy,
- 
+
     ) {
     super(injector);
   }
@@ -56,29 +57,29 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
 
-    
+
   }
 
- 
 
 
 
-//   viewButton(id:number)
-// {
-//   this._modalService.show(
-//     ViewWarehouseDialogComponent,
-//     {
-//       backdrop: true,
-//       ignoreBackdropClick: true,
-//       initialState: {
-//         id: id,
-//       },
-//     }
-//   );
 
-// }
+  viewButton(id:number)
+{
+  this._modalService.show(
+    ViewWarehouseDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      initialState: {
+        id: id,
+      },
+    }
+  );
 
-  
+}
+
+
   editButton(id:number): void {
     let editWarehouseDialog: BsModalRef;
         editWarehouseDialog = this._modalService.show(
@@ -95,18 +96,18 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
       editWarehouseDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-   
+
 
     }
 
     protected delete(entity: WarehouseDto): void {
-    
+
       abp.message.confirm(
         this.l('WarehouseDeleteWarningMessage', this.selected.length, ' Warehouses'),
         undefined,
         (result: boolean) => {
           if (result) {
-           
+
             this._warehouseService.delete(entity.id).subscribe((recponce) => {
               abp.notify.success(this.l('SuccessfullyDeleted'));
               this.refresh();
@@ -127,7 +128,7 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
       request.maxResultCount = this.itemsPerPage;
       this.list(request, this.pageNumber, () => { });
 
-    
+
     }
   deleteItem(): void {
     if (this.selected.length == 0) {
@@ -172,11 +173,11 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   }
 
   isSelected(p: WarehouseDto): boolean {
-  
+
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
   onSelect(item: WarehouseDto): void {
-  
+
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -205,7 +206,7 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
         })
       )
       .subscribe((result: WarehouseDtoPagedResultDto) => {
-        
+
         this.data = result.items;
 
         this.totalItem = result.totalCount;
@@ -213,8 +214,8 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
         });
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
-     
-       
+
+
       });
   }
 
@@ -255,7 +256,7 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  
+
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

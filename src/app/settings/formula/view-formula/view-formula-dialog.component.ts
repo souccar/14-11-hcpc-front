@@ -12,6 +12,7 @@ export class ViewFormulaDialogComponent implements OnInit {
   units: UnitDto[] = [];
   data: FormulaDto[] = [];
 
+
   @Input() productId: number;
   constructor(public bsModalRef: BsModalRef,
     private _materialService: MaterialServiceProxy,

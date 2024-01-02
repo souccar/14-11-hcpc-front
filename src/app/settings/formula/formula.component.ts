@@ -72,6 +72,7 @@ export class FormulaComponent extends PagedListingComponentBase<FormulaDto> {
     {
       backdrop: true,
       ignoreBackdropClick: true,
+     
       // initialState: {
       //   id: id,
       // },

@@ -23,6 +23,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ViewWarehouseDialogComponent } from './warehouse/view-warehouse/view-warehouse-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     CreateOutputRequestMaterialDialogComponent,
     EditOutputRequestMaterialDialogComponent,
     ViewOutputRequestDialogComponent,
+    ViewWarehouseDialogComponent,
 
 
   ],

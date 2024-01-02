@@ -43,25 +43,22 @@
       <div class="separator my-5"></div>
       <div class="row">
         <div class="col-12 list">
-          <table class="table table-hover">
-            <thead>
+          <table class="table table-hover table-borderless ">
+            <thead class="border-bottom">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">{{'Product'|localize}}</th>
                 <th scope="col">{{'NumberOfItems'|localize}}</th>
-                <!-- <th scope="col">Priority</th> -->
                 <th scope="col">{{'Action'|localize}}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let planProduct of plan.planProducts;let i=index; ">
-                <td></td>
-                
-                <!-- <ng-contanier *ngFor="let p of products;let pId=index"> -->
+                <td>{{i+1}}</td>
                   <td >{{planProduct.product.name}} </td>
                   <td>{{planProduct.numberOfItems}} </td>
                 <!-- </ng-contanier> -->
-                <!-- <td>{{planProduct.priority}}</td> -->
+    
 
                 <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                     (click)="edit(planProduct)">

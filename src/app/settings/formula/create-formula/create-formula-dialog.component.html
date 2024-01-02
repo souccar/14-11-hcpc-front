@@ -41,10 +41,10 @@
       </div>
       <div class="separator my-5"></div>
         <!-- tabel -->
-    <div class="row">
-      <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table table-hover">
-          <thead>
+        <div class="row">
+          <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-hover table-borderless">
+              <thead class="border-bottom">
             <tr>
               <th scope="col">#</th>
               <th scope="col">{{'Material'|localize}}</th>
@@ -53,17 +53,14 @@
             </tr>
           </thead>
           <tbody>
-
             <tr *ngFor="let formula of data;let i=index; ">
-              <td></td>
+               <td>{{i+1}}</td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
                 <td *ngIf="mId==i">{{m.name}} </td>
               </ng-contanier>
               <td>{{formula.quantity }}
                 <ng-contanier *ngFor="let u of unitsNames; let uId = index">
-                  <span *ngIf="uId == i">{{u }}</span>
-
-
+                 <span *ngIf="uId == i">{{u }}</span>
                 </ng-contanier>
               </td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
@@ -74,6 +71,10 @@
                   (click)="delete(formula)">
                   <i class="simple-icon-trash text-primary"></i>
                 </button>
+                <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"
+                (click)="view(formula)">
+                <i class="simple-icon-eye text-primary"></i>
+              </button>
               </td>
             </tr>
           </tbody>

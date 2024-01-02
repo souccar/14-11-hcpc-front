@@ -8,6 +8,11 @@
       </tr>
     </thead>
     <tbody>
+      <div class="d-flex justify-content-between">
+        <span class="text-one text-primary">{{'Material request' | localize}}:</span>&nbsp;&nbsp;&nbsp;
+        <span class="text-one text-primary d-flex justify-content-start">{{'Daily production' | localize}}:</span>
+      </div>
+
       <tr *ngFor="let item of outputRequests">
         <!-- Output request -->
         <td>
@@ -15,24 +20,27 @@
             <!-- <li><span class="text-one text-primary">{{'Material request' | localize}}:</span></li> -->
             <li>
               <span class="log-indicator align-middle mx-1"></span>
-              <span class="text-one">{{'Title' | localize}}: {{item.title}}</span>
+              &nbsp;
+              <span class="text-one">{{'Title' | localize}}: {{item.title}}.</span>
             </li>
             <li>
               <span class="log-indicator align-middle mx-1"></span>
-              <span class="text-one">{{'Request date' | localize}}: {{item.outputDate | date:'EEEE MMM dd , yyyy'}}</span>
+              &nbsp;
+              <span class="text-one">{{'RequestDate' | localize}}: {{item.outputDate | date:'EEEE MMM dd , yyyy'}}.</span>
             </li>
             <li>
               <span class="log-indicator align-middle mx-1"></span>
+              &nbsp;
               <span class="text-one">{{'Products' | localize}}:</span>
               <div class="ml-3 d-flex justify-content-start" *ngFor="let requestProduct of item.outputRequestProducts">
                 <span class="font-weight-medium mx-1">{{requestProduct.product?.name}} / </span>
-                <span class="font-weight-medium mx-1">{{'Can produce' | localize}}: {{requestProduct.canProduce}}</span>
+                <span class="font-weight-medium mx-1">{{'Can produce' | localize}}: {{requestProduct.canProduce}}.</span>
               </div>
             </li>
-            
+
           </ul>
         </td>
-        
+
         <!-- Daily production -->
         <td>
           <ul class="list-unstyled">
@@ -40,27 +48,30 @@
             <ng-container *ngFor="let dailyProduction of item.dailyProductions">
               <li>
                 <span class="log-indicator align-middle mx-1"></span>
-                <span class="text-one">{{'Date' | localize}}: {{dailyProduction.creationTime | date:'EEEE MMM dd , yyyy'}}</span>
+                &nbsp;
+                <span class="text-one">{{'Date' | localize}}: {{dailyProduction.creationTime | date:'EEEE MMM dd , yyyy'}}.</span>
               </li>
               <li>
                 <span class="log-indicator align-middle mx-1"></span>
+                &nbsp;
                 <span class="text-one">{{'Products' | localize}}:</span>
                 <div class="ml-3 d-flex justify-content-start" *ngFor="let dailyProductionDetail of dailyProduction.dailyProductionDetails">
                   <span class="font-weight-medium mx-1">{{dailyProductionDetail.product?.name}} / </span>
-                  <span class="font-weight-medium mx-1">{{'The number produced' | localize}}: {{dailyProductionDetail.quantity}}</span>
+                  <span class="font-weight-medium mx-1">{{'The number produced' | localize}}: {{dailyProductionDetail.quantity}}.</span>
                 </div>
               </li>
               <li>
                 <span class="log-indicator align-middle mx-1"></span>
+                &nbsp;
                 <span class="text-one">{{'Notes' | localize}}: </span>
               </li>
             </ng-container>
-            
-            
+
+
           </ul>
         </td>
         <td>
-          
+
         </td>
       </tr>
     </tbody>

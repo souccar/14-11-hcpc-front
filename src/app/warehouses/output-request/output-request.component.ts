@@ -41,14 +41,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   tooltipData = {
     changeStatus:"change Status"
   };
-
-
-
-
-
-
-  // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
-
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _OutputRequestService: OutputRequestServiceProxy,
@@ -59,7 +51,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   }
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
-
   }
   viewButton(id: number) {
     this._modalService.show(
@@ -72,16 +63,15 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
         },
       }
     );
-
   }
   editButton(id: number): void {
     this._router.navigate(['app/warehouses/editOutputRequest',id])
-
-
   }
+checkDate(row:OutputRequestDto){
+  console.log(row.outputDate.year())
 
+}
   protected delete(entity: OutputRequestDto): void {
-
     abp.message.confirm(
       this.l('OutputRequestDeleteWarningMessage', this.selected.length, ' OutputRequests'),
       undefined,
@@ -186,13 +176,9 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   onchangeStatusToInProduction(id:number)
 {
     this._OutputRequestService.changeStatus(1,id).subscribe((result)=>{
-
       this.notify.info(this.l('changeSuccessfully'));
       this.bsModalRef.hide();
       location.reload();
-
-
-
     })
 
 }

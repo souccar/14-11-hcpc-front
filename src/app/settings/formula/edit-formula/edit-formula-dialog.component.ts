@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ViewMaterialDialogComponent } from '@app/settings/material/view-material/view-material-dialog.component';
 import { AppComponentBase } from '@shared/app-component-base';
 import { FormulaDto, FormulaServiceProxy, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductNameForDropdownDto, ProductServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy, UpdateFormulaDto, UpdateProductDto } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -31,6 +32,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
     private _unitService: UnitServiceProxy,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
+    private _modalService: BsModalService,
     private _route:ActivatedRoute
 
   ) {
@@ -115,7 +117,20 @@ export class EditFormulaDialogComponent extends AppComponentBase {
 
   }
 
+  view(row: FormulaDto) {
+    this._modalService.show(
+      ViewMaterialDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: row.materialId ,
+        },
+        class: 'modal-lg',
+      }
+    );
 
+  }
   delete(row: FormulaDto) {
     const index = this.data.indexOf(row);
 

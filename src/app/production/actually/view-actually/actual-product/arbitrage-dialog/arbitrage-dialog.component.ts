@@ -12,10 +12,10 @@ export class ArbitrageDialogComponent extends AppComponentBase {
   planProduct: PlanProductDto;
 
   tooltipData = {
-    amountWasted:'قيمة المبلغ المهدور من عملية الإنتاج',
-    produceCost:'تكلفة العبوات المنتجة حتى اليوم',
-    totalSalesAmount:'مبلغ المبيع الإجمالي حسب عدد العبوات المنتجة',
-    productArbitrage:'موازنة المنتج',
+    amountWasted:this.l('TheValueOfTheAmountWastedFromTheProductionProcess'),
+    produceCost:this.l('CostOfPackagingProducedToDate') ,
+    totalSalesAmount:this.l('TotalSalesAmountAccordingToTheNumberOfPackagesProduced ') ,
+    productArbitrage:this.l('ProductBalancing'),
   };
 
   constructor(injector: Injector,public bsModalRef:BsModalRef){

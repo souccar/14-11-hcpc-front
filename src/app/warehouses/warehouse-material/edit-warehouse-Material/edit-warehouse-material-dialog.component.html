@@ -40,7 +40,7 @@
       </div>
       <div class="form-group row required">
         <label class="col-md-3 col-form-label" for="code">
-          {{ "Code" | localize }}
+          {{ "WarehouseCode" | localize }}
         </label>
         <div class="col-md-9 ">
           <input type="text" class="form-control" name="code" id="code" required
@@ -88,7 +88,7 @@
         <div class="col-md-4">
           <input type="number" class="form-control" name="quantity" id="quantity" required min="0"
             [(ngModel)]="warehouseMaterial.initialQuantity" #quantityModel="ngModel" #quantityEl   />
-          <abp-validation-summary [control]="quantityModel" [controlEl]="quantityEl"></abp-validation-summary>
+            <abp-validation-summary [control]="quantityModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="quantityEl"></abp-validation-summary>
         </div>
         <label class="col-md-1 col-form-label" for="unit">
           {{ "Unit"|localize  }}
@@ -108,7 +108,7 @@
           {{ "Price"|localize  }}
         </label>
         <div class="col-md-9">
-          <input type="number" class="form-control"  min="1" name="price" id="price" required 
+          <input type="number" class="form-control"  min="1" name="price" id="price" required
             [(ngModel)]="warehouseMaterial.price" #priceModel="ngModel" #priceEl   />
           <abp-validation-summary [customValidationErrors]="priceValidationErrors()" [control]="priceModel" [controlEl]="priceEl"></abp-validation-summary>
         </div>

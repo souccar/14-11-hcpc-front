@@ -48,9 +48,14 @@ export class EditTransferDialogComponent extends AppComponentBase {
    });
    }
    save(): void {
-    this.saving = true;
-    this._transferService
-      .update(
+    if(this.transfer.fromId==this.transfer.toId)
+    {
+      this.notify.error(this.l('ChooseDifferentUnits'));
+    }
+    else {
+      this.saving = true;
+      this._transferService.
+      create(
         this.transfer
       )
       .pipe(
@@ -58,13 +63,14 @@ export class EditTransferDialogComponent extends AppComponentBase {
           this.saving = false;
         })
       )
-      .subscribe((response:any) => {
-       
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();
-      });
+      .subscribe((response: any) => {
 
+         (response);
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.bsModalRef.hide();
+        this.onSave.emit();
+      });
+    }
   }
 
 }

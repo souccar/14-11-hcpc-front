@@ -19,10 +19,6 @@ export class ViewWarehouseMaterialDialogComponent {
 
   constructor(
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
-    private _unitService: UnitServiceProxy,
-    private _materialService: MaterialServiceProxy,
-    private _warehouseService: WarehouseServiceProxy ,
-    private _supplierService: SupplierServiceProxy ,
     public bsModalRef: BsModalRef,
 
   ) {
