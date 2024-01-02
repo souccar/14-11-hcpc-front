@@ -5709,6 +5709,7 @@ export class SupplierServiceProxy {
     }
 
     protected processCreate(response: HttpResponseBase): Observable<SupplierDto> {
+        
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -5724,7 +5725,7 @@ export class SupplierServiceProxy {
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
         return _observableOf(null as any);
@@ -19161,6 +19162,7 @@ export class ApiException extends Error {
 }
 
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
+    debugger;
     if (result !== null && result !== undefined)
         return _observableThrow(result);
     else

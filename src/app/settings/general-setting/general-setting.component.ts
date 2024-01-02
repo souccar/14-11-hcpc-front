@@ -27,10 +27,6 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
-  itemOrder = { label: this.l("Name"), value: "name" };
-  itemOptionsOrders = [
-    { label: this.l("Name"), value: "name" },
-  ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
@@ -44,31 +40,9 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
     ) {
     super(injector);
   }
-
-
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
   }
-// getFromUnitName(){
-// this._unitService.getNameForDropdown().subscribe
-// }
-
-  viewButton(id:number)
-{
-  // this._modalService.show(
-  //   ViewGeneralSettingDialogComponent,
-  //   {
-  //     backdrop: true,
-  //     ignoreBackdropClick: true,
-  //     initialState: {
-  //       id: id,
-  //     },
-  //   }
-  // );
-
-}
-
-
   editButton(id:number): void {
     let editGeneralSettingDialog: BsModalRef;
         editGeneralSettingDialog = this._modalService.show(
@@ -85,10 +59,7 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
       editGeneralSettingDialog.content.onSave.subscribe(() => {
         this.refresh();
       });
-
-
     }
-
     protected delete(entity: GeneralSettingDto): void {
 
       abp.message.confirm(
@@ -117,47 +88,23 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
       request.maxResultCount = this.itemsPerPage;
       this.list(request, this.pageNumber, () => { });
     }
-  deleteItem(): void {
-    if (this.selected.length == 0) {
-      abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
-    }
-    else {
-      abp.message.confirm(
-        this.l('GeneralSettingDeleteWarningMessage', this.selected.length, 'GeneralSettings'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-            this.selected.forEach(element => {
-              this._GeneralSettingService.delete(element.id).subscribe(() => {
-                abp.notify.success(this.l('SuccessfullyDeleted'));
-                this.refresh();
-              });
-            });
-          }
-        }
-      );
-    }
-  }
 
-  changeDisplayMode(mode): void {
-    this.displayMode = mode;
-  }
 
-  showAddNewModal(): void {
-    let createOrEditGeneralSettingDialog: BsModalRef;
-    createOrEditGeneralSettingDialog = this._modalService.show(
-      CreateGeneralSettingDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        class: 'modal-lg',
+  // showAddNewModal(): void {
+  //   let createOrEditGeneralSettingDialog: BsModalRef;
+  //   createOrEditGeneralSettingDialog = this._modalService.show(
+  //     CreateGeneralSettingDialogComponent,
+  //     {
+  //       backdrop: true,
+  //       ignoreBackdropClick: true,
+  //       class: 'modal-lg',
 
-      }
-    );
-    createOrEditGeneralSettingDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
-  }
+  //     }
+  //   );
+  //   createOrEditGeneralSettingDialog.content.onSave.subscribe(() => {
+  //     this.refresh();
+  //   });
+  // }
 
   isSelected(p: GeneralSettingDto): boolean {
 
@@ -170,7 +117,6 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
     } else {
       this.selected.push(item);
     }
-    this.setSelectAllState();
   }
   protected list(
     request: PagedProductsRequestDto,
@@ -198,48 +144,9 @@ export class GeneralSettingComponent extends PagedListingComponentBase<GeneralSe
 
         this.totalItem = result.totalCount;
         this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
+       
       });
   }
-
-
-  setSelectAllState(): void {
-    if (this.selected.length === this.data.length) {
-      this.selectAllState = 'checked';
-    } else if (this.selected.length !== 0) {
-      this.selectAllState = 'indeterminate';
-    } else {
-      this.selectAllState = '';
-    }
-  }
-
-  selectAllChange($event): void {
-    if ($event.target.checked) {
-      this.selected = [...this.data];
-    } else {
-      this.selected = [];
-    }
-    this.setSelectAllState();
-  }
-
-  pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
-  }
-
-  itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy);
-  }
-
-  changeOrderBy(item: any): void {
-    this.loadData(this.itemsPerPage, 1, this.search, item.value);
-  }
-
-  searchKeyUp(event): void {
-    const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy);
-  }
-
-
 }
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;

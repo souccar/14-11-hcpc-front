@@ -68,14 +68,14 @@
         class="text-success glyph-icon simple-icon-check mt-2 mr-1"
         data-bs-toggle="tooltip"
         data-bs-placement="right"
-        title="Plan Can Produce"
+        title="{{'PlanCanProduce'|localize}}"
       ></i>
       <i
         *ngIf="!plan.lack"
         class="text-danger glyph-icon simple-icon-close mt-2 mr-1"
         data-bs-toggle="tooltip"
         data-bs-placement="right"
-        title=" Plan Can't Produce"
+        title="{{'PlanCanNotProduce'|localize}}"
       ></i>
 
       <app-heading title="{{ plan.title }}"></app-heading>
@@ -87,7 +87,7 @@
         class="d-flex justify-content-center"
         data-bs-toggle="tooltip"
         data-bs-placement="top"
-        title="Start Date"
+        title="{{'StartDate'|localize}}"
       >
         <i class="glyph-icon iconsminds-calendar-4"> </i>
         <span class="mt-2 text-one">{{
@@ -104,7 +104,7 @@
         class="d-flex justify-content-center"
         data-bs-toggle="tooltip"
         data-bs-placement="top"
-        title="Duration"
+        title="{{'Duration'|localize}}"
       >
         <span class="mt-2 text-one"> {{ plan.duration }} {{'Day'|localize}}</span>
       </div>
@@ -124,11 +124,9 @@
   </div>
 </div>
 
-<div
-  class="text-center pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column"
-  *ngIf="plan == undefined || plan.id == 0">
-  <p>There is no plan, please add a new plan</p>
-  <a class="btn btn-link btn-empty btn-lg" href="/app/plan/displayAllPlan"
-    >Go to Plan List <i class="simple-icon-arrow-right"></i
-  ></a>
+<div *ngIf="plan.id==0||plan==undefined"
+  class="text-center pt-5 pb-5 d-flex flex-lg-column align-items-center flex-md-row flex-sm-row flex-column">
+  <p>{{'ThereIsNoPlan,PleaseAddANewOne'|localize}}</p>
+  <a class="btn btn-link btn-empty btn-lg" href="/app/production/displayAllPlan">{{'GoToPlanList'|localize}} <i
+      class="simple-icon-arrow-right"></i></a>
 </div>

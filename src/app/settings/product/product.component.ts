@@ -68,7 +68,7 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
         initialState: {
           id: id,
         },
-        class: 'modal-xl',
+        class: 'modal-lg',
       }
     );
 
