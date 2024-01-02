@@ -65,7 +65,7 @@ export class RoleComponent extends PagedListingComponentBase<RoleDto>  implement
   }
 
   editButton(id: number): void {
-    this._router.navigate(['app/settings/editproduct',id]);
+    this._router.navigate(['app/security/editRole',id]);
   }
 
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {

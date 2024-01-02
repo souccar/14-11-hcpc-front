@@ -4,6 +4,7 @@ import { SecurityComponent } from './security.component';
 import { RoleComponent } from './role/role.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { CreateRoleComponent } from './role/create-role/create-role.component';
+import { EditRoleComponent } from './role/edit-role/edit-role.component';
 
 
 
@@ -13,14 +14,18 @@ const routes: Routes = [{
     {
       path: 'role',
       component: RoleComponent,
-
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard],
     },
     {
       path: 'newRole',
       component: CreateRoleComponent,
-
+      //data: { permission : 'Pages.Products' },
+      canActivate: [AppRouteGuard]
+    },
+    {
+      path: 'editRole/:id',
+      component: EditRoleComponent,
       //data: { permission : 'Pages.Products' },
       canActivate: [AppRouteGuard]
     }

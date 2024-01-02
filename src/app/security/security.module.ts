@@ -10,7 +10,8 @@ import { SecurityComponent } from './security.component';
 import { SecurityRoutingModule } from './security-routing.module';
 import { CreateRoleComponent } from './role/create-role/create-role.component';
 import { ViewRoleComponent } from './role/view-role/view-role.component';
-
+import { TreeviewModule } from 'ngx-treeview';
+import { EditRoleComponent } from './role/edit-role/edit-role.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ViewRoleComponent } from './role/view-role/view-role.component';
     SecurityComponent,
     RoleComponent,
     CreateRoleComponent,
-    ViewRoleComponent
+    ViewRoleComponent,
+    EditRoleComponent
   ],
   imports: [
     AccordionModule.forRoot(),
@@ -27,8 +29,9 @@ import { ViewRoleComponent } from './role/view-role/view-role.component';
     ReactiveFormsModule,
     LayoutModule,
     PaginationModule.forRoot(),
+    TreeviewModule.forRoot(),
     CommonModule,
-    SecurityRoutingModule
+    SecurityRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

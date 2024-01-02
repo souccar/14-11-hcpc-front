@@ -1,21 +1,22 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateRoleDto, RoleServiceProxy } from '@shared/service-proxies/service-proxies';
+import { PermissionDtoListResultDto, RoleDto, RoleServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { finalize } from 'rxjs';
-import { Location } from '@angular/common';
-import { PermissionDtoListResultDto } from './../../../../shared/service-proxies/service-proxies';
 import { TreeviewConfig, TreeviewItem } from 'ngx-treeview';
+import { Location } from '@angular/common';
+import { finalize } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-  selector: 'create-role',
-  templateUrl: './create-role.component.html',
-  styleUrls: ['./create-role.component.scss']
+  selector: 'edit-role',
+  templateUrl: './edit-role.component.html',
+  styleUrls: ['./edit-role.component.scss']
 })
-export class CreateRoleComponent extends AppComponentBase implements OnInit {
+export class EditRoleComponent extends AppComponentBase implements OnInit {
   saving = false;
+  id:number
   permissions: PermissionDtoListResultDto = new PermissionDtoListResultDto();
-  role: CreateRoleDto = new CreateRoleDto();
+  role: RoleDto = new RoleDto();
   tempRoles: string[] = [];
   items: TreeviewItem[] = [];
   config = TreeviewConfig.create({
@@ -26,17 +27,28 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
     maxHeight: 300,
   });
 
-
   constructor(injector: Injector,
     private _roleService: RoleServiceProxy,
     public bsModalRef: BsModalRef,
-    private _location: Location
+    private _location: Location,
+    private _route:ActivatedRoute
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
-    this.initialPermissions();
+    this._route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+    });
+    this.initialRole(this.id);    
+  }
+
+  initialRole(id){
+    this._roleService.get(id)
+    .subscribe((result)=>{
+      this.role = result;
+      this.initialPermissions();
+    })
   }
 
   initialPermissions() {
@@ -97,7 +109,19 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
           })
         );
       }
+    });     
+    
+    this.role.grantedPermissions.forEach((element)=>{
+      let parent = this.items[0].children.find(x=>x.children.find(y=>y.value.toString() == element.toString()));
+      parent.children.find(q=>q.value.toString() == element.toString()).checked = true;      
+    });
+    
+    this.items[0].children.forEach((element)=>{
+      if (element.children.every(a=>a.checked == true)) {
+        element.checked = true;
+      }
     })
+
   }
 
   backToAllroles() {
@@ -105,10 +129,12 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
   }
 
   save(): void {
-    this.role.grantedPermissions = this.tempRoles;
+    if(this.tempRoles.length != 0){
+      this.role.grantedPermissions = this.tempRoles;
+    }
     this.saving = true;
     this._roleService
-      .create(
+      .update(
         this.role
       )
       .pipe(
