@@ -37,10 +37,10 @@ $shadow-blurs-bottom: 3 6 6 5 6;
 $shadow-opacities-bottom: 0.1 0.3 0.6 0.7 0.8;
 
 $logo-path: "assets/img/logo/logo-dark.svg";
-$logo-path-mobile: "../../logos/ahc-logo.svg";
+$logo-path-mobile:"assets/img/logo/logo-dark.svg";
 
-$lp-logo-path-pinned: "../../logos/ahc-logo.svg";
-$lp-logo-path: "../../logos/ahc-logo.svg";
+$lp-logo-path-pinned: "assets/img/logo/logo-dark.svg";
+$lp-logo-path: "assets/img/logo/logo-dark.svg";
 
 @import "../_mixins.scss";
 @import "../_vien.style.scss";
