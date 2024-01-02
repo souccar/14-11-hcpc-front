@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ChartService } from '@app/@components/charts/chart.service';
 import { Colors } from '@app/@components/charts/color.service';
 import { PlanDto, PlanMaterialDto, PlanProductDto, PlanServiceProxy, ProductDto } from '@shared/service-proxies/service-proxies';
@@ -6,28 +6,31 @@ import { forEach } from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ArbitrageDialogComponent } from './arbitrage-dialog/arbitrage-dialog.component';
 import { MaterialDetailsComponent } from '@app/settings/material/material-details/material-details.component';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-actual-product',
   templateUrl: './actual-product.component.html',
 
 })
-export class ActualProductComponent implements OnInit{
+export class ActualProductComponent  extends AppComponentBase implements OnInit{
 
   @Input() planProducts: PlanProductDto[];
   chartDataConfig: ChartService;
   productionPercent: number;
   tooltipData = {
-    requiredQuantity: 'العدد المطلوب انتاجه',
-    canProduce: 'العدد الممكن إنتاجه حسب كميات المواد الموجودة في المستودعات',
-    totalProduction: 'العدد الذي تم إنتاجه حتى اليوم',
-    cost: 'تكلفة إنتاج عبوة واحدة / تكلفة إنتاج العدد الممكن إنتاجه',
-    price: 'مبلغ المبيع الإجمالي حسب عدد العبوات المنتجة / سعر المنتج',
-    productArbitrage:'موازنة المنتج'
+    requiredQuantity: this.l('TheNumberRequiredToBeProduced'),
+    canProduce: this.l('TheNumberThatCanBeProducedAccordingToTheQuantitiesOfMaterialsPresentInTheWarehouses'),
+    totalProduction: this.l('NumberProducedSoFar'),
+    cost:this.l('TheCostOfProducingOnePackage/TheCostOfProducingTheNumberThatCanBeProduced') ,
+    price: this.l('TotalSalesAmountAccordingToTheNumberOfPackagesProduced/ProductPrice'),
+    productArbitrage:this.l('ProductBalancing')
   }
   constructor(private chartService: ChartService
     ,private _planService:PlanServiceProxy,
-    private _modalService: BsModalService,) {
+    private _modalService: BsModalService,
+    injector: Injector, ) {
+      super(injector);
     this.chartDataConfig = this.chartService;
   }
   ngOnInit(): void {
@@ -74,7 +77,7 @@ export class ActualProductComponent implements OnInit{
       labels: materials,
       datasets: [
         {
-          label: 'RequiedQuantity',
+          label:this.l('RequiedQuantity') ,
           borderColor: Colors.getColors().themeColor1,
           backgroundColor: Colors.getColors().themeColor1_10,
           data: data,

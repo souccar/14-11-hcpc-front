@@ -62,6 +62,7 @@ export class EditActuallyDialogComponent extends AppComponentBase {
   initDailyProduction(id: number) {    
     this._dailyProductionService.get(id).subscribe((result) => {
       this.dailyProduction.id = result.id;
+      this.dailyProduction.note = result.dailyProductionNotes[0].note;
       this.dailyProduction.planId = result.planId;
       this.dailyProduction.outputRequestId = result.outputRequestId;
       this.dailyProductionDetails =result.dailyProductionDetails;
@@ -72,7 +73,6 @@ export class EditActuallyDialogComponent extends AppComponentBase {
       }
       this.outputRequests = plan.outputRequests;
       this.getPlanOutputRequests(result.planId);
-
     });
   }
   onSelectPlan(planId: number) {

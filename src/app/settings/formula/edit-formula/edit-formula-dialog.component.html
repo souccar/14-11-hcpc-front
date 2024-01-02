@@ -18,7 +18,7 @@
           <div class="col-md-3">
             <label form="quantity">{{'quantity'|localize}}</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required
-              [(ngModel)]="formula.quantity" #quantityModel="ngModel" #quantityEl />
+              [(ngModel)]="formula.quantity" #quantityModel="ngModel" min="0" #quantityEl />
 
           </div>
           <div class="col-md-3">
@@ -43,8 +43,8 @@
     <!-- tabel -->
     <div class="row">
       <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table table-hover">
-          <thead>
+        <table class="table table-hover table-borderless">
+          <thead class="border-bottom">
             <tr>
               <th scope="col">#</th>
               <th scope="col">{{'Material'|localize}}</th>
@@ -54,7 +54,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let formula of data;let i=index; ">
-              <td></td>
+              <td>{{i+1}}</td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
                 <td *ngIf="mId==i"> {{m.name}} </td>
               </ng-contanier>
@@ -71,6 +71,10 @@
                 <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"
                   (click)="delete(formula)">
                   <i class="simple-icon-trash text-primary"></i>
+                </button>
+                <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"
+                (click)="view(formula)">
+                <i class="simple-icon-eye text-primary"></i>
                 </button>
               </td>
             </tr>

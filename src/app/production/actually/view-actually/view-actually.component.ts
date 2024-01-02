@@ -10,8 +10,6 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 
 })
 export class ViewActuallyComponent implements OnInit {
-
-
   canProduce:boolean=false;
   plan:PlanDto=new PlanDto();
   changeStatus=false;

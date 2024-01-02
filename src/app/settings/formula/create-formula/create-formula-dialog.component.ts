@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateFormulaDto, FormulaDto, FormulaServiceProxy, MaterialNameForDropdownDto, MaterialServiceProxy, ProductNameForDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
+import { ViewFormulaDialogComponent } from '../view-formula/view-formula-dialog.component';
+import { ViewMaterialDialogComponent } from '@app/settings/material/view-material/view-material-dialog.component';
 
 
 @Component({
@@ -37,7 +39,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
     private _unitService: UnitServiceProxy,
-    private _productService: ProductServiceProxy,
+    private _modalService: BsModalService,
     public bsModalRef: BsModalRef,
 
 
@@ -110,16 +112,25 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
 
   edit(row: FormulaDto) {
     this.formula = row
-
     const index = this.data.indexOf(row);
-
     if (index !== -1) {
       this.data.splice(index, 1);
       this.unitsNames.splice(index, 1);
       this.materials.splice(index, 1);
     }
-
-
+  }
+  view(row: FormulaDto) {
+    this._modalService.show(
+      ViewMaterialDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          id: row.materialId ,
+        },
+        class: 'modal-lg',
+      }
+    );
   }
 
   delete(row: FormulaDto) {

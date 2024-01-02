@@ -22,9 +22,9 @@ export class ActualMaterialComponent extends AppComponentBase implements OnInit 
   //Table
   rows = [];
   columns = [
-    { name: 'Title' },
-    { name: 'TotalQuantity' },
-    { name: 'Inventory' },
+    { name:  this.l('Title') },
+    { name:this.l('TotalQuantity')  },
+    { name: this.l('TotalQuantity') },
   ];
   columnMode = ColumnMode;
 
@@ -79,7 +79,7 @@ export class ActualMaterialComponent extends AppComponentBase implements OnInit 
     return {
       datasets: [
         {
-          label: 'Actual',
+          label: this.l('Actually'),
           borderWidth: 2,
           pointBackgroundColor: Colors.getColors().themeColor1,
           borderColor: Colors.getColors().themeColor1,
@@ -87,7 +87,7 @@ export class ActualMaterialComponent extends AppComponentBase implements OnInit 
           data: actualData
         },
         {
-          label: 'Inventory',
+          label: this.l('Inventory'),
           borderWidth: 2,
           pointBackgroundColor: Colors.getColors().themeColor3,
           borderColor: Colors.getColors().themeColor3,

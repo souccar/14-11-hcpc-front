@@ -35,11 +35,11 @@
         prop="material"
         [flexGrow]="1"
       >
-        <ng-template let-row="row" ngx-datatable-cell-template>
+        <ng-template let-row="row" ngx-datatable-cell-template >
           {{ row.material?.name }}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="l('Code')" prop="code" [flexGrow]="1">
+      <ngx-datatable-column [name]="l('WarehouseCode')" prop="WarehouseCode" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.code }}
         </ng-template>
