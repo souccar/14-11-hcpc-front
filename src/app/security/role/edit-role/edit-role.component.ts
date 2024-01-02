@@ -117,10 +117,14 @@ export class EditRoleComponent extends AppComponentBase implements OnInit {
     });
     
     this.items[0].children.forEach((element)=>{
+      
       if (element.children.every(a=>a.checked == true)) {
         element.checked = true;
       }
-    })
+    });
+    if(this.items[0].children.every(a=>a.checked == true)){
+      this.items[0].checked = true;
+    }
 
   }
 
