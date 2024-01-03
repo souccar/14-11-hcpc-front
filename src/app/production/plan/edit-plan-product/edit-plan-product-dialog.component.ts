@@ -78,7 +78,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
         var product = this.products.filter(x => x.id == this.planProduct.productId)[0];
         this.planProduct.product = product;
         if (this.plan.planProducts.filter(x => x.product.name == this.planProduct.product.name).length > 0) {
-          this.notify.error(this.l('Product is Already Exist'));
+          this.notify.error(this.l('ProductIsAlreadyExist'));
           return;
         }
         this.plan.planProducts.push(this.planProduct)
@@ -90,7 +90,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
       }
       else {
         if (this.plan.planProducts.filter(x => x.product.id == this.planProduct.productId).length > 0) {
-          this.notify.error(this.l('Product is Already Exist'));
+          this.notify.error(this.l('ProductIsAlreadyExist'));
           return;
         }
         let product = this.productsForDropDown.filter(x => x.id == this.planProduct.productId)[0];

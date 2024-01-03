@@ -53,25 +53,14 @@ export class EditMaterialDialogComponent extends AppComponentBase {
       this.material.name=result.name;
       this.material.code=result.code;
       this.material.description=result.description;
-
      result.suppliers.forEach((item)=>{
       let supplier =new UpdateMaterialSuppliersDto();
       supplier.id=item.id,
       supplier.supplierId=item.supplier.id
       supplier.leadTime=item.leadTime
-
       this.material.suppliers.push(supplier)
-      // this.supplierIds.push(item.supplier.id)
+
      });
-
-
-
-    // var materialSuppliers : UpdateMaterialSuppliersDto[] = [];
-    // result.suppliers.forEach(item=>{
-    //   var updateMaterialSupplier = new UpdateMaterialSuppliersDto();
-    //   updateMaterialSupplier.init({supplierId: item.supplier.id, id: item.id,leadTime:item.leadTime});
-    //   materialSuppliers.push(updateMaterialSupplier);
-    // });
    });
    }
 
@@ -91,7 +80,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
         this.material.suppliers.push(materialSupplier);
       }
     }
-    //if the list empty 
+    //if the list empty
     else
     {
       let materialSupplier = new UpdateMaterialSuppliersDto();
@@ -135,7 +124,7 @@ export class EditMaterialDialogComponent extends AppComponentBase {
     this.saving = true;
 
 
-   
+
   }
 
 }

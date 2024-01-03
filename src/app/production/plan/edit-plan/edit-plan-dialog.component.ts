@@ -48,7 +48,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
 
   save(): void {
 
-    
+
     this.plan.startDate = this.startDate.toLocaleString();
 
     if (this.plan.planProducts.length < 1) {

@@ -58,7 +58,7 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
     }
     else{
       if(this.data.filter(x=>x.productId ==this.planProduct.productId).length >0){
-        this.notify.error(this.l('Product is Already Exist'));
+        this.notify.error(this.l('ProductIsAlreadyExist'));
         return;
       }
     this.getMaterialName(this.planProduct.productId)

@@ -114,12 +114,12 @@ const data: IMenuItem[] = [
     subs: [
       {
         label: 'Role',
-        to: `${adminRoot}/security/roles`,
+        to: `${adminRoot}/security/role`,
         icon: 'iconsminds-lock-2',
       },
       {
         label: 'User',
-        to: `${adminRoot}/security/users`,
+        to: `${adminRoot}/security/user`,
         icon: 'iconsminds-business-man-woman',
       },
 

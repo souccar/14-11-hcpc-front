@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Injector, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Injector, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { IPageField } from '@app/layout/content-template/page-default/page-field';
+import { BtSortableHeader, SortEvent } from '@shared/directives/bt-sortable-header.directive';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { EmployeeDto, EmployeeDtoPagedResultDto, EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { DateParsingFlags } from 'ngx-bootstrap/chronos/create/parsing.types';
@@ -14,72 +16,49 @@ import { finalize } from 'rxjs';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> implements AfterViewInit {
-  @ViewChild('table') tableElement: ElementRef;
+
+  @ViewChildren(BtSortableHeader) headers: QueryList<BtSortableHeader>;
+
   data: EmployeeDto[] = [];
-  currentPage = 1;
-  pageSize = 10;
+  displayMode = 'table';
   search = '';
   filter = '';
   orderBy = '';
-  totalPage = 0;
   advancedFiltersVisible = false;
   title = this.l("Employee")
-  columns = [
-    { label: this.l('FirstName'),  name: 'firstName', sortable: true },
-    { label: this.l('LastName'), name: 'lastName', sortable: true },
-    { label: this.l('Age'), name: 'age', sortable: true },
-    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true },
-  ];
   fields = [
-    {name:'firstName', type:'string' },
-    {name:'lastName', type:'string' },
-    {name:'age', type:'number', template:'<span class="text-primary">$$</span>' },
-    {name:'dateOfBirth', type:'date',format:'dd MMM YYYY' },
-  ]
-  table: string = '';
+    { label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
+    { label: this.l('FirstName'), name: 'firstName', sortable: false, type: 'string' },
+    { label: this.l('LastName'), name: 'lastName', sortable: true, type: 'string' },
+    { label: this.l('Age'), name: 'age', sortable: true, type: 'number' },
+    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true, type: 'date', format: 'dd MM YYYY' },
+  ];
+
   constructor(injector: Injector,
     private _modalService: BsModalService,
-    private _renderer: Renderer2,
-    private _datePipe: DatePipe,
     private _employeeService: EmployeeServiceProxy) {
     super(injector);
   }
   ngAfterViewInit(): void {
-    
-  }
-  // ngOnInit(): void {
-  //   this.loadData(this.pageSize, this.currentPage, this.search, this.orderBy);
-  // }
 
-  getDataField(name, item) {
-    debugger;
-    var index = this.fields.findIndex(x=>x.name == name);
-    if(index != -1){
-      let value = '';
-      const field = this.fields[index];
-      if(field.type === 'date'){
-        value = this._datePipe.transform(item, field.format);
-        return value;
-      }else{
-        if(field.template){
-          return field.template.replace("$$",item);
-        }
-      }
-    }
-    return item;
   }
+
+
+  // ngOnInit(): void {
+  //   this.loadData(this.pageSize, this.pageNumber, this.search, this.orderBy);
+  // }
 
   loadData(
     pageSize: number = 10,
-    currentPage: number = 1,
+    pageNumber: number = 1,
     search: string = '',
     sortFields: string = ''): void {
     let request: PagedProductsRequestDto = new PagedProductsRequestDto();
     this.pageSize = pageSize;
-    this.currentPage = currentPage;
+    this.pageNumber = pageNumber;
     request.keyword = search;
     request.sortFields = sortFields;
-    request.skipCount = (currentPage - 1) * pageSize;
+    request.skipCount = (pageNumber - 1) * pageSize;
     request.maxResultCount = this.pageSize;
     this.list(request, this.pageNumber, () => { });
   }
@@ -97,7 +76,7 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
         request.sortFields,
         "",
         request.skipCount,
-        request.MaxResultCount,
+        request.maxResultCount,
       )
       .pipe(
         finalize(() => {
@@ -106,7 +85,8 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
       )
       .subscribe((result: EmployeeDtoPagedResultDto) => {
         this.data = result.items;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+        this.totalItems = result.totalCount;
+        this.totalPages = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
       });
   }
 
@@ -175,16 +155,17 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
     // });
   }
 
-  pageChanged(event: any): void {
-    this.loadData(this.pageSize, event.page, this.search, this.orderBy);
+  pageChanged(page: number): void {
+    this.loadData(this.pageSize, page, this.search, this.orderBy);
   }
 
   onChangePage(perPage: number): void {
     this.loadData(perPage, 1, this.search, this.orderBy);
   }
 
-  changeOrderBy(item: any): void {
-    this.loadData(this.pageSize, 1, this.search, item.value);
+  changeOrderBy(sortFields): void {
+    this.orderBy = sortFields;
+    this.loadData(this.pageSize, 1, this.search, this.orderBy);
   }
 
   searchKeyUp(event): void {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EditPlanDialogComponent } from '../edit-plan/edit-plan-dialog.component';
+import { CreatePlanDialogComponent } from '../create-plan/create-plan-dialog.component';
 
 @Component({
   selector: 'view-plan',
@@ -18,18 +19,16 @@ export class ViewPlanComponent implements OnInit{
   constructor( private _modalService: BsModalService,
     private _planService:PlanServiceProxy){}
   ngOnInit(): void {
-  this.getPendingPlans()
+  this.getPendingPlans();
 }
 
 getPendingPlans()
 {
-  // this._planService.getPendingPlans().subscribe((result)=>{
-  //   console.log(result)
-  //     this.plans = result;
+  this._planService.getPendingPlans().subscribe((result)=>{
+    console.log(result)
+      this.plans = result;
 
-  // })
-
-
+  })
 
 }
 changePlanStatusToActually(id:number){
@@ -64,4 +63,19 @@ editButton(id:number): void {
 
   }
 
+  showAddNewModal(): void {
+    let createOrEditPlanDialog: BsModalRef;
+    createOrEditPlanDialog = this._modalService.show(
+      CreatePlanDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'modal-lg',
+
+      }
+    );
+    createOrEditPlanDialog.content.onSave.subscribe(() => {
+      this.getPendingPlans();
+    });
+  }
 }

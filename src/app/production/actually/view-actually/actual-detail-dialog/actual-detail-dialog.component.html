@@ -1,19 +1,18 @@
 <abp-modal-header [title]="'DailyProduction'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
 <div class="modal-body">
   <table class="table table-sm table-striped">
+    <thead>
+      <tr>
+        <th class="text-one text-primary">{{'MaterialRequest' | localize}}</th>
+        <th class="text-one text-primary">{{'DailyProduction' | localize}}</th>
+      </tr>
+    </thead>
     <tbody>
-      <div class="d-flex justify-content-between">
-        <span class="text-one text-primary">{{'Material request' | localize}}:</span>&nbsp;&nbsp;&nbsp;
-        <span class="text-one text-primary d-flex justify-content-start">{{'Daily production' | localize}}:</span>
-      </div>
-
       <tr *ngFor="let item of outputRequests">
         <!-- Output request -->
         <td>
           <ul class="list-unstyled">
-
-            <li><span class="text-one text-primary">{{'MaterialRequest' | localize}}:</span></li>
-
+            <!-- <li><span class="text-one text-primary">{{'Material request' | localize}}:</span></li> -->
             <li>
               <span class="log-indicator align-middle mx-1"></span>
               &nbsp;
@@ -40,9 +39,7 @@
         <!-- Daily production -->
         <td>
           <ul class="list-unstyled">
-
-            <li><span class="text-one text-primary">{{'DailyProduction' | localize}}:</span></li>
-
+            <!-- <li><span class="text-one text-primary">{{'Daily production' | localize}}:</span></li> -->
             <ng-container *ngFor="let dailyProduction of item.dailyProductions">
               <li>
                 <span class="log-indicator align-middle mx-1"></span>
