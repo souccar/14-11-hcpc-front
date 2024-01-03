@@ -12,6 +12,9 @@ import { CreateRoleComponent } from './role/create-role/create-role.component';
 import { ViewRoleComponent } from './role/view-role/view-role.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { EditRoleComponent } from './role/edit-role/edit-role.component';
+import { UserComponent } from './user/user.component';
+import { CreateUserComponent } from './user/create-user/create-user.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { EditRoleComponent } from './role/edit-role/edit-role.component';
     RoleComponent,
     CreateRoleComponent,
     ViewRoleComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    UserComponent,
+    CreateUserComponent,
+    EditUserComponent
   ],
   imports: [
     AccordionModule.forRoot(),
