@@ -105,7 +105,6 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
         })
       )
       .subscribe((result: EmployeeDtoPagedResultDto) => {
-        console.log(result.items);
         this.data = result.items;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
       });

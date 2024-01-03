@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 import { CreateMaterialDto, MaterialDto, MaterialServiceProxy, SupplierDto, SupplierNameForDropdownDto, SupplierServiceProxy, UpdateMaterialDto, UpdateMaterialSuppliersDto, UpdateSupplierDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
@@ -16,6 +17,12 @@ export class EditMaterialDialogComponent extends AppComponentBase {
   suppliers: SupplierNameForDropdownDto[] = [];
   supplierIds:number[]=[]
   updateSupplier:UpdateMaterialSuppliersDto[]=[];
+  defaultValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'min',
+      localizationKey: 'leadTimeCanNotBeNegativeOrZero',
+    },
+  ];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
     private _materialService:MaterialServiceProxy,
@@ -36,10 +43,12 @@ export class EditMaterialDialogComponent extends AppComponentBase {
     this.suppliers = result;
   });
   }
-
+  leadTimeValidationErrors(){
+    let errors: AbpValidationError[] = [{name:'min',localizationKey:'leadTimeCanNotBeNegativeOrZero',propertyKey:'leadTimeCanNotBeNegativeOrZero'}];
+    return errors;
+  }
   initMaterial(){
     this._materialService.get(this.id).subscribe((result:MaterialDto) => {
-      console.log(result )
       this.material.id=result.id;
       this.material.name=result.name;
       this.material.code=result.code;

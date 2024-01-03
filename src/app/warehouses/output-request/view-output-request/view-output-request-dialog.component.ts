@@ -31,7 +31,6 @@ export class ViewOutputRequestDialogComponent implements OnInit {
   initOutputRequest() {
     this._outputService.get(this.id).subscribe((response: OutputRequestDto) => {
       this.data = response;
-      console.log(this.data);
       this.loaded = true;
       this.data.outputRequestMaterials.forEach((element) => {
         this.initUnitNames(element.unitId);

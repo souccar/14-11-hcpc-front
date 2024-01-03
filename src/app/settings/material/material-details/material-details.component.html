@@ -64,8 +64,6 @@
             <th scope="col">{{'Quantity'|localize}}</th>
             <th scope="col">{{"Code"|localize}}</th>
             <th scope="col">{{'ExpirationDate'|localize}}</th>
-            <th scope="col">{{'OutputRequest'|localize}}</th>
-
           </tr>
         </thead>
         <tbody>
@@ -81,14 +79,8 @@
                 <span class="text-muted">
                   {{'Quantity'|localize}} : {{ outputRequest.quantity }}
                 </span>
-                &nbsp;|
-                <span class="text-muted">
-                 {{outputRequest.outputDate | date:"yyyy-MM-dd"}}
-                 &nbsp; &nbsp;</span>
-
             </td>
             </ng-contanier>
-
 
           </tr>
         </tbody>

@@ -67,10 +67,6 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   editButton(id: number): void {
     this._router.navigate(['app/warehouses/editOutputRequest',id])
   }
-checkDate(row:OutputRequestDto){
-  console.log(row.outputDate.year())
-
-}
   protected delete(entity: OutputRequestDto): void {
     abp.message.confirm(
       this.l('OutputRequestDeleteWarningMessage', this.selected.length, ' OutputRequests'),

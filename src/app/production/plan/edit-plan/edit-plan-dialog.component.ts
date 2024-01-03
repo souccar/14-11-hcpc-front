@@ -52,10 +52,10 @@ export class EditPlanDialogComponent extends AppComponentBase {
     this.plan.startDate = this.startDate.toLocaleString();
 
     if (this.plan.planProducts.length < 1) {
-      this.notify.error(this.l('Add One Plan Product at least'));
+      this.notify.error(this.l('AddOneProductAtLeast'));
     }
     else{
-      this.saving = true;
+   
       this.plan.planProducts.forEach((element) =>
       element.id = 0
     );
@@ -69,7 +69,7 @@ export class EditPlanDialogComponent extends AppComponentBase {
       })
     )
     .subscribe((response: any) => {
-      this.notify.info(this.l('SavedSuccessfully'));
+      this.notify.info(this.l('EditSuccessfully'));
       this.bsModalRef.hide();
       this.onSave.emit();
     });

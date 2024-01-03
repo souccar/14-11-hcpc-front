@@ -21,7 +21,6 @@ export class ViewWarehouseDialogComponent implements OnInit {
   initWarehouse()
   {
     this._warehouseService.get(this.id).subscribe((result)=>{
-      console.log(result)
       this.data=result;
     })
   }

@@ -92,7 +92,6 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
       })
     )
       .subscribe((result) => {
-        console.log(result)
         this.data = result;
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
