@@ -3,8 +3,6 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
-import { defineLocale } from 'ngx-bootstrap/chronos';
-import { esLocale } from 'ngx-bootstrap/locale';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 
 @Component({
