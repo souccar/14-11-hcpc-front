@@ -60,7 +60,7 @@
                                     </li>
 
                                     <li class="text-one  text-primary">
-                                        {{p.productArbitrage | commaNumber}}
+                                        {{(p.totalSalesAmount / p.totalCost) | commaNumber}}
                                     </li>
                                 </ul>
                             </div>
@@ -88,7 +88,7 @@
                                     <tr *ngFor="let f of p.product.formulas">
                                         <td>
                                             <a class="btn btn-empty text-muted" (click)="editMaterial(f.material.id)">
-                                                <span class="log-indicator align-middle mx-1"
+                                                <span class="log-indicator align-middle mr-1"
                                                     [ngClass]="{'border-danger' : !checkBalanceIsSufficient(p,f.materialId)}"></span>
                                                 <span class="font-weight-medium">{{f.material.name}} /
                                                     {{f.quantity}}{{f.unit.name}}</span>

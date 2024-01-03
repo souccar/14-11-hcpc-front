@@ -6,7 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CommaNumberPipe implements PipeTransform {
 
   transform(value: number, ...args: any[]): string {
-    value = Math.round(value * 100)/ 100;
+    const commaDimension = args[0] as number;
+    var roundValue = commaDimension ? Math.pow(10, commaDimension) : 100;
+    value = Math.round(value * roundValue) / roundValue;
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
