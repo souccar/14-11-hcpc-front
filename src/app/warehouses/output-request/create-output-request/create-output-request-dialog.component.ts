@@ -26,10 +26,10 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     public bsModalRef: BsModalRef,
     private _planService: PlanServiceProxy,
     private _location: Location,
-    private el: ElementRef,  
+    private el: ElementRef,
     private rendererFactory: RendererFactory2
   ) {
-    super(injector);   
+    super(injector);
   }
   ngOnInit(): void {
 
@@ -68,11 +68,11 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   }
   save(): void {
     if (this.outputRequest.outputRequestMaterials.length < 1) {
-      this.notify.error(this.l('Add One output Request Material at least'));
+      this.notify.error(this.l('AddOneOutputRequestMaterialAtLeast'));
     }
       else if(this.outputRequest.title==null || this.outputRequest.planId==null || this.outputRequest.outputRequestProducts.length<1 )
       {
-        this.notify.error(this.l('Please Enter the required filed !!!!'));
+        this.notify.error(this.l('PleaseEnterTheRequiredFiled'));
       }
 
       else{

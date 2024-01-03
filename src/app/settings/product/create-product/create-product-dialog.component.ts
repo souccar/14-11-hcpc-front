@@ -54,8 +54,12 @@ export class CreateProductDialogComponent extends AppComponentBase  {
     if (this.product.formulas.length < 1) {
       this.notify.error(this.l('AddOneFormulaAtLeast'));
     }
+    else if(this.product.name==null || this.product.price==null )
+    {
+      this.notify.error(this.l('PleaseEnterTheRequiredFiled'));
+    }
     else {
-      if(this.product.name && this.product.name){
+
         this.saving = true;
         this._productService
           .create(
@@ -72,15 +76,10 @@ export class CreateProductDialogComponent extends AppComponentBase  {
             this.onSave.emit();
           });
       }
-      else
-      {
-        this.notify.error(this.l('FillRequiredFieldPleas'));
 
-      }
-    
     }
 
 
   }
 
-}
+

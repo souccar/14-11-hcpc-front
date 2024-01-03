@@ -34,8 +34,8 @@ export class CreatePlanDialogComponent extends AppComponentBase {
 
   save(): void {
     if (!this.plan.planProducts || this.plan.planProducts.length <= 0) {
-      this.notify.error(this.l('Add One Plan Product at least'));      
-    }else{   
+      this.notify.error(this.l('AddOnePlanProductAtLeast'));
+    }else{
     this.plan.startDate.toString();
     this._planService.
       create(
