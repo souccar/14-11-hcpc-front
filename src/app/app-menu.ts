@@ -119,7 +119,7 @@ const data: IMenuItem[] = [
       },
       {
         label: 'User',
-        to: `${adminRoot}/security/users`,
+        to: `${adminRoot}/security/user`,
         icon: 'iconsminds-business-man-woman',
       },
 
