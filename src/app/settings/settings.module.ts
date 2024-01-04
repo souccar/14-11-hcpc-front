@@ -35,6 +35,7 @@ import { SupplierComponent } from './supplier/supplier.component';
 import { CreateSupplierDialogComponent } from './supplier/create-supplier/create-supplier-dialog.component';
 import { EditSupplierDialogComponent } from './supplier/edit-supplier/edit-supplier-dialog.component';
 import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-supplier-dialog.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -74,6 +75,7 @@ import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-suppl
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
+    TooltipModule.forRoot(),
     PaginationModule.forRoot(),
     CommonModule,
     SettingsRoutingModule
