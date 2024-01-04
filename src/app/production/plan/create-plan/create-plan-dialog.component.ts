@@ -58,25 +58,4 @@ export class CreatePlanDialogComponent extends AppComponentBase {
   }
 
 
-    if (!this.plan.planProducts || this.plan.planProducts.length <= 0) {
-      this.notify.error(this.l('AddOnePlanProductAtLeast'));
-    }else{
-    this.plan.startDate.toString();
-    this._planService.
-      create(
-        this.plan
-      )
-      .pipe(
-        finalize(() => {
-          this.saving = false;
-        })
-      )
-      .subscribe((response: any) => {
-        this.notify.info(this.l('SavedSuccessfully'));
-        this.bsModalRef.hide();
-        this.onSave.emit();
-      });
-    }
-  }
 
-}
