@@ -20,6 +20,7 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   chartDataConfig: ChartService;
   cancel:boolean=false;
   IsUpdate:boolean=false;
+  change:boolean=false;
   numberOfItem:number;
   plan = new UpdatePlanDto();
   index:number;
@@ -78,17 +79,23 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
     this.index=index;
     this.cancel=true;
     this.IsUpdate=true;
+    this.change=false;
 
   }
-  CancelEdit(index:number)
+  CancelEdit()
   {
-      this.cancel=false
+      this.cancel=false;
+      this.IsUpdate=false;
+      this.change=true;
 
   }
   updatePlan(numberOfItems:number,productId:number)
   {
 
     this.IsUpdate=false;
+    this.cancel=false;
+    this.IsUpdate=false;
+    this.change=true;
     let planProducts= this.plan.planProducts
 
     planProducts.forEach((item)=>{
@@ -171,4 +178,3 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   }
 
 }
-

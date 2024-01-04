@@ -6,7 +6,7 @@
         <!-- Inputs -->
         <div class="row">
 
-          <div class="col-md-6">
+          <div class="col-md-3">
             <label form="materialId">{{'Material'|localize}}</label>
             <select aria-placeholder="Material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
               required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl>
@@ -29,6 +29,12 @@
             </select>
 
           </div>
+          <div class="col-md-3 required">
+            <label form="percentage">{{'Percentage'|localize}}</label>
+            <input type="number" class="form-control" name="percentage" id="percentage" required min="1"
+              [(ngModel)]="formula.percentage" #percentageModel="ngModel" #percentageEl  />
+          </div>
+
         </div>
       </div>
 
@@ -49,6 +55,7 @@
               <th scope="col">#</th>
               <th scope="col">{{'Material'|localize}}</th>
               <th scope="col">{{'Quantity'|localize}}</th>
+              <th scope="col">{{'Percentage'|localize}}</th>
               <th scope="col">{{'Action'|localize}}</th>
             </tr>
           </thead>
@@ -63,7 +70,7 @@
                   <span *ngIf="uId == i">{{u.name }}</span>
                 </ng-contanier>
               </td>
-
+              <td>{{formula.percentage}}%</td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
                   (click)="edit(formula)">
                   <i class="simple-icon-pencil text-primary"></i>
