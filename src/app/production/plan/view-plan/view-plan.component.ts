@@ -9,43 +9,41 @@ import { CreatePlanDialogComponent } from '../create-plan/create-plan-dialog.com
   templateUrl: './view-plan.component.html',
   styleUrls: ['./view-plan.component.scss']
 })
-export class ViewPlanComponent implements OnInit{
+export class ViewPlanComponent implements OnInit {
 
 
-  canProduce:boolean=false;
-  plans:PlanDto[]=[];
-  changeStatus=false;
+  canProduce: boolean = false;
+  plans: PlanDto[] = [];
+  changeStatus = false;
 
-  constructor( private _modalService: BsModalService,
-    private _planService:PlanServiceProxy){}
+  constructor(private _modalService: BsModalService,
+    private _planService: PlanServiceProxy) { }
   ngOnInit(): void {
-  this.getPendingPlans();
-}
+    this.getPendingPlans();
+  }
 
-getPendingPlans()
-{
-  this._planService.getPendingPlans().subscribe((result)=>{
-    console.log(result)
+  getPendingPlans() {
+    this._planService.getPendingPlans().subscribe((result) => {
       this.plans = result;
 
-  })
+    })
 
-}
-changePlanStatusToActually(id:number){
-  this._planService.changeStatusToActual(id).subscribe((result)=>{
-    this.changeStatus=true;
-    location.reload()
-  })
-}
-changePlanStatusToArchive(){
-  // this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
-  //   location.reload()
-  // })
-}
+  }
+  changePlanStatusToActually(id: number) {
+    this._planService.changeStatusToActual(id).subscribe((result) => {
+      this.changeStatus = true;
+      location.reload()
+    })
+  }
+  changePlanStatusToArchive() {
+    // this._planService.changeStatusToArchive(this.plan.id).subscribe((result)=>{
+    //   location.reload()
+    // })
+  }
 
-editButton(id:number): void {
-  let editPlanDialog: BsModalRef;
-      editPlanDialog = this._modalService.show(
+  editButton(id: number): void {
+    let editPlanDialog: BsModalRef;
+    editPlanDialog = this._modalService.show(
       EditPlanDialogComponent,
       {
         backdrop: true,

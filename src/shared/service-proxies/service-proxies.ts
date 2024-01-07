@@ -4551,6 +4551,62 @@ export class ProductServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: UpdateProductDto | undefined): Observable<ProductDto> {
+        let url_ = this.baseUrl + "/api/services/app/Product/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ProductDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ProductDto>;
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<ProductDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProductDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -4768,62 +4824,6 @@ export class ProductServiceProxy {
     }
 
     protected processCreate(response: HttpResponseBase): Observable<ProductDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProductDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    update(body: UpdateProductDto | undefined): Observable<ProductDto> {
-        let url_ = this.baseUrl + "/api/services/app/Product/Update";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdate(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ProductDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ProductDto>;
-        }));
-    }
-
-    protected processUpdate(response: HttpResponseBase): Observable<ProductDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9697,10 +9697,10 @@ export interface ICreateEmployeeDto {
 }
 
 export class CreateFormulaDto implements ICreateFormulaDto {
+    percentage: number;
     quantity: number;
     materialId: number;
     unitId: number;
-    productId: number | undefined;
 
     constructor(data?: ICreateFormulaDto) {
         if (data) {
@@ -9713,10 +9713,10 @@ export class CreateFormulaDto implements ICreateFormulaDto {
 
     init(_data?: any) {
         if (_data) {
+            this.percentage = _data["percentage"];
             this.quantity = _data["quantity"];
             this.materialId = _data["materialId"];
             this.unitId = _data["unitId"];
-            this.productId = _data["productId"];
         }
     }
 
@@ -9729,10 +9729,10 @@ export class CreateFormulaDto implements ICreateFormulaDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["percentage"] = this.percentage;
         data["quantity"] = this.quantity;
         data["materialId"] = this.materialId;
         data["unitId"] = this.unitId;
-        data["productId"] = this.productId;
         return data;
     }
 
@@ -9745,10 +9745,10 @@ export class CreateFormulaDto implements ICreateFormulaDto {
 }
 
 export interface ICreateFormulaDto {
+    percentage: number;
     quantity: number;
     materialId: number;
     unitId: number;
-    productId: number | undefined;
 }
 
 export class CreateGeneralSettingDto implements ICreateGeneralSettingDto {
@@ -10190,6 +10190,7 @@ export interface ICreatePlanProductDto {
 export class CreateProductDto implements ICreateProductDto {
     name: string;
     description: string | undefined;
+    size: number;
     price: number;
     formulas: CreateFormulaDto[] | undefined;
 
@@ -10206,6 +10207,7 @@ export class CreateProductDto implements ICreateProductDto {
         if (_data) {
             this.name = _data["name"];
             this.description = _data["description"];
+            this.size = _data["size"];
             this.price = _data["price"];
             if (Array.isArray(_data["formulas"])) {
                 this.formulas = [] as any;
@@ -10226,6 +10228,7 @@ export class CreateProductDto implements ICreateProductDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["description"] = this.description;
+        data["size"] = this.size;
         data["price"] = this.price;
         if (Array.isArray(this.formulas)) {
             data["formulas"] = [];
@@ -10246,6 +10249,7 @@ export class CreateProductDto implements ICreateProductDto {
 export interface ICreateProductDto {
     name: string;
     description: string | undefined;
+    size: number;
     price: number;
     formulas: CreateFormulaDto[] | undefined;
 }
@@ -11623,9 +11627,10 @@ export interface IFlatPermissionDto {
 }
 
 export class FormulaDto implements IFormulaDto {
-    quantity: number;
-    materialId: number | undefined;
+    percentage: number;
+    quantity: number | undefined;
     unitId: number | undefined;
+    materialId: number | undefined;
     productId: number | undefined;
     id: number;
     unit: UnitDto;
@@ -11642,9 +11647,10 @@ export class FormulaDto implements IFormulaDto {
 
     init(_data?: any) {
         if (_data) {
+            this.percentage = _data["percentage"];
             this.quantity = _data["quantity"];
-            this.materialId = _data["materialId"];
             this.unitId = _data["unitId"];
+            this.materialId = _data["materialId"];
             this.productId = _data["productId"];
             this.id = _data["id"];
             this.unit = _data["unit"] ? UnitDto.fromJS(_data["unit"]) : <any>undefined;
@@ -11661,9 +11667,10 @@ export class FormulaDto implements IFormulaDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["percentage"] = this.percentage;
         data["quantity"] = this.quantity;
-        data["materialId"] = this.materialId;
         data["unitId"] = this.unitId;
+        data["materialId"] = this.materialId;
         data["productId"] = this.productId;
         data["id"] = this.id;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>undefined;
@@ -11680,9 +11687,10 @@ export class FormulaDto implements IFormulaDto {
 }
 
 export interface IFormulaDto {
-    quantity: number;
-    materialId: number | undefined;
+    percentage: number;
+    quantity: number | undefined;
     unitId: number | undefined;
+    materialId: number | undefined;
     productId: number | undefined;
     id: number;
     unit: UnitDto;
@@ -14901,6 +14909,7 @@ export enum PriorityInPlan {
 export class ProductDto implements IProductDto {
     name: string | undefined;
     description: string | undefined;
+    size: number;
     price: number;
     formulas: FormulaDto[] | undefined;
     id: number;
@@ -14918,6 +14927,7 @@ export class ProductDto implements IProductDto {
         if (_data) {
             this.name = _data["name"];
             this.description = _data["description"];
+            this.size = _data["size"];
             this.price = _data["price"];
             if (Array.isArray(_data["formulas"])) {
                 this.formulas = [] as any;
@@ -14939,6 +14949,7 @@ export class ProductDto implements IProductDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["description"] = this.description;
+        data["size"] = this.size;
         data["price"] = this.price;
         if (Array.isArray(this.formulas)) {
             data["formulas"] = [];
@@ -14960,6 +14971,7 @@ export class ProductDto implements IProductDto {
 export interface IProductDto {
     name: string | undefined;
     description: string | undefined;
+    size: number;
     price: number;
     formulas: FormulaDto[] | undefined;
     id: number;
@@ -17746,10 +17758,10 @@ export interface IUpdateEmployeeDto {
 
 export class UpdateFormulaDto implements IUpdateFormulaDto {
     id: number;
+    percentage: number;
     quantity: number;
     materialId: number;
     unitId: number;
-    productId: number;
 
     constructor(data?: IUpdateFormulaDto) {
         if (data) {
@@ -17763,10 +17775,10 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.percentage = _data["percentage"];
             this.quantity = _data["quantity"];
             this.materialId = _data["materialId"];
             this.unitId = _data["unitId"];
-            this.productId = _data["productId"];
         }
     }
 
@@ -17780,10 +17792,10 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["percentage"] = this.percentage;
         data["quantity"] = this.quantity;
         data["materialId"] = this.materialId;
         data["unitId"] = this.unitId;
-        data["productId"] = this.productId;
         return data;
     }
 
@@ -17797,10 +17809,10 @@ export class UpdateFormulaDto implements IUpdateFormulaDto {
 
 export interface IUpdateFormulaDto {
     id: number;
+    percentage: number;
     quantity: number;
     materialId: number;
     unitId: number;
-    productId: number;
 }
 
 export class UpdateGeneralSettingDto implements IUpdateGeneralSettingDto {
@@ -18330,6 +18342,7 @@ export class UpdateProductDto implements IUpdateProductDto {
     id: number;
     name: string;
     description: string | undefined;
+    size: number;
     price: number;
     formulas: UpdateFormulaDto[] | undefined;
 
@@ -18347,6 +18360,7 @@ export class UpdateProductDto implements IUpdateProductDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.description = _data["description"];
+            this.size = _data["size"];
             this.price = _data["price"];
             if (Array.isArray(_data["formulas"])) {
                 this.formulas = [] as any;
@@ -18368,6 +18382,7 @@ export class UpdateProductDto implements IUpdateProductDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["description"] = this.description;
+        data["size"] = this.size;
         data["price"] = this.price;
         if (Array.isArray(this.formulas)) {
             data["formulas"] = [];
@@ -18389,6 +18404,7 @@ export interface IUpdateProductDto {
     id: number;
     name: string;
     description: string | undefined;
+    size: number;
     price: number;
     formulas: UpdateFormulaDto[] | undefined;
 }
