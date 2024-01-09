@@ -91,28 +91,6 @@
         ></abp-validation-summary>
       </div>
     </div>
-    <!--  -->
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="code">
-        {{ "WarehouseCode" | localize }}
-      </label>
-      <div class="col-md-9">
-        <input
-          type="text"
-          class="form-control"
-          name="code"
-          id="code"
-          required
-          [(ngModel)]="warehouseMaterial.code"
-          #codeModel="ngModel"
-          #codeEl
-        />
-        <abp-validation-summary
-          [control]="codeModel"
-          [controlEl]="codeEl"
-        ></abp-validation-summary>
-      </div>
-    </div>
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="entryDate">
         {{ "EntryDate" | localize }}
@@ -230,7 +208,7 @@
           name="price"
           id="price"
           required
-          [(ngModel)]="warehouseMaterial.price"
+          [(ngModel)]="warehouseMaterial.priceSYP"
           #priceModel="ngModel"
           #priceEl
         />

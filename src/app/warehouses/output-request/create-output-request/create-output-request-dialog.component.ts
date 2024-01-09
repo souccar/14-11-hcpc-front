@@ -19,6 +19,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   plans: PlanNameForDropdownDto[] = [];
   planProducts: PlanProductDto[] = [];
   showItemIndex = 0;
+  loadMaterialView: boolean = false;
   renderer: Renderer2;
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -58,6 +59,8 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       });
     }
   }
+
+  
   onChangeOutputRequestProduct(items: PlanProductDto[]){
     this.outputRequest.outputRequestProducts = [];
     items.forEach(item=>{
@@ -66,6 +69,31 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       this.outputRequest.outputRequestProducts.push(outputRequestProduct);
     });
   }
+
+  onCloseSelect(){    
+    if(this.loadMaterialView == true){
+      this.loadMaterialView = false;
+    setTimeout(()=>{
+      this.loadMaterialView = true;
+    },1);
+    }else{
+      this.loadMaterialView = true;
+    }
+  }
+  onRemoveFromSelect(){
+    if(this.outputRequest.outputRequestProducts.length != 0){
+      this.loadMaterialView = false;
+    setTimeout(()=>{
+      this.loadMaterialView = true;
+    },1);
+    }else{
+      this.loadMaterialView = false;
+    }    
+  }
+  onClearSelect(){
+    this.loadMaterialView = false;
+  }
+
   save(): void {
     if (this.outputRequest.outputRequestMaterials.length < 1) {
       this.notify.error(this.l('AddOneOutputRequestMaterialAtLeast'));

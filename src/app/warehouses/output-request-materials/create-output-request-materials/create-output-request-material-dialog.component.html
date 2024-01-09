@@ -7,8 +7,8 @@
           <div class="col-md-5 required">
             <label form="warehouseMaterialId">{{'WarehouseMaterialCode'|localize}}</label>
             <select class="form-control" aria-label="unit" #warehouseMaterialIdModel="ngModel" required
-              name="warehouseMaterialId" [(ngModel)]="outputRequestMaterial.warehouseMaterialId" #warehouseMaterialIdEl>
-              <option *ngFor="let item of warehouseMaterialCode" value="{{ item.id }}">
+              name="warehouseMaterialId" [(ngModel)]="materialId" #warehouseMaterialIdEl>
+              <option *ngFor="let item of materials" value="{{ item.id }}">
                 {{ item.code }}
               </option>
             </select>

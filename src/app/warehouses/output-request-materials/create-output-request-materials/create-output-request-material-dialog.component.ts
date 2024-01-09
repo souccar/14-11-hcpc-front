@@ -1,5 +1,5 @@
-import { CreateOutputRequestMaterialDto, UnitNameForDropdownDto, WarehouseMaterialNameForDropdownDto, WarehouseMaterialServiceProxy, WarehouseNameForDropdownDto } from './../../../../shared/service-proxies/service-proxies';
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { CreateOutputRequestMaterialDto, CreateOutputRequestProductDto, MaterialCodeForDropdownDto, MaterialServiceProxy, UnitNameForDropdownDto, WarehouseMaterialNameForDropdownDto, WarehouseMaterialServiceProxy, WarehouseNameForDropdownDto } from './../../../../shared/service-proxies/service-proxies';
+import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
@@ -21,11 +21,15 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   unitsNames: UnitNameForDropdownDto[] = [];
   warehouseCodes: WarehouseMaterialNameForDropdownDto[] = [];
   warehouseCode: WarehouseMaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
+  materialId: number;
+  @Input() productIds: number[] = [];
   @Output() saveoutputRequestMaterialList = new EventEmitter<CreateOutputRequestMaterialDto[]>();
 
   constructor(injector: Injector,
     private _warehouseMaterialService:WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
+    private _materialService: MaterialServiceProxy,
     public bsModalRef: BsModalRef,
 
 
@@ -33,10 +37,17 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
     super(injector);
   }
   ngOnInit(): void {
-
+    console.log(this.productIds)
     this.initUnits();
-    this.initWarehouseMaterial()
+    this.initialMaterialsForSelectedProducts(this.productIds);
+    // this.initWarehouseMaterial();
+  }
 
+  initialMaterialsForSelectedProducts(productIds: number[]){
+    this._materialService.getByProductsIds(productIds)
+    .subscribe((result)=>{
+      this.materials = result;
+    });
   }
 
    initWarehouseMaterial()
@@ -47,7 +58,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
    }
    getWarehouseCode(id: number) {
     this._warehouseMaterialService.getForEdit(id).subscribe((result) => {
-      this.warehouseCodes.push(result);
+      // this.warehouseCodes.push(result);
     });
 
 

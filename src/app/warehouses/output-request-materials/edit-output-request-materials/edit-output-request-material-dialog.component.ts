@@ -70,7 +70,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase {
 
 
     this._warehouseMaterialService.getForEdit(id).subscribe((result) => {
-      this.warehouseCodes.push(result);
+      // this.warehouseCodes.push(result);
     });
 
 

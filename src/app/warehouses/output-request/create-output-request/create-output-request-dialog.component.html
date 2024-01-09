@@ -60,7 +60,7 @@
             </label>
             <div class="col-md-9">
               <ng-select required name="outputRequestProducts"
-              (change)="onChangeOutputRequestProduct($event)"  #productsEl
+              (close)="onCloseSelect()" (clear)="onClearSelect()" (remove)="onRemoveFromSelect()" (change)="onChangeOutputRequestProduct($event)"  #productsEl
               [items]="planProducts" [multiple]="true" bindLabel="product.name" bindValue="product.productId" [closeOnSelect]="false">
             </ng-select>
             <!-- <abp-validation-summary [controlEl]="planIdEl"></abp-validation-summary> -->
@@ -69,7 +69,7 @@
         </div>
       </accordion-group>
       <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
-        <create-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></create-output-request-material-dialog>
+        <create-output-request-material-dialog *ngIf="loadMaterialView" [productIds]="outputRequest.outputRequestProducts" (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></create-output-request-material-dialog>
       </accordion-group>
 
     </accordion>
