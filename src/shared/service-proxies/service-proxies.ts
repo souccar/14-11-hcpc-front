@@ -8226,6 +8226,82 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param including (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetAll?";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<WarehouseMaterialDtoPagedResultDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<WarehouseMaterialDtoPagedResultDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<WarehouseMaterialDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = WarehouseMaterialDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -8387,6 +8463,69 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
+     * @param materialId (optional) 
+     * @return Success
+     */
+    getByMaterialId(materialId: number | undefined): Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetByMaterialId?";
+        if (materialId === null)
+            throw new Error("The parameter 'materialId' cannot be null.");
+        else if (materialId !== undefined)
+            url_ += "materialId=" + encodeURIComponent("" + materialId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByMaterialId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByMaterialId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]>;
+        }));
+    }
+
+    protected processGetByMaterialId(response: HttpResponseBase): Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(WarehouseMaterialWithWarehouseNameAndExpiryDateDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -8432,82 +8571,6 @@ export class WarehouseMaterialServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = UpdateWarehouseMaterialDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param keyword (optional) 
-     * @param sorting (optional) 
-     * @param including (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetAll?";
-        if (keyword === null)
-            throw new Error("The parameter 'keyword' cannot be null.");
-        else if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<WarehouseMaterialDtoPagedResultDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<WarehouseMaterialDtoPagedResultDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<WarehouseMaterialDtoPagedResultDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = WarehouseMaterialDtoPagedResultDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -10651,8 +10714,8 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
     entryDate: string;
     initialQuantity: number;
     expirationDate: string;
-    code: string;
-    price: number;
+    priceSYP: number;
+    priceUSD: number;
     unitId: number;
     unitPriceId: number | undefined;
     materialId: number;
@@ -10673,8 +10736,8 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
             this.entryDate = _data["entryDate"];
             this.initialQuantity = _data["initialQuantity"];
             this.expirationDate = _data["expirationDate"];
-            this.code = _data["code"];
-            this.price = _data["price"];
+            this.priceSYP = _data["priceSYP"];
+            this.priceUSD = _data["priceUSD"];
             this.unitId = _data["unitId"];
             this.unitPriceId = _data["unitPriceId"];
             this.materialId = _data["materialId"];
@@ -10695,8 +10758,8 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
         data["entryDate"] = this.entryDate;
         data["initialQuantity"] = this.initialQuantity;
         data["expirationDate"] = this.expirationDate;
-        data["code"] = this.code;
-        data["price"] = this.price;
+        data["priceSYP"] = this.priceSYP;
+        data["priceUSD"] = this.priceUSD;
         data["unitId"] = this.unitId;
         data["unitPriceId"] = this.unitPriceId;
         data["materialId"] = this.materialId;
@@ -10717,8 +10780,8 @@ export interface ICreateWarehouseMaterialDto {
     entryDate: string;
     initialQuantity: number;
     expirationDate: string;
-    code: string;
-    price: number;
+    priceSYP: number;
+    priceUSD: number;
     unitId: number;
     unitPriceId: number | undefined;
     materialId: number;
@@ -15250,6 +15313,7 @@ export interface IPropertyInfo {
 
 export class ReadOutputRequesProductDto implements IReadOutputRequesProductDto {
     id: number;
+    canProduce: number;
     product: ProductDto;
 
     constructor(data?: IReadOutputRequesProductDto) {
@@ -15264,6 +15328,7 @@ export class ReadOutputRequesProductDto implements IReadOutputRequesProductDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.canProduce = _data["canProduce"];
             this.product = _data["product"] ? ProductDto.fromJS(_data["product"]) : <any>undefined;
         }
     }
@@ -15278,6 +15343,7 @@ export class ReadOutputRequesProductDto implements IReadOutputRequesProductDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["canProduce"] = this.canProduce;
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
         return data;
     }
@@ -15292,6 +15358,7 @@ export class ReadOutputRequesProductDto implements IReadOutputRequesProductDto {
 
 export interface IReadOutputRequesProductDto {
     id: number;
+    canProduce: number;
     product: ProductDto;
 }
 
@@ -18622,8 +18689,8 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
     entryDate: string;
     initialQuantity: number;
     expirationDate: string;
-    code: string;
-    price: number;
+    priceSYP: number;
+    priceUSD: number;
     unitId: number;
     unitPriceId: number;
     materialId: number;
@@ -18645,8 +18712,8 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
             this.entryDate = _data["entryDate"];
             this.initialQuantity = _data["initialQuantity"];
             this.expirationDate = _data["expirationDate"];
-            this.code = _data["code"];
-            this.price = _data["price"];
+            this.priceSYP = _data["priceSYP"];
+            this.priceUSD = _data["priceUSD"];
             this.unitId = _data["unitId"];
             this.unitPriceId = _data["unitPriceId"];
             this.materialId = _data["materialId"];
@@ -18668,8 +18735,8 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
         data["entryDate"] = this.entryDate;
         data["initialQuantity"] = this.initialQuantity;
         data["expirationDate"] = this.expirationDate;
-        data["code"] = this.code;
-        data["price"] = this.price;
+        data["priceSYP"] = this.priceSYP;
+        data["priceUSD"] = this.priceUSD;
         data["unitId"] = this.unitId;
         data["unitPriceId"] = this.unitPriceId;
         data["materialId"] = this.materialId;
@@ -18691,8 +18758,8 @@ export interface IUpdateWarehouseMaterialDto {
     entryDate: string;
     initialQuantity: number;
     expirationDate: string;
-    code: string;
-    price: number;
+    priceSYP: number;
+    priceUSD: number;
     unitId: number;
     unitPriceId: number;
     materialId: number;
@@ -19097,8 +19164,9 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     initialQuantity: number;
     currentQuantity: number;
     expirationDate: moment.Moment;
-    code: string | undefined;
-    price: number;
+    priceUSD: number;
+    priceSYP: number;
+    expiryStatus: number | undefined;
     unitId: number | undefined;
     unitPriceId: number | undefined;
     materialId: number | undefined;
@@ -19127,8 +19195,9 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
             this.initialQuantity = _data["initialQuantity"];
             this.currentQuantity = _data["currentQuantity"];
             this.expirationDate = _data["expirationDate"] ? moment(_data["expirationDate"].toString()) : <any>undefined;
-            this.code = _data["code"];
-            this.price = _data["price"];
+            this.priceUSD = _data["priceUSD"];
+            this.priceSYP = _data["priceSYP"];
+            this.expiryStatus = _data["expiryStatus"];
             this.unitId = _data["unitId"];
             this.unitPriceId = _data["unitPriceId"];
             this.materialId = _data["materialId"];
@@ -19161,8 +19230,9 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
         data["initialQuantity"] = this.initialQuantity;
         data["currentQuantity"] = this.currentQuantity;
         data["expirationDate"] = this.expirationDate ? this.expirationDate.toISOString() : <any>undefined;
-        data["code"] = this.code;
-        data["price"] = this.price;
+        data["priceUSD"] = this.priceUSD;
+        data["priceSYP"] = this.priceSYP;
+        data["expiryStatus"] = this.expiryStatus;
         data["unitId"] = this.unitId;
         data["unitPriceId"] = this.unitPriceId;
         data["materialId"] = this.materialId;
@@ -19195,8 +19265,9 @@ export interface IWarehouseMaterialDto {
     initialQuantity: number;
     currentQuantity: number;
     expirationDate: moment.Moment;
-    code: string | undefined;
-    price: number;
+    priceUSD: number;
+    priceSYP: number;
+    expiryStatus: number | undefined;
     unitId: number | undefined;
     unitPriceId: number | undefined;
     materialId: number | undefined;
@@ -19267,7 +19338,6 @@ export interface IWarehouseMaterialDtoPagedResultDto {
 
 export class WarehouseMaterialNameDto implements IWarehouseMaterialNameDto {
     id: number;
-    code: string | undefined;
     materialId: number | undefined;
     warehouseId: number | undefined;
     material: MaterialDto;
@@ -19285,7 +19355,6 @@ export class WarehouseMaterialNameDto implements IWarehouseMaterialNameDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.code = _data["code"];
             this.materialId = _data["materialId"];
             this.warehouseId = _data["warehouseId"];
             this.material = _data["material"] ? MaterialDto.fromJS(_data["material"]) : <any>undefined;
@@ -19303,7 +19372,6 @@ export class WarehouseMaterialNameDto implements IWarehouseMaterialNameDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["code"] = this.code;
         data["materialId"] = this.materialId;
         data["warehouseId"] = this.warehouseId;
         data["material"] = this.material ? this.material.toJSON() : <any>undefined;
@@ -19321,7 +19389,6 @@ export class WarehouseMaterialNameDto implements IWarehouseMaterialNameDto {
 
 export interface IWarehouseMaterialNameDto {
     id: number;
-    code: string | undefined;
     materialId: number | undefined;
     warehouseId: number | undefined;
     material: MaterialDto;
@@ -19330,7 +19397,7 @@ export interface IWarehouseMaterialNameDto {
 
 export class WarehouseMaterialNameForDropdownDto implements IWarehouseMaterialNameForDropdownDto {
     id: number;
-    code: string | undefined;
+    name: string | undefined;
 
     constructor(data?: IWarehouseMaterialNameForDropdownDto) {
         if (data) {
@@ -19344,7 +19411,7 @@ export class WarehouseMaterialNameForDropdownDto implements IWarehouseMaterialNa
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.code = _data["code"];
+            this.name = _data["name"];
         }
     }
 
@@ -19358,7 +19425,7 @@ export class WarehouseMaterialNameForDropdownDto implements IWarehouseMaterialNa
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["code"] = this.code;
+        data["name"] = this.name;
         return data;
     }
 
@@ -19372,7 +19439,54 @@ export class WarehouseMaterialNameForDropdownDto implements IWarehouseMaterialNa
 
 export interface IWarehouseMaterialNameForDropdownDto {
     id: number;
-    code: string | undefined;
+    name: string | undefined;
+}
+
+export class WarehouseMaterialWithWarehouseNameAndExpiryDateDto implements IWarehouseMaterialWithWarehouseNameAndExpiryDateDto {
+    id: number;
+    info: string | undefined;
+
+    constructor(data?: IWarehouseMaterialWithWarehouseNameAndExpiryDateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.info = _data["info"];
+        }
+    }
+
+    static fromJS(data: any): WarehouseMaterialWithWarehouseNameAndExpiryDateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarehouseMaterialWithWarehouseNameAndExpiryDateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["info"] = this.info;
+        return data;
+    }
+
+    clone(): WarehouseMaterialWithWarehouseNameAndExpiryDateDto {
+        const json = this.toJSON();
+        let result = new WarehouseMaterialWithWarehouseNameAndExpiryDateDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWarehouseMaterialWithWarehouseNameAndExpiryDateDto {
+    id: number;
+    info: string | undefined;
 }
 
 export class WarehouseNameForDropdownDto implements IWarehouseNameForDropdownDto {
