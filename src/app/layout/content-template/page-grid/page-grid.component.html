@@ -9,7 +9,9 @@
               <thead>
                 <tr>
                   <th></th>
-                  <th class="bi" *ngFor="let field of fields" [sortable]="field.sortable ? field.name : ''" (sort)="onSort($event)">{{field.label}}</th>
+                  <ng-container *ngFor="let field of fields">
+                    <th class="bi" *ngIf="field.hidden == false" [sortable]="field.sortable ? field.name : ''" (sort)="onSort($event)">{{field.label}}</th>
+                  </ng-container>
                 </tr>
               </thead>
               <tbody>
@@ -88,7 +90,9 @@
                       </span>
                     </span>
                   </td>
-                  <td *ngFor="let field of fields" [innerHtml]="getValue(item, field)"></td>
+                  <ng-container *ngFor="let field of fields">
+                    <td *ngIf="field.hidden == false" [innerHtml]="getValue(item, field)"></td>
+                  </ng-container>
                 </tr>
               </tbody>
             </table>

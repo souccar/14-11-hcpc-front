@@ -1,5 +1,6 @@
 <app-page-header [title]="title | localize" [fields]="fields" (addNewItem)="showAddNewModal()"
-  (onChangePage)="onChangePage($event)" (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)">
+  (onChangePage)="onChangePage($event)" (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)"
+  (selectedColumns)="selectColumns($event)">
 </app-page-header>
 <app-page-grid [fields]="fields" [data]="data" [totalItems]="totalItems" [pageNumber]="pageNumber" [pageSize]="pageSize"
   [displayMode]="displayMode" (changeOrderBy)="changeOrderBy($event)"

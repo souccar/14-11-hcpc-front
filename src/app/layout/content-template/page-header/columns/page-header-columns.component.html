@@ -1,0 +1,14 @@
+<div dropdown class="d-inline-block position-relative" [autoClose]="false">
+    <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false" dropdownToggle>
+      {{'Columns' | localize}}
+    </button>
+    <div class="dropdown-menu dropdown-menu-right dropdown-menu-sm" *dropdownMenu>
+      <li class="dropdown-item" role="menuitem" *ngFor="let item of fields">
+        <label class="custom-control custom-checkbox mb-0 d-inline-block">
+        <input type="checkbox" class="custom-control-input" [checked]="item.hidden == false"
+         (change)="selectColumn(item)" />
+        <span class="custom-control-label">{{item.label}}</span>
+      </label></li>
+    </div>
+  </div>

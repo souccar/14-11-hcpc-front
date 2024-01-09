@@ -5,5 +5,6 @@ export interface IPageField{
     compoundValue: string | undefined;
     templateValue: string | undefined;
     format: string | undefined;
-    sortable: boolean
+    sortable: boolean;
+    hidden: boolean | undefined;
 }

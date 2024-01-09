@@ -12,6 +12,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { PageGridComponent } from './page-grid/page-grid.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { PageHeaderColumnsComponent } from './page-header/columns/page-header-columns.component';
+import { PageHeaderPerPageComponent } from './page-header/per-page/page-header-per-page.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +23,12 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     BreadcrumbComponent,
     PageHeaderComponent,
     PageGridComponent,
+    PageHeaderColumnsComponent,
+    PageHeaderPerPageComponent,
   ],
   imports: [
     CommonModule,
-    // PerfectScrollbarModule,
+    PerfectScrollbarModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),

@@ -3,8 +3,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-page-header',
-  templateUrl: './page-header.component.html',
-  styleUrls: ['./page-header.component.scss']
+  templateUrl: './page-header.component.html'
 })
 export class PageHeaderComponent extends AppComponentBase {
   
@@ -24,6 +23,7 @@ export class PageHeaderComponent extends AppComponentBase {
   @Output() searchKeyUp: EventEmitter<any> = new EventEmitter();
   @Output() onChangePage: EventEmitter<any> = new EventEmitter();
   @Output() changeOrderBy: EventEmitter<any> = new EventEmitter();
+  @Output() selectedColumns: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('search') search: any;
   constructor(injector: Injector) {
@@ -47,5 +47,9 @@ export class PageHeaderComponent extends AppComponentBase {
 
   onChangeOrderBy($event){
 
+  }
+
+  selectColumn(field){
+    this.selectedColumns.emit(field);
   }
 }

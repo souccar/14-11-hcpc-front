@@ -1,0 +1,12 @@
+<span class="text-muted text-small">{{'PerPage'|localize}} </span>
+<span dropdown class="d-inline-block position-relative">
+    <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" dropdownToggle>
+        {{pageSize}}
+    </button>
+    <div class="dropdown-menu dropdown-menu-right dropdown-menu-sm text-right" *dropdownMenu>
+        <li role="menuitem" *ngFor="let item of itemOptionsPerPage"><a
+                [ngClass]="item === pageSize ? 'dropdown-item active' : 'dropdown-item'"
+                (click)="onChangeItemsPerPage(item)">{{item}}</a></li>
+    </div>
+</span>

@@ -27,11 +27,11 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
   advancedFiltersVisible = false;
   title = this.l("Employee")
   fields = [
-    { label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
-    { label: this.l('FirstName'), name: 'firstName', sortable: false, type: 'string' },
-    { label: this.l('LastName'), name: 'lastName', sortable: true, type: 'string' },
-    { label: this.l('Age'), name: 'age', sortable: true, type: 'number' },
-    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true, type: 'date', format: 'dd MM YYYY' },
+    //{ label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
+    { label: this.l('FirstName'), name: 'firstName', sortable: true, type: 'string', hidden: true },
+    { label: this.l('LastName'), name: 'lastName', sortable: true, type: 'string', hidden: false},
+    { label: this.l('Age'), name: 'age', sortable: true, type: 'number', hidden: false },
+    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true, type: 'date', format: 'dd MM YYYY', hidden: false },
   ];
 
   constructor(injector: Injector,
@@ -68,8 +68,6 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
     pageNumber: number,
     finishedCallback: Function
   ): void {
-    request.keyword = this.search;
-
     this._employeeService
       .getAll(
         request.keyword,
@@ -170,8 +168,16 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
 
   searchKeyUp(event): void {
     const val = event.target.value.toLowerCase().trim();
+    console.log(val);
     this.loadData(this.pageSize, 1, val, this.orderBy);
   }
+
+  selectColumns(field){
+    debugger;
+    var index = this.fields.findIndex(x=>x.label == field.label);
+    this.fields[index].hidden = !this.fields[index].hidden;
+  }
+
 }
 
 class PagedProductsRequestDto extends PagedRequestDto {
