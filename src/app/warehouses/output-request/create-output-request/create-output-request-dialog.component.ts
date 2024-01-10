@@ -32,6 +32,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
+
   ngOnInit(): void {
 
     this.outputRequest.outputRequestMaterials = [];
@@ -43,14 +44,18 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   backToAlloutputRequest() {
     this._location.back();
   }
+
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
+    debugger;
     this.outputRequest.outputRequestMaterials = [...items];
   }
+
   initPlan() {
     this._planService.getActualPlansNameForDropdown().subscribe((result) => {
       this.plans = result;
     })
   }
+
   getProductFromPlan(id: number) {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {
@@ -60,7 +65,6 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     }
   }
 
-  
   onChangeOutputRequestProduct(items: PlanProductDto[]){
     this.outputRequest.outputRequestProducts = [];
     items.forEach(item=>{
@@ -80,6 +84,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       this.loadMaterialView = true;
     }
   }
+
   onRemoveFromSelect(){
     if(this.outputRequest.outputRequestProducts.length != 0){
       this.loadMaterialView = false;
@@ -90,6 +95,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       this.loadMaterialView = false;
     }    
   }
+
   onClearSelect(){
     this.loadMaterialView = false;
   }
@@ -122,6 +128,4 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     }
 
   }
-
-
 }

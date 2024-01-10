@@ -1,9 +1,13 @@
-import { CreateOutputRequestMaterialDto, CreateOutputRequestProductDto, MaterialCodeForDropdownDto, MaterialServiceProxy, UnitNameForDropdownDto, WarehouseMaterialNameForDropdownDto, WarehouseMaterialServiceProxy, WarehouseNameForDropdownDto } from './../../../../shared/service-proxies/service-proxies';
+import { CreateOutputRequestMaterialDto, CreateOutputRequestProductDto, MaterialCodeForDropdownDto, MaterialServiceProxy, UnitNameForDropdownDto, WarehouseMaterialNameForDropdownDto, WarehouseMaterialServiceProxy, WarehouseMaterialWithWarehouseNameAndExpiryDateDto, WarehouseNameForDropdownDto } from './../../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { UnitServiceProxy } from '@shared/service-proxies/service-proxies';
-import { ColumnMode } from '@swimlane/ngx-datatable';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+
+export class CreateOutputRequestMaterialWithMaterialIdDto{
+  outputRequestMaterial: CreateOutputRequestMaterialDto = new CreateOutputRequestMaterialDto();
+  materialId: number | undefined;
+}
 
 @Component({
   selector: 'create-output-request-material-dialog',
@@ -13,103 +17,143 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase {
   saving = false;
   units: UnitNameForDropdownDto[] = [];
-  data: CreateOutputRequestMaterialDto[] = [];
-  outputRequestMaterial = new CreateOutputRequestMaterialDto();
-  ColumnMode = ColumnMode;
-  warehouseMaterialCode:WarehouseMaterialNameForDropdownDto[]=[]
-  saveDisabled = true
+  data: CreateOutputRequestMaterialWithMaterialIdDto[] = [];
+  subData: CreateOutputRequestMaterialDto[] = [];
+  outputRequestMaterialWithMaterialId = new CreateOutputRequestMaterialWithMaterialIdDto();
   unitsNames: UnitNameForDropdownDto[] = [];
   warehouseCodes: WarehouseMaterialNameForDropdownDto[] = [];
-  warehouseCode: WarehouseMaterialNameForDropdownDto[] = [];
   materials: MaterialCodeForDropdownDto[] = [];
-  materialId: number;
-  @Input() productIds: number[] = [];
+  selectedMaterials: MaterialCodeForDropdownDto[] = [];
+  warehouseMaterials: WarehouseMaterialWithWarehouseNameAndExpiryDateDto[] = [];
+  selectedWarehouseMaterials: WarehouseMaterialWithWarehouseNameAndExpiryDateDto[] = [];
+  warehouseMaterialId: number;
+  selectedMaterialId: number;
+  selectedWarehouseMaterialId: number;
+  select: boolean = true;
+  ids: number[] = [];
+
+  @Input() productIds: CreateOutputRequestProductDto[] = [];
   @Output() saveoutputRequestMaterialList = new EventEmitter<CreateOutputRequestMaterialDto[]>();
 
   constructor(injector: Injector,
-    private _warehouseMaterialService:WarehouseMaterialServiceProxy,
+    private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
     private _materialService: MaterialServiceProxy,
     public bsModalRef: BsModalRef,
-
-
   ) {
     super(injector);
   }
+
   ngOnInit(): void {
-    console.log(this.productIds)
+    this.productIds.forEach((element) => {
+      this.ids.push(element.productId);
+    });
+    this.initialMaterialsForSelectedProducts(this.ids);
     this.initUnits();
-    this.initialMaterialsForSelectedProducts(this.productIds);
-    // this.initWarehouseMaterial();
   }
 
-  initialMaterialsForSelectedProducts(productIds: number[]){
+  initialMaterialsForSelectedProducts(productIds: number[]) {
     this._materialService.getByProductsIds(productIds)
-    .subscribe((result)=>{
-      this.materials = result;
-    });
+      .subscribe((result) => {
+        this.materials = result;
+      });
   }
 
-   initWarehouseMaterial()
-   {
-      this._warehouseMaterialService.getNameForDropdown().subscribe((result:WarehouseMaterialNameForDropdownDto [])=>{
-        this.warehouseMaterialCode=result;
-      })
-   }
-   getWarehouseCode(id: number) {
-    this._warehouseMaterialService.getForEdit(id).subscribe((result) => {
-      // this.warehouseCodes.push(result);
-    });
-
-
-  }
   initUnits() {
     this._unitService.getNameForDropdown().subscribe((result: UnitNameForDropdownDto[]) => {
       this.units = result;
     });
   }
+
   getUnitName(id: any) {
     this._unitService.get(id).subscribe((result) => {
       this.unitsNames.push(result);
     });
+  }
 
- }
+  onSelectMaterial(event) {
+    if(event.target == undefined){
+      this.selectedMaterialId = event;
+    }else{
+      this.selectedMaterialId = event.target.value
+    }
+    this._warehouseMaterialService.getByMaterialId(this.outputRequestMaterialWithMaterialId.materialId)
+      .subscribe((result) => {
+        this.warehouseMaterials = result;
+      });
+  }
+
+  onSelectwarehouseMaterial(event) {
+    this.selectedWarehouseMaterialId = event.target.value;
+  }
 
   addToOutputRequestMaterialList() {
-
-    if (this.outputRequestMaterial.warehouseMaterialId == null || this.outputRequestMaterial.quantity == null || this.outputRequestMaterial.unitId == null) {
+    if (this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId == null ||
+       this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity == null ||
+        this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId == null) {
       return;
     }
     else {
-      this.getUnitName(this.outputRequestMaterial.unitId);
-      this.getWarehouseCode(this.outputRequestMaterial.warehouseMaterialId)
-      this.data.push(this.outputRequestMaterial);
+      if(!this.data.some(x=>x.outputRequestMaterial.warehouseMaterialId == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId
+        && x.outputRequestMaterial.unitId == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId 
+        && x.outputRequestMaterial.quantity == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity)){  
+        
+        debugger;
+        this.selectedMaterials.push(
+          this.materials.find(x => x.id == this.outputRequestMaterialWithMaterialId.materialId)
+          );
+        this.onSelectMaterial(this.outputRequestMaterialWithMaterialId.materialId);
+
+
+        this.selectedWarehouseMaterials.push(
+          this.warehouseMaterials.find(x => x.id == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId)
+        );
+        
+      this.getUnitName(this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId);
+      this.data.push(this.outputRequestMaterialWithMaterialId);
       this.data = [...this.data];
-      this.saveoutputRequestMaterialList.emit(this.data);
+      this.subData = [];
+      this.data.forEach((element)=>{
+        this.subData.push(element.outputRequestMaterial);
+      });
+      this.saveoutputRequestMaterialList.emit(this.subData);
       this.saving = true;
-      this.outputRequestMaterial = new CreateOutputRequestMaterialDto()
+      this.outputRequestMaterialWithMaterialId = new CreateOutputRequestMaterialWithMaterialIdDto();
+      console.log(this.warehouseMaterials);
+    }
     }
   }
 
-  edit(row: CreateOutputRequestMaterialDto) {
-    this.outputRequestMaterial = row
+  edit(row: CreateOutputRequestMaterialWithMaterialIdDto) {
+    debugger;
+    this.outputRequestMaterialWithMaterialId = row
+    this.onSelectMaterial(row.materialId);
     const index = this.data.indexOf(row);
     if (index !== -1) {
       this.data.splice(index, 1);
-      this.unitsNames.splice(index,1);
-      this.warehouseCodes.splice(index,1)
+      this.unitsNames.splice(index, 1);
+      this.selectedWarehouseMaterials.splice(index, 1);
+      this.selectedMaterials.splice(index, 1);
     }
+    this.select = false;
   }
 
-
-
-  delete(row: CreateOutputRequestMaterialDto) {
+  delete(row: CreateOutputRequestMaterialWithMaterialIdDto) {
     const index = this.data.indexOf(row);
     if (index !== -1) {
+    this.selectedWarehouseMaterials = this.selectedWarehouseMaterials.filter((x)=>x.id != row.outputRequestMaterial.warehouseMaterialId);
+
+    const i = this.selectedMaterials[index];
+    this.selectedMaterials = this.selectedMaterials.filter((x)=>x.id != i.id);
+
+    const u = this.unitsNames[index]
+    this.unitsNames = this.unitsNames.filter((x)=>x.id != u.id);   
+    
       this.data.splice(index, 1);
-      this.saveoutputRequestMaterialList.emit(this.data);
+      this.data.forEach((element)=>{
+        this.subData.push(element.outputRequestMaterial);
+      });
+      this.saveoutputRequestMaterialList.emit(this.subData);
     }
-
   }
-
 }
