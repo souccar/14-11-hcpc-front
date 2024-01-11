@@ -196,28 +196,25 @@
       </div>
     </div>
 
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="price">
-        {{ "Price" | localize }}
+    <div class="form-group row ">
+      <label class="col-md-3 col-form-label" for="priceSYP">
+        {{ "PriceSYP"|localize  }}&nbsp;<span class="text-danger">*</span>
       </label>
-      <div class="col-md-9">
-        <input
-          type="number"
-          class="form-control"
-          min="1"
-          name="price"
-          id="price"
-          required
-          [(ngModel)]="warehouseMaterial.priceSYP"
-          #priceModel="ngModel"
-          #priceEl
-        />
-        <abp-validation-summary
-          [customValidationErrors]="priceValidationErrors()"
-          [control]="priceModel"
-          [controlEl]="priceEl"
-        ></abp-validation-summary>
+      <div class="col-md-4">
+        <input type="number" class="form-control" min=1 name="priceSYP" id="priceSYP" required
+          [(ngModel)]="warehouseMaterial.priceSYP" #priceSYPModel="ngModel" #priceSYPEl   />
+        <abp-validation-summary [control]="priceSYPModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="priceSYPEl"></abp-validation-summary>
       </div>
+
+      <label class="col-md-1 col-form-label" for="priceUSD">
+        {{ "PriceUSD"|localize  }}
+      </label>
+      <div class="col-md-4">
+        <input type="number" class="form-control" min=1 name="priceUSD" id="priceUSD"
+          [(ngModel)]="warehouseMaterial.priceUSD" #priceUSDModel="ngModel" #priceUSDEl   />
+        <abp-validation-summary [control]="priceUSDModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="priceUSDEl"></abp-validation-summary>
+      </div>
+
     </div>
   </div>
   <abp-modal-footer
