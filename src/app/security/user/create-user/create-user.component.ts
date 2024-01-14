@@ -33,7 +33,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
     super(injector);
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.initialRoles();
   }
 
@@ -44,7 +44,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
       this.initialItems();
     });
   }
-  
+
   initialItems() {
     this.roles.forEach(element => {
       if (this.items.length == 0) {
@@ -79,7 +79,6 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
 
   save(): void {
     this.user.roleNames = this.tempRoles;
-    console.log(this.user);
     this.saving = true;
     this._userService.
     create(
@@ -94,7 +93,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
       });
-  } 
+  }
 
   onSelectedChange(event): void {
     this.tempRoles = event;

@@ -29,7 +29,7 @@ import { WarehousesModule } from './warehouses/warehouses.module';
 import { SecurityModule } from './security/security.module';import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PersonnelModule } from './personnel/personnel.module';// notification
 import {NotificationModule} from './layout/notification/notification.module'
-
+// import { QueryBuilderModule } from "angular2-query-builder";
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +38,7 @@ import {NotificationModule} from './layout/notification/notification.module'
     EditTenantDialogComponent
   ],
   imports: [
+
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -79,6 +80,6 @@ import {NotificationModule} from './layout/notification/notification.module'
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
   ],
-  
+
 })
 export class AppModule {}

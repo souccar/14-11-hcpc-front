@@ -29,6 +29,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { DateFormattedPipe } from './pipes/date-formatted.pipe';
 import { BtSortableHeader } from './directives/bt-sortable-header.directive';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { FilterComponent } from './components/filter/filter.component';
+import { QueryBuilderModule } from 'angular2-query-builder';
 @NgModule({
     imports: [
         TabsModule.forRoot(),
@@ -39,6 +41,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
         NgxPaginationModule,
         NgSelectModule,
         NgxDatatableModule,
+        QueryBuilderModule,
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
         PerfectScrollbarModule,
@@ -55,7 +58,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
         CommaNumberPipe,
         SafeHtmlPipe,
         DateFormattedPipe,
-        BtSortableHeader
+        BtSortableHeader,
+        FilterComponent
     ],
     exports: [
         AbpPaginationControlsComponent,
