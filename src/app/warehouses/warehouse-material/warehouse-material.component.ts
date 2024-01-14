@@ -55,23 +55,6 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
 
 
   }
-
-  // getMaterialById(materialId) {
-
-  //   this._materialService.get(materialId).subscribe((responce) => {
-  //     this.materials.push(responce);
-  //   });
-  // }
-  // getUnitById(unitId) {
-
-  //   this._unitService.get(unitId).subscribe((responce) => {
-
-  //     this.units.push(responce);
-
-  //   });
-  // }
-
-
   viewButton(id: number) {
     this._modalService.show(
       ViewWarehouseMaterialDialogComponent,
@@ -212,7 +195,6 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
       .subscribe((result: WarehouseMaterialDtoPagedResultDto) => {
 
         this.data = result.items;
-        console.log(this.data)
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();

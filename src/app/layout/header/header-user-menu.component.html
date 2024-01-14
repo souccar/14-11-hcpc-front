@@ -58,16 +58,10 @@
         <button id="button-basic" dropdownToggle type="button" id="notificationButton"
           class="header-icon btn btn-empty">
           <i class="simple-icon-bell"></i>
-
           <span class="count">{{unreadNotificationCount}}</span>
-
         </button>
-        <div id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3"
-          id="notificationDropdown" style="width: 350px;">
-          <!-- <div class="d-flex justify-content-between">
-            <a class="text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"SetAllAsRead" | localize}}</a>
-            <a class="text-primary" [routerLink]="notifications" style="cursor: pointer;">{{"Settings" | localize}}</a>
-          </div> -->
+        <div id="dropdown-basic" *dropdownMenu class="  dropdown-menu dropdown-menu-right mt-3"
+          id="notificationDropdown" style=" width: 350px;"  >
           <perfect-scrollbar>
             <ng-container *ngFor="let item of notifications">
               <div class="d-flex flex-row mb-3 pb-3 border-bottom" *ngIf="item.isUnread">
@@ -75,26 +69,33 @@
                   <span [class]="item.icon" style="font-size: xx-large;"></span>
                 </a>
                 <div class="pl-3">
-                  <div >
-                    <a href="javascript:;" ><p class="font-weight-medium mb-1">{{item.text}}</p></a>
+                  <div>
+                    <a href="javascript:;">
+                      <p class="font-weight-medium mb-1">{{item.text}}</p>
+                    </a>
                     <span class="mb-0">
                       <span class="text-muted text-small">{{item.creationTime | date: 'dd.MM.yyyy - hh:mm'}}</span>
-                      <span >
-                        <a href="javascript:;" *ngIf="item.state=='UNREAD'" class="btn btn-link ml-1 text-small" (click)="setNotificationAsRead(item); $event.preventDefault(); $event.stopPropagation();">{{"SetAsRead" | localize}}</a>
-                    </span>
+                      <span>
+                        <a href="javascript:;" *ngIf="item.state=='UNREAD'" class="btn btn-link ml-1 text-small"
+                          (click)="setNotificationAsRead(item); $event.preventDefault(); $event.stopPropagation();">{{"SetAsRead"
+                          | localize}}</a>
+                      </span>
                     </span>
                   </div>
                 </div>
               </div>
             </ng-container>
-
+            <div class="d-flex justify-content-center text-primary"  *ngIf="notifications.length<1">
+              {{'NothingToShow'|localize}}
+            </div>
           </perfect-scrollbar>
+
           <div>
             <a class="p-4 text-primary" routerLink="/app/notifications/notifications" style="cursor: pointer;">
               {{"Show All Notifications" | localize}}</a>
-              <a class="ml-3 p-4 text-primary"   (click)="showSettingModal()" style="cursor: pointer;">
-                {{"Setting" | localize}}</a>
-            </div>
+            <a class="ml-3 p-4 text-primary" (click)="showSettingModal()" style="cursor: pointer;">
+              {{"Setting" | localize}}</a>
+          </div>
         </div>
       </div>
     </div>
