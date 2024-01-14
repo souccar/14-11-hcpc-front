@@ -2141,6 +2141,69 @@ export class MaterialServiceProxy {
     }
 
     /**
+     * @param warehouseMaterialsIds (optional) 
+     * @return Success
+     */
+    getIncludeWarehouseMaterials(warehouseMaterialsIds: number[] | undefined): Observable<MaterialincludeWarehouseMaterialDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Material/GetIncludeWarehouseMaterials?";
+        if (warehouseMaterialsIds === null)
+            throw new Error("The parameter 'warehouseMaterialsIds' cannot be null.");
+        else if (warehouseMaterialsIds !== undefined)
+            warehouseMaterialsIds && warehouseMaterialsIds.forEach(item => { url_ += "warehouseMaterialsIds=" + encodeURIComponent("" + item) + "&"; });
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetIncludeWarehouseMaterials(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetIncludeWarehouseMaterials(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialincludeWarehouseMaterialDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialincludeWarehouseMaterialDto[]>;
+        }));
+    }
+
+    protected processGetIncludeWarehouseMaterials(response: HttpResponseBase): Observable<MaterialincludeWarehouseMaterialDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(MaterialincludeWarehouseMaterialDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -3129,6 +3192,62 @@ export class OutputRequestServiceProxy {
      * @param id (optional) 
      * @return Success
      */
+    getForEdit(id: number | undefined): Observable<UpdateOutputRequestDto> {
+        let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<UpdateOutputRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<UpdateOutputRequestDto>;
+        }));
+    }
+
+    protected processGetForEdit(response: HttpResponseBase): Observable<UpdateOutputRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UpdateOutputRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
     get(id: number | undefined): Observable<OutputRequestDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/Get?";
         if (id === null)
@@ -3490,62 +3609,6 @@ export class OutputRequestServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = OutputRequestDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getForEdit(id: number | undefined): Observable<UpdateOutputRequestDto> {
-        let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<UpdateOutputRequestDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<UpdateOutputRequestDto>;
-        }));
-    }
-
-    protected processGetForEdit(response: HttpResponseBase): Observable<UpdateOutputRequestDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UpdateOutputRequestDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8589,6 +8652,64 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getWithWarehouseNameAndExpiryDate(): Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetWithWarehouseNameAndExpiryDate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetWithWarehouseNameAndExpiryDate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetWithWarehouseNameAndExpiryDate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]>;
+        }));
+    }
+
+    protected processGetWithWarehouseNameAndExpiryDate(response: HttpResponseBase): Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(WarehouseMaterialWithWarehouseNameAndExpiryDateDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -12941,6 +13062,61 @@ export class MaterialSuppliersDtoPagedResultDto implements IMaterialSuppliersDto
 export interface IMaterialSuppliersDtoPagedResultDto {
     items: MaterialSuppliersDto[] | undefined;
     totalCount: number;
+}
+
+export class MaterialincludeWarehouseMaterialDto implements IMaterialincludeWarehouseMaterialDto {
+    id: number;
+    warehouseMaterials: WarehouseMaterialIdDto[] | undefined;
+
+    constructor(data?: IMaterialincludeWarehouseMaterialDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            if (Array.isArray(_data["warehouseMaterials"])) {
+                this.warehouseMaterials = [] as any;
+                for (let item of _data["warehouseMaterials"])
+                    this.warehouseMaterials.push(WarehouseMaterialIdDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): MaterialincludeWarehouseMaterialDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MaterialincludeWarehouseMaterialDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        if (Array.isArray(this.warehouseMaterials)) {
+            data["warehouseMaterials"] = [];
+            for (let item of this.warehouseMaterials)
+                data["warehouseMaterials"].push(item.toJSON());
+        }
+        return data;
+    }
+
+    clone(): MaterialincludeWarehouseMaterialDto {
+        const json = this.toJSON();
+        let result = new MaterialincludeWarehouseMaterialDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMaterialincludeWarehouseMaterialDto {
+    id: number;
+    warehouseMaterials: WarehouseMaterialIdDto[] | undefined;
 }
 
 export class MaterialsOfSupplierDto implements IMaterialsOfSupplierDto {
@@ -19444,6 +19620,49 @@ export class WarehouseMaterialDtoPagedResultDto implements IWarehouseMaterialDto
 export interface IWarehouseMaterialDtoPagedResultDto {
     items: WarehouseMaterialDto[] | undefined;
     totalCount: number;
+}
+
+export class WarehouseMaterialIdDto implements IWarehouseMaterialIdDto {
+    id: number;
+
+    constructor(data?: IWarehouseMaterialIdDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): WarehouseMaterialIdDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new WarehouseMaterialIdDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data;
+    }
+
+    clone(): WarehouseMaterialIdDto {
+        const json = this.toJSON();
+        let result = new WarehouseMaterialIdDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IWarehouseMaterialIdDto {
+    id: number;
 }
 
 export class WarehouseMaterialNameDto implements IWarehouseMaterialNameDto {

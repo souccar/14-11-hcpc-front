@@ -1,5 +1,5 @@
 import { CreateOutputRequestMaterialDto, CreateOutputRequestProductDto, MaterialCodeForDropdownDto, MaterialServiceProxy, UnitNameForDropdownDto, WarehouseMaterialNameForDropdownDto, WarehouseMaterialServiceProxy, WarehouseMaterialWithWarehouseNameAndExpiryDateDto, WarehouseNameForDropdownDto } from './../../../../shared/service-proxies/service-proxies';
-import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -14,7 +14,7 @@ export class CreateOutputRequestMaterialWithMaterialIdDto{
   templateUrl: './create-output-request-material-dialog.component.html',
   styleUrls: ['./create-output-request-material-dialog.component.scss']
 })
-export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase {
+export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase implements AfterViewInit {
   saving = false;
   units: UnitNameForDropdownDto[] = [];
   data: CreateOutputRequestMaterialWithMaterialIdDto[] = [];
@@ -43,14 +43,16 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   ) {
     super(injector);
   }
-
-  ngOnInit(): void {
+  
+  ngAfterViewInit(): void {
     this.productIds.forEach((element) => {
       this.ids.push(element.productId);
     });
     this.initialMaterialsForSelectedProducts(this.ids);
     this.initUnits();
   }
+
+  ngOnInit(): void {}
 
   initialMaterialsForSelectedProducts(productIds: number[]) {
     this._materialService.getByProductsIds(productIds)
@@ -70,7 +72,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.unitsNames.push(result);
     });
   }
-
+  
   onSelectMaterial(event) {
     if(event.target == undefined){
       this.selectedMaterialId = event;
@@ -98,7 +100,6 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
         && x.outputRequestMaterial.unitId == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId 
         && x.outputRequestMaterial.quantity == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity)){  
         
-        debugger;
         this.selectedMaterials.push(
           this.materials.find(x => x.id == this.outputRequestMaterialWithMaterialId.materialId)
           );
@@ -119,13 +120,11 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.saveoutputRequestMaterialList.emit(this.subData);
       this.saving = true;
       this.outputRequestMaterialWithMaterialId = new CreateOutputRequestMaterialWithMaterialIdDto();
-      console.log(this.warehouseMaterials);
     }
     }
   }
 
   edit(row: CreateOutputRequestMaterialWithMaterialIdDto) {
-    debugger;
     this.outputRequestMaterialWithMaterialId = row
     this.onSelectMaterial(row.materialId);
     const index = this.data.indexOf(row);

@@ -17,7 +17,7 @@
             <label form="warehouseMaterialId">{{'WarehouseMaterial'|localize}}</label>
             <select class="form-control" aria-label="WarehouseMaterial" #warehouseMaterialIdModel="ngModel" required
               name="warehouseMaterialId" [(ngModel)]="outputRequestMaterialWithMaterialId?.outputRequestMaterial.warehouseMaterialId"
-              (change)="onSelectwarehouseMaterial($event)"  #warehouseMaterialIdEl>
+              (change)="onSelectwarehouseMaterial($event)" #warehouseMaterialIdEl>
               <option [selected]="select" value="0">...</option>
               <option *ngFor="let warehouseMaterial of warehouseMaterials" value="{{warehouseMaterial.id}}">
                 {{ warehouseMaterial.info }}

@@ -68,7 +68,7 @@
           </div>
         </div>
       </accordion-group>
-      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
+      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'" [isOpen]="true">
         <create-output-request-material-dialog *ngIf="loadMaterialView" [productIds]="outputRequest.outputRequestProducts" (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></create-output-request-material-dialog>
       </accordion-group>
 

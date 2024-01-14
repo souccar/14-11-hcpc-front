@@ -46,7 +46,6 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   }
 
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
-    debugger;
     this.outputRequest.outputRequestMaterials = [...items];
   }
 
