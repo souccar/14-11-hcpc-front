@@ -2130,7 +2130,7 @@ angular2-hotkeys@^16.0.1:
     mousetrap "^1.6.5"
     tslib "^2.3.1"
 
-angular2-query-builder@0.6.2:
+angular2-query-builder@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/angular2-query-builder/-/angular2-query-builder-0.6.2.tgz#070bc584bc27d21327dca7a524e62259c6a2a913"
   integrity sha512-gNwie0t1FBe3Dl4YSoiTM70JM6KymOYz6uswNIs6Ux93U6IKK3qxTVeup6rYmi3ih81+bj5azTU1JzrCQi2Fug==

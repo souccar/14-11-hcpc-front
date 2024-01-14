@@ -16,8 +16,6 @@ import { ViewTransferDialogComponent } from './Transfer/view-transfer/view-trans
 import { EditTransferDialogComponent } from './Transfer/edit-transfer/edit-transfer-dialog.component';
 import { CreateTransferDialogComponent } from './Transfer/create-transfer/create-transfer-dialog.component';
 import { GeneralSettingComponent } from './general-setting/general-setting.component';
-import { CreateGeneralSettingDialogComponent } from './general-setting/create-general-setting/create-general-setting-dialog.component';
-import { EditGeneralSettingDialogComponent } from './general-setting/edit-general-setting/edit-general-setting-dialog.component';
 import { CreateProductDialogComponent } from './product/create-product/create-product-dialog.component';
 import { EditProductDialogComponent } from './product/edit-product/edit-product-dialog.component';
 import { ViewProductDialogComponent } from './product/view-product/view-product-dialog.component';
@@ -54,8 +52,6 @@ import { QueryBuilderModule } from 'angular2-query-builder';
     ViewProductDialogComponent,
     CreateTransferDialogComponent,
     GeneralSettingComponent,
-    CreateGeneralSettingDialogComponent,
-    EditGeneralSettingDialogComponent,
     MaterialComponent,
     CreateMaterialDialogComponent,
     EditMaterialDialogComponent,

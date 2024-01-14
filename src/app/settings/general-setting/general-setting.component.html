@@ -1,32 +1,57 @@
-
-<app-heading  [title]= "title"></app-heading>
-<div class="separator mb-4"></div>
-
-<!-- <app-add-new-product-modal #addNewModalRef></app-add-new-product-modal> -->
-<div class="row">
-  <div class="col-12 mb-4 data-table-rows" >
-    <ngx-datatable [rows]="data" [columnMode]="ColumnMode.flex" [limit]="itemsPerPage" [headerHeight]="20"
-      [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]" (select)="onSelect($event)"
-      [selected]="selected">
-      <ngx-datatable-column [name]="l('ExpiryDurationNotifyInDays') " prop="expiryDurationNotify" [flexGrow]="1">
-        <ng-template let-row="row" ngx-datatable-cell-template >
-           {{row.expiryDurationNotify}}
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column [sortable]="false" [name]="l('Action')" prop="Action"  [flexGrow]="1">
-        <ng-template let-row="row" ngx-datatable-cell-template >
-          <button id="button-basic" type="button" id="edit" class="btn btn-empty text-primary align-self-center " (click)="editButton(row.id)">
-            <i class=" text-primary simple-icon-pencil"></i>
-          </button>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-footer *ngIf="true">
-        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
-          let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset" let-limit="limit">
-          <div class="w-100 d-flex justify-content-center">
-          </div>
-        </ng-template>
-      </ngx-datatable-footer>
-    </ngx-datatable>
+<form class="form-horizontal " autocomplete="off" #generalSettings="ngForm" (ngSubmit)="save()">
+  <div class="card">
+    <div class="card-body border-bottom pb-2">
+      <div class="float-left float-none-xs">
+        <div class="d-inline-block">
+          <h5 class="d-inline">{{title}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <!--  -->
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="expiryDurationNotify">
+          {{ "ExpiryDurationNotify" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <input type="number" class="form-control" placeholder="{{'InDays'|localize}}" name="expiryDurationNotify"
+            id="expiryDurationNotify" required [(ngModel)]="expiryDurationNotify " min="1"
+            #expiryDurationNotifyModel="ngModel" #expiryDurationNotifyEl />
+          <abp-validation-summary [control]="expiryDurationNotifyModel"
+            [controlEl]="expiryDurationNotifyEl"></abp-validation-summary>
+        </div>
+      </div>
+      <!--  -->
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="expiryDurationNotify">
+          {{ "SsrsUrl" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <input  class="form-control" placeholder="{{'Server Url'|localize}}" name="ssrsUrl"
+            id="ssrsUrl" required [(ngModel)]="ssrsUrl " min="1"
+            #ssrsUrlModel="ngModel" #ssrsUrlEl />
+          <abp-validation-summary [control]="ssrsUrlModel"
+            [controlEl]="ssrsUrlEl"></abp-validation-summary>
+        </div>
+      </div>
+      <!--  -->
+      <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="ssrsFolder">
+          {{ "SsrsFolder" | localize }}
+        </label>
+        <div class="col-md-9 ">
+          <input class="form-control" placeholder="{{'Reports Folder'|localize}}" name="ssrsFolder"
+            id="ssrsFolder" required [(ngModel)]="ssrsFolder " min="1"
+            #ssrsFolderModel="ngModel" #ssrsFolderEl />
+          <abp-validation-summary [control]="ssrsFolderModel"
+            [controlEl]="ssrsFolderEl"></abp-validation-summary>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer justify-content-between ">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!generalSettings.form.valid">
+        <i class="bi bi-check"> </i> {{ 'Save' | localize }}
+      </button>
+    </div>
   </div>
-</div>
+</form>

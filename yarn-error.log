@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add datatable.net
+  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js add angular2-query-builde
 
 PATH: 
   C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Users\abdalrahman.karaja\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\IBM\SPSS\Statistics\23\JRE\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\dotnet\;C:\Users\abdalrahman.karaja\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\xampp\php;C:\composer;C:\Program Files\WireGuard\;C:\Users\abdalrahman.karaja\AppData\Local\Microsoft\WindowsApps;C:\Users\abdalrahman.karaja\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\abdalrahman.karaja\.dotnet\tools;C:\Users\abdalrahman.karaja\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\abdalrahman.karaja\AppData\Roaming\Composer\vendor\bin;C:\xampp\php;C:\composer;C:\Users\abdalrahman.karaja\AppData\Local\GitHubDesktop\bin;C:\Program Files\BioStar 2(x64)\ve\dist\lib\bsve\dll;
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/datatable.net: Not found
+  Error: https://registry.yarnpkg.com/angular2-query-builde: Not found
       at params.callback [as _callback] (C:\Users\abdalrahman.karaja\AppData\Roaming\nvm\v18.16.0\node_modules\yarn\lib\cli.js:66145:18)
       at self.callback (C:\Users\abdalrahman.karaja\AppData\Roaming\nvm\v18.16.0\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -64,12 +64,11 @@ npm manifest:
       "angular-archwizard": "^7.0.0",
       "angular-svg-round-progressbar": "^12.0.0",
       "angular2-hotkeys": "^16.0.1",
+      "angular2-query-builder": "0.6.2",
       "bootstrap": "^5.3.2",
       "chart.js": "^2.9.3",
       "core-js": "^3.26.1",
-      "datatables.net-dt": "^1.13.8",
       "famfamfam-flags": "^1.0.0",
-      "jquery": "^3.7.1",
       "lodash-es": "^4.17.15",
       "moment": "2.29.4",
       "moment-timezone": "0.5.40",
@@ -79,6 +78,8 @@ npm manifest:
       "ngx-pagination": "^6.0.3",
       "ngx-perfect-scrollbar": "^10.1.1",
       "ngx-quill": "^24.0.0",
+      "ngx-ssrs-reportviewer": "^3.1.1",
+      "ngx-treeview": "10.0.2",
       "nouislider": "^15.7.1",
       "push.js": "1.0.12",
       "quill": "^1.3.7",
@@ -2253,6 +2254,13 @@ Lockfile:
       mousetrap "^1.6.5"
       tslib "^2.3.1"
   
+  angular2-query-builder@0.6.2:
+    version "0.6.2"
+    resolved "https://registry.yarnpkg.com/angular2-query-builder/-/angular2-query-builder-0.6.2.tgz#070bc584bc27d21327dca7a524e62259c6a2a913"
+    integrity sha512-gNwie0t1FBe3Dl4YSoiTM70JM6KymOYz6uswNIs6Ux93U6IKK3qxTVeup6rYmi3ih81+bj5azTU1JzrCQi2Fug==
+    dependencies:
+      tslib "^1.10.0"
+  
   ansi-colors@4.1.3:
     version "4.1.3"
     resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.3.tgz#37611340eb2243e70cc604cad35d63270d48781b"
@@ -3261,21 +3269,6 @@ Lockfile:
     integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
     dependencies:
       assert-plus "^1.0.0"
-  
-  datatables.net-dt@^1.13.8:
-    version "1.13.8"
-    resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.13.8.tgz#6e875d97407cc605f0dadb3452cf477361000176"
-    integrity sha512-/ZPzr1hQ+domerlg/MbcQHqeeqxK9fsZmpRs1YeKxsdfr+UyHQTUiiOO7RqekppSLc7MPqxGnzKkCX9vAgqm0w==
-    dependencies:
-      datatables.net "1.13.8"
-      jquery ">=1.7"
-  
-  datatables.net@1.13.8:
-    version "1.13.8"
-    resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.13.8.tgz#05a2fb5a036b0b65b66d1bb1eae0ba018aaea8a3"
-    integrity sha512-2pDamr+GUwPTby2OgriVB9dR9ftFKD2AQyiuCXzZIiG4d9KkKFQ7gqPfNmG7uj9Tc5kDf+rGj86do4LAb/V71g==
-    dependencies:
-      jquery ">=1.7"
   
   date-format@^4.0.14:
     version "4.0.14"
@@ -4953,11 +4946,6 @@ Lockfile:
       merge-stream "^2.0.0"
       supports-color "^8.0.0"
   
-  jquery@>=1.7, jquery@^3.7.1:
-    version "3.7.1"
-    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
-    integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
-  
   js-tokens@^4.0.0:
     version "4.0.0"
     resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -5766,6 +5754,20 @@ Lockfile:
     integrity sha512-rey6yhvYpHE9ms7/uzUvWWnDah7WdEp2wSku2W4otgegyLs2YU585B40Ccl3/tAustDZX4Wu53um5AR3a9E6mQ==
     dependencies:
       tslib "^2.3.0"
+  
+  ngx-ssrs-reportviewer@^3.1.1:
+    version "3.1.1"
+    resolved "https://registry.yarnpkg.com/ngx-ssrs-reportviewer/-/ngx-ssrs-reportviewer-3.1.1.tgz#6c0a07cad1c7baaecdfad37e751bb4e9e8890658"
+    integrity sha512-KFxt5+B9qK3CtxMHoU0j0FLpEwSMpQmDL7Mzo4Q+qkCvb0iF8gwTC4ftBWW23HMD5KtIAfHr2asPUt/j5GzHJA==
+    dependencies:
+      tslib "^2.0.0"
+  
+  ngx-treeview@10.0.2:
+    version "10.0.2"
+    resolved "https://registry.yarnpkg.com/ngx-treeview/-/ngx-treeview-10.0.2.tgz#efb2ad4a9f6357e3a28913519721e571505ce6cb"
+    integrity sha512-vuSaJ3mqQOsosQE8tWhyPbfNvrUYgdy+YNxUWdaAvwX+Oucwe+xqfMT6J//jx0SI1u3GqOCXZDN+XMK813Hvhw==
+    dependencies:
+      tslib "^2.0.0"
   
   nice-napi@^1.0.2:
     version "1.0.2"

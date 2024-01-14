@@ -3,7 +3,7 @@ import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/
 import { ProductComponent } from '@app/settings/product/product.component';
 import { QueryBuilderClassNames, QueryBuilderConfig } from 'angular2-query-builder';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FilterInputDto, GeneralSettingServiceProxy, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FilterDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { ActivatedRoute } from '@angular/router';
 import { element } from 'protractor';
@@ -15,7 +15,7 @@ import { element } from 'protractor';
 })
 export class FilterComponent extends AppComponentBase implements OnInit {
   @ViewChild(ProductComponent) ProductComponent!: ProductComponent;
-  query: FilterInputDto = new FilterInputDto()
+  query: FilterDto = new FilterDto()
   componentName: string;
   constructor(injcter: Injector, public bsModalRef: BsModalRef,
     private _productService: ProductServiceProxy) {
@@ -187,12 +187,8 @@ export class FilterComponent extends AppComponentBase implements OnInit {
           fullname: { name: 'FullName', type: 'string' },
           username: { name: 'UserName', type: 'string' },
           emailaddress: { name: 'EmailAddress', type: 'string' },
-
-
-
         }
       }
-
     }
 
     else if (this.componentName == 'RoleComponent') {
@@ -203,27 +199,18 @@ export class FilterComponent extends AppComponentBase implements OnInit {
 
         }
       }
-
     }
-
-
-
-
   }
 
   filter() {
     this.query.condition = "and";
     this.query.rules.forEach((element) => {
       element.field = "Price",
-        element.operator = ">",
-        element.value = '11',
-        element.entity = '';
-    })
+      element.operator = ">",
+      element.value = '11'
+    });
     this._productService.filter(this.query).subscribe((reponse) => {
 
-    })
-
-
+    });
   }
-
 }
