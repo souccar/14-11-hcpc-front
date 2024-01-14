@@ -39,6 +39,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
    //
 
   }
+
   ngOnInit(): void {
     this.displayName = this.displayName = this._session.user.name;
     //SignalRAspNetCoreHelper.initSignalR();

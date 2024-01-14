@@ -3,6 +3,7 @@ import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxi
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ActualDetailDialogComponent } from './actual-detail-dialog/actual-detail-dialog.component';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { TestReportComponent } from '@app/reports/test-report/test-report.component';
 
 @Component({
   selector: 'view-actually',
@@ -37,6 +38,17 @@ actualyDetailDialog(planId){
       initialState: {
         planId: planId,
       },
+      class:'modal-xl'
+    }
+  );
+}
+TestReport(){
+  this._modalService.show(
+    TestReportComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+   
       class:'modal-xl'
     }
   );
