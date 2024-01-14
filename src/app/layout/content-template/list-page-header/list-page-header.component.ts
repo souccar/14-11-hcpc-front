@@ -2,12 +2,16 @@ import { Component,  ViewChild, EventEmitter, Output, Input, Injector, Renderer2
 import { AppComponentBase } from '@shared/app-component-base';
 import {HeadingComponent} from '../heading/heading.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { FilterComponent } from '@shared/components/filter/filter.component';
+import { ActivatedRoute } from '@angular/router';
+import { initialState } from 'ngx-bootstrap/timepicker/reducer/timepicker.reducer';
 
 @Component({
   selector: 'app-list-page-header',
   templateUrl: './list-page-header.component.html'
 })
-export class ListPageHeaderComponent extends AppComponentBase {
+export class ListPageHeaderComponent extends AppComponentBase implements OnInit {
   displayOptionsCollapsed = false;
 
   @Input() title = "Unknown";
@@ -32,9 +36,13 @@ export class ListPageHeaderComponent extends AppComponentBase {
   @Output() changeOrderBy: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('search') search: any;
-  constructor(injector: Injector) {
+  constructor(injector: Injector,private _modalService: BsModalService,
+    private route: ActivatedRoute) {
     super(injector);
    }
+  ngOnInit(): void {
+
+  }
 
   onSelectDisplayMode(mode: string): void {
     this.changeDisplayMode.emit(mode);
@@ -43,6 +51,23 @@ export class ListPageHeaderComponent extends AppComponentBase {
     this.addNewItem.emit(null);
   }
 
+  filterbutton():void
+  {
+    // console.log(this.route.component.prototype.variableValue)
+   this._modalService.show(
+     FilterComponent,
+     {
+       backdrop: true,
+       ignoreBackdropClick: true,
+       initialState: {
+        componentName:this.route.component.name,
+        },
+       class: 'modal-lg',
+
+     },
+
+   );
+  }
 
   onDeleteItem(): void {
     this.deleteItem.emit(null);

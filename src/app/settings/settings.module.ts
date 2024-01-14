@@ -36,6 +36,8 @@ import { CreateSupplierDialogComponent } from './supplier/create-supplier/create
 import { EditSupplierDialogComponent } from './supplier/edit-supplier/edit-supplier-dialog.component';
 import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-supplier-dialog.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { QueryBuilderModule } from 'angular2-query-builder';
+
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -66,7 +68,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     SupplierComponent,
     CreateSupplierDialogComponent,
     EditSupplierDialogComponent,
-    ViewSupplierDialogComponent
+    ViewSupplierDialogComponent,
+
 
   ],
   imports: [
@@ -78,6 +81,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     TooltipModule.forRoot(),
     PaginationModule.forRoot(),
     CommonModule,
+    QueryBuilderModule,
     SettingsRoutingModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
