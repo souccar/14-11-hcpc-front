@@ -49,7 +49,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase imple
     this.initWarehouseMaterial();
     this.initUnits();
     this.initMaterials();
-    this. initWarehouses();
+    this.initWarehouses();
 
   }
   ngOnInit(): void {

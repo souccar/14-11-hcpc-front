@@ -53,16 +53,20 @@
             <div class="col-md-9" *ngIf="planProductloaded">
             <ng-select [items]="planProducts" [multiple]="true" bindLabel="name" [closeOnSelect]="false"
             [(ngModel)]="selectedOutputRequestProducts"   name="planProduct"
-            (clear)="onRemoveallProducts()" (remove)="onRemoveProduct($event)"
-             (add)="addProduct($event)"  >
+            (close)="onCloseSelect()" (clear)="onClearSelect()" (remove)="onRemoveFromSelect()"
+            (change)="onChangeOutputRequestProduct($event)"  >
             </ng-select>
             <!-- <abp-validation-summary  [controlEl]="productsEl"></abp-validation-summary> -->
           </div>
           </div>
         </div>
       </accordion-group>
-      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
-        <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
+      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'" [isOpen]="true">
+        <edit-output-request-material-dialog
+         *ngIf="loadMaterialView" [previousMaterials]="outputRequest.outputRequestMaterials"
+          [productIds]="outputRequest.outputRequestProducts"
+           (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)">
+        </edit-output-request-material-dialog>
       </accordion-group>
     </accordion>
   </div>

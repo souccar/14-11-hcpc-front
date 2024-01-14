@@ -22,7 +22,10 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   showItemIndex = 0;
   products: ProductDto[] = [];
   allProducts :  ProductNameForDropdownDto[] = [];
+  loadMaterialView: boolean = false;
+
   @Output() onSave = new EventEmitter<any>();
+
   constructor(injector: Injector,
     private _outputRequestService: OutputRequestServiceProxy,
     public bsModalRef: BsModalRef,
@@ -34,7 +37,6 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
-    // this.outputRequest.outputRequestMaterials = [];
     this.allProducts=[]
     this._router.params.subscribe((params: Params) => {
       this.id = params['id'];
@@ -58,7 +60,6 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   initOutputRequest(id) {
     this.selectedOutputRequestProducts = [];
     this._outputRequestService.getForEdit(id).subscribe((result) => {
-
       this.outputRequest = result;
       this.onChangePlan(result.planId);
       result.outputRequestProducts.forEach(element => {
@@ -66,6 +67,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
 
       });
       this.planProductloaded=true;
+      this.loadMaterialView = true;
     });
 
   }
@@ -153,6 +155,42 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   }
 
 
+  onChangeOutputRequestProduct(items: PlanProductDto[]){
+    this.outputRequest.outputRequestProducts = [];
+    items.forEach(item=>{
+      var outputRequestProduct = new UpdateOutputRequestProductDto();
+      outputRequestProduct.init({
+        // id: item.id,
+        productId: item.id
+      });
+      this.outputRequest.outputRequestProducts.push(outputRequestProduct);
+    });
+  }
 
+  onCloseSelect(){    
+    if(this.loadMaterialView == true){
+      this.loadMaterialView = false;
+    setTimeout(()=>{
+      this.loadMaterialView = true;
+    },1);
+    }else{
+      this.loadMaterialView = true;
+    }
+  }
+
+  onRemoveFromSelect(){
+    if(this.outputRequest.outputRequestProducts.length != 0){
+      this.loadMaterialView = false;
+    setTimeout(()=>{
+      this.loadMaterialView = true;
+    },1);
+    }else{
+      this.loadMaterialView = false;
+    }    
+  }
+
+  onClearSelect(){
+    this.loadMaterialView = false;
+  }
 
 }

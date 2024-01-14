@@ -19,6 +19,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   plans: PlanNameForDropdownDto[] = [];
   planProducts: PlanProductDto[] = [];
   showItemIndex = 0;
+  loadMaterialView: boolean = false;
   renderer: Renderer2;
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -31,6 +32,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
+
   ngOnInit(): void {
 
     this.outputRequest.outputRequestMaterials = [];
@@ -42,14 +44,17 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
   backToAlloutputRequest() {
     this._location.back();
   }
+
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
     this.outputRequest.outputRequestMaterials = [...items];
   }
+
   initPlan() {
     this._planService.getActualPlansNameForDropdown().subscribe((result) => {
       this.plans = result;
     })
   }
+
   getProductFromPlan(id: number) {
     if (id != null) {
       this._planService.get(id).subscribe((result) => {
@@ -58,6 +63,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       });
     }
   }
+
   onChangeOutputRequestProduct(items: PlanProductDto[]){
     this.outputRequest.outputRequestProducts = [];
     items.forEach(item=>{
@@ -66,6 +72,33 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
       this.outputRequest.outputRequestProducts.push(outputRequestProduct);
     });
   }
+
+  onCloseSelect(){    
+    if(this.loadMaterialView == true){
+      this.loadMaterialView = false;
+    setTimeout(()=>{
+      this.loadMaterialView = true;
+    },1);
+    }else{
+      this.loadMaterialView = true;
+    }
+  }
+
+  onRemoveFromSelect(){
+    if(this.outputRequest.outputRequestProducts.length != 0){
+      this.loadMaterialView = false;
+    setTimeout(()=>{
+      this.loadMaterialView = true;
+    },1);
+    }else{
+      this.loadMaterialView = false;
+    }    
+  }
+
+  onClearSelect(){
+    this.loadMaterialView = false;
+  }
+
   save(): void {
     if (this.outputRequest.outputRequestMaterials.length < 1) {
       this.notify.error(this.l('AddOneOutputRequestMaterialAtLeast'));
@@ -94,6 +127,4 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     }
 
   }
-
-
 }
