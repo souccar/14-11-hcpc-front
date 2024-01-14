@@ -29,13 +29,15 @@ import { WarehousesModule } from './warehouses/warehouses.module';
 import { SecurityModule } from './security/security.module';import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { PersonnelModule } from './personnel/personnel.module';// notification
 import {NotificationModule} from './layout/notification/notification.module'
-// import { QueryBuilderModule } from "angular2-query-builder";
+import { ReportsModule } from './reports/reports.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     TenantsComponent,
     CreateTenantDialogComponent,
-    EditTenantDialogComponent
+    EditTenantDialogComponent,
+
   ],
   imports: [
 
@@ -69,7 +71,9 @@ import {NotificationModule} from './layout/notification/notification.module'
     SettingsModule,
     SecurityModule,
     WarehousesModule,
-    PersonnelModule
+    PersonnelModule,
+    
+    ReportsModule
   ],
 
   schemas: [
