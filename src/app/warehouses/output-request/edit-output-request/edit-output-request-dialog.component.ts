@@ -54,6 +54,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
 
   }
   addOutputRequestMaterial(items: OutputRequestMaterialDto[]) {
+    debugger;
     this.outputRequest.outputRequestMaterials = [...items];
   }
 
@@ -122,6 +123,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     }
   }
   save(): void {
+    debugger;
       if (this.outputRequest.outputRequestMaterials.length < 1) {
       this.notify.error(this.l('AddOneOutputRequestMaterialAtLeast'));
       }

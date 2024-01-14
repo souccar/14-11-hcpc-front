@@ -187,8 +187,9 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
 
     const u = this.unitsNames[index]
     this.unitsNames = this.unitsNames.filter((x)=>x.id != u.id);   
-
+      debugger;
       this.data.splice(index, 1);
+      this.subData = [];
       this.data.forEach((element)=>{
         this.subData.push(element.outputRequestMaterial);
       });
