@@ -33,7 +33,6 @@ import { ActualProductComponent } from './actually/view-actually/actual-product/
 import { ActualDetailDialogComponent } from './actually/view-actually/actual-detail-dialog/actual-detail-dialog.component';
 import { ConfirmationDialogComponent } from './actually/confirmation-dialog/confirmation-dialog.component';
 import { DailyProductionDoughnutComponent } from './actually/view-actually/actual-product/daily-production-doughnut/daily-production-doughnut.component';
-
 @NgModule({
   declarations: [
     ProductionComponent,
@@ -57,7 +56,8 @@ import { DailyProductionDoughnutComponent } from './actually/view-actually/actua
     ArbitrageDialogComponent,
     ActualDetailDialogComponent,
     ConfirmationDialogComponent,
-    DailyProductionDoughnutComponent
+    DailyProductionDoughnutComponent,
+
   ],
   imports: [
     ProductionRoutingModule,

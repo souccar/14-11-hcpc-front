@@ -31,7 +31,6 @@ import { PersonnelModule } from './personnel/personnel.module';// notification
 import {NotificationModule} from './layout/notification/notification.module'
 import { ReportsModule } from './reports/reports.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +40,7 @@ import { ReportsModule } from './reports/reports.module';
 
   ],
   imports: [
+
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -84,6 +84,6 @@ import { ReportsModule } from './reports/reports.module';
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
   ],
-  
+
 })
 export class AppModule {}

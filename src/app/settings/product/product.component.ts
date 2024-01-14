@@ -10,6 +10,8 @@ import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { CreateFormulaDialogComponent } from '@app/settings/formula/create-formula/create-formula-dialog.component';
+import { QueryBuilderConfig } from 'angular2-query-builder';
+
 
 @Component({
   selector: 'product',
@@ -17,6 +19,7 @@ import { CreateFormulaDialogComponent } from '@app/settings/formula/create-formu
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent extends PagedListingComponentBase<ProductDto> {
+
 
   displayMode = 'list';
   selectAllState = '';
@@ -36,6 +39,7 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
   ];
+  static label:any[]=['name','size','price']
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
@@ -74,25 +78,8 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
 
   }
 
-
   editButton(id: number): void {
     this._router.navigate(['app/settings/editproduct',id]);
-    // let editProductDialog: BsModalRef;
-    // editProductDialog = this._modalService.show(
-    //   EditProductDialogComponent,
-    //   {
-    //     backdrop: true,
-    //     ignoreBackdropClick: true,
-    //     initialState: {
-    //       id: id,
-    //     },
-    //     class: 'modal-xl',
-    //   }
-    // );
-    // editProductDialog.content.onSave.subscribe(() => {
-    //   this.refresh();
-    // });
-
   }
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
     let request: PagedProductsRequestDto = new PagedProductsRequestDto();

@@ -55,29 +55,13 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
 
 
   }
-
-  // getMaterialById(materialId) {
-
-  //   this._materialService.get(materialId).subscribe((responce) => {
-  //     this.materials.push(responce);
-  //   });
-  // }
-  // getUnitById(unitId) {
-
-  //   this._unitService.get(unitId).subscribe((responce) => {
-
-  //     this.units.push(responce);
-
-  //   });
-  // }
-
-
   viewButton(id: number) {
     this._modalService.show(
       ViewWarehouseMaterialDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
+        class: 'modal-lg',
         initialState: {
           id: id,
         },

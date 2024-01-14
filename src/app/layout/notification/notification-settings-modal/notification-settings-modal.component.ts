@@ -55,7 +55,6 @@ export class NotificationSettingsModalComponent extends AppComponentBase {
 
   private getSettings(callback: () => void) {
       this._notificationService.getNotificationSettings().subscribe((result: GetNotificationSettingsOutput) => {
-        console.log(result)
           this.settings = result;
           callback();
       });

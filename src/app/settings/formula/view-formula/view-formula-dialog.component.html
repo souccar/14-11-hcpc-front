@@ -6,6 +6,7 @@
         <th scope="col">#</th>
         <th scope="col">{{'Name'|localize}}</th>
         <th scope="col">{{'Quantity'|localize}}</th>
+        <th scope="col">{{'Percentage'|localize}}</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
             <span *ngIf="uId == i">{{u.name }}</span>
           </ng-contanier>
         </td>
+        <td>{{formula.percentage}}</td>
       </tr>
     </tbody>
   </table>
