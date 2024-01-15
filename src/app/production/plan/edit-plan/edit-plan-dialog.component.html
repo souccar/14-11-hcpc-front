@@ -43,13 +43,12 @@
         </div>
       </div>
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editUnitModal.form.valid || saving"
-    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
     </tab>
     <tab heading="{{'PlanProduct'|localize}}"  *ngIf="loaded">
       <edit-plan-product-dialog [planId]="plan.id"   (savePlanProductList)="addPlan($event)"  ></edit-plan-product-dialog>
     </tab>
-
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editUnitModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
     </tabset>
 
   </form>

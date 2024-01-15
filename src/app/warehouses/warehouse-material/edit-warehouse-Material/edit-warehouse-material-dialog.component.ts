@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
-import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, SupplierDto, SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
+import { WarehouseMaterialServiceProxy ,SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -10,15 +10,18 @@ import { finalize } from 'rxjs';
   templateUrl: './edit-warehouse-material-dialog.component.html',
 
 })
-export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
+export class EditWarehouseMaterialDialogComponent extends AppComponentBase implements AfterViewInit  {
   saving = false;
+  loaded:boolean=false;
   id:number;
   minDate:Date;
   maxDate:Date;
+  selectedValue: string = 'option1';
   warehouseMaterial = new UpdateWarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
   materials: MaterialNameForDropdownDto[] = [];
   suppliers: SupplierNameForDropdownDto[] = [];
+  supplier: SupplierNameForDropdownDto=new SupplierNameForDropdownDto();
   warehouses: WarehouseNameForDropdownDto[] = [];
   @Output() onSave = new EventEmitter<any>();
   defaultValidationErrors: Partial<AbpValidationError>[] = [
@@ -38,7 +41,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate()+1);
     this.maxDate = new Date();
@@ -46,12 +49,16 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
     this.initWarehouseMaterial();
     this.initUnits();
     this.initMaterials();
-    this. initWarehouses();
-    this.initSuppliers()
+    this.initWarehouses();
+
+  }
+  ngOnInit(): void {
+
   }
   initWarehouseMaterial(){
     this._warehouseMaterialService.getForEdit(this.id).subscribe((result) => {
       this.warehouseMaterial = result;
+      this.getsupplierByMaterial(result.materialId);
     });
   }
 
@@ -60,12 +67,15 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
       this.units = result;
     });
   }
-  initSuppliers() {
-    this._supplierService.getNameForDropdown().subscribe((result) => {
-      this.suppliers = result;
-    });
-  }
+  getsupplierByMaterial(id: number) {
+    if (id != null) {
 
+      this._supplierService.getSuppliersByMaterialIdForDropdown(id).subscribe((result) => {
+        this.suppliers = result;
+      });
+        this.loaded=true;
+      }
+    }
   priceValidationErrors(){
 
     let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];
@@ -84,7 +94,6 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase {
   }
    save(): void {
     this.saving = true;
-     (this.warehouseMaterial)
     this._warehouseMaterialService
       .update(
         this.warehouseMaterial

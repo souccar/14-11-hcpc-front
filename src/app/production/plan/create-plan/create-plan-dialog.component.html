@@ -43,13 +43,13 @@
         </div>
       </div>
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
-    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+
     </tab>
     <tab heading="{{'PlanProduct'|localize}}">
       <create-plan-product-dialog  (savePlanProductList)="addPlan($event)"  ></create-plan-product-dialog>
     </tab>
-
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createUnitModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
     </tabset>
 
   </form>

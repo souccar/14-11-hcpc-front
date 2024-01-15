@@ -29,7 +29,6 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     super(injector);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.fields);
   }
 
   onSort({ column, direction }: SortEvent) {

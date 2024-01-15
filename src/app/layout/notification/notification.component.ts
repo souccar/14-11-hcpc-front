@@ -1,13 +1,15 @@
 import { Component, Injector, OnInit, ViewEncapsulation } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/app-component-base';
-import { GetNotificationsOutput, NotificationServiceProxy, UserNotification, UserNotificationState } from '@shared/service-proxies/service-proxies';
+import { GetNotificationsOutput, GuidEntityDto, NotificationServiceProxy, UserNotification, UserNotificationState } from '@shared/service-proxies/service-proxies';
 import { IFormattedUserNotification, UserNotificationHelper } from './UserNotificationHelper';
 import * as moment from 'moment';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-
+import { Data } from '@angular/router';
+import { result } from 'lodash-es';
+import * as _ from 'lodash';
 @Component({
   selector: 'notifications',
   templateUrl: './notification.component.html',
@@ -19,10 +21,6 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   displayMode = 'list';
   readStateFilter = '';
   selectAllState = '';
-  data: GetNotificationsOutput=new GetNotificationsOutput();
-  moveNotification: GetNotificationsOutput=new GetNotificationsOutput();
-  moveNotificationId:string;
-  notificationsInfo: IFormattedUserNotification;
   totalItem = 0;
   totalPage = 0;
   currentPage = 1;
@@ -35,11 +33,15 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   deleteIcon = 'bi bi-x-lg';
   deleteLabel = this.l('Delete');
   selected: UserNotification[] = [];
-  itemOrder = { label: this.l("Title"), value: "title" };
+  itemOrder = { label: this.l("Text"), value: "text" };
   itemOptionsOrders = [
-    { label: this.l("Title"), value: "title" },
+    { label: this.l("Text"), value: "text" },
   ];
   title=this.l("AllNotifications");
+  data:IFormattedUserNotification[] = [];
+  selectedNotification:IFormattedUserNotification;
+  tempNotifications:GetNotificationsOutput=new GetNotificationsOutput();
+  loaded=false;
   constructor(
     injector: Injector,
     private _notificationService: NotificationServiceProxy,
@@ -55,18 +57,22 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   ngOnInit(): void {
     this.loadData(this.itemsPerPage, this.currentPage);
   }
+
   move(id:string)
   {
-      this.data.items.forEach((item)=>{
-        if(item.id==id)
-        {
-          this.moveNotification=item.notification.data.properties.Message;
-          this.moveNotificationId=item.id;
+      this.data.forEach((item)=>{
+        if(item.userNotificationId==id)
+        { console.log(item)
+          this.selectedNotification=item;
           this.isMove=true;
+          const notificationId:GuidEntityDto=new GuidEntityDto();
+          notificationId.id=item.userNotificationId;
+          this._notificationService.setNotificationAsRead( notificationId).subscribe(result=>{
+          });
+          console.log( this.selectedNotification)
         }
       })
   }
-
   loadData(pageSize: number = 10, currentPage: number = 1): void {
     let request: GetUserNotificationsInput = new GetUserNotificationsInput();
     this.itemsPerPage = pageSize;
@@ -92,8 +98,12 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
       })
     )
       .subscribe((result) => {
-        console.log(result)
-        this.data = result;
+        this.tempNotifications = result;
+        _.forEach(result.items, (item: UserNotification) => {
+          this.data.push(this._userNotificationHelper.format(<any>item));
+        });
+        console.log(this.data);
+        this.loaded=true;
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
       });
@@ -235,11 +245,14 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
       }
     );
   }
-
-  public getRowClass(formattedRecord: IFormattedUserNotification): string {
-    return formattedRecord.state === 'READ' ? 'notification-read' : '';
+  public getRowClass = (row:IFormattedUserNotification) => {
+    if(row.isUnread){
+    return {
+      'row-color': true
+    };
   }
-
+  return {'row-color': false};
+ }
 }
 
 class GetUserNotificationsInput extends PagedRequestDto {

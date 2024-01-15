@@ -16,8 +16,6 @@ import { ViewTransferDialogComponent } from './Transfer/view-transfer/view-trans
 import { EditTransferDialogComponent } from './Transfer/edit-transfer/edit-transfer-dialog.component';
 import { CreateTransferDialogComponent } from './Transfer/create-transfer/create-transfer-dialog.component';
 import { GeneralSettingComponent } from './general-setting/general-setting.component';
-import { CreateGeneralSettingDialogComponent } from './general-setting/create-general-setting/create-general-setting-dialog.component';
-import { EditGeneralSettingDialogComponent } from './general-setting/edit-general-setting/edit-general-setting-dialog.component';
 import { CreateProductDialogComponent } from './product/create-product/create-product-dialog.component';
 import { EditProductDialogComponent } from './product/edit-product/edit-product-dialog.component';
 import { ViewProductDialogComponent } from './product/view-product/view-product-dialog.component';
@@ -35,6 +33,9 @@ import { SupplierComponent } from './supplier/supplier.component';
 import { CreateSupplierDialogComponent } from './supplier/create-supplier/create-supplier-dialog.component';
 import { EditSupplierDialogComponent } from './supplier/edit-supplier/edit-supplier-dialog.component';
 import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-supplier-dialog.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { QueryBuilderModule } from 'angular2-query-builder';
+
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -51,8 +52,6 @@ import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-suppl
     ViewProductDialogComponent,
     CreateTransferDialogComponent,
     GeneralSettingComponent,
-    CreateGeneralSettingDialogComponent,
-    EditGeneralSettingDialogComponent,
     MaterialComponent,
     CreateMaterialDialogComponent,
     EditMaterialDialogComponent,
@@ -65,7 +64,8 @@ import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-suppl
     SupplierComponent,
     CreateSupplierDialogComponent,
     EditSupplierDialogComponent,
-    ViewSupplierDialogComponent
+    ViewSupplierDialogComponent,
+
 
   ],
   imports: [
@@ -74,8 +74,10 @@ import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-suppl
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
+    TooltipModule.forRoot(),
     PaginationModule.forRoot(),
     CommonModule,
+    QueryBuilderModule,
     SettingsRoutingModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

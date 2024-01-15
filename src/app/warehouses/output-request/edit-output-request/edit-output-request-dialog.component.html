@@ -28,7 +28,7 @@
               {{ "Title"|localize }}
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" name="title" id="title" required 
+              <input type="text" class="form-control" name="title" id="title" required
               [(ngModel)]="outputRequest.title"
                 #titleModel="ngModel" #titleEl />
               <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
@@ -39,10 +39,9 @@
               {{ "Plans" | localize }}
             </label>
             <div class="col-md-9 ">
-              <select class="form-control" aria-label="plans" #planModel="ngModel" required name="plans" 
+              <select class="form-control" aria-label="plans" #planModel="ngModel" required name="plans"
               [(ngModel)]="outputRequest.planId" (change)="onChangePlan($event.target.value)" #planEl>
               <option *ngFor="let item of plans" value={{item.id}}>{{item.title}}</option>
-               
               </select>
               <abp-validation-summary [control]="planModel" [controlEl]="planEl"></abp-validation-summary>
             </div>
@@ -53,18 +52,22 @@
             </label>
             <div class="col-md-9" *ngIf="planProductloaded">
             <ng-select [items]="planProducts" [multiple]="true" bindLabel="name" [closeOnSelect]="false"
-            [(ngModel)]="selectedOutputRequestProducts"   name="planProduct" 
-            (clear)="onRemoveallProducts()" (remove)="onRemoveProduct($event)"
-             (add)="addProduct($event)"  >
+            [(ngModel)]="selectedOutputRequestProducts"   name="planProduct"
+            (close)="onCloseSelect()" (clear)="onClearSelect()" (remove)="onRemoveFromSelect()"
+            (change)="onChangeOutputRequestProduct($event)"  >
             </ng-select>
             <!-- <abp-validation-summary  [controlEl]="productsEl"></abp-validation-summary> -->
           </div>
           </div>
         </div>
       </accordion-group>
-      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'">
-        <edit-output-request-material-dialog (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)"></edit-output-request-material-dialog>
-      </accordion-group>  
+      <accordion-group class="mt-2" heading="{{'OutputRequestMaterial' | localize}}" [panelClass]="'border'" [isOpen]="true">
+        <edit-output-request-material-dialog
+         *ngIf="loadMaterialView" [previousMaterials]="outputRequest.outputRequestMaterials"
+          [productIds]="outputRequest.outputRequestProducts"
+           (saveoutputRequestMaterialList)="addOutputRequestMaterial($event)">
+        </edit-output-request-material-dialog>
+      </accordion-group>
     </accordion>
   </div>
 </div>

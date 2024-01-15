@@ -25,7 +25,7 @@ export class EditUserComponent extends AppComponentBase implements OnInit  {
     decoupleChildFromParent: false,
     maxHeight: 300,
   });
-  
+
   constructor(injector: Injector,
     private _userService: UserServiceProxy,
     private _roleService: RoleServiceProxy,
@@ -34,9 +34,9 @@ export class EditUserComponent extends AppComponentBase implements OnInit  {
     super(injector);
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.initialUser();
-    
+
   }
 
   initialUser(){
@@ -51,7 +51,7 @@ export class EditUserComponent extends AppComponentBase implements OnInit  {
     this._roleService.getAllRolesNames()
     .subscribe((result)=>{
       this.roles = result;
-      this.initialItems();     
+      this.initialItems();
     });
   }
 
@@ -89,7 +89,7 @@ export class EditUserComponent extends AppComponentBase implements OnInit  {
     this.user.roleNames.forEach((element)=>{
       let parent = this.items[0].children.find(x=>x.value.toString().toLowerCase() == element.toString().toLowerCase());
       if(parent){
-        parent.checked = true;      
+        parent.checked = true;
       }
     });
     if(this.items[0].children.every(a=>a.checked == true)){
@@ -101,7 +101,6 @@ export class EditUserComponent extends AppComponentBase implements OnInit  {
     if(this.tempRoles.length != 0){
     this.user.roleNames = this.tempRoles;
     }
-    console.log(this.user);
     this.saving = true;
     this._userService.update(
         this.user
