@@ -54,39 +54,34 @@
   </div>  
   <div class="separator my-3"></div>
   <!---->
+
+
+  <!-- tabel -->
   <div class="row">
     <div class="col-12 list table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-hover table-striped table-borderless">
+      <table class="table table-hover table-borderless ">
         <thead class="border-bottom">
           <tr>
-            <th>{{ "Quantity" | localize }}</th>
+            <th scope="col">{{'Material'|localize}}</th>
             <th></th>
-            <th>{{ "Material" | localize }}</th>
-            <th>{{ "Warehouse" | localize }}</th>
+            <th scope="col">{{'WarehouseMaterial'|localize}}</th>
+            <th scope="col">{{'Quantity'|localize}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="
-              let outputRequestMaterial of data.outputRequestMaterials;
-              let i = index
-            "
-          >
-            <!-- <td>{{ outputRequestMaterial.quantity }}</td> -->
-            <ng-conatiner *ngFor="let unitName of unitNames; let uId = index">
-              <td *ngIf="uId == i">
-                {{ outputRequestMaterial.quantity }}{{ unitName.name }}
-              </td>
-            </ng-conatiner>
+          <tr *ngFor="let outputRequestMaterialWithMaterial of data.outputRequestMaterials; let i = index">
+            <ng-contanier *ngFor="let materialCode of materialsCodes; let materialCodeIndex = index">
+              <td *ngIf="materialCodeIndex == i">{{materialCode?.code }}</td>
+            </ng-contanier>
             <td></td>
-            <td>{{ material.name }}</td>
-            <ng-conatiner
-              *ngFor="let warehouseName of warehouseNames; let wId = index"
-            >
-              <td *ngIf="wId == i">
-                <span>{{ warehouseName.name }}</span>
-              </td>
-            </ng-conatiner>
+            <ng-contanier *ngFor="let warehouseMaterial of warehouseMaterials; let warehouseMaterialIndex = index">
+              <td *ngIf="warehouseMaterialIndex == i">{{warehouseMaterial?.info }}</td>
+            </ng-contanier>
+            <td>{{outputRequestMaterialWithMaterial?.quantity }}
+              <ng-contanier *ngFor="let unitName of unitNames; let unitNameIndex = index">
+               <span *ngIf="unitNameIndex == i">{{unitName?.name }}</span>
+              </ng-contanier>
+            </td>
           </tr>
         </tbody>
       </table>
