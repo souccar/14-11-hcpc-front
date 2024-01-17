@@ -12,11 +12,11 @@ import { finalize } from 'rxjs';
 })
 export class EditMaterialDialogComponent extends AppComponentBase {
   saving = false;
-  id:number;
-  material =  new UpdateMaterialDto ();
+  id: number;
+  material = new UpdateMaterialDto();
   suppliers: SupplierNameForDropdownDto[] = [];
-  supplierIds:number[]=[]
-  updateSupplier:UpdateMaterialSuppliersDto[]=[];
+  supplierIds: number[] = []
+  updateSupplier: UpdateMaterialSuppliersDto[] = [];
   defaultValidationErrors: Partial<AbpValidationError>[] = [
     {
       name: 'min',
@@ -25,106 +25,108 @@ export class EditMaterialDialogComponent extends AppComponentBase {
   ];
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
-    private _materialService:MaterialServiceProxy,
-    private _supplierService:SupplierServiceProxy,
+    private _materialService: MaterialServiceProxy,
+    private _supplierService: SupplierServiceProxy,
     public bsModalRef: BsModalRef,
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
-    this.material.suppliers=[]
+    this.material.suppliers = []
     this.initSupplier();
-    this.initMaterial()
+    this.initMaterial();
   }
 
-  initSupplier(){
-   this._supplierService.getNameForDropdown().subscribe((result:SupplierNameForDropdownDto[]) => {
-    this.suppliers = result;
-  });
+  initSupplier() {
+    this._supplierService.getNameForDropdown().subscribe((result: SupplierNameForDropdownDto[]) => {
+      this.suppliers = result;
+    });
   }
-  leadTimeValidationErrors(){
-    let errors: AbpValidationError[] = [{name:'min',localizationKey:'leadTimeCanNotBeNegativeOrZero',propertyKey:'leadTimeCanNotBeNegativeOrZero'}];
+  leadTimeValidationErrors() {
+    let errors: AbpValidationError[] = [{ name: 'min', localizationKey: 'leadTimeCanNotBeNegativeOrZero', propertyKey: 'leadTimeCanNotBeNegativeOrZero' }];
     return errors;
   }
-  initMaterial(){
-    this._materialService.get(this.id).subscribe((result:MaterialDto) => {
-      this.material.id=result.id;
-      this.material.name=result.name;
-      this.material.code=result.code;
-      this.material.description=result.description;
-     result.suppliers.forEach((item)=>{
-      let supplier =new UpdateMaterialSuppliersDto();
-      supplier.id=item.id,
-      supplier.supplierId=item.supplier.id
-      supplier.leadTime=item.leadTime
-      this.material.suppliers.push(supplier)
+  initMaterial() {
+    this._materialService.get(this.id).subscribe((result: MaterialDto) => {
+      this.material.id = result.id;
+      this.material.name = result.name;
+      this.material.code = result.code;
+      this.material.description = result.description;
+      result.suppliers.forEach((item) => {
+        let supplier = new UpdateMaterialSuppliersDto();
+        supplier.id = item.id,
+          supplier.supplierId = item.supplier.id
+        supplier.leadTime = item.leadTime
+        this.material.suppliers.push(supplier);
+      });
+    });
+  }
 
-     });
-   });
-   }
-
-   addMaterialSupplier (){
-
-
-    const index = this.material.suppliers.length ;
+  addMaterialSupplier() {
+    const index = this.material.suppliers.length;
     //list have one element at least
-    if(index>0)
-    {
-      if ((this.material.suppliers[index-1].supplierId == null || this.material.suppliers[index-1].leadTime == null) ) {
+    if (index > 0) {
+      if ((this.material.suppliers[index - 1].supplierId == null || this.material.suppliers[index - 1].leadTime == null)) {
         this.notify.error(this.l('FillSupplierAndLeadTimeFieldFirst'));
       }
-      else{
+      else {
         let materialSupplier = new UpdateMaterialSuppliersDto();
-        materialSupplier.materialId=this.material.id;
+        materialSupplier.materialId = this.material.id;
         this.material.suppliers.push(materialSupplier);
       }
     }
     //if the list empty
-    else
-    {
+    else {
       let materialSupplier = new UpdateMaterialSuppliersDto();
-      materialSupplier.materialId=this.material.id;
+      materialSupplier.materialId = this.material.id;
       this.material.suppliers.push(materialSupplier);
     }
   }
-  removeMaterialSupplier (materialsupplier:UpdateMaterialSuppliersDto){
-    const index =  this.material.suppliers.indexOf(materialsupplier, 0);
+  removeMaterialSupplier(materialsupplier: UpdateMaterialSuppliersDto) {
+    const index = this.material.suppliers.indexOf(materialsupplier, 0);
     if (index > -1) {
       this.material.suppliers.splice(index, 1);
     }
   }
-   save(): void {
+  hasDuplicatesSuppliers() {
 
+    var valueArr: number[] = this.material.suppliers.map(function (item) { return item.supplierId });
+    var isDuplicate = valueArr.some(function (item, idx) {
+      return valueArr.indexOf(item) !== idx
+    });
+    return isDuplicate;
+  }
+
+  save(): void {
     if (this.material.suppliers.length < 1) {
       this.notify.error(this.l('AddOneSupplierAtLeast'));
     }
     else {
-      this.saving = true;
-      this.material.suppliers.forEach((element) =>
-      element.id = 0
-    );
-      this._materialService.
-      update(
-          this.material
-        )
-        .pipe(
-          finalize(() => {
-            this.saving = false;
-          })
-        )
-        .subscribe((result: any) => {
-
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();
-        });
+      if (!this.hasDuplicatesSuppliers()) {
+        this.saving = true;
+        this.material.suppliers.forEach((element) =>
+          element.id = 0);
+        this._materialService.
+          update(
+            this.material
+          )
+          .pipe(
+            finalize(() => {
+              this.saving = false;
+            })
+          )
+          .subscribe((result: any) => {
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.bsModalRef.hide();
+            this.onSave.emit();
+          });
+      }
+      else {
+        this.notify.error(this.l('TheSupplierCannotBeDuplicated'));
+      }
     }
-
     this.saving = true;
-
-
-
   }
 
 }
