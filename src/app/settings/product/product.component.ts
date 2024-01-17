@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EditProductDialogComponent } from './edit-product/edit-product-dialog.component';
 import { CreateProductDialogComponent } from './create-product/create-product-dialog.component';
 import { ViewProductDialogComponent } from './view-product/view-product-dialog.component';
-import { ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { PagedProductRequestDto, ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 
 import { Router } from '@angular/router';
@@ -82,13 +82,11 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
     this._router.navigate(['app/settings/editproduct',id]);
   }
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-    let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+    let request: PagedProductRequestDto = new PagedProductRequestDto();
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
     this.search = search;
     request.keyword = search;
-    request.sort_Field = sort_Field;
-    request.sort_Desc = sort_Desc;
     request.skipCount = (currentPage - 1) * pageSize;
     request.maxResultCount = this.itemsPerPage;
     this.list(request, this.pageNumber, () => { });
@@ -140,18 +138,15 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
     this.setSelectAllState();
   }
   protected list(
-    request: PagedProductsRequestDto,
+    request: PagedProductRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
 
     this._productService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.skipCount,
-        request.MaxResultCount,
+      .read(
+      request
       )
       .pipe(
         finalize(() => {
@@ -240,9 +235,4 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
 
 
 }
-class PagedProductsRequestDto extends PagedRequestDto {
-  keyword: string;
-  sort_Field: string;
-  sort_Desc: boolean;
-  MaxResultCount: number
-}
+

@@ -72,7 +72,7 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
 
     this._employeeService
       .read(
-       request
+        request
       )
       .pipe(
         finalize(() => {
@@ -169,6 +169,5 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
     this.loadData(this.pageSize, 1, val, this.orderBy);
   }
 }
-
 
 

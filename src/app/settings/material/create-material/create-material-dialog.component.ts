@@ -46,6 +46,13 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
 
     });
   }
+  hasDuplicatesSuppliers(){
+  var valueArr = this.material.suppliers.map(function(item){ return item.supplierId });
+  var isDuplicate = valueArr.some(function(item, idx){ 
+    return valueArr.indexOf(item) != idx 
+    });
+    return isDuplicate;
+  }
   addMaterialSupplier() {
     const index = this.material.suppliers.length ;
     //list have one element at least
@@ -76,22 +83,28 @@ export class CreateMaterialDialogComponent extends AppComponentBase {
       this.notify.error(this.l('AddOneSupplierAtLeast'));
     }
     else {
-      this.saving = true;
-      this._materialService.
-        create(
-          this.material
-        )
-        .pipe(
-          finalize(() => {
-            this.saving = false;
-          })
-        )
-        .subscribe((result: any) => {
-
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();
-        });
+      if(!this.hasDuplicatesSuppliers()){
+        this.saving = true;
+        this._materialService.
+          create(
+            this.material
+          )
+          .pipe(
+            finalize(() => {
+              this.saving = false;
+            })
+          )
+          .subscribe((result: any) => {
+  
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.bsModalRef.hide();
+            this.onSave.emit();
+          });
+      }
+      else {
+        this.notify.error(this.l('TheSupplierCannotBeDuplicated'));
+      }
+  
     }
 
 

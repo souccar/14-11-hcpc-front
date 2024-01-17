@@ -4952,17 +4952,32 @@ export class ProductServiceProxy {
 
     /**
      * @param keyword (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
+    getAll(keyword: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Product/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -15200,6 +15215,7 @@ export class PagedProductRequestDto implements IPagedProductRequestDto {
     maxResultCount: number;
     skipCount: number;
     keyword: string | undefined;
+    filtering: FilterDto;
     sorting: string | undefined;
 
     constructor(data?: IPagedProductRequestDto) {
@@ -15216,6 +15232,7 @@ export class PagedProductRequestDto implements IPagedProductRequestDto {
             this.maxResultCount = _data["maxResultCount"];
             this.skipCount = _data["skipCount"];
             this.keyword = _data["keyword"];
+            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
             this.sorting = _data["sorting"];
         }
     }
@@ -15232,6 +15249,7 @@ export class PagedProductRequestDto implements IPagedProductRequestDto {
         data["maxResultCount"] = this.maxResultCount;
         data["skipCount"] = this.skipCount;
         data["keyword"] = this.keyword;
+        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
         data["sorting"] = this.sorting;
         return data;
     }
@@ -15248,6 +15266,7 @@ export interface IPagedProductRequestDto {
     maxResultCount: number;
     skipCount: number;
     keyword: string | undefined;
+    filtering: FilterDto;
     sorting: string | undefined;
 }
 

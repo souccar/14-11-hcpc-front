@@ -55,7 +55,7 @@
               <div class="col-md-3 ">
                 <select class="form-control" aria-label="supplier" #supplierModel="ngModel" required
                   name="supplier{{i}}" id="supplier{{i}}" [(ngModel)]="materialsupplier.supplierId" #supplierEl>
-                  <option *ngFor="let item of suppliers" value={{item.id}}>{{item.name}}</option>
+                  <option *ngFor="let item of suppliers" [ngValue]="item.id">{{item.name}}</option>
                   <abp-validation-summary [control]="supplierModel" [controlEl]="supplierEl"></abp-validation-summary>
                 </select>
               </div>
