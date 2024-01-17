@@ -88,10 +88,10 @@ export class EditMaterialDialogComponent extends AppComponentBase {
       this.material.suppliers.push(materialSupplier);
     }
   }
-  removeMaterialSupplier (materialsupplier:UpdateMaterialSuppliersDto){
-    const index =  this.material.suppliers.indexOf(materialsupplier, 0);
-    if (index > -1) {
-      this.material.suppliers.splice(index, 1);
+  removeMaterialSupplier (i:number){
+    if(i!=-1)
+    {
+      this.material.suppliers.splice(i,1);
     }
   }
    save(): void {

@@ -26,7 +26,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   product: UpdateProductDto = new UpdateProductDto();
   @Input() productId: number;
   @Output() saveFormulaList = new EventEmitter<UpdateFormulaDto[]>();
-
+  isButtonDisabled = false;
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
     private _unitService: UnitServiceProxy,
@@ -90,7 +90,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
     });
   }
   addToFormulaList() {
-
+    this.isButtonDisabled = false;
     if(this.formula.materialId ==null || this.formula.quantity==null || this.formula.unitId ==null){
       return;
     }
@@ -100,12 +100,13 @@ export class EditFormulaDialogComponent extends AppComponentBase {
     this.getMaterialsName(this.formula.materialId);
     this.getUnitName(this.formula.unitId);
     this.saveFormulaList.emit(this.data);
-   
-   
+
+
     this.formula = new FormulaDto();
   }
   }
   edit(row: FormulaDto) {
+    this.isButtonDisabled = true;
     this.formula = row
     const index = this.data.indexOf(row);
 

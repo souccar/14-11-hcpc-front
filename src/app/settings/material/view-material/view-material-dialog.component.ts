@@ -13,8 +13,7 @@ export class ViewMaterialDialogComponent implements OnInit {
   id: number;
   editable: true;
   constructor(public bsModalRef: BsModalRef,
-    private _materialService:MaterialServiceProxy,
-    private _supplierService:SupplierServiceProxy){}
+    private _materialService:MaterialServiceProxy){}
   ngOnInit(): void {
     this.initMaterial()
   }
@@ -23,16 +22,8 @@ export class ViewMaterialDialogComponent implements OnInit {
   {
      this._materialService.get(this.id).subscribe((response)=>{
       this.data=response;
-
-      // this.initSupplier(this.data.supplierId)
      })
   }
-
-  initSupplier(id:number){
-    this._supplierService.get(id).subscribe((response) => {
-     this.supplier = response;
-   });
-   }
 
 
 }

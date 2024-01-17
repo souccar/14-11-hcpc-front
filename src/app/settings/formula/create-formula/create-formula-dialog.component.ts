@@ -27,8 +27,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   saveDisabled = true
   unitsNames: string[] = [];
   materialNames: string[] = [];
-
-
+  isButtonDisabled = false;
   @Output() saveFormulaList = new EventEmitter<CreateFormulaDto[]>();
   defaultValidationErrors: Partial<AbpValidationError>[] = [
     {
@@ -88,8 +87,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     });
   }
   addToFormulaList() {
-
-
+    this.isButtonDisabled = false;
     if (this.formula.materialId == null || this.formula.quantity == null || this.formula.unitId == null) {
       return;
     }
@@ -111,6 +109,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
   }
 
   edit(row: FormulaDto) {
+    this.isButtonDisabled = true;
     this.formula = row
     const index = this.data.indexOf(row);
     if (index !== -1) {

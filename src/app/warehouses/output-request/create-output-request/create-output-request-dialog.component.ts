@@ -13,7 +13,6 @@ import { forEach } from 'lodash-es';
 })
 export class CreateOutputRequestDialogComponent extends AppComponentBase {
   saving = false;
-
   planProductloaded=false;
   outputRequest: CreateOutputRequestDto = new CreateOutputRequestDto();
   plans: PlanNameForDropdownDto[] = [];
@@ -73,7 +72,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     });
   }
 
-  onCloseSelect(){    
+  onCloseSelect(){
     if(this.loadMaterialView == true){
       this.loadMaterialView = false;
     setTimeout(()=>{
@@ -92,7 +91,7 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     },1);
     }else{
       this.loadMaterialView = false;
-    }    
+    }
   }
 
   onClearSelect(){
