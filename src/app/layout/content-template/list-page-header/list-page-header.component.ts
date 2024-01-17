@@ -53,7 +53,7 @@ export class ListPageHeaderComponent extends AppComponentBase implements OnInit 
 
   filterbutton():void
   {
-    // console.log(this.route.component.prototype.variableValue)
+
    this._modalService.show(
      FilterComponent,
      {

@@ -31,7 +31,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   selectedWarehouseMaterialId: number;
   select: boolean = true;
   ids: number[] = [];
-
+  isButtonDisabled = false;
   @Input() productIds: CreateOutputRequestProductDto[] = [];
   @Output() saveoutputRequestMaterialList = new EventEmitter<CreateOutputRequestMaterialDto[]>();
 
@@ -43,7 +43,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   ) {
     super(injector);
   }
-  
+
   ngAfterViewInit(): void {
     this.productIds.forEach((element) => {
       this.ids.push(element.productId);
@@ -72,7 +72,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.unitsNames.push(result);
     });
   }
-  
+
   onSelectMaterial(event) {
     if(event.target == undefined){
       this.selectedMaterialId = event;
@@ -90,6 +90,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   }
 
   addToOutputRequestMaterialList() {
+    this.isButtonDisabled = false;
     if (this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId == null ||
        this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity == null ||
         this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId == null) {
@@ -97,9 +98,9 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
     }
     else {
       if(!this.data.some(x=>x.outputRequestMaterial.warehouseMaterialId == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId
-        && x.outputRequestMaterial.unitId == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId 
-        && x.outputRequestMaterial.quantity == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity)){  
-        
+        && x.outputRequestMaterial.unitId == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId
+        && x.outputRequestMaterial.quantity == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity)){
+
         this.selectedMaterials.push(
           this.materials.find(x => x.id == this.outputRequestMaterialWithMaterialId.materialId)
           );
@@ -109,7 +110,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
         this.selectedWarehouseMaterials.push(
           this.warehouseMaterials.find(x => x.id == this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId)
         );
-        
+
       this.getUnitName(this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId);
       this.data.push(this.outputRequestMaterialWithMaterialId);
       this.data = [...this.data];
@@ -125,6 +126,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
   }
 
   edit(row: CreateOutputRequestMaterialWithMaterialIdDto) {
+    this.isButtonDisabled = true;
     this.outputRequestMaterialWithMaterialId = row
     this.onSelectMaterial(row.materialId);
     const index = this.data.indexOf(row);
@@ -146,8 +148,8 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
     this.selectedMaterials = this.selectedMaterials.filter((x)=>x.id != i.id);
 
     const u = this.unitsNames[index]
-    this.unitsNames = this.unitsNames.filter((x)=>x.id != u.id);   
-    
+    this.unitsNames = this.unitsNames.filter((x)=>x.id != u.id);
+
       this.data.splice(index, 1);
       this.data.forEach((element)=>{
         this.subData.push(element.outputRequestMaterial);

@@ -61,7 +61,8 @@
                 </ng-contanier>
                 <td>{{planProduct.numberOfItems}} </td>
                 <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
-                    (click)="edit(planProduct)">
+                    (click)="edit(planProduct)"
+                    [disabled]="isButtonDisabled">
                     <i class="simple-icon-pencil text-primary"></i>
                   </button>
                   <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"

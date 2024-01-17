@@ -72,7 +72,7 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
 
     this._employeeService
       .read(
-        request
+       request
       )
       .pipe(
         finalize(() => {

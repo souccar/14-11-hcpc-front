@@ -40,7 +40,7 @@ export class EditTransferDialogComponent extends AppComponentBase {
       this.ToUnits = result;
     });
   }
- 
+
 
   initTransfer(){
     this._transferService.get(this.id).subscribe((result) => {
@@ -55,7 +55,7 @@ export class EditTransferDialogComponent extends AppComponentBase {
     else {
       this.saving = true;
       this._transferService.
-      create(
+      update(
         this.transfer
       )
       .pipe(
@@ -64,8 +64,6 @@ export class EditTransferDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response: any) => {
-
-         (response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();

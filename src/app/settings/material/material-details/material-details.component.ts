@@ -39,8 +39,8 @@ export class MaterialDetailsComponent implements OnInit {
       this.materialOfSuppliers = result;
     });
   }
-  
-  onHover(supplierId){    
+
+  onHover(supplierId){
     this.dataToolTip = '';
     const dataInfo = this.materialOfSuppliers.find(x=>x.supplierId == supplierId);
     if(dataInfo){

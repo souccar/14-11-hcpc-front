@@ -41,6 +41,7 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   tooltipData = {
     changeStatus:"change Status"
   };
+  isButtonDisabled = false;
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _OutputRequestService: OutputRequestServiceProxy,

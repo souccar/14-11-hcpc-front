@@ -37,8 +37,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
   ids: number[] = [];
   materialIds: number[] = [];
   materialsWithWarehouseMaterials: MaterialincludeWarehouseMaterialDto[] = [];
-
-
+  isButtonDisabled = false;
   @Input() productIds: CreateOutputRequestProductDto[] = [];
   @Input() previousMaterials: UpdateOutputRequestMaterialDto[] = [];
   @Output() saveoutputRequestMaterialList = new EventEmitter<UpdateOutputRequestMaterialDto[]>();
@@ -133,8 +132,9 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
       this.unitsNames.push(response);
     });
   }
-  
+
   addToOutputRequestMaterialList() {
+    this.isButtonDisabled = false;
     if (this.outputRequestMaterialWithMaterialId.outputRequestMaterial.warehouseMaterialId == null ||
        this.outputRequestMaterialWithMaterialId.outputRequestMaterial.quantity == null ||
         this.outputRequestMaterialWithMaterialId.outputRequestMaterial.unitId == null) {
@@ -166,6 +166,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
   }
 
   edit(row: UpdateOutputRequestMaterialWithMaterialIdDto) {
+    this.isButtonDisabled = true;
     this.outputRequestMaterialWithMaterialId = row;
     this.onSelectMaterial(row.materialId);
     const index = this.data.indexOf(row);
@@ -186,7 +187,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
     this.selectedMaterials = this.selectedMaterials.filter((x)=>x.id != i.id);
 
     const u = this.unitsNames[index]
-    this.unitsNames = this.unitsNames.filter((x)=>x.id != u.id);   
+    this.unitsNames = this.unitsNames.filter((x)=>x.id != u.id);
       debugger;
       this.data.splice(index, 1);
       this.subData = [];
