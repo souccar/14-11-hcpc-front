@@ -9,7 +9,7 @@
         <div class="col-md-9 ">
           <select class="form-control" aria-label="material" #materialModel="ngModel" required name="material"
           [(ngModel)]="warehouseMaterial.materialId"  (change)="getsupplierByMaterial($event.target.value)"  #materialEl>
-            <option *ngFor="let item of materials" value={{item.id}}>{{item.name}}</option>
+            <option *ngFor="let item of materials" value={{item.id}}>{{item.code}}</option>
           </select>
 
           <abp-validation-summary [control]="materialModel" [controlEl]="materialEl"></abp-validation-summary>

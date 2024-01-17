@@ -10,7 +10,7 @@
               <label form="productId">{{'Product'|localize}}</label>
               <select aria-placeholder="{{'Product'|localize}}" class="form-control" aria-label="Product" #productIdModel="ngModel" required name="productId"
               [(ngModel)]="planProduct.productId"  #productIdEl >
-                <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.name}}</option>
+                <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.information}}</option>
               </select>
 
             </div>
@@ -55,7 +55,7 @@
             <tbody>
               <tr *ngFor="let planProduct of plan.planProducts;let i=index; ">
                 <td>{{i+1}}</td>
-                  <td >{{planProduct.product.name}} </td>
+                  <td >{{planProduct.product.name +" | " +planProduct.product.size}} </td>
                   <td>{{planProduct.numberOfItems}} </td>
                 <!-- </ng-contanier> -->
     

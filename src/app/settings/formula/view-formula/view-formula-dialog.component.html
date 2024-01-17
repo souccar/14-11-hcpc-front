@@ -13,7 +13,7 @@
       <tr *ngFor="let formula of data; ;let i=index;  ">
         <th scope="row">{{i+1}}</th>
         <ng-contanier *ngFor="let m of materials;let mId=index">
-          <td *ngIf="mId==i">{{m.name}} </td>
+          <td *ngIf="mId==i">{{m.code}} </td>
         </ng-contanier>
         <td>{{formula.quantity }}
           <ng-contanier *ngFor="let u of units; let uId = index">

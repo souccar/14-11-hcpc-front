@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, Input, Output } from '@angular/core'
 import { ActivatedRoute, Params } from '@angular/router';
 import { ViewMaterialDialogComponent } from '@app/settings/material/view-material/view-material-dialog.component';
 import { AppComponentBase } from '@shared/app-component-base';
-import { FormulaDto, FormulaServiceProxy, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductNameForDropdownDto, ProductServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy, UpdateFormulaDto, UpdateProductDto } from '@shared/service-proxies/service-proxies';
+import { FormulaDto, FormulaServiceProxy, MaterialCodeForDropdownDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductInfoDropdownDto, ProductServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy, UpdateFormulaDto, UpdateProductDto } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
@@ -16,11 +16,11 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   saving = false;
   loaded = false;
   ColumnMode = ColumnMode;
-  materials: MaterialNameForDropdownDto[] = [];
-  materialDropdown: MaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
+  materialDropdown: MaterialCodeForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
   unitDropdown: UnitNameForDropdownDto[] = [];
-  products: ProductNameForDropdownDto[] = [];
+  products: ProductInfoDropdownDto[] = [];
   data: UpdateFormulaDto[] = [];
   formula = new UpdateFormulaDto();
   product: UpdateProductDto = new UpdateProductDto();
@@ -65,7 +65,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   }
 
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((result) => {
+    this._materialService.getCodeForDropdown().subscribe((result) => {
       this.materialDropdown = result
 
     });

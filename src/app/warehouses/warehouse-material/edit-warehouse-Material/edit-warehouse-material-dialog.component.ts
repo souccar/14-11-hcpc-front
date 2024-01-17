@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
-import { WarehouseMaterialServiceProxy ,SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
+import { WarehouseMaterialServiceProxy ,SupplierServiceProxy, UpdateWarehouseMaterialDto, UnitNameForDropdownDto, MaterialNameForDropdownDto, UnitServiceProxy, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, WarehouseNameForDropdownDto, MaterialCodeForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase imple
   selectedValue: string = 'option1';
   warehouseMaterial = new UpdateWarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
-  materials: MaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
   suppliers: SupplierNameForDropdownDto[] = [];
   supplier: SupplierNameForDropdownDto=new SupplierNameForDropdownDto();
   warehouses: WarehouseNameForDropdownDto[] = [];
@@ -83,7 +83,7 @@ export class EditWarehouseMaterialDialogComponent extends AppComponentBase imple
   }
 
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((result) => {
+    this._materialService.getCodeForDropdown().subscribe((result) => {
       this.materials = result;
     });
   }

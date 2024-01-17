@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, WarehouseNameForDropdownDto } from '@shared/service-proxies/service-proxies';
+import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, WarehouseNameForDropdownDto, MaterialCodeForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
@@ -13,7 +13,7 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   saving = false;
   warehouseMaterial = new CreateWarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
-  materials: MaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
   suppliers: SupplierNameForDropdownDto[] = [];
   warehouses: WarehouseNameForDropdownDto[] = [];
   minDate:Date;
@@ -65,7 +65,7 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
     return errors;
   }
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((result) => {
+    this._materialService.getCodeForDropdown().subscribe((result) => {
       this.materials = result;
     });
   }
