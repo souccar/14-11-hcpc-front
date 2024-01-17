@@ -15,7 +15,6 @@ export class LoginComponent extends AppComponentBase implements OnInit, OnDestro
   @HostListener('window:resize', ['$event'])
 onResize(event) {
   this.innerWidth = window.innerWidth;
-  console.log( this.innerWidth)
 }
   constructor(
     injector: Injector,
