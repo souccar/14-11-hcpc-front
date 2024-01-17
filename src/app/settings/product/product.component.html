@@ -34,6 +34,11 @@
           {{ row.name }}
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-column [name]="l('Size')" prop="size" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.size}}
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column [name]="l('Price')" prop="price" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.price | commaNumber }}

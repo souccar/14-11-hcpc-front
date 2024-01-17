@@ -31,7 +31,6 @@ export class ViewWarehouseMaterialDialogComponent {
   initWarehouseMaterial(){
     this._warehouseMaterialService.get(this.id).subscribe((result) => {
       this.warehouseMaterial = result;
-       (result)
       this.loaded=true;
     });
   }

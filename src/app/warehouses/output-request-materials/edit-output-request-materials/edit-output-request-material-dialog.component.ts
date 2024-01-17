@@ -68,6 +68,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
   }
 
   getMaterials() {
+    
     this.previousMaterials.forEach((element) => {
       const material = new UpdateOutputRequestMaterialWithMaterialIdDto();
       const m = this.materialsWithWarehouseMaterials
@@ -129,6 +130,7 @@ export class EditOutputRequestMaterialDialogComponent extends AppComponentBase i
 
   getUnitName(id: number) {
     this._unitService.get(id).subscribe((response) => {
+      debugger;
       this.unitsNames.push(response);
     });
   }

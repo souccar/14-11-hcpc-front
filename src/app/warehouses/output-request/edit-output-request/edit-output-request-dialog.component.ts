@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Output, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanProductMaterialDto, PlanServiceProxy, ProductDto, ProductInfoDropdownDto, ProductServiceProxy, UpdateOutputRequestDto, UpdateOutputRequestProductDto } from '@shared/service-proxies/service-proxies';
@@ -11,7 +11,7 @@ import { element } from 'protractor';
   templateUrl: './edit-output-request-dialog.component.html',
   styleUrls: ['./edit-output-request-dialog.component.scss']
 })
-export class EditOutputRequestDialogComponent extends AppComponentBase {
+export class EditOutputRequestDialogComponent extends AppComponentBase implements AfterViewInit {
   saving = false;
   planProductloaded = false;
   outputRequest: UpdateOutputRequestDto = new UpdateOutputRequestDto();
@@ -36,14 +36,17 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   ) {
     super(injector);
   }
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.allProducts=[]
     this._router.params.subscribe((params: Params) => {
       this.id = params['id'];
     });
     this.initProduct();
     this.initPlan();
-    this.initOutputRequest(this.id);
+    
+  }
+  ngOnInit(): void {
+    
   }
   backToAlloutputRequest() {
     this._location.back();
@@ -79,10 +82,9 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
   }
   getSelectedProduct(id){
     const prod = this.allProducts.find(x => x.id == id);
-
     if (prod) {
       var selectedProduct = new ProductInfoDropdownDto();
-       selectedProduct.init({ id: prod.id, name: prod.information });
+       selectedProduct.init({ id: prod.id, information: prod.information });
       this.selectedOutputRequestProducts.push(selectedProduct);
 
     }
@@ -90,7 +92,7 @@ export class EditOutputRequestDialogComponent extends AppComponentBase {
     initProduct(){
     this._productService.getNameForDropdown().subscribe((result) => {
     this.allProducts=result;
-
+    this.initOutputRequest(this.id);
     });
 }
 

@@ -11272,7 +11272,6 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
     priceSYP: number;
     priceUSD: number;
     unitId: number;
-    unitPriceId: number | undefined;
     materialId: number;
     supplierId: number;
     warehouseId: number;
@@ -11294,7 +11293,6 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
             this.priceSYP = _data["priceSYP"];
             this.priceUSD = _data["priceUSD"];
             this.unitId = _data["unitId"];
-            this.unitPriceId = _data["unitPriceId"];
             this.materialId = _data["materialId"];
             this.supplierId = _data["supplierId"];
             this.warehouseId = _data["warehouseId"];
@@ -11316,7 +11314,6 @@ export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
         data["priceSYP"] = this.priceSYP;
         data["priceUSD"] = this.priceUSD;
         data["unitId"] = this.unitId;
-        data["unitPriceId"] = this.unitPriceId;
         data["materialId"] = this.materialId;
         data["supplierId"] = this.supplierId;
         data["warehouseId"] = this.warehouseId;
@@ -11338,7 +11335,6 @@ export interface ICreateWarehouseMaterialDto {
     priceSYP: number;
     priceUSD: number;
     unitId: number;
-    unitPriceId: number | undefined;
     materialId: number;
     supplierId: number;
     warehouseId: number;
@@ -20049,7 +20045,6 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
     priceSYP: number;
     priceUSD: number;
     unitId: number;
-    unitPriceId: number;
     materialId: number;
     supplierId: number;
     warehouseId: number;
@@ -20072,7 +20067,6 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
             this.priceSYP = _data["priceSYP"];
             this.priceUSD = _data["priceUSD"];
             this.unitId = _data["unitId"];
-            this.unitPriceId = _data["unitPriceId"];
             this.materialId = _data["materialId"];
             this.supplierId = _data["supplierId"];
             this.warehouseId = _data["warehouseId"];
@@ -20095,7 +20089,6 @@ export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
         data["priceSYP"] = this.priceSYP;
         data["priceUSD"] = this.priceUSD;
         data["unitId"] = this.unitId;
-        data["unitPriceId"] = this.unitPriceId;
         data["materialId"] = this.materialId;
         data["supplierId"] = this.supplierId;
         data["warehouseId"] = this.warehouseId;
@@ -20118,7 +20111,6 @@ export interface IUpdateWarehouseMaterialDto {
     priceSYP: number;
     priceUSD: number;
     unitId: number;
-    unitPriceId: number;
     materialId: number;
     supplierId: number;
     warehouseId: number;
@@ -20525,7 +20517,6 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
     priceSYP: number;
     expiryStatus: number | undefined;
     unitId: number | undefined;
-    unitPriceId: number | undefined;
     materialId: number | undefined;
     supplierId: number | undefined;
     warehouseId: number | undefined;
@@ -20556,7 +20547,6 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
             this.priceSYP = _data["priceSYP"];
             this.expiryStatus = _data["expiryStatus"];
             this.unitId = _data["unitId"];
-            this.unitPriceId = _data["unitPriceId"];
             this.materialId = _data["materialId"];
             this.supplierId = _data["supplierId"];
             this.warehouseId = _data["warehouseId"];
@@ -20591,7 +20581,6 @@ export class WarehouseMaterialDto implements IWarehouseMaterialDto {
         data["priceSYP"] = this.priceSYP;
         data["expiryStatus"] = this.expiryStatus;
         data["unitId"] = this.unitId;
-        data["unitPriceId"] = this.unitPriceId;
         data["materialId"] = this.materialId;
         data["supplierId"] = this.supplierId;
         data["warehouseId"] = this.warehouseId;
@@ -20626,7 +20615,6 @@ export interface IWarehouseMaterialDto {
     priceSYP: number;
     expiryStatus: number | undefined;
     unitId: number | undefined;
-    unitPriceId: number | undefined;
     materialId: number | undefined;
     supplierId: number | undefined;
     warehouseId: number | undefined;

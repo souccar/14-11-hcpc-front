@@ -51,7 +51,7 @@
               {{ "Products" | localize }}
             </label>
             <div class="col-md-9" *ngIf="planProductloaded">
-            <ng-select [items]="planProducts" [multiple]="true" bindLabel="name" [closeOnSelect]="false"
+            <ng-select [items]="planProducts" [multiple]="true" bindLabel="information" [closeOnSelect]="false"
             [(ngModel)]="selectedOutputRequestProducts"   name="planProduct"
             (close)="onCloseSelect()" (clear)="onClearSelect()" (remove)="onRemoveFromSelect()"
             (change)="onChangeOutputRequestProduct($event)"  >
