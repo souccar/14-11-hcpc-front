@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreatePlanProductDto, PlanProductDto, ProductDto, ProductNameForDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreatePlanProductDto, PlanProductDto, ProductDto, ProductInfoDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -12,7 +12,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class CreatePlanProductDialogComponent extends AppComponentBase {
   saving = false;
   products: ProductDto[] = [];
-  productsForDropDown: ProductNameForDropdownDto[] = [];
+  productsForDropDown: ProductInfoDropdownDto[] = [];
   productId: number;
   product:ProductDto=new ProductDto();
   planProduct:CreatePlanProductDto=new CreatePlanProductDto();
@@ -37,7 +37,7 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
 
 
   initProducts() {
-    this._productService.getNameForDropdown().subscribe((response: ProductNameForDropdownDto[]) => {
+    this._productService.getNameForDropdown().subscribe((response: ProductInfoDropdownDto[]) => {
       this.productsForDropDown = response;
 
 

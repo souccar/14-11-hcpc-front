@@ -11,7 +11,7 @@
               <select aria-placeholder="material" class="form-control" aria-label="Material" #materialIdModel="ngModel" required name="materialId"
               [(ngModel)]="formula.materialId"  #materialIdEl >
                 <!-- <option  disabled selected hidden >Material</option> -->
-                <option *ngFor="let item of materialsForDropDown" value={{item.id}}>{{item.name}}</option>
+                <option *ngFor="let item of materialsForDropDown" value={{item.id}}>{{item.code}}</option>
               </select>
               <!-- <abp-validation-summary [control]="materialIdModel" [controlEl]="materialIdEl"></abp-validation-summary> -->
             </div>
@@ -62,7 +62,7 @@
             <tr *ngFor="let formula of data;let i=index; ">
                <td>{{i+1}}</td>
               <ng-contanier *ngFor="let m of materials;let mId=index">
-                <td *ngIf="mId==i">{{m.name}} </td>
+                <td *ngIf="mId==i">{{m.code}} </td>
               </ng-contanier>
               <td>{{formula.quantity }}
                 <ng-contanier *ngFor="let u of unitsNames; let uId = index">

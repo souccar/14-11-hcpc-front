@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy, UpdateWarehouseMaterialDto, WarehouseMaterialDto, WarehouseMaterialServiceProxy, WarehouseNameForDropdownDto, WarehouseServiceProxy } from '@shared/service-proxies/service-proxies';
+import { MaterialCodeForDropdownDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, UnitDto, UnitNameForDropdownDto, UnitServiceProxy, UpdateWarehouseMaterialDto, WarehouseMaterialDto, WarehouseMaterialServiceProxy, WarehouseNameForDropdownDto, WarehouseServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -13,7 +13,7 @@ export class ViewWarehouseMaterialDialogComponent {
   editable=true;
   warehouseMaterial = new WarehouseMaterialDto();
   units: UnitNameForDropdownDto[] = [];
-  materials: MaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
   suppliers: SupplierNameForDropdownDto[] = [];
   warehouses: WarehouseNameForDropdownDto[] = [];
 

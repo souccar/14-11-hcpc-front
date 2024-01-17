@@ -1,7 +1,7 @@
 
 import { Component, EventEmitter, Injector, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { FormulaDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductNameForDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy, UpdateProductDto } from '@shared/service-proxies/service-proxies';
+import { FormulaDto, MaterialCodeForDropdownDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy, UpdateProductDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
@@ -16,7 +16,7 @@ export class EditProductDialogComponent extends AppComponentBase {
   saving = false;
   product :UpdateProductDto=new UpdateProductDto();
   formulas:FormulaDto[]=[];
-  materials: MaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
   id:number
   loaded=false;
@@ -68,7 +68,7 @@ export class EditProductDialogComponent extends AppComponentBase {
 
   }
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((response:MaterialNameForDropdownDto[]) => {
+    this._materialService.getCodeForDropdown().subscribe((response:MaterialCodeForDropdownDto[]) => {
       this.materials = response;
     });
   }

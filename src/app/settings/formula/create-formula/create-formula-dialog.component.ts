@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateFormulaDto, FormulaDto, FormulaServiceProxy, MaterialNameForDropdownDto, MaterialServiceProxy, ProductNameForDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateFormulaDto, FormulaDto, FormulaServiceProxy, MaterialCodeForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductInfoDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
@@ -16,10 +16,10 @@ import { ViewMaterialDialogComponent } from '@app/settings/material/view-materia
 })
 export class CreateFormulaDialogComponent extends AppComponentBase {
   saving = false;
-  materials: MaterialNameForDropdownDto[] = [];
-  materialsForDropDown: MaterialNameForDropdownDto[] = [];
+  materials: MaterialCodeForDropdownDto[] = [];
+  materialsForDropDown: MaterialCodeForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
-  products: ProductNameForDropdownDto[] = [];
+  products: ProductInfoDropdownDto[] = [];
   productId: number;
   data: CreateFormulaDto[] = [];
   formula = new CreateFormulaDto();
@@ -56,7 +56,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     return errors;
   }
   initMaterials() {
-    this._materialService.getNameForDropdown().subscribe((response: MaterialNameForDropdownDto[]) => {
+    this._materialService.getCodeForDropdown().subscribe((response: MaterialCodeForDropdownDto[]) => {
       this.materialsForDropDown = response;
     });
   }
