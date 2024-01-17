@@ -156,7 +156,6 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
       .subscribe((result: ProductDtoPagedResultDto) => {
 
         this.data = result.items;
- (this.data)
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
