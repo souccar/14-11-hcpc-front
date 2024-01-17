@@ -62,14 +62,13 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   {
       this.data.forEach((item)=>{
         if(item.userNotificationId==id)
-        { console.log(item)
-          this.selectedNotification=item;
+        { this.selectedNotification=item;
           this.isMove=true;
           const notificationId:GuidEntityDto=new GuidEntityDto();
           notificationId.id=item.userNotificationId;
           this._notificationService.setNotificationAsRead( notificationId).subscribe(result=>{
           });
-          console.log( this.selectedNotification)
+
         }
       })
   }
@@ -102,7 +101,6 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
         _.forEach(result.items, (item: UserNotification) => {
           this.data.push(this._userNotificationHelper.format(<any>item));
         });
-        console.log(this.data);
         this.loaded=true;
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
