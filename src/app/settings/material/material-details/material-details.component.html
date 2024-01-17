@@ -33,7 +33,7 @@
                 <span id="f0" class="font-weight-medium" [tooltip]="onHover(supplier.supplier.id)">{{supplier.supplier.name}}</span>
               </td>
               <td class="text-right">
-                <span class="text-muted"    
+                <span class="text-muted"
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
                 title="{{'leadTime'|localize}}">{{ supplier.leadTime }}</span>
@@ -70,7 +70,7 @@
           <tr *ngFor="let warehousematerial of data.warehouseMaterials; let i = index">
             <td>{{warehousematerial.warehouse.name}}</td>
             <td>{{warehousematerial.currentQuantity}} {{warehousematerial.unit?.name}}</td>
-            <td>{{warehousematerial.code}}</td>
+            <td>{{warehousematerial.material.code}}</td>
             <td>{{warehousematerial.expirationDate|date:"yyyy/MM/dd"}}</td>
 
             <ng-contanier *ngFor="let outputRequest of warehousematerial.outputRequests;let wId = index">

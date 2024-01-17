@@ -21,7 +21,7 @@
               <option [selected]="select" value="0">...</option>
               <option *ngFor="let warehouseMaterial of warehouseMaterials" value="{{warehouseMaterial.id}}">
                 {{ warehouseMaterial.info }}
-              </option>   
+              </option>
             </select>
           </div>
           <div class="col-md-3 required">
@@ -77,6 +77,7 @@
               </td>
               <td>
                 <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
+                [disabled]="isButtonDisabled"
                   (click)="edit(outputRequestMaterialWithMaterial)">
                   <i class="simple-icon-pencil text-primary"></i>
                 </button>

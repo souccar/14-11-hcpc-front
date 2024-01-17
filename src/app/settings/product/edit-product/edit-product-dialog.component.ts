@@ -82,8 +82,6 @@ export class EditProductDialogComponent extends AppComponentBase {
   }
 
   save(): void {
-
-
     if (this.product.formulas.length < 1) {
       this.notify.error(this.l('AddOneFormulaAtLeast'));
     }

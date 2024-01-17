@@ -72,6 +72,7 @@
               </td>
               <td>{{formula.percentage}}%</td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
+                [disabled]="isButtonDisabled"
                   (click)="edit(formula)">
                   <i class="simple-icon-pencil text-primary"></i>
                 </button>

@@ -20,7 +20,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   data: PlanProductDto[] = [];
   plan: PlanDto = new PlanDto();
   ColumnMode = ColumnMode;
-
+  isButtonDisabled = false;
   @Input() planId: number;
   @Output() savePlanProductList = new EventEmitter<PlanProductDto[]>();
 
@@ -69,6 +69,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   }
 
   addToProductList() {
+    this.isButtonDisabled = false;
     if (this.planProduct.numberOfItems == null || this.planProduct.productId == null) {
       return;
     }
@@ -110,13 +111,11 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
 
 
   edit(row: PlanProductDto) {
+    this.isButtonDisabled = true;
     this.planProduct = new PlanProductDto();
     this.planProduct = row
     const index = this.plan.planProducts.indexOf(row);
-
-
     if (index !== -1) {
-      // this.data.splice(index, 1);
       this.plan.planProducts.splice(index, 1);
     }
   }

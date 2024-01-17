@@ -203,14 +203,14 @@ export class FilterComponent extends AppComponentBase implements OnInit {
   }
 
   filter() {
-    this.query.condition = "and";
-    this.query.rules.forEach((element) => {
-      element.field = "Price",
-      element.operator = ">",
-      element.value = '11'
-    });
-    this._productService.filter(this.query).subscribe((reponse) => {
+    // this.query.condition = "and";
+    // this.query.rules.forEach((element) => {
+    //   element.field = "Price",
+    //   element.operator = ">",
+    //   element.value = '11'
+    // });
+    // this._productService.filter(this.query).subscribe((reponse) => {
 
-    });
+    // });
   }
 }

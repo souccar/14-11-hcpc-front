@@ -29,6 +29,7 @@ export class MaterialDetailsComponent implements OnInit {
   {
     this._materialService.getMaterialDetails(this.id).subscribe((result:MaterialDetailDto)=>{
       this.data=result;
+      console.log(this.data)
       this.isLoaded=true;
     });
   }
@@ -39,8 +40,8 @@ export class MaterialDetailsComponent implements OnInit {
       this.materialOfSuppliers = result;
     });
   }
-  
-  onHover(supplierId){    
+
+  onHover(supplierId){
     this.dataToolTip = '';
     const dataInfo = this.materialOfSuppliers.find(x=>x.supplierId == supplierId);
     if(dataInfo){

@@ -19,9 +19,8 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
   data: CreatePlanProductDto[] = [];
   ColumnMode = ColumnMode;
   saveDisabled = true
-
+  isButtonDisabled = false;
   @Output() savePlanProductList = new EventEmitter<CreatePlanProductDto[]>();
-
   constructor(injector: Injector,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
@@ -53,6 +52,7 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
 
   addToProductList()
   {
+    this.isButtonDisabled = false;
     if(this.planProduct.numberOfItems ==null || this.planProduct.productId == null){
       return;
     }
@@ -72,12 +72,10 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
   }
 
   edit(row: PlanProductDto) {
+
+    this.isButtonDisabled = true;
     this.planProduct = row
-
-
-    const index = this.data.indexOf(row);
-
-
+      const index = this.data.indexOf(row);
     if (index !== -1) {
       this.data.splice(index, 1);
     }
