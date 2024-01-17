@@ -32,7 +32,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
   itemOptionsOrders = [
     { label: this.l("Name"), value: "name" },
     { label: this.l("Description"), value: "description" },
-   
+
 
   ];
   selectedCount = 0;
@@ -255,7 +255,7 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
 
   searchKeyUp(event): void {
     const val = event.target.value.toLowerCase().trim();
-    console.log(event)
+
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 

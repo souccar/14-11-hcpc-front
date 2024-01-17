@@ -57,6 +57,7 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
     this.pageSize = pageSize;
     this.pageNumber = pageNumber;
     request.keyword = search;
+    // request.sortFields = sortFields;
     request.skipCount = (pageNumber - 1) * pageSize;
     request.maxResultCount = this.pageSize;
     this.list(request, this.pageNumber, () => { });
@@ -168,4 +169,5 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
     this.loadData(this.pageSize, 1, val, this.orderBy);
   }
 }
+
 

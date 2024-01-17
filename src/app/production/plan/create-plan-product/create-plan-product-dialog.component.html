@@ -11,7 +11,7 @@
               <select  aria-placeholder="{{ 'Product' | localize }}"  class="form-control" aria-label="Product" #productIdModel="ngModel" required name="productId"
               [(ngModel)]="planProduct.productId"  #productIdEl >
                 <!-- <option  disabled selected hidden >Material</option> -->
-                <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.name}}</option>
+                <option *ngFor="let item of productsForDropDown" value={{item.id}}>{{item.information}}</option>
               </select>
 
             </div>
@@ -57,11 +57,12 @@
               <tr *ngFor="let planProduct of data;let i=index; ">
                 <td>{{i+1}}</td>
                 <ng-contanier *ngFor="let p of products;let pId=index">
-                  <td *ngIf="pId==i">{{p.name}} </td>
+                  <td *ngIf="pId==i">{{p.name +" | " +p.size}} </td>
                 </ng-contanier>
                 <td>{{planProduct.numberOfItems}} </td>
                 <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
-                    (click)="edit(planProduct)">
+                    (click)="edit(planProduct)"
+                    [disabled]="isButtonDisabled">
                     <i class="simple-icon-pencil text-primary"></i>
                   </button>
                   <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"

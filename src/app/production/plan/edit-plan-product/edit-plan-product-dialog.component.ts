@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { PlanDto, PlanProductDto, PlanServiceProxy, ProductDto, ProductDtoPagedResultDto, ProductNameForDropdownDto, ProductServiceProxy, UpdatePlanDto, UpdatePlanProductDto } from '@shared/service-proxies/service-proxies';
+import { PlanDto, PlanProductDto, PlanServiceProxy, ProductDto, ProductDtoPagedResultDto, ProductInfoDropdownDto, ProductServiceProxy, UpdatePlanDto, UpdatePlanProductDto } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -13,14 +13,14 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   saving = false;
   loaded = false;
   products: ProductDto[] = [];
-  productsForDropDown: ProductNameForDropdownDto[] = [];
+  productsForDropDown: ProductInfoDropdownDto[] = [];
   productId: number;
   product: ProductDto = new ProductDto();
   planProduct: PlanProductDto = new PlanProductDto();
   data: PlanProductDto[] = [];
   plan: PlanDto = new PlanDto();
   ColumnMode = ColumnMode;
-
+  isButtonDisabled = false;
   @Input() planId: number;
   @Output() savePlanProductList = new EventEmitter<PlanProductDto[]>();
 
@@ -41,7 +41,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   }
 
   initProductsDropDown() {
-    this._productService.getNameForDropdown().subscribe((response: ProductNameForDropdownDto[]) => {
+    this._productService.getNameForDropdown().subscribe((response: ProductInfoDropdownDto[]) => {
       this.productsForDropDown = response;
     });
   }
@@ -69,6 +69,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   }
 
   addToProductList() {
+    this.isButtonDisabled = false;
     if (this.planProduct.numberOfItems == null || this.planProduct.productId == null) {
       return;
     }
@@ -96,7 +97,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
         let product = this.productsForDropDown.filter(x => x.id == this.planProduct.productId)[0];
 
         this.planProduct.product.id = product.id;
-        this.planProduct.product.name = product.name;
+        this.planProduct.product.name = product.information;
         this.plan.planProducts.push(this.planProduct)
         this.data.push(this.planProduct)
         this.planProduct = new PlanProductDto();
@@ -110,13 +111,11 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
 
 
   edit(row: PlanProductDto) {
+    this.isButtonDisabled = true;
     this.planProduct = new PlanProductDto();
     this.planProduct = row
     const index = this.plan.planProducts.indexOf(row);
-
-
     if (index !== -1) {
-      // this.data.splice(index, 1);
       this.plan.planProducts.splice(index, 1);
     }
   }

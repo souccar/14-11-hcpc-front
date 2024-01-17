@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreatePlanProductDto, PlanProductDto, ProductDto, ProductNameForDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreatePlanProductDto, PlanProductDto, ProductDto, ProductInfoDropdownDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -12,16 +12,15 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class CreatePlanProductDialogComponent extends AppComponentBase {
   saving = false;
   products: ProductDto[] = [];
-  productsForDropDown: ProductNameForDropdownDto[] = [];
+  productsForDropDown: ProductInfoDropdownDto[] = [];
   productId: number;
   product:ProductDto=new ProductDto();
   planProduct:CreatePlanProductDto=new CreatePlanProductDto();
   data: CreatePlanProductDto[] = [];
   ColumnMode = ColumnMode;
   saveDisabled = true
-
+  isButtonDisabled = false;
   @Output() savePlanProductList = new EventEmitter<CreatePlanProductDto[]>();
-
   constructor(injector: Injector,
     private _productService: ProductServiceProxy,
     public bsModalRef: BsModalRef,
@@ -38,7 +37,7 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
 
 
   initProducts() {
-    this._productService.getNameForDropdown().subscribe((response: ProductNameForDropdownDto[]) => {
+    this._productService.getNameForDropdown().subscribe((response: ProductInfoDropdownDto[]) => {
       this.productsForDropDown = response;
 
 
@@ -53,6 +52,7 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
 
   addToProductList()
   {
+    this.isButtonDisabled = false;
     if(this.planProduct.numberOfItems ==null || this.planProduct.productId == null){
       return;
     }
@@ -72,12 +72,10 @@ export class CreatePlanProductDialogComponent extends AppComponentBase {
   }
 
   edit(row: PlanProductDto) {
+
+    this.isButtonDisabled = true;
     this.planProduct = row
-
-
-    const index = this.data.indexOf(row);
-
-
+      const index = this.data.indexOf(row);
     if (index !== -1) {
       this.data.splice(index, 1);
     }

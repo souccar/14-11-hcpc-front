@@ -2028,6 +2028,64 @@ export class MaterialServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getCodeForDropdown(): Observable<MaterialCodeForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Material/GetCodeForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCodeForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCodeForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MaterialCodeForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MaterialCodeForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetCodeForDropdown(response: HttpResponseBase): Observable<MaterialCodeForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(MaterialCodeForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -4355,7 +4413,7 @@ export class PlanServiceProxy {
      * @param planId (optional) 
      * @return Success
      */
-    getProductsOfPlan(planId: number | undefined): Observable<ProductNameForDropdownDto[]> {
+    getProductsOfPlan(planId: number | undefined): Observable<ProductInfoDropdownDto[]> {
         let url_ = this.baseUrl + "/api/services/app/Plan/GetProductsOfPlan?";
         if (planId === null)
             throw new Error("The parameter 'planId' cannot be null.");
@@ -4378,14 +4436,14 @@ export class PlanServiceProxy {
                 try {
                     return this.processGetProductsOfPlan(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ProductNameForDropdownDto[]>;
+                    return _observableThrow(e) as any as Observable<ProductInfoDropdownDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ProductNameForDropdownDto[]>;
+                return _observableThrow(response_) as any as Observable<ProductInfoDropdownDto[]>;
         }));
     }
 
-    protected processGetProductsOfPlan(response: HttpResponseBase): Observable<ProductNameForDropdownDto[]> {
+    protected processGetProductsOfPlan(response: HttpResponseBase): Observable<ProductInfoDropdownDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4399,7 +4457,7 @@ export class PlanServiceProxy {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200.push(ProductNameForDropdownDto.fromJS(item));
+                    result200.push(ProductInfoDropdownDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -4669,7 +4727,7 @@ export class ProductServiceProxy {
     /**
      * @return Success
      */
-    getNameForDropdown(): Observable<ProductNameForDropdownDto[]> {
+    getNameForDropdown(): Observable<ProductInfoDropdownDto[]> {
         let url_ = this.baseUrl + "/api/services/app/Product/GetNameForDropdown";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4688,14 +4746,14 @@ export class ProductServiceProxy {
                 try {
                     return this.processGetNameForDropdown(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ProductNameForDropdownDto[]>;
+                    return _observableThrow(e) as any as Observable<ProductInfoDropdownDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ProductNameForDropdownDto[]>;
+                return _observableThrow(response_) as any as Observable<ProductInfoDropdownDto[]>;
         }));
     }
 
-    protected processGetNameForDropdown(response: HttpResponseBase): Observable<ProductNameForDropdownDto[]> {
+    protected processGetNameForDropdown(response: HttpResponseBase): Observable<ProductInfoDropdownDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4709,7 +4767,7 @@ export class ProductServiceProxy {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200.push(ProductNameForDropdownDto.fromJS(item));
+                    result200.push(ProductInfoDropdownDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -16394,11 +16452,11 @@ export interface IProductDtoPagedResultDto {
     totalCount: number;
 }
 
-export class ProductNameForDropdownDto implements IProductNameForDropdownDto {
+export class ProductInfoDropdownDto implements IProductInfoDropdownDto {
     id: number;
-    name: string | undefined;
+    information: string | undefined;
 
-    constructor(data?: IProductNameForDropdownDto) {
+    constructor(data?: IProductInfoDropdownDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -16410,13 +16468,13 @@ export class ProductNameForDropdownDto implements IProductNameForDropdownDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.name = _data["name"];
+            this.information = _data["information"];
         }
     }
 
-    static fromJS(data: any): ProductNameForDropdownDto {
+    static fromJS(data: any): ProductInfoDropdownDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ProductNameForDropdownDto();
+        let result = new ProductInfoDropdownDto();
         result.init(data);
         return result;
     }
@@ -16424,21 +16482,21 @@ export class ProductNameForDropdownDto implements IProductNameForDropdownDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["name"] = this.name;
+        data["information"] = this.information;
         return data;
     }
 
-    clone(): ProductNameForDropdownDto {
+    clone(): ProductInfoDropdownDto {
         const json = this.toJSON();
-        let result = new ProductNameForDropdownDto();
+        let result = new ProductInfoDropdownDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IProductNameForDropdownDto {
+export interface IProductInfoDropdownDto {
     id: number;
-    name: string | undefined;
+    information: string | undefined;
 }
 
 export class ProductOfMaterialDto implements IProductOfMaterialDto {
