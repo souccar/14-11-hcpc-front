@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { IPageField } from '@app/layout/content-template/page-default/page-field';
 import { BtSortableHeader, SortEvent } from '@shared/directives/bt-sortable-header.directive';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { EmployeeDto, EmployeeDtoPagedResultDto, EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { EmployeeDto, EmployeeDtoPagedResultDto, EmployeeServiceProxy, FilterDto, PagedEmployeeRequestDto } from '@shared/service-proxies/service-proxies';
 import { DateParsingFlags } from 'ngx-bootstrap/chronos/create/parsing.types';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
@@ -22,7 +22,7 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
   data: EmployeeDto[] = [];
   displayMode = 'table';
   search = '';
-  filter = '';
+  filter:FilterDto = new FilterDto();
   orderBy = '';
   advancedFiltersVisible = false;
   title = this.l("Employee")
@@ -53,28 +53,24 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
     pageNumber: number = 1,
     search: string = '',
     sortFields: string = ''): void {
-    let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+    let request: PagedEmployeeRequestDto = new PagedEmployeeRequestDto();
     this.pageSize = pageSize;
     this.pageNumber = pageNumber;
     request.keyword = search;
-    request.sortFields = sortFields;
+    //request.sortFields = sortFields;
     request.skipCount = (pageNumber - 1) * pageSize;
     request.maxResultCount = this.pageSize;
     this.list(request, this.pageNumber, () => { });
   }
 
   protected list(
-    request: PagedProductsRequestDto,
+    request: PagedEmployeeRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     this._employeeService
-      .getAll(
-        request.keyword,
-        request.sortFields,
-        "",
-        request.skipCount,
-        request.maxResultCount,
+      .read(
+        request
       )
       .pipe(
         finalize(() => {
@@ -180,9 +176,5 @@ export class EmployeeComponent extends PagedListingComponentBase<EmployeeDto> im
 
 }
 
-class PagedProductsRequestDto extends PagedRequestDto {
-  keyword: string;
-  sortFields: string;
-  MaxResultCount: number
-}
+
 

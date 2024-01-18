@@ -699,69 +699,6 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<DailyProductionDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/DailyProduction/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<DailyProductionDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<DailyProductionDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<DailyProductionDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(DailyProductionDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
      * @param id (optional) 
      * @return Success
      */
@@ -823,69 +760,6 @@ export class EmployeeServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    getFilteredQuery(body: FilterDto | undefined): Observable<EmployeeDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Employee/GetFilteredQuery";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetFilteredQuery(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetFilteredQuery(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<EmployeeDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<EmployeeDto[]>;
-        }));
-    }
-
-    protected processGetFilteredQuery(response: HttpResponseBase): Observable<EmployeeDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(EmployeeDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
     }
 
     /**
@@ -1002,26 +876,36 @@ export class EmployeeServiceProxy {
 
     /**
      * @param keyword (optional) 
-     * @param sorting (optional) 
-     * @param filtering (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, filtering: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
+    getAll(keyword: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Employee/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (filtering === null)
-            throw new Error("The parameter 'filtering' cannot be null.");
-        else if (filtering !== undefined)
-            url_ += "Filtering=" + encodeURIComponent("" + filtering) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -1122,69 +1006,6 @@ export class EmployeeServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = EmployeeDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<EmployeeDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Employee/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<EmployeeDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<EmployeeDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<EmployeeDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(EmployeeDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1600,69 +1421,6 @@ export class FormulaServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FormulaDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<FormulaDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Formula/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FormulaDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FormulaDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<FormulaDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(FormulaDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2451,69 +2209,6 @@ export class MaterialServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    filter(body: FilterDto | undefined): Observable<MaterialDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Material/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<MaterialDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<MaterialDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<MaterialDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(MaterialDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
     create(body: CreateMaterialDto | undefined): Observable<MaterialDto> {
         let url_ = this.baseUrl + "/api/services/app/Material/Create";
         url_ = url_.replace(/[?&]$/, "");
@@ -2859,69 +2554,6 @@ export class MaterialSuppliersServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = MaterialSuppliersDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<MaterialSuppliersDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<MaterialSuppliersDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<MaterialSuppliersDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<MaterialSuppliersDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(MaterialSuppliersDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -3978,69 +3610,6 @@ export class OutputRequestServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    filter(body: FilterDto | undefined): Observable<OutputRequestDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/OutputRequest/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<OutputRequestDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<OutputRequestDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<OutputRequestDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(OutputRequestDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
     update(body: UpdateOutputRequestDto | undefined): Observable<OutputRequestDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/Update";
         url_ = url_.replace(/[?&]$/, "");
@@ -5029,69 +4598,6 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<PlanDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PlanDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PlanDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<PlanDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(PlanDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
      * @param id (optional) 
      * @return Success
      */
@@ -5498,69 +5004,6 @@ export class ProductServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ProductDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<ProductDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Product/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ProductDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ProductDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<ProductDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(ProductDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6637,69 +6080,6 @@ export class SupplierServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    filter(body: FilterDto | undefined): Observable<SupplierDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Supplier/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<SupplierDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<SupplierDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<SupplierDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(SupplierDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
     create(body: CreateSupplierDto | undefined): Observable<SupplierDto> {
         let url_ = this.baseUrl + "/api/services/app/Supplier/Create";
         url_ = url_.replace(/[?&]$/, "");
@@ -7547,69 +6927,6 @@ export class TransferServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    filter(body: FilterDto | undefined): Observable<TransferDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Transfer/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<TransferDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<TransferDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<TransferDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(TransferDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
     create(body: CreateTransferDto | undefined): Observable<TransferDto> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/Create";
         url_ = url_.replace(/[?&]$/, "");
@@ -8069,69 +7386,6 @@ export class UnitServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = UnitDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<UnitDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Unit/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<UnitDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<UnitDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<UnitDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(UnitDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9248,69 +8502,6 @@ export class WarehouseServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    filter(body: FilterDto | undefined): Observable<WarehouseDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/Warehouse/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<WarehouseDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<WarehouseDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<WarehouseDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(WarehouseDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
     create(body: CreateWarehouseDto | undefined): Observable<WarehouseDto> {
         let url_ = this.baseUrl + "/api/services/app/Warehouse/Create";
         url_ = url_.replace(/[?&]$/, "");
@@ -9943,69 +9134,6 @@ export class WarehouseMaterialServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = WarehouseMaterialDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    filter(body: FilterDto | undefined): Observable<WarehouseMaterialDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/Filter";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFilter(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFilter(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<WarehouseMaterialDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<WarehouseMaterialDto[]>;
-        }));
-    }
-
-    protected processFilter(response: HttpResponseBase): Observable<WarehouseMaterialDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(WarehouseMaterialDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -15718,8 +14846,8 @@ export class PagedEmployeeRequestDto implements IPagedEmployeeRequestDto {
     maxResultCount: number;
     skipCount: number;
     keyword: string | undefined;
-    sorting: string | undefined;
-    filtering: string | undefined;
+    filtering: FilterDto;
+    including: string | undefined;
 
     constructor(data?: IPagedEmployeeRequestDto) {
         if (data) {
@@ -15735,8 +14863,8 @@ export class PagedEmployeeRequestDto implements IPagedEmployeeRequestDto {
             this.maxResultCount = _data["maxResultCount"];
             this.skipCount = _data["skipCount"];
             this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.filtering = _data["filtering"];
+            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
+            this.including = _data["including"];
         }
     }
 
@@ -15752,8 +14880,8 @@ export class PagedEmployeeRequestDto implements IPagedEmployeeRequestDto {
         data["maxResultCount"] = this.maxResultCount;
         data["skipCount"] = this.skipCount;
         data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["filtering"] = this.filtering;
+        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
+        data["including"] = this.including;
         return data;
     }
 
@@ -15769,8 +14897,8 @@ export interface IPagedEmployeeRequestDto {
     maxResultCount: number;
     skipCount: number;
     keyword: string | undefined;
-    sorting: string | undefined;
-    filtering: string | undefined;
+    filtering: FilterDto;
+    including: string | undefined;
 }
 
 export class PagedFormulaRequestDto implements IPagedFormulaRequestDto {
