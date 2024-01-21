@@ -34,6 +34,7 @@
             <label form="unitId">{{'Unit'|localize}}</label>
             <select aria-placeholder="{{'Material'|localize}}"  class="form-control" aria-label="Material" #unitIdModel="ngModel"
               required name="unitId" [(ngModel)]="outputRequestMaterialWithMaterialId?.outputRequestMaterial.unitId" #unitIdEl>
+              <option value="0">...</option>
               <option *ngFor="let item of units" value="{{ item.id }}">
                 {{ item.name }}
               </option>

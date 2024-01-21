@@ -49,7 +49,6 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       this.ids.push(element.productId);
     });
     this.initialMaterialsForSelectedProducts(this.ids);
-    this.initUnits();
   }
 
   ngOnInit(): void {}
@@ -61,8 +60,8 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       });
   }
 
-  initUnits() {
-    this._unitService.getNameForDropdown().subscribe((result: UnitNameForDropdownDto[]) => {
+  initUnits(materialId) {
+    this._unitService.getAllForMaterial(materialId).subscribe((result: UnitNameForDropdownDto[]) => {
       this.units = result;
     });
   }
@@ -83,6 +82,7 @@ export class CreateOutputRequestMaterialDialogComponent extends AppComponentBase
       .subscribe((result) => {
         this.warehouseMaterials = result;
       });
+      this.initUnits(this.selectedMaterialId);
   }
 
   onSelectwarehouseMaterial(event) {
