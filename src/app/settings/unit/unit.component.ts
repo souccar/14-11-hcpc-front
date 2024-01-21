@@ -1,10 +1,10 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateUnitDialogComponent } from './create-unit/create-unit-dialog.component';
 import { EditUnitDialogComponent } from './edit-unit/edit-unit-dialog.component';
 import { ViewUnitDialogComponent } from './view-unit/view-unit-dialog.component';
-import { CreateUnitDto, UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
@@ -28,17 +28,13 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   totalItem = 0;
   totalPage = 0;
   ColumnMode = ColumnMode;
-
-  itemOrder = { label: this.l("Name"), value: "name" };
-  itemOptionsOrders = [
-    { label: this.l("Name"), value: "name" },
-  ];
   selectedCount = 0;
   isActive: boolean | null = true;
   advancedFiltersVisible = false;
   loading = false;
   title = this.l("Unit")
-  // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
+  itemOrder = { label: this.l("Name"), value: "name" };
+  itemOptionsOrders = [{ label: this.l("Name"), value: "name" }];
 
   constructor(injector: Injector,
     private _modalService: BsModalService,
@@ -61,9 +57,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
         },
       }
     );
-
   }
-
 
   editButton(id: number): void {
     let editUnitDialog: BsModalRef;
@@ -81,12 +75,9 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
     editUnitDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
-
-
   }
 
   protected delete(entity: UnitDto): void {
-
     abp.message.confirm(
       this.l('UnitDeleteWarningMessage', this.selected.length, 'Units'),
       undefined,
@@ -101,6 +92,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
       }
     );
   }
+
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
     let request: PagedProductsRequestDto = new PagedProductsRequestDto();
     this.itemsPerPage = pageSize;
@@ -113,6 +105,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
     request.maxResultCount = this.itemsPerPage;
     this.list(request, this.pageNumber, () => { });
   }
+
   deleteItem(): void {
     if (this.selected.length == 0) {
       abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
@@ -147,7 +140,6 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
         backdrop: true,
         ignoreBackdropClick: true,
         class: 'modal-lg',
-
       }
     );
     createOrEditUnitDialog.content.onSave.subscribe(() => {
@@ -156,11 +148,10 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   }
 
   isSelected(p: UnitDto): boolean {
-
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: UnitDto): void {
 
+  onSelect(item: UnitDto): void {
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -168,17 +159,19 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
     }
     this.setSelectAllState();
   }
+
   protected list(
     request: PagedProductsRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-
+    request.include = 'parentUnit';
     this._unitService
       .getAll(
         request.keyword,
         request.sort_Field,
+        request.include,
         request.skipCount,
         request.MaxResultCount,
       )
@@ -188,9 +181,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
         })
       )
       .subscribe((result: UnitDtoPagedResultDto) => {
-
         this.data = result.items;
-
         this.totalItem = result.totalCount;
         this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
@@ -232,12 +223,12 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
     const val = event.target.value.toLowerCase().trim();
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
-
-
 }
+
 class PagedProductsRequestDto extends PagedRequestDto {
   keyword: string;
   sort_Field: string;
+  include: string;
   sort_Desc: boolean;
   MaxResultCount: number
 }

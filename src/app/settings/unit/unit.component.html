@@ -34,6 +34,16 @@
           {{ row.name }}
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-column [name]="l('ParentUnit')" prop="parentUnit.name" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div *ngIf="row.parentUnit">
+            {{ row.parentUnit?.name }}
+          </div>
+          <div *ngIf="!row.parentUnit">
+            -
+          </div>          
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column
         [sortable]="false"
         [name]="l('Action')"

@@ -1,19 +1,17 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateFormulaDto, FormulaDto, FormulaServiceProxy, MaterialCodeForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductInfoDropdownDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateFormulaDto, FormulaDto,MaterialCodeForDropdownDto,MaterialServiceProxy, ProductInfoDropdownDto,UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
-import { ViewFormulaDialogComponent } from '../view-formula/view-formula-dialog.component';
 import { ViewMaterialDialogComponent } from '@app/settings/material/view-material/view-material-dialog.component';
-
 
 @Component({
   selector: 'create-formula-dialog',
   templateUrl: './create-formula-dialog.component.html',
   styleUrls: ['./create-formula-dialog.component.scss']
 })
+
 export class CreateFormulaDialogComponent extends AppComponentBase {
   saving = false;
   materials: MaterialCodeForDropdownDto[] = [];
@@ -35,57 +33,50 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       localizationKey: 'QuantityCanNotBeNegativeOrZero',
     },
   ];
+
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
     private _unitService: UnitServiceProxy,
     private _modalService: BsModalService,
     public bsModalRef: BsModalRef,
-
-
   ) {
     super(injector);
   }
+
   ngOnInit(): void {
     this.initMaterials();
-    this.initUnits();
-
   }
-  QuantityValidationErrors(){
 
+  QuantityValidationErrors(){
     let errors: AbpValidationError[] = [{name:'min',localizationKey:'QuantityCanNotBeNegativeOrZero',propertyKey:'QuantityCanNotBeNegativeOrZero'}];
     return errors;
   }
+
   initMaterials() {
     this._materialService.getCodeForDropdown().subscribe((response: MaterialCodeForDropdownDto[]) => {
       this.materialsForDropDown = response;
     });
   }
-  initUnits() {
-    this._unitService.getNameForDropdown().subscribe((response: UnitNameForDropdownDto[]) => {
+
+  initUnits(event) {
+    debugger;
+    this._unitService.getAllForMaterial(event.target.value).subscribe((response: UnitNameForDropdownDto[]) => {
       this.units = response;
     });
   }
-  getUnitName(id: number) {
 
+  getUnitName(id: number) {
     this._unitService.getForEdit(id).subscribe((response) => {
       this.unitsNames.push(response.name);
     });
   }
-
-  // getMaterialName(id: number) {
-  //   const material = this.materials.find(x => x.id == id);
-  //   if (material) {
-  //     return material.name;
-  //   }
-  //   return '';
-
-  // }
 
   getMaterialName(id: number) {
     this._materialService.getForEdit(id).subscribe((result) => {
       this.materials.push(result);
     });
   }
+
   addToFormulaList() {
     this.isButtonDisabled = false;
     if (this.formula.materialId == null || this.formula.quantity == null || this.formula.unitId == null) {
@@ -100,8 +91,6 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.saving = true;
       this.formula = new FormulaDto()
     }
-
-
   }
 
   getUnitNameById(unitId) {
@@ -118,6 +107,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.materials.splice(index, 1);
     }
   }
+
   view(row: FormulaDto) {
     this._modalService.show(
       ViewMaterialDialogComponent,
@@ -140,5 +130,4 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     }
 
   }
-
 }

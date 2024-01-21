@@ -47,7 +47,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
   }
   initProducts() {
 
-    this._productService.getAll("","",undefined,'',0,1000).subscribe((response) => {
+    this._productService.getAll("","",0,1000).subscribe((response) => {
       var result = response as ProductDtoPagedResultDto;
       this.products = result.items;
 

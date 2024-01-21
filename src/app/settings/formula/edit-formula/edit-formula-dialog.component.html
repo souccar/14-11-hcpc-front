@@ -1,43 +1,37 @@
 <form class="form-horizontal " autocomplete="off" #editformulaModal="ngForm">
-
   <div class="modal-body modal-xl">
     <div class="row">
       <div class="col-md-11">
         <!-- Inputs -->
         <div class="row">
-
           <div class="col-md-3">
             <label form="materialId">{{'Material'|localize}}</label>
             <select aria-placeholder="Material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
-              required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl>
-              <!-- <option  disabled selected hidden >Material</option> -->
+              required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl
+              (change)="initUnits($event.target.value)">
               <option *ngFor="let item of materialDropdown" value={{item.id}}>{{item.code}}</option>
             </select>
-
           </div>
           <div class="col-md-3">
             <label form="quantity">{{'quantity'|localize}}</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required
               [(ngModel)]="formula.quantity" #quantityModel="ngModel" min="0" #quantityEl />
-
           </div>
           <div class="col-md-3">
             <label form="unitId">{{'Unit'|localize}}</label>
             <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
+              <option value="0">...</option>
               <option *ngFor="let item of unitDropdown" value={{item.id}}>{{item.name}}</option>
             </select>
-
           </div>
           <div class="col-md-3 required">
             <label form="percentage">{{'Percentage'|localize}}</label>
             <input type="number" class="form-control" name="percentage" id="percentage" required min="1"
-              [(ngModel)]="formula.percentage" #percentageModel="ngModel" #percentageEl  />
+              [(ngModel)]="formula.percentage" #percentageModel="ngModel" #percentageEl />
           </div>
-
         </div>
       </div>
-
       <div class="col-md-1">
         <!-- Button -->
         <button type="button" class="btn btn-outline-primary mt-4" (click)="addToFormulaList()">
@@ -72,8 +66,7 @@
               </td>
               <td>{{formula.percentage}}%</td>
               <td> <button id="button-basic" type="button" id="edit" class="header-icon btn btn-empty text-primary"
-                [disabled]="isButtonDisabled"
-                  (click)="edit(formula)">
+                  [disabled]="isButtonDisabled" (click)="edit(formula)">
                   <i class="simple-icon-pencil text-primary"></i>
                 </button>
                 <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"
@@ -81,8 +74,8 @@
                   <i class="simple-icon-trash text-primary"></i>
                 </button>
                 <button id="button-basic" type="button" id="delete" class="header-icon btn btn-empty text-primary"
-                (click)="view(formula)">
-                <i class="simple-icon-eye text-primary"></i>
+                  (click)="view(formula)">
+                  <i class="simple-icon-eye text-primary"></i>
                 </button>
               </td>
             </tr>
@@ -91,5 +84,4 @@
       </div>
     </div>
   </div>
-
 </form>
