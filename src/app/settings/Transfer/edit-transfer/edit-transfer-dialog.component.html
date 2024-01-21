@@ -8,7 +8,7 @@
         </label>
         <div class="col-md-9 ">
           <select class="form-control" aria-label="From" #fromModel="ngModel" required name="From" 
-          [(ngModel)]="transfer.fromId" #fromEl>
+          [(ngModel)]="transfer.fromId" #fromEl (change)="onSelectFromUnit($event)">
             <option *ngFor="let item of fromUnits" value={{item.id}}>{{item.name}}</option>
           </select>
           <abp-validation-summary [control]="fromModel" [controlEl]="fromEl"></abp-validation-summary>

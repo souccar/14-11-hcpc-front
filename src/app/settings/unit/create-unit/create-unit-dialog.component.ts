@@ -1,32 +1,41 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateUnitDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateUnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
 @Component({
   selector: 'create-unit-dialog',
   templateUrl: './create-unit-dialog.component.html',
-
 })
+
 export class CreateUnitDialogComponent extends AppComponentBase {
   saving = false;
-  unit =  new CreateUnitDto();
-  @Output() onSave = new EventEmitter<any>();
-  constructor(injector: Injector,
-   private _unitService:UnitServiceProxy,
-    public bsModalRef: BsModalRef,
+  unit = new CreateUnitDto();
+  parentUnits: UnitNameForDropdownDto[] = [];
 
+  @Output() onSave = new EventEmitter<any>();
+
+  constructor(injector: Injector,
+    private _unitService: UnitServiceProxy,
+    public bsModalRef: BsModalRef,
   ) {
     super(injector);
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void { 
+    this.initialAllParentUnits();
   }
-   save(): void {
+
+  initialAllParentUnits(){
+    this._unitService.getAllParentUnits()
+    .subscribe((result)=>{this.parentUnits = result});
+  }
+
+  save(): void {
     this.saving = true;
     this._unitService.
-    create(
+      create(
         this.unit
       )
       .pipe(
@@ -34,14 +43,11 @@ export class CreateUnitDialogComponent extends AppComponentBase {
           this.saving = false;
         })
       )
-      .subscribe((response:any) => {
-
-           (response);
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();
+      .subscribe((response: any) => {
+        (response);
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.bsModalRef.hide();
+        this.onSave.emit();
       });
-
   }
-
 }
