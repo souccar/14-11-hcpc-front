@@ -13,12 +13,15 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { EmployeeServiceProxy, NationalityServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FilterEmployeeDialogComponent } from './employee/filter-employee/filter-employee-dialog.component';
+import { QueryBuilderModule } from 'angular2-query-builder';
 
 @NgModule({
   declarations: [
     PersonnelComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    FilterEmployeeDialogComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,7 @@ import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
     LayoutModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
-    
+    QueryBuilderModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PersonnelRoutingModule,
@@ -37,6 +40,7 @@ import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
   ],
   providers:[
     EmployeeServiceProxy,
+    NationalityServiceProxy,
     DatePipe
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]

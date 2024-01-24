@@ -875,21 +875,21 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param keyword (optional) 
+     * @param including (optional) 
      * @param filtering_Condition (optional) 
      * @param filtering_Rules (optional) 
-     * @param including (optional) 
+     * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, including: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Employee/GetAll?";
-        if (keyword === null)
-            throw new Error("The parameter 'keyword' cannot be null.");
-        else if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (filtering_Condition === null)
             throw new Error("The parameter 'filtering_Condition' cannot be null.");
         else if (filtering_Condition !== undefined)
@@ -903,10 +903,10 @@ export class EmployeeServiceProxy {
         				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
         			}
             });
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -969,7 +969,7 @@ export class EmployeeServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedEmployeeRequestDto | undefined): Observable<EmployeeDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<EmployeeDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Employee/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2782,6 +2782,76 @@ export class MaterialSuppliersServiceProxy {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class NationalityServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<NationalityDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Nationality/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NationalityDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NationalityDto[]>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<NationalityDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(NationalityDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -4952,32 +5022,17 @@ export class ProductServiceProxy {
 
     /**
      * @param keyword (optional) 
-     * @param filtering_Condition (optional) 
-     * @param filtering_Rules (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
+    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Product/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
-        if (filtering_Condition === null)
-            throw new Error("The parameter 'filtering_Condition' cannot be null.");
-        else if (filtering_Condition !== undefined)
-            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
-        if (filtering_Rules === null)
-            throw new Error("The parameter 'filtering_Rules' cannot be null.");
-        else if (filtering_Rules !== undefined)
-            filtering_Rules && filtering_Rules.forEach((item, index) => {
-                for (let attr in item)
-        			if (item.hasOwnProperty(attr)) {
-        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
-        			}
-            });
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -12472,6 +12527,69 @@ export interface IFormulaDtoPagedResultDto {
     totalCount: number;
 }
 
+export class FullPagedRequestDto implements IFullPagedRequestDto {
+    maxResultCount: number;
+    skipCount: number;
+    sorting: string | undefined;
+    keyword: string | undefined;
+    filtering: FilterDto;
+    including: string | undefined;
+
+    constructor(data?: IFullPagedRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.maxResultCount = _data["maxResultCount"];
+            this.skipCount = _data["skipCount"];
+            this.sorting = _data["sorting"];
+            this.keyword = _data["keyword"];
+            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
+            this.including = _data["including"];
+        }
+    }
+
+    static fromJS(data: any): FullPagedRequestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FullPagedRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["maxResultCount"] = this.maxResultCount;
+        data["skipCount"] = this.skipCount;
+        data["sorting"] = this.sorting;
+        data["keyword"] = this.keyword;
+        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
+        data["including"] = this.including;
+        return data;
+    }
+
+    clone(): FullPagedRequestDto {
+        const json = this.toJSON();
+        let result = new FullPagedRequestDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFullPagedRequestDto {
+    maxResultCount: number;
+    skipCount: number;
+    sorting: string | undefined;
+    keyword: string | undefined;
+    filtering: FilterDto;
+    including: string | undefined;
+}
+
 export enum GenericParameterAttributes {
     _0 = 0,
     _1 = 1,
@@ -14916,69 +15034,6 @@ export interface IPagedDailyProductionRequestDto {
     including: string | undefined;
 }
 
-export class PagedEmployeeRequestDto implements IPagedEmployeeRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    filtering: FilterDto;
-    including: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedEmployeeRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
-            this.including = _data["including"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedEmployeeRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedEmployeeRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
-        data["including"] = this.including;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedEmployeeRequestDto {
-        const json = this.toJSON();
-        let result = new PagedEmployeeRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedEmployeeRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    filtering: FilterDto;
-    including: string | undefined;
-    sorting: string | undefined;
-}
-
 export class PagedFormulaRequestDto implements IPagedFormulaRequestDto {
     maxResultCount: number;
     skipCount: number;
@@ -15211,7 +15266,6 @@ export class PagedProductRequestDto implements IPagedProductRequestDto {
     maxResultCount: number;
     skipCount: number;
     keyword: string | undefined;
-    filtering: FilterDto;
     sorting: string | undefined;
 
     constructor(data?: IPagedProductRequestDto) {
@@ -15228,7 +15282,6 @@ export class PagedProductRequestDto implements IPagedProductRequestDto {
             this.maxResultCount = _data["maxResultCount"];
             this.skipCount = _data["skipCount"];
             this.keyword = _data["keyword"];
-            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
             this.sorting = _data["sorting"];
         }
     }
@@ -15245,7 +15298,6 @@ export class PagedProductRequestDto implements IPagedProductRequestDto {
         data["maxResultCount"] = this.maxResultCount;
         data["skipCount"] = this.skipCount;
         data["keyword"] = this.keyword;
-        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
         data["sorting"] = this.sorting;
         return data;
     }
@@ -15262,7 +15314,6 @@ export interface IPagedProductRequestDto {
     maxResultCount: number;
     skipCount: number;
     keyword: string | undefined;
-    filtering: FilterDto;
     sorting: string | undefined;
 }
 

@@ -116,6 +116,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   deleteItem(): void {
     if (this.selected.length == 0) {
       abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
+      
     }
     else {
       abp.message.confirm(
@@ -192,7 +193,7 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
         this.data = result.items;
 
         this.totalItem = result.totalCount;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+        //this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
         this.setSelectAllState();
       });
   }

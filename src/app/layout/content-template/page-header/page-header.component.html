@@ -10,11 +10,18 @@
           <i class="simple-icon-arrow-down align-middle"></i>
         </a>
         <div id="displayOptions" [collapse]="displayOptionsCollapsed" class="collapse dont-collapse-sm">
-
-
           <div class="d-inline-block" *ngIf="showSearch">
             <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
               <input class="form-control" placeholder="Search" (keyup)="onSearchKeyUp($event)">
+            </div>
+          </div>
+          <div class="d-inline-block" *ngIf="showAdvanceFilter">
+            <div class="d-inline-block float-md-left mr-1 mb-1 align-top">
+              
+              <div class="btn-group" role="group" aria-label="advance filter group">
+                <button class="btn btn-xs btn-outline-primary" (click)="onFilter()"><i class="bi bi-filter mr-1"></i>{{'Filter' | localize}}</button>
+                <button class="btn btn-xs btn-outline-primary" *ngIf="filtering" (click)="clearFilter()"><i class="bi bi-x-lg"></i> </button>
+              </div>
             </div>
           </div>
 
