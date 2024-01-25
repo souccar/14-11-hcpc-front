@@ -41,7 +41,7 @@
         [flexGrow]="1"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <button
+          <button *ngIf="isGranted('Pages.Units.Edit')"
             id="button-basic"
             type="button"
             id="edit"

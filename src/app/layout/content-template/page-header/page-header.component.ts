@@ -1,7 +1,6 @@
 import { Component,  ViewChild, EventEmitter, Output, Input, Injector, Renderer2, OnInit, AfterViewInit } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { FilterDto } from '@shared/service-proxies/service-proxies';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-page-header',
   templateUrl: './page-header.component.html',
@@ -21,6 +20,9 @@ export class PageHeaderComponent extends AppComponentBase {
   @Input() itemOrder ;
   @Input() fields = [];
   @Input() filtering: boolean = false;
+  @Input() ParentName = '';
+  @Input() IsDetail: boolean  = false;
+
 
   @Output() changeDisplayMode: EventEmitter<string> = new EventEmitter<string>();
   @Output() addNewItem: EventEmitter<any> = new EventEmitter();
@@ -30,7 +32,8 @@ export class PageHeaderComponent extends AppComponentBase {
   @Output() changeOrderBy: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('search') search: any;
-  constructor(injector: Injector) {
+  constructor(injector: Injector,
+    private _location: Location) {
     super(injector);
    }
 
@@ -60,5 +63,8 @@ export class PageHeaderComponent extends AppComponentBase {
 
   clearFilter(){
     this.advanceFilter.emit('clear_filter');
+  }
+  backTo(){
+    this._location.back();
   }
 }

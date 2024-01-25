@@ -1,113 +1,83 @@
 <div class="row">
-    <!-- start table mode -->
-    <div class="col-md-12" *ngIf="displayMode==='table'">
-      <div class="card">
-        <div class="card-body pb-0">
-          <!-- table start -->
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th class="bi" *ngFor="let field of fields" [sortable]="field.sortable ? field.name : ''" (sort)="onSort($event)">{{field.label}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of data; index as i">
-                  <td>
-                    <span  id="anchorDropdownContainer">
-                      <span dropdown container="#anchorDropdownContainer">
-                        <a
-                          href
-                          id="basic-link"
-                          dropdownToggle
-                          (click)="(false)"
-                          aria-controls="basic-link-dropdown"
-                        >
-                          <i
-                            class="text-primary simple-icon-options-vertical"
-                          ></i
-                        ></a>
-                        <ul
-                          id="basic-link-dropdown"
-                          *dropdownMenu
-                          class="dropdown-menu dropdown-menu-left"
-                          role="menu"
-                          aria-labelledby="basic-link"
-                        >
-                        <ng-conatiner >
-                          <a
-                            id="button-basic"
-                            type="button"
-                            id="edit"
-                            class="btn btn-empty dropdown-item text-primary align-self-center"
-                            
-                          >
-    
+  <!-- start table mode -->
+  <div class="col-md-12" *ngIf="displayMode==='table'">
+    <div class="card">
+      <div class="card-body pb-0">
+        <!-- table start -->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="bi" *ngFor="let field of fields" [sortable]="field.sortable ? field.name : ''"
+                  (sort)="onSort($event)">{{field.label}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data; index as i">
+
+                <td>
+                  <span id="anchorDropdownContainer">
+                    <span dropdown container="#anchorDropdownContainer">
+                      <a href id="basic-link" dropdownToggle (click)="(false)" aria-controls="basic-link-dropdown">
+                        <i class="text-primary simple-icon-options-vertical"></i></a>
+                      <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu"
+                        aria-labelledby="basic-link">
+                        <ng-conatiner>
+                          <a id="button-basic" type="button" id="edit" (click)="onEditItem(item.id)"
+                            class="btn btn-empty dropdown-item text-primary align-self-center">
                             <i class="text-primary simple-icon-pencil">
-    
                             </i>&nbsp;&nbsp;
                             <span>{{'Edit'|localize}}</span>
                           </a>
-                          <a
-                            id="button-basic"
-                            type="button"
-                            id="delete"
-                            class="btn btn-empty dropdown-item text-primary align-self-center"
-                            
-                          >
+                          <a id="button-basic" type="button" id="delete"
+                            class="btn btn-empty dropdown-item text-primary align-self-center">
                             <i class="text-primary simple-icon-trash"></i>
                             &nbsp;&nbsp;
                             <span>{{'Delete'|localize}}</span>
                           </a>
                         </ng-conatiner>
-                          <a
-                          id="button-basic"
-                          type="button"
-                          id="delete"
-                          class="btn btn-empty dropdown-item text-primary align-self-center"
-                          
-                        >
+                        <a id="button-basic" type="button" id="delete"
+                          class="btn btn-empty dropdown-item text-primary align-self-center">
                           <i class="text-primary simple-icon-eye "></i>
                           &nbsp;&nbsp;
-                            <span>{{'View'|localize}}</span>
+                          <span>{{'View'|localize}}</span>
                         </a>
                         <li class="divider dropdown-divider"></li>
-                          <a
-                            
-                            class="dropdown-item"
-                            
-                            >{{ "InProduction" | localize }}</a
-                          >
-                          <a 
-                            class="dropdown-item"
-                            
-                            >{{ "Finished" | localize }}</a
-                          >
-                        </ul>
-                      </span>
+                        <a class="dropdown-item">{{ "InProduction" | localize }}</a>
+                        <a class="dropdown-item">{{ "Finished" | localize }}</a>
+                      </ul>
+                      <a *ngIf="hasDetails"
+                      class="pointer" (click)="getEmployeeId(item.id)"
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="right" title="{{'Details'|localize}}"> 
+                       <i class=" ml-4 text-primary  iconsminds-arrow-inside"></i>
+                      </a>
+                    
                     </span>
-                  </td>
-                  <td *ngFor="let field of fields" [innerHtml]="getValue(item, field)"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- table end -->
-          <!-- pagination start -->
-          <div class="col-12" *ngIf="totalItems > pageSize">
-            <!-- <div class="separator"></div> -->
-            <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" [rotate]="true" [maxSize]="5"
-              [(ngModel)]="pageNumber" (pageChanged)="pageChanged($event)" class="justify-content-center"
-              [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
-            </pagination>
-          </div>
-          <!-- pagination end -->
+                  </span>
+                </td>
+
+                <td *ngFor="let field of fields" [innerHtml]="getValue(item, field)"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <!-- table end -->
+        <!-- pagination start -->
+        <div class="col-12" *ngIf="totalItems > pageSize">
+          <!-- <div class="separator"></div> -->
+          <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" [rotate]="true" [maxSize]="5"
+            [(ngModel)]="pageNumber" (pageChanged)="pageChanged($event)" class="justify-content-center"
+            [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+          </pagination>
+        </div>
+        <!-- pagination end -->
       </div>
     </div>
-    <!-- end table mode -->
-    <!-- <div class="col-12 list" *ngIf="displayMode==='list'">
+  </div>
+  <!-- end table mode -->
+  <!-- <div class="col-12 list" *ngIf="displayMode==='list'">
         <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(p)}" *ngFor="let p of data; let i=index"
           [contextMenu]="basicMenu" [contextMenuSubject]="p">
           <div class="d-flex flex-grow-1 min-width-zero">
@@ -130,8 +100,8 @@
           </div>
         </div>
       </div> -->
-    
-      <!-- <div class="col-12 list" *ngIf="displayMode==='thumb'">
+
+  <!-- <div class="col-12 list" *ngIf="displayMode==='thumb'">
         <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(p)}" *ngFor="let p of data; let i=index"
           [contextMenu]="basicMenu" [contextMenuSubject]="p">
           <a class="d-flex" href="javascript:;">
@@ -157,8 +127,8 @@
           </div>
         </div>
       </div> -->
-    
-      <!-- <div class="col-12 list" *ngIf="displayMode==='image'">
+
+  <!-- <div class="col-12 list" *ngIf="displayMode==='image'">
         <div class="row">
           <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4" *ngFor="let p of data; let i=index" [contextMenu]="basicMenu"
             [contextMenuSubject]="p">
@@ -193,18 +163,18 @@
           </div>
         </div>
       </div> -->
-    
-      <div class="col-12" *ngIf="displayMode != 'table'">
-        <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" [rotate]="true" [maxSize]="5"
-          [(ngModel)]="pageNumber" (pageChanged)="pageChanged($event)" class="justify-content-center"
-          [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
-        </pagination>
-      </div>
-  </div>
 
-  <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
-    <i class='simple-icon-arrow-right'></i>
-  </ng-template>
-  <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
-    <i class='simple-icon-arrow-left'></i>
-  </ng-template>
+  <div class="col-12" *ngIf="displayMode != 'table'">
+    <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" [rotate]="true" [maxSize]="5"
+      [(ngModel)]="pageNumber" (pageChanged)="pageChanged($event)" class="justify-content-center"
+      [customNextTemplate]="nextTemplate" [customPreviousTemplate]="prevTemplate">
+    </pagination>
+  </div>
+</div>
+
+<ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+  <i class='simple-icon-arrow-right'></i>
+</ng-template>
+<ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+  <i class='simple-icon-arrow-left'></i>
+</ng-template>

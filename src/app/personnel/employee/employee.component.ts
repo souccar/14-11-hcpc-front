@@ -1,17 +1,10 @@
-import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Injector, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { IPageField } from '@app/layout/content-template/page-default/page-field';
-import { BtSortableHeader, SortEvent } from '@shared/directives/bt-sortable-header.directive';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { FullPagedListingComponentBase } from '@shared/full-paged-listing-component-base';
 import { EmployeeDto, EmployeeServiceProxy, FilterDto, FullPagedRequestDto } from '@shared/service-proxies/service-proxies';
-import { result } from 'lodash-es';
-import { DateParsingFlags } from 'ngx-bootstrap/chronos/create/parsing.types';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription, finalize } from 'rxjs';
 import { FilterEmployeeDialogComponent } from './filter-employee/filter-employee-dialog.component';
-import { locale } from 'moment-timezone';
-import { SharedService } from '@shared/services/shared.service';
+import { CreateEmployeeDialogComponent } from './create-employee/create-employee-dialog.component';
+import { EditEmployeeDialogComponent } from './edit-employee/edit-employee-dialog.component';
 
 
 @Component({
@@ -20,7 +13,9 @@ import { SharedService } from '@shared/services/shared.service';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto> implements OnInit {
-  employees:EmployeeDto[] = [];
+  employees: EmployeeDto[] = [];
+  employeeId: number;
+  loadDetails: boolean = false;
   fields = [
     { label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
     { label: this.l('FirstName'), name: 'firstName', sortable: false, type: 'string' },
@@ -30,6 +25,7 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
   ];
 
   @ViewChild(FilterEmployeeDialogComponent) child!: FilterEmployeeDialogComponent;
+
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _employeeService: EmployeeServiceProxy,
@@ -40,20 +36,53 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
 
   protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
     this.request.including = "Nationality";
-    console.log(request)
     this._employeeService.read(request)
-    .subscribe(result=>{
-      this.employees = result.items;
-      this.showPaging(result, pageNumber);
-    })
-  }
- 
-  showAddNewModal(){
-
+      .subscribe(result => {
+        this.employees = result.items;
+        this.showPaging(result, pageNumber);
+      })
   }
 
-  showFilterDialog(status){
-    if(status == 'clear_filter'){
+  getEmployeeIdForChildren(id: number) {
+    this.loadDetails = true
+    this.employeeId = id;
+  }
+
+  showAddNewModal() {
+    let createEmployeeDialog: BsModalRef;
+    createEmployeeDialog = this._modalService.show(
+      CreateEmployeeDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'modal-lg',
+
+      }
+    );
+    createEmployeeDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+  }
+  showEditModal(id: any){
+    let editEmployeeDialog: BsModalRef;
+    editEmployeeDialog = this._modalService.show(
+      EditEmployeeDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'modal-lg',
+        initialState:{
+          id:id
+        }
+
+      }
+    );
+    editEmployeeDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+  }
+  showFilterDialog(status) {
+    if (status == 'clear_filter') {
       this.request.filtering = undefined;
       this.refresh();
       return;
@@ -67,16 +96,16 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
         initialState: {
           filterInput: this.request.filtering,
         },
-       class: 'modal-lg',
+        class: 'modal-lg',
       }
     );
-    filterDialog.content.onSave.subscribe((result:FilterDto) => {
+    filterDialog.content.onSave.subscribe((result: FilterDto) => {
       this.request.filtering = result;
       this._modalService.hide();
       this.refresh();
     });
   }
- 
+
 }
 
 

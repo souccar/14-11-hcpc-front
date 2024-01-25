@@ -18,9 +18,11 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   @Input() totalItems: number;
   @Input() pageNumber: number;
   @Input() pageSize: number;
-
+  @Input() hasDetails:boolean=false;
   @Output() changeOrderBy: EventEmitter<string> = new EventEmitter();
   @Output() changePage: EventEmitter<any> = new EventEmitter();
+  @Output() employeeId: EventEmitter<any> = new EventEmitter();
+  @Output() editItem: EventEmitter<any> = new EventEmitter();
 
   constructor(injector: Injector,
     private _renderer: Renderer2,
@@ -46,7 +48,12 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
       return direction === 'asc' ? 'desc' : 'asc';
     }
   }
-
+  onEditItem(id:number): void {
+    this.editItem.emit(id);
+  }
+  getEmployeeId(id:number){
+    this.employeeId.emit(id);
+  }
   pageChanged(event: any): void {
     this.changePage.emit(event.page);
   }

@@ -11,7 +11,6 @@ import { finalize } from 'rxjs';
 })
 export class EditTransferDialogComponent extends AppComponentBase {
   saving = false;
-
   id:number;
   fromUnits: UnitNameForDropdownDto[] = [];
   ToUnits: UnitNameForDropdownDto[] = [];

@@ -16,12 +16,24 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EmployeeServiceProxy, NationalityServiceProxy } from '@shared/service-proxies/service-proxies';
 import { FilterEmployeeDialogComponent } from './employee/filter-employee/filter-employee-dialog.component';
 import { QueryBuilderModule } from 'angular2-query-builder';
+import { ChildrenComponent } from './employee/children/children.component';
+import { DetailsComponent } from './employee/details/details.component';
+import { CreateEmployeeDialogComponent } from './employee/create-employee/create-employee-dialog.component';
+import { EditEmployeeDialogComponent } from './employee/edit-employee/edit-employee-dialog.component';
+import { CreateChildDialogComponent } from './employee/children/create-child/create-child-dialog.component';
+import { EditChildDialogComponent } from './employee/children/edit-child/edit-child-dialog.component';
 
 @NgModule({
   declarations: [
     PersonnelComponent,
     EmployeeComponent,
-    FilterEmployeeDialogComponent
+    FilterEmployeeDialogComponent,
+    ChildrenComponent,
+    DetailsComponent,
+    CreateEmployeeDialogComponent,
+    EditEmployeeDialogComponent,
+    CreateChildDialogComponent,
+    EditChildDialogComponent
   ],
   imports: [
     CommonModule,

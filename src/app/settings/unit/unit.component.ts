@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateUnitDialogComponent } from './create-unit/create-unit-dialog.component';
 import { EditUnitDialogComponent } from './edit-unit/edit-unit-dialog.component';
 import { ViewUnitDialogComponent } from './view-unit/view-unit-dialog.component';
-import { CreateUnitDto, UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateUnitDto, PagedUnitRequestDto, UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
@@ -102,13 +102,11 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
     );
   }
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-    let request: PagedProductsRequestDto = new PagedProductsRequestDto();
+    let request: PagedUnitRequestDto = new PagedUnitRequestDto();
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
     this.search = search;
     request.keyword = search;
-    request.sort_Field = sort_Field;
-    request.sort_Desc = sort_Desc;
     request.skipCount = (currentPage - 1) * pageSize;
     request.maxResultCount = this.itemsPerPage;
     this.list(request, this.pageNumber, () => { });
@@ -170,18 +168,16 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
     this.setSelectAllState();
   }
   protected list(
-    request: PagedProductsRequestDto,
+    request: PagedUnitRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
 
     this._unitService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.skipCount,
-        request.MaxResultCount,
+      .read(
+        request
+        
       )
       .pipe(
         finalize(() => {
@@ -235,11 +231,5 @@ export class UnitComponent extends PagedListingComponentBase<UnitDto> {
   }
 
 
-}
-class PagedProductsRequestDto extends PagedRequestDto {
-  keyword: string;
-  sort_Field: string;
-  sort_Desc: boolean;
-  MaxResultCount: number
 }
 
