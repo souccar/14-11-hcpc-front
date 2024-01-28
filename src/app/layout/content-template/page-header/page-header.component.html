@@ -5,7 +5,7 @@
     <a *ngIf="IsDetail" class="ml-4 pointer text-primary" (click)="backTo()">
       <i class=" iconsminds-arrow-left-in-circle "></i>
       {{'BackTo'|localize}}{{ParentName}}{{' List'|localize}}</a>
-    <div class="top-right-button-container text-zero"> <button type="button" (click)="onAddNewItem()"
+    <div *ngIf="isGranted(CreatePermission)" class="top-right-button-container text-zero"> <button type="button" (click)="onAddNewItem()"
         class="top-right-button btn btn-primary btn-lg mr-1">{{ 'AddNew' | localize}}</button></div>
     <div class="display-options-container ">
       <a class="btn pt-0 pl-0 d-inline-block d-md-none c-pointer" data-toggle="collapse"

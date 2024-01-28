@@ -19,9 +19,11 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   @Input() pageNumber: number;
   @Input() pageSize: number;
   @Input() hasDetails:boolean=false;
+  @Input() EditPermission:string='';
+  @Input() DeletePermission:string='';
   @Output() changeOrderBy: EventEmitter<string> = new EventEmitter();
   @Output() changePage: EventEmitter<any> = new EventEmitter();
-  @Output() employeeId: EventEmitter<any> = new EventEmitter();
+  @Output() ParentId: EventEmitter<any> = new EventEmitter();
   @Output() editItem: EventEmitter<any> = new EventEmitter();
 
   constructor(injector: Injector,
@@ -52,7 +54,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     this.editItem.emit(id);
   }
   getEmployeeId(id:number){
-    this.employeeId.emit(id);
+    this.ParentId.emit(id);
   }
   pageChanged(event: any): void {
     this.changePage.emit(event.page);

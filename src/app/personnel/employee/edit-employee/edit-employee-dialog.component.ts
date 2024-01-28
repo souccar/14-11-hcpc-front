@@ -22,16 +22,20 @@ export class EditEmployeeDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
+    console.log(this.id)
     this.initEmployee();
   }
   initEmployee() {
-    this._employeeService.get(this.id).subscribe((result) => {
+    this._employeeService.getForEdit(this.id).subscribe((result) => {
+      
       this.employee = result;
+      this.dateOfBirth = new Date(this.employee.dateOfBirth);
      
     });
   }
   save(): void {
-
+   
+    this.employee.dateOfBirth= this.dateOfBirth.toString();
     this.saving = true;
     this._employeeService.
       update(

@@ -24,13 +24,13 @@
                       <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu"
                         aria-labelledby="basic-link">
                         <ng-conatiner>
-                          <a id="button-basic" type="button" id="edit" (click)="onEditItem(item.id)"
+                          <a *ngIf="isGranted(EditPermission)" id="button-basic" type="button" id="edit" (click)="onEditItem(item.id)"
                             class="btn btn-empty dropdown-item text-primary align-self-center">
                             <i class="text-primary simple-icon-pencil">
                             </i>&nbsp;&nbsp;
                             <span>{{'Edit'|localize}}</span>
                           </a>
-                          <a id="button-basic" type="button" id="delete"
+                          <a *ngIf="isGranted(DeletePermission)" id="button-basic" type="button" id="delete"
                             class="btn btn-empty dropdown-item text-primary align-self-center">
                             <i class="text-primary simple-icon-trash"></i>
                             &nbsp;&nbsp;

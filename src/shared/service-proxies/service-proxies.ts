@@ -10615,7 +10615,7 @@ export class ChildDto implements IChildDto {
     employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: IChildDto) {
         if (data) {
@@ -10632,7 +10632,7 @@ export class ChildDto implements IChildDto {
             this.employeeId = _data["employeeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -10649,7 +10649,7 @@ export class ChildDto implements IChildDto {
         data["employeeId"] = this.employeeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -10666,7 +10666,7 @@ export interface IChildDto {
     employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class ChildDtoPagedResultDto implements IChildDtoPagedResultDto {
@@ -10997,7 +10997,7 @@ export class CreateChildDto implements ICreateChildDto {
     employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: ICreateChildDto) {
         if (data) {
@@ -11013,7 +11013,7 @@ export class CreateChildDto implements ICreateChildDto {
             this.employeeId = _data["employeeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -11029,7 +11029,7 @@ export class CreateChildDto implements ICreateChildDto {
         data["employeeId"] = this.employeeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -11045,7 +11045,7 @@ export interface ICreateChildDto {
     employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class CreateDailyProductionDetailsDto implements ICreateDailyProductionDetailsDto {
@@ -11159,11 +11159,9 @@ export interface ICreateDailyProductionDto {
 }
 
 export class CreateEmployeeDto implements ICreateEmployeeDto {
-    tenantId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: CreateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: ICreateEmployeeDto) {
         if (data) {
@@ -11176,15 +11174,9 @@ export class CreateEmployeeDto implements ICreateEmployeeDto {
 
     init(_data?: any) {
         if (_data) {
-            this.tenantId = _data["tenantId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
-            if (Array.isArray(_data["children"])) {
-                this.children = [] as any;
-                for (let item of _data["children"])
-                    this.children.push(CreateChildDto.fromJS(item));
-            }
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -11197,15 +11189,9 @@ export class CreateEmployeeDto implements ICreateEmployeeDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["tenantId"] = this.tenantId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
-        if (Array.isArray(this.children)) {
-            data["children"] = [];
-            for (let item of this.children)
-                data["children"].push(item.toJSON());
-        }
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -11218,11 +11204,9 @@ export class CreateEmployeeDto implements ICreateEmployeeDto {
 }
 
 export interface ICreateEmployeeDto {
-    tenantId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: CreateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class CreateFormulaDto implements ICreateFormulaDto {
@@ -12645,7 +12629,7 @@ export class EmployeeDto implements IEmployeeDto {
     id: number;
     firstName: string | undefined;
     lastName: string | undefined;
-    age: number;
+    readonly age: number;
     dateOfBirth: moment.Moment | undefined;
     children: ChildDto[] | undefined;
     nationalityId: number;
@@ -12665,7 +12649,7 @@ export class EmployeeDto implements IEmployeeDto {
             this.id = _data["id"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.age = _data["age"];
+            (<any>this).age = _data["age"];
             this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
             if (Array.isArray(_data["children"])) {
                 this.children = [] as any;
@@ -19907,7 +19891,7 @@ export class UpdateChildDto implements IUpdateChildDto {
     employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: IUpdateChildDto) {
         if (data) {
@@ -19924,7 +19908,7 @@ export class UpdateChildDto implements IUpdateChildDto {
             this.employeeId = _data["employeeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -19941,7 +19925,7 @@ export class UpdateChildDto implements IUpdateChildDto {
         data["employeeId"] = this.employeeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -19958,7 +19942,7 @@ export interface IUpdateChildDto {
     employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class UpdateDailyProductionDetailsDto implements IUpdateDailyProductionDetailsDto {
@@ -20083,8 +20067,7 @@ export class UpdateEmployeeDto implements IUpdateEmployeeDto {
     id: number;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: UpdateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: IUpdateEmployeeDto) {
         if (data) {
@@ -20100,12 +20083,7 @@ export class UpdateEmployeeDto implements IUpdateEmployeeDto {
             this.id = _data["id"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
-            if (Array.isArray(_data["children"])) {
-                this.children = [] as any;
-                for (let item of _data["children"])
-                    this.children.push(UpdateChildDto.fromJS(item));
-            }
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -20121,12 +20099,7 @@ export class UpdateEmployeeDto implements IUpdateEmployeeDto {
         data["id"] = this.id;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
-        if (Array.isArray(this.children)) {
-            data["children"] = [];
-            for (let item of this.children)
-                data["children"].push(item.toJSON());
-        }
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -20142,8 +20115,7 @@ export interface IUpdateEmployeeDto {
     id: number;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: UpdateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class UpdateFormulaDto implements IUpdateFormulaDto {

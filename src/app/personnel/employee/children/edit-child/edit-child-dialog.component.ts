@@ -26,7 +26,7 @@ export class EditChildDialogComponent extends AppComponentBase {
     this.initEmployee();
   }
   initEmployee() {
-    this._childService.get(this.id).subscribe((result) => {
+    this._childService.getForEdit(this.id).subscribe((result) => {
       this.child = result;
      
     });

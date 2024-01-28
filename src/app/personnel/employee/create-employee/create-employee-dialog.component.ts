@@ -21,6 +21,7 @@ export class CreateEmployeeDialogComponent extends AppComponentBase {
     super(injector);
   }
   save(): void {
+    this.employee.dateOfBirth.toString();
     this.saving = true;
     this._employeeService.
       create(

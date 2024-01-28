@@ -1,5 +1,5 @@
 <form class="form-horizontal " autocomplete="off" #createUnitModal="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'EditEmployee'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="'EditChild'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
   
     <div class="modal-body modal-xl">
         <div class="form-group row required">
@@ -31,7 +31,7 @@
                 bsDatepicker
                 placement="top"
                 name="dateOfBirth" id="dateOfBirth" required
-                [(ngModel)]="employee.dateOfBirth" #dateOfBirthElModel="ngModel" #dateOfBirthEl
+                [(ngModel)]="dateOfBirth" #dateOfBirthElModel="ngModel" #dateOfBirthEl
                 [bsConfig]="{  dateInputFormat: 'DD-MM-YYYY', isAnimated: true }"
               >
               <abp-validation-summary [control]="dateOfBirthElModel" [controlEl]="dateOfBirthEl"></abp-validation-summary>

@@ -22,6 +22,7 @@ export class PageHeaderComponent extends AppComponentBase {
   @Input() filtering: boolean = false;
   @Input() ParentName = '';
   @Input() IsDetail: boolean  = false;
+  @Input() CreatePermission: string  = '';
 
 
   @Output() changeDisplayMode: EventEmitter<string> = new EventEmitter<string>();
