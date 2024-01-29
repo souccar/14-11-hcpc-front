@@ -8,6 +8,6 @@
 
 <app-page-grid [hasDetails]="false" [EditPermission]="'Pages.Employee.Edit'" 
 [DeletePermission]="'Pages.Employee.Delete'" [fields]="fields" [data]="units" 
-[totalItems]="totalItems" [pageNumber]="pageNumber" [pageSize]="pageSize"
+[totalItems]="totalItems" [pageNumber]="pageNumber" [pageSize]="pageSize"    (viewItem)="showViewModal($event)"
    (changeOrderBy)="changeOrderBy($event)" (editItem)="showEditModal($event)" (deleteItem)="deleteItem($event)"
   (changePage)="pageChanged($event)" ></app-page-grid>

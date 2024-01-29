@@ -26,6 +26,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   @Output() ParentId: EventEmitter<any> = new EventEmitter();
   @Output() editItem: EventEmitter<any> = new EventEmitter();
   @Output() deleteItem: EventEmitter<any> = new EventEmitter();
+  @Output() viewItem: EventEmitter<any> = new EventEmitter();
 
   constructor(injector: Injector,
     private _renderer: Renderer2,
@@ -56,6 +57,9 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   }
   onDeleteItem(id:number){
     this.deleteItem.emit(id);
+  }
+  onViewItem(id:number){
+    this.viewItem.emit(id);
   }
   getEmployeeId(id:number){
     this.ParentId.emit(id);

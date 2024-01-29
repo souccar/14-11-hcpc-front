@@ -105,6 +105,21 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
     });
   }
 
+  showViewModal(id:number){
+
+    // this._modalService.show(
+    //   ViewEmployeeDialogComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //   }
+    // );
+
+  }
+
   deleteItem(id:number): void {
   
   

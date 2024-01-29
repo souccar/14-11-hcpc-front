@@ -68,6 +68,20 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
   );
 
 }
+  showViewModal(id:number){
+
+    // this._modalService.show(
+    //   ViewEmployeeDialogComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //   }
+    // );
+
+  }
 
 
   editButton(id:number): void {

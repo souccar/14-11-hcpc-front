@@ -5,6 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilterUnitDialogComponent } from './filter-unit/filter-unit-dialog.component';
 import { CreateUnitDialogComponent } from './create-unit/create-unit-dialog.component';
 import { EditUnitDialogComponent } from './edit-unit/edit-unit-dialog.component';
+import { ViewUnitDialogComponent } from './view-unit/view-unit-dialog.component';
 
 @Component({
   selector: 'unit',
@@ -87,6 +88,21 @@ export class UnitComponent extends FullPagedListingComponentBase<UnitDto> implem
     );
   
 }
+showViewModal(id:number){
+
+  this._modalService.show(
+    ViewUnitDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      initialState: {
+        id: id,
+      },
+    }
+  );
+
+}
+
   showFilterDialog(status) {
     if (status == 'clear_filter') {
       this.request.filtering = undefined;
