@@ -771,15 +771,34 @@ export class DailyProductionServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/DailyProduction/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -788,10 +807,6 @@ export class DailyProductionServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -1144,7 +1159,7 @@ export class DailyProductionServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedDailyProductionRequestDto | undefined): Observable<DailyProductionDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<DailyProductionDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/DailyProduction/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2640,14 +2655,34 @@ export class MaterialServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Material/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -2714,7 +2749,7 @@ export class MaterialServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedMaterialRequestDto | undefined): Observable<MaterialDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<MaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Material/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2999,14 +3034,34 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -3073,7 +3128,7 @@ export class MaterialSuppliersServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedMaterialRequestDto | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3919,15 +3974,34 @@ export class OutputRequestServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OutputRequestDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OutputRequestDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -3936,10 +4010,6 @@ export class OutputRequestServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -4185,7 +4255,7 @@ export class OutputRequestServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedOutputRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -5097,15 +5167,34 @@ export class PlanServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlanDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlanDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Plan/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -5114,10 +5203,6 @@ export class PlanServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -5176,7 +5261,7 @@ export class PlanServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedPlanRequestDto | undefined): Observable<PlanDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<PlanDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Plan/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -6596,14 +6681,34 @@ export class SupplierServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SupplierDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SupplierDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Supplier/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -6670,7 +6775,7 @@ export class SupplierServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedSupplierRequestDto | undefined): Observable<SupplierDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<SupplierDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Supplier/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -7438,15 +7543,34 @@ export class TransferServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TransferDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TransferDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -7455,10 +7579,6 @@ export class TransferServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -7517,7 +7637,7 @@ export class TransferServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedTransferRequestDto | undefined): Observable<TransferDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<TransferDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -8212,15 +8332,34 @@ export class UnitServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UnitDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UnitDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Unit/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -8229,10 +8368,6 @@ export class UnitServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -8291,7 +8426,7 @@ export class UnitServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedUnitRequestDto | undefined): Observable<UnitDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<UnitDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Unit/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -9258,15 +9393,34 @@ export class WarehouseServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Warehouse/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -9275,10 +9429,6 @@ export class WarehouseServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -9337,7 +9487,7 @@ export class WarehouseServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedWarehouseRequestDto | undefined): Observable<WarehouseDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<WarehouseDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Warehouse/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -9566,15 +9716,34 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -9583,10 +9752,6 @@ export class WarehouseMaterialServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -9983,7 +10148,7 @@ export class WarehouseMaterialServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedWarehouseMaterialRequestDto | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -15776,65 +15941,6 @@ export interface IOutputRequestWithDetailDto {
     dailyProductions: DailyProductionDto[] | undefined;
 }
 
-export class PagedDailyProductionRequestDto implements IPagedDailyProductionRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedDailyProductionRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedDailyProductionRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedDailyProductionRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedDailyProductionRequestDto {
-        const json = this.toJSON();
-        let result = new PagedDailyProductionRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedDailyProductionRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
 export class PagedFormulaRequestDto implements IPagedFormulaRequestDto {
     maxResultCount: number;
     skipCount: number;
@@ -15888,179 +15994,6 @@ export interface IPagedFormulaRequestDto {
     skipCount: number;
     keyword: string | undefined;
     sorting: string | undefined;
-}
-
-export class PagedMaterialRequestDto implements IPagedMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedMaterialRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedMaterialRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedMaterialRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedMaterialRequestDto {
-        const json = this.toJSON();
-        let result = new PagedMaterialRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-}
-
-export class PagedOutputRequestDto implements IPagedOutputRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedOutputRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedOutputRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedOutputRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedOutputRequestDto {
-        const json = this.toJSON();
-        let result = new PagedOutputRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedOutputRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedPlanRequestDto implements IPagedPlanRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedPlanRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedPlanRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedPlanRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedPlanRequestDto {
-        const json = this.toJSON();
-        let result = new PagedPlanRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedPlanRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
 }
 
 export class PagedProductRequestDto implements IPagedProductRequestDto {
@@ -16120,297 +16053,6 @@ export interface IPagedProductRequestDto {
     keyword: string | undefined;
     filtering: FilterDto;
     sorting: string | undefined;
-}
-
-export class PagedSupplierRequestDto implements IPagedSupplierRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedSupplierRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedSupplierRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedSupplierRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedSupplierRequestDto {
-        const json = this.toJSON();
-        let result = new PagedSupplierRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedSupplierRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-}
-
-export class PagedTransferRequestDto implements IPagedTransferRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedTransferRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedTransferRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedTransferRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedTransferRequestDto {
-        const json = this.toJSON();
-        let result = new PagedTransferRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedTransferRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedUnitRequestDto implements IPagedUnitRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedUnitRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedUnitRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedUnitRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedUnitRequestDto {
-        const json = this.toJSON();
-        let result = new PagedUnitRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedUnitRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedWarehouseMaterialRequestDto implements IPagedWarehouseMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedWarehouseMaterialRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedWarehouseMaterialRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedWarehouseMaterialRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedWarehouseMaterialRequestDto {
-        const json = this.toJSON();
-        let result = new PagedWarehouseMaterialRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedWarehouseMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedWarehouseRequestDto implements IPagedWarehouseRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedWarehouseRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedWarehouseRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedWarehouseRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedWarehouseRequestDto {
-        const json = this.toJSON();
-        let result = new PagedWarehouseRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedWarehouseRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
 }
 
 export enum ParameterAttributes {

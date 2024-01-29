@@ -30,7 +30,7 @@
                             </i>&nbsp;&nbsp;
                             <span>{{'Edit'|localize}}</span>
                           </a>
-                          <a *ngIf="isGranted(DeletePermission)" id="button-basic" type="button" id="delete"
+                          <a *ngIf="isGranted(DeletePermission)" id="button-basic" type="button" id="delete"  (click)="onDeleteItem(item.id)"
                             class="btn btn-empty dropdown-item text-primary align-self-center">
                             <i class="text-primary simple-icon-trash"></i>
                             &nbsp;&nbsp;
@@ -43,9 +43,9 @@
                           &nbsp;&nbsp;
                           <span>{{'View'|localize}}</span>
                         </a>
-                        <li class="divider dropdown-divider"></li>
+                        <!-- <li class="divider dropdown-divider"></li>
                         <a class="dropdown-item">{{ "InProduction" | localize }}</a>
-                        <a class="dropdown-item">{{ "Finished" | localize }}</a>
+                        <a class="dropdown-item">{{ "Finished" | localize }}</a> -->
                       </ul>
                       <a *ngIf="hasDetails"
                       class="pointer" (click)="getEmployeeId(item.id)"

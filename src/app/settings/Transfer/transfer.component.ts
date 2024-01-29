@@ -181,27 +181,27 @@ export class TransferComponent extends PagedListingComponentBase<TransferDto> {
     request.keyword = this.search;
     request.Including ="From,To";
 
-    this._transferService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.Including,
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: TransferDtoPagedResultDto) => {
+    // this._transferService
+    //   .getAll(
+    //     request.keyword,
+    //     request.sort_Field,
+    //     request.Including,
+    //     request.skipCount,
+    //     request.MaxResultCount,
+    //   )
+    //   .pipe(
+    //     finalize(() => {
+    //       finishedCallback();
+    //     })
+    //   )
+    //   .subscribe((result: TransferDtoPagedResultDto) => {
 
-        this.data = result.items;
-         (result)
-        this.totalItem = result.totalCount;
-        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
-      });
+    //     this.data = result.items;
+    //      (result)
+    //     this.totalItem = result.totalCount;
+    //     this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+    //     this.setSelectAllState();
+    //   });
   }
 
 

@@ -175,26 +175,26 @@ export class ActuallyComponent extends PagedListingComponentBase<DailyProduction
   ): void {
     request.keyword = this.search;
     request.Including = "plan,outputRequest";
-    this._dailyProductionService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.Including,
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: DailyProductionDtoPagedResultDto) => {
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
+    // this._dailyProductionService
+    //   .getAll(
+    //     request.keyword,
+    //     request.sort_Field,
+    //     request.Including,
+    //     request.skipCount,
+    //     request.MaxResultCount,
+    //   )
+    //   .pipe(
+    //     finalize(() => {
+    //       finishedCallback();
+    //     })
+    //   )
+    //   .subscribe((result: DailyProductionDtoPagedResultDto) => {
+    //     this.data = result.items;
+    //     this.totalItem = result.totalCount;
+    //     this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+    //     this.setSelectAllState();
 
-      });
+    //   });
   }
 
 

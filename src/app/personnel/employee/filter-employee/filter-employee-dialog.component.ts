@@ -7,7 +7,7 @@ import { FilterComponentBase } from '@shared/filter-Component-base';
 @Component({
   selector: 'filter-employee-dialog',
   templateUrl: './filter-employee-dialog.component.html',
-  styleUrls: ['./filter-employee-dialog.component.scss']
+
 })
 export class FilterEmployeeDialogComponent extends FilterComponentBase implements OnInit {
   

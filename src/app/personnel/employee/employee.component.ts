@@ -6,11 +6,10 @@ import { FilterEmployeeDialogComponent } from './filter-employee/filter-employee
 import { CreateEmployeeDialogComponent } from './create-employee/create-employee-dialog.component';
 import { EditEmployeeDialogComponent } from './edit-employee/edit-employee-dialog.component';
 
-
 @Component({
   selector: 'employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+
 })
 export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto> implements OnInit {
   employees: EmployeeDto[] = [];
@@ -104,6 +103,24 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
       this._modalService.hide();
       this.refresh();
     });
+  }
+
+  deleteItem(id:number): void {
+  
+  
+      abp.message.confirm(
+        this.l('EmployeeDeleteWarningMessage',  'Employees'),
+        undefined,
+        (result: boolean) => {
+          if (result) {
+            this._employeeService.delete(id).subscribe(() => {
+              abp.notify.success(this.l('SuccessfullyDeleted'));
+              this.refresh();
+            });
+          }
+        }
+      );
+    
   }
 
 }
