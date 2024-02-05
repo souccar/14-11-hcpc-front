@@ -3,7 +3,7 @@ import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/
 import { ProductComponent } from '@app/settings/product/product.component';
 import { QueryBuilderClassNames, QueryBuilderConfig } from 'angular2-query-builder';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FilterDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { ActivatedRoute } from '@angular/router';
 import { element } from 'protractor';
@@ -15,7 +15,7 @@ import { element } from 'protractor';
 })
 export class FilterComponent extends AppComponentBase implements OnInit {
   @ViewChild(ProductComponent) ProductComponent!: ProductComponent;
-  query: FilterDto = new FilterDto()
+  query:  any;
   componentName: string;
   constructor(injcter: Injector, public bsModalRef: BsModalRef,
     private _productService: ProductServiceProxy) {

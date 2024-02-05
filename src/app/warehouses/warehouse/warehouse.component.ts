@@ -192,31 +192,31 @@ export class WarehouseComponent extends PagedListingComponentBase<WarehouseDto> 
   ): void {
     request.keyword = this.search;
 
-    this._warehouseService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-       '',
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: WarehouseDtoPagedResultDto) => {
+    // this._warehouseService
+    //   .getAll(
+    //     request.keyword,
+    //     request.sort_Field,
+    //    '',
+    //     request.skipCount,
+    //     request.MaxResultCount,
+    //   )
+    //   .pipe(
+    //     finalize(() => {
+    //       finishedCallback();
+    //     })
+    //   )
+    //   .subscribe((result: WarehouseDtoPagedResultDto) => {
 
-        this.data = result.items;
+    //     this.data = result.items;
 
-        this.totalItem = result.totalCount;
-        result.items.forEach(element => {
-        });
-        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
+    //     this.totalItem = result.totalCount;
+    //     result.items.forEach(element => {
+    //     });
+    //     this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+    //     this.setSelectAllState();
 
 
-      });
+    //   });
   }
 
 

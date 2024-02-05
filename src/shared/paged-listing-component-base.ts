@@ -15,6 +15,7 @@ export class PagedRequestDto {
     maxResultCount: number;
 }
 
+
 @Component({
     template: ''
 })
@@ -25,7 +26,7 @@ export abstract class PagedListingComponentBase<TEntityDto> extends AppComponent
     public totalPages = 1;
     public totalItems: number;
     public isTableLoading = false;
-
+    public request: PagedRequestDto = new PagedRequestDto();
     constructor(injector: Injector) {
         super(injector);
     }
@@ -46,12 +47,12 @@ export abstract class PagedListingComponentBase<TEntityDto> extends AppComponent
     }
 
     public getDataPage(page: number): void {
-        const req = new PagedRequestDto();
-        req.maxResultCount = this.pageSize;
-        req.skipCount = (page - 1) * this.pageSize;
+        
+        this.request.maxResultCount = this.pageSize;
+        this.request.skipCount = (page - 1) * this.pageSize;
 
         this.isTableLoading = true;
-        this.list(req, page, () => {
+        this.list(this.request, page, () => {
             this.isTableLoading = false;
         });
     }

@@ -31,6 +31,7 @@ import { BtSortableHeader } from './directives/bt-sortable-header.directive';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FilterComponent } from './components/filter/filter.component';
 import { QueryBuilderModule } from 'angular2-query-builder';
+
 @NgModule({
     imports: [
         TabsModule.forRoot(),
@@ -44,7 +45,7 @@ import { QueryBuilderModule } from 'angular2-query-builder';
         QueryBuilderModule,
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        PerfectScrollbarModule,
+        PerfectScrollbarModule
     ],
     declarations: [
         AbpPaginationControlsComponent,

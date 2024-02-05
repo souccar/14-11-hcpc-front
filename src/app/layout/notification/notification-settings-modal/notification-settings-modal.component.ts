@@ -8,7 +8,6 @@ import { finalize } from 'rxjs';
 @Component({
   selector: 'notification-settings-modal',
   templateUrl: './notification-settings-modal.component.html',
-  styleUrls: ['./notification-settings-modal.component.scss']
 })
 export class NotificationSettingsModalComponent extends AppComponentBase {
   @ViewChild('modal') modal: ModalDirective;

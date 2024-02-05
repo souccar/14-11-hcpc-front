@@ -11,7 +11,7 @@ import { finalize } from 'rxjs';
 
 export class EditTransferDialogComponent extends AppComponentBase {
   saving = false;
-  id: number;
+  id:number;
   fromUnits: UnitNameForDropdownDto[] = [];
   ToUnits: UnitNameForDropdownDto[] = [];
   transfer = new UpdateTransferDto();
@@ -25,8 +25,8 @@ export class EditTransferDialogComponent extends AppComponentBase {
     super(injector);
   }
 
-  ngOnInit(): void {    
-    this.initfromUnits();    
+  ngOnInit(): void {
+    this.initfromUnits();
   }
 
   initfromUnits() {

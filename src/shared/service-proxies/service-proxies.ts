@@ -142,6 +142,504 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class ChildServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param employeeId (optional) 
+     * @return Success
+     */
+    getByEmployeeId(employeeId: number | undefined): Observable<ChildDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Child/GetByEmployeeId?";
+        if (employeeId === null)
+            throw new Error("The parameter 'employeeId' cannot be null.");
+        else if (employeeId !== undefined)
+            url_ += "employeeId=" + encodeURIComponent("" + employeeId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByEmployeeId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByEmployeeId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ChildDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ChildDto[]>;
+        }));
+    }
+
+    protected processGetByEmployeeId(response: HttpResponseBase): Observable<ChildDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ChildDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined): Observable<ChildDto> {
+        let url_ = this.baseUrl + "/api/services/app/Child/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ChildDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ChildDto>;
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<ChildDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ChildDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getForEdit(id: number | undefined): Observable<UpdateChildDto> {
+        let url_ = this.baseUrl + "/api/services/app/Child/GetForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<UpdateChildDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<UpdateChildDto>;
+        }));
+    }
+
+    protected processGetForEdit(response: HttpResponseBase): Observable<UpdateChildDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UpdateChildDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ChildDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Child/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ChildDtoPagedResultDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ChildDtoPagedResultDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<ChildDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ChildDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    read(body: FullPagedRequestDto | undefined): Observable<ChildDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Child/Read";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRead(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRead(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ChildDtoPagedResultDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ChildDtoPagedResultDto>;
+        }));
+    }
+
+    protected processRead(response: HttpResponseBase): Observable<ChildDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ChildDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateChildDto | undefined): Observable<ChildDto> {
+        let url_ = this.baseUrl + "/api/services/app/Child/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ChildDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ChildDto>;
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<ChildDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ChildDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: UpdateChildDto | undefined): Observable<ChildDto> {
+        let url_ = this.baseUrl + "/api/services/app/Child/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ChildDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ChildDto>;
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<ChildDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ChildDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Child/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -273,15 +771,34 @@ export class DailyProductionServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/DailyProduction/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -290,10 +807,6 @@ export class DailyProductionServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -646,7 +1159,7 @@ export class DailyProductionServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedDailyProductionRequestDto | undefined): Observable<DailyProductionDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<DailyProductionDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/DailyProduction/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -875,21 +1388,21 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param keyword (optional) 
+     * @param including (optional) 
      * @param filtering_Condition (optional) 
      * @param filtering_Rules (optional) 
-     * @param including (optional) 
+     * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, including: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Employee/GetAll?";
-        if (keyword === null)
-            throw new Error("The parameter 'keyword' cannot be null.");
-        else if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (filtering_Condition === null)
             throw new Error("The parameter 'filtering_Condition' cannot be null.");
         else if (filtering_Condition !== undefined)
@@ -903,10 +1416,10 @@ export class EmployeeServiceProxy {
         				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
         			}
             });
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -969,7 +1482,7 @@ export class EmployeeServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedEmployeeRequestDto | undefined): Observable<EmployeeDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<EmployeeDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Employee/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2142,14 +2655,34 @@ export class MaterialServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Material/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -2216,7 +2749,7 @@ export class MaterialServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedMaterialRequestDto | undefined): Observable<MaterialDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<MaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Material/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2501,14 +3034,34 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -2575,7 +3128,7 @@ export class MaterialSuppliersServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedMaterialRequestDto | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/MaterialSuppliers/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2782,6 +3335,76 @@ export class MaterialSuppliersServiceProxy {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class NationalityServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<NationalityDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Nationality/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NationalityDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NationalityDto[]>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<NationalityDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(NationalityDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -3351,15 +3974,34 @@ export class OutputRequestServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OutputRequestDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OutputRequestDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -3368,10 +4010,6 @@ export class OutputRequestServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -3617,7 +4255,7 @@ export class OutputRequestServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedOutputRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4529,15 +5167,34 @@ export class PlanServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlanDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlanDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Plan/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -4546,10 +5203,6 @@ export class PlanServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -4608,7 +5261,7 @@ export class PlanServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedPlanRequestDto | undefined): Observable<PlanDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<PlanDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Plan/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -6013,14 +6666,34 @@ export class SupplierServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SupplierDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SupplierDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Supplier/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -6087,7 +6760,7 @@ export class SupplierServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedSupplierRequestDto | undefined): Observable<SupplierDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<SupplierDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Supplier/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -6855,15 +7528,34 @@ export class TransferServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TransferDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TransferDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -6872,10 +7564,6 @@ export class TransferServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -6934,7 +7622,7 @@ export class TransferServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedTransferRequestDto | undefined): Observable<TransferDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<TransferDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Transfer/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -7629,6 +8317,9 @@ export class UnitServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
      * @param including (optional) 
@@ -7636,8 +8327,29 @@ export class UnitServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
+<<<<<<< HEAD
     getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UnitDtoPagedResultDto> {
+=======
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UnitDtoPagedResultDto> {
+>>>>>>> origin/demo-read
         let url_ = this.baseUrl + "/api/services/app/Unit/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -7708,7 +8420,7 @@ export class UnitServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedUnitRequestDto | undefined): Observable<UnitDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<UnitDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Unit/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -8675,15 +9387,34 @@ export class WarehouseServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Warehouse/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -8692,10 +9423,6 @@ export class WarehouseServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -8754,7 +9481,7 @@ export class WarehouseServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedWarehouseRequestDto | undefined): Observable<WarehouseDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<WarehouseDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Warehouse/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -8983,15 +9710,34 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
      * @param keyword (optional) 
      * @param sorting (optional) 
-     * @param including (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, sorting: string | undefined, including: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
+    getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/GetAll?";
+        if (including === null)
+            throw new Error("The parameter 'including' cannot be null.");
+        else if (including !== undefined)
+            url_ += "Including=" + encodeURIComponent("" + including) + "&";
+        if (filtering_Condition === null)
+            throw new Error("The parameter 'filtering_Condition' cannot be null.");
+        else if (filtering_Condition !== undefined)
+            url_ += "Filtering.Condition=" + encodeURIComponent("" + filtering_Condition) + "&";
+        if (filtering_Rules === null)
+            throw new Error("The parameter 'filtering_Rules' cannot be null.");
+        else if (filtering_Rules !== undefined)
+            filtering_Rules && filtering_Rules.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filtering.Rules[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -9000,10 +9746,6 @@ export class WarehouseMaterialServiceProxy {
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
             url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (including === null)
-            throw new Error("The parameter 'including' cannot be null.");
-        else if (including !== undefined)
-            url_ += "Including=" + encodeURIComponent("" + including) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -9400,7 +10142,7 @@ export class WarehouseMaterialServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    read(body: PagedWarehouseMaterialRequestDto | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
+    read(body: FullPagedRequestDto | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/WarehouseMaterial/Read";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -10029,10 +10771,10 @@ export interface IChangeUserLanguageDto {
 
 export class ChildDto implements IChildDto {
     id: number;
-    tenantId: number | undefined;
+    employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: IChildDto) {
         if (data) {
@@ -10046,10 +10788,10 @@ export class ChildDto implements IChildDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.tenantId = _data["tenantId"];
+            this.employeeId = _data["employeeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -10063,10 +10805,10 @@ export class ChildDto implements IChildDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["tenantId"] = this.tenantId;
+        data["employeeId"] = this.employeeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -10080,10 +10822,65 @@ export class ChildDto implements IChildDto {
 
 export interface IChildDto {
     id: number;
-    tenantId: number | undefined;
+    employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
+}
+
+export class ChildDtoPagedResultDto implements IChildDtoPagedResultDto {
+    items: ChildDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IChildDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ChildDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): ChildDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChildDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+
+    clone(): ChildDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new ChildDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IChildDtoPagedResultDto {
+    items: ChildDto[] | undefined;
+    totalCount: number;
 }
 
 export class ConstructorInfo implements IConstructorInfo {
@@ -10356,10 +11153,10 @@ export interface IConvertToOutputDto {
 }
 
 export class CreateChildDto implements ICreateChildDto {
-    tenantId: number | undefined;
+    employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: ICreateChildDto) {
         if (data) {
@@ -10372,10 +11169,10 @@ export class CreateChildDto implements ICreateChildDto {
 
     init(_data?: any) {
         if (_data) {
-            this.tenantId = _data["tenantId"];
+            this.employeeId = _data["employeeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -10388,10 +11185,10 @@ export class CreateChildDto implements ICreateChildDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["tenantId"] = this.tenantId;
+        data["employeeId"] = this.employeeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -10404,10 +11201,10 @@ export class CreateChildDto implements ICreateChildDto {
 }
 
 export interface ICreateChildDto {
-    tenantId: number | undefined;
+    employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class CreateDailyProductionDetailsDto implements ICreateDailyProductionDetailsDto {
@@ -10521,11 +11318,9 @@ export interface ICreateDailyProductionDto {
 }
 
 export class CreateEmployeeDto implements ICreateEmployeeDto {
-    tenantId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: CreateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: ICreateEmployeeDto) {
         if (data) {
@@ -10538,15 +11333,9 @@ export class CreateEmployeeDto implements ICreateEmployeeDto {
 
     init(_data?: any) {
         if (_data) {
-            this.tenantId = _data["tenantId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
-            if (Array.isArray(_data["children"])) {
-                this.children = [] as any;
-                for (let item of _data["children"])
-                    this.children.push(CreateChildDto.fromJS(item));
-            }
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -10559,15 +11348,9 @@ export class CreateEmployeeDto implements ICreateEmployeeDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["tenantId"] = this.tenantId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
-        if (Array.isArray(this.children)) {
-            data["children"] = [];
-            for (let item of this.children)
-                data["children"].push(item.toJSON());
-        }
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -10580,11 +11363,9 @@ export class CreateEmployeeDto implements ICreateEmployeeDto {
 }
 
 export interface ICreateEmployeeDto {
-    tenantId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: CreateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class CreateFormulaDto implements ICreateFormulaDto {
@@ -12007,7 +12788,7 @@ export class EmployeeDto implements IEmployeeDto {
     id: number;
     firstName: string | undefined;
     lastName: string | undefined;
-    age: number;
+    readonly age: number;
     dateOfBirth: moment.Moment | undefined;
     children: ChildDto[] | undefined;
     nationalityId: number;
@@ -12027,7 +12808,7 @@ export class EmployeeDto implements IEmployeeDto {
             this.id = _data["id"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.age = _data["age"];
+            (<any>this).age = _data["age"];
             this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
             if (Array.isArray(_data["children"])) {
                 this.children = [] as any;
@@ -12704,6 +13485,69 @@ export class FormulaDtoPagedResultDto implements IFormulaDtoPagedResultDto {
 export interface IFormulaDtoPagedResultDto {
     items: FormulaDto[] | undefined;
     totalCount: number;
+}
+
+export class FullPagedRequestDto implements IFullPagedRequestDto {
+    maxResultCount: number;
+    skipCount: number;
+    sorting: string | undefined;
+    keyword: string | undefined;
+    filtering: FilterDto;
+    including: string | undefined;
+
+    constructor(data?: IFullPagedRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.maxResultCount = _data["maxResultCount"];
+            this.skipCount = _data["skipCount"];
+            this.sorting = _data["sorting"];
+            this.keyword = _data["keyword"];
+            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
+            this.including = _data["including"];
+        }
+    }
+
+    static fromJS(data: any): FullPagedRequestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FullPagedRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["maxResultCount"] = this.maxResultCount;
+        data["skipCount"] = this.skipCount;
+        data["sorting"] = this.sorting;
+        data["keyword"] = this.keyword;
+        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
+        data["including"] = this.including;
+        return data;
+    }
+
+    clone(): FullPagedRequestDto {
+        const json = this.toJSON();
+        let result = new FullPagedRequestDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFullPagedRequestDto {
+    maxResultCount: number;
+    skipCount: number;
+    sorting: string | undefined;
+    keyword: string | undefined;
+    filtering: FilterDto;
+    including: string | undefined;
 }
 
 export enum GenericParameterAttributes {
@@ -15091,128 +15935,6 @@ export interface IOutputRequestWithDetailDto {
     dailyProductions: DailyProductionDto[] | undefined;
 }
 
-export class PagedDailyProductionRequestDto implements IPagedDailyProductionRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedDailyProductionRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedDailyProductionRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedDailyProductionRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedDailyProductionRequestDto {
-        const json = this.toJSON();
-        let result = new PagedDailyProductionRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedDailyProductionRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedEmployeeRequestDto implements IPagedEmployeeRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    filtering: FilterDto;
-    including: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedEmployeeRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
-            this.including = _data["including"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedEmployeeRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedEmployeeRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
-        data["including"] = this.including;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedEmployeeRequestDto {
-        const json = this.toJSON();
-        let result = new PagedEmployeeRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedEmployeeRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    filtering: FilterDto;
-    including: string | undefined;
-    sorting: string | undefined;
-}
-
 export class PagedFormulaRequestDto implements IPagedFormulaRequestDto {
     maxResultCount: number;
     skipCount: number;
@@ -15266,179 +15988,6 @@ export interface IPagedFormulaRequestDto {
     skipCount: number;
     keyword: string | undefined;
     sorting: string | undefined;
-}
-
-export class PagedMaterialRequestDto implements IPagedMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedMaterialRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedMaterialRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedMaterialRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedMaterialRequestDto {
-        const json = this.toJSON();
-        let result = new PagedMaterialRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-}
-
-export class PagedOutputRequestDto implements IPagedOutputRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedOutputRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedOutputRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedOutputRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedOutputRequestDto {
-        const json = this.toJSON();
-        let result = new PagedOutputRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedOutputRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedPlanRequestDto implements IPagedPlanRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedPlanRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedPlanRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedPlanRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedPlanRequestDto {
-        const json = this.toJSON();
-        let result = new PagedPlanRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedPlanRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
 }
 
 export class PagedProductRequestDto implements IPagedProductRequestDto {
@@ -15496,6 +16045,7 @@ export interface IPagedProductRequestDto {
     sorting: string | undefined;
 }
 
+<<<<<<< HEAD
 export class PagedSupplierRequestDto implements IPagedSupplierRequestDto {
     maxResultCount: number;
     skipCount: number;
@@ -15787,6 +16337,8 @@ export interface IPagedWarehouseRequestDto {
     including: string | undefined;
 }
 
+=======
+>>>>>>> origin/demo-read
 export enum ParameterAttributes {
     _0 = 0,
     _1 = 1,
@@ -19262,10 +19814,10 @@ export interface IUnitNameForDropdownDto {
 
 export class UpdateChildDto implements IUpdateChildDto {
     id: number;
-    tenantId: number | undefined;
+    employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: IUpdateChildDto) {
         if (data) {
@@ -19279,10 +19831,10 @@ export class UpdateChildDto implements IUpdateChildDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.tenantId = _data["tenantId"];
+            this.employeeId = _data["employeeId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -19296,10 +19848,10 @@ export class UpdateChildDto implements IUpdateChildDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["tenantId"] = this.tenantId;
+        data["employeeId"] = this.employeeId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -19313,10 +19865,10 @@ export class UpdateChildDto implements IUpdateChildDto {
 
 export interface IUpdateChildDto {
     id: number;
-    tenantId: number | undefined;
+    employeeId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class UpdateDailyProductionDetailsDto implements IUpdateDailyProductionDetailsDto {
@@ -19439,11 +19991,9 @@ export interface IUpdateDailyProductionDto {
 
 export class UpdateEmployeeDto implements IUpdateEmployeeDto {
     id: number;
-    tenantId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: UpdateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 
     constructor(data?: IUpdateEmployeeDto) {
         if (data) {
@@ -19457,15 +20007,9 @@ export class UpdateEmployeeDto implements IUpdateEmployeeDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.tenantId = _data["tenantId"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
-            this.dateOfBirth = _data["dateOfBirth"] ? moment(_data["dateOfBirth"].toString()) : <any>undefined;
-            if (Array.isArray(_data["children"])) {
-                this.children = [] as any;
-                for (let item of _data["children"])
-                    this.children.push(UpdateChildDto.fromJS(item));
-            }
+            this.dateOfBirth = _data["dateOfBirth"];
         }
     }
 
@@ -19479,15 +20023,9 @@ export class UpdateEmployeeDto implements IUpdateEmployeeDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["tenantId"] = this.tenantId;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
-        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
-        if (Array.isArray(this.children)) {
-            data["children"] = [];
-            for (let item of this.children)
-                data["children"].push(item.toJSON());
-        }
+        data["dateOfBirth"] = this.dateOfBirth;
         return data;
     }
 
@@ -19501,11 +20039,9 @@ export class UpdateEmployeeDto implements IUpdateEmployeeDto {
 
 export interface IUpdateEmployeeDto {
     id: number;
-    tenantId: number | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    dateOfBirth: moment.Moment | undefined;
-    children: UpdateChildDto[] | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class UpdateFormulaDto implements IUpdateFormulaDto {

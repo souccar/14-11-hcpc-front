@@ -177,25 +177,25 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
     request.keyword = this.search;
     request.Including ="plan";
     this._planService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.Including,
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: PlanDtoPagedResultDto) => {
+      // .getAll(
+      //   request.keyword,
+      //   request.sort_Field,
+      //   request.Including,
+      //   request.skipCount,
+      //   request.MaxResultCount,
+      // )
+      // .pipe(
+      //   finalize(() => {
+      //     finishedCallback();
+      //   })
+      // )
+      // .subscribe((result: PlanDtoPagedResultDto) => {
 
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
-      });
+      //   this.data = result.items;
+      //   this.totalItem = result.totalCount;
+      //   this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+      //   this.setSelectAllState();
+      // });
   }
 
 

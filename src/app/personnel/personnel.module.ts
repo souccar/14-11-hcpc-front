@@ -13,12 +13,27 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { EmployeeServiceProxy, NationalityServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FilterEmployeeDialogComponent } from './employee/filter-employee/filter-employee-dialog.component';
+import { QueryBuilderModule } from 'angular2-query-builder';
+import { ChildrenComponent } from './employee/children/children.component';
+import { DetailsComponent } from './employee/details/details.component';
+import { CreateEmployeeDialogComponent } from './employee/create-employee/create-employee-dialog.component';
+import { EditEmployeeDialogComponent } from './employee/edit-employee/edit-employee-dialog.component';
+import { CreateChildDialogComponent } from './employee/children/create-child/create-child-dialog.component';
+import { EditChildDialogComponent } from './employee/children/edit-child/edit-child-dialog.component';
 
 @NgModule({
   declarations: [
     PersonnelComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    FilterEmployeeDialogComponent,
+    ChildrenComponent,
+    DetailsComponent,
+    CreateEmployeeDialogComponent,
+    EditEmployeeDialogComponent,
+    CreateChildDialogComponent,
+    EditChildDialogComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +44,7 @@ import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
     LayoutModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
-    
+    QueryBuilderModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PersonnelRoutingModule,
@@ -37,6 +52,7 @@ import { EmployeeServiceProxy } from '@shared/service-proxies/service-proxies';
   ],
   providers:[
     EmployeeServiceProxy,
+    NationalityServiceProxy,
     DatePipe
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]

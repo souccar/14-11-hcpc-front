@@ -35,6 +35,7 @@ import { EditSupplierDialogComponent } from './supplier/edit-supplier/edit-suppl
 import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-supplier-dialog.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { QueryBuilderModule } from 'angular2-query-builder';
+import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { QueryBuilderModule } from 'angular2-query-builder';
     CreateSupplierDialogComponent,
     EditSupplierDialogComponent,
     ViewSupplierDialogComponent,
+    FilterUnitDialogComponent,
 
 
   ],

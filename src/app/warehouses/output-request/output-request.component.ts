@@ -146,27 +146,27 @@ export class OutputRequestComponent extends PagedListingComponentBase<OutputRequ
   ): void {
     request.keyword = this.search;
     request.Including ="Plan,OutputRequestProducts";
-    this._OutputRequestService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.Including,
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: OutputRequestDtoPagedResultDto) => {
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
+    // this._OutputRequestService
+    //   .getAll(
+    //     request.keyword,
+    //     request.sort_Field,
+    //     request.Including,
+    //     request.skipCount,
+    //     request.MaxResultCount,
+    //   )
+    //   .pipe(
+    //     finalize(() => {
+    //       finishedCallback();
+    //     })
+    //   )
+    //   .subscribe((result: OutputRequestDtoPagedResultDto) => {
+    //     this.data = result.items;
+    //     this.totalItem = result.totalCount;
+    //     this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+    //     this.setSelectAllState();
 
 
-      });
+    //   });
   }
 
 
