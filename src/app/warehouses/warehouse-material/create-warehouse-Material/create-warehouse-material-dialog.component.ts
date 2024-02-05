@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy, UnitServiceProxy, UnitNameForDropdownDto, MaterialNameForDropdownDto, MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto, SupplierServiceProxy, WarehouseNameForDropdownDto, MaterialCodeForDropdownDto } from '@shared/service-proxies/service-proxies';
+import {
+  CreateWarehouseMaterialDto, WarehouseMaterialServiceProxy,
+  UnitServiceProxy, UnitNameForDropdownDto,
+  MaterialServiceProxy, WarehouseServiceProxy, SupplierNameForDropdownDto,
+  SupplierServiceProxy, WarehouseNameForDropdownDto, MaterialCodeForDropdownDto
+} from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
@@ -9,6 +14,7 @@ import { AbpValidationError } from '@shared/components/validation/abp-validation
   selector: 'create-warehouse-material-dialog',
   templateUrl: './create-warehouse-material-dialog.component.html',
 })
+
 export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   saving = false;
   warehouseMaterial = new CreateWarehouseMaterialDto();
@@ -16,9 +22,9 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
   materials: MaterialCodeForDropdownDto[] = [];
   suppliers: SupplierNameForDropdownDto[] = [];
   warehouses: WarehouseNameForDropdownDto[] = [];
-  minDate:Date;
-  maxDate:Date;
-  loaded:boolean=false;
+  minDate: Date;
+  maxDate: Date;
+  loaded: boolean = false;
   @Output() onSave = new EventEmitter<any>();
   defaultValidationErrors: Partial<AbpValidationError>[] = [
     {
@@ -26,62 +32,65 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
       localizationKey: 'PriceCanNotBeNegativeOrZero',
     },
   ];
+
   constructor(injector: Injector,
     private _warehouseMaterialService: WarehouseMaterialServiceProxy,
     private _unitService: UnitServiceProxy,
     private _materialService: MaterialServiceProxy,
-    private _warehouseService: WarehouseServiceProxy ,
-    private _supplierService: SupplierServiceProxy ,
+    private _warehouseService: WarehouseServiceProxy,
+    private _supplierService: SupplierServiceProxy,
     public bsModalRef: BsModalRef,
-
   ) {
     super(injector);
-
   }
+
   ngOnInit(): void {
-    this.suppliers=[]
+    this.suppliers = []
     this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate()+1);
+    this.minDate.setDate(this.minDate.getDate() + 1);
     this.maxDate = new Date();
-    this.maxDate.setDate(this.maxDate.getDate() );
-    this.initUnits();
+    this.maxDate.setDate(this.maxDate.getDate());
     this.initMaterials();
-    this. initWarehouses();
-
+    this.initWarehouses();
   }
 
-  initUnits() {
-    this._unitService.getNameForDropdown().subscribe((result) => {
+  initUnits(materialId) {
+    this._unitService.getAllForMaterial(materialId).subscribe((result) => {
       this.units = result;
     });
   }
-  initSuppliers(id:number) {
+
+  initSuppliers(id: number) {
     this._supplierService.getSuppliersByMaterialIdForDropdown(id).subscribe((result) => {
       this.suppliers = result;
     });
   }
-  priceValidationErrors(){
-    let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];
+
+  priceValidationErrors() {
+    let errors: AbpValidationError[] = [{ name: 'min', localizationKey: 'PriceCanNotBeNegativeOrZero', propertyKey: 'PriceCanNotBeNegativeOrZero' }];
     return errors;
   }
+
   initMaterials() {
     this._materialService.getCodeForDropdown().subscribe((result) => {
       this.materials = result;
     });
   }
 
-  getsupplierByMaterial(id: number) {
+  getSuppliersAndUnitsByMaterial(id: number) {
     if (id != null) {
       this.initSuppliers(id);
-        this.loaded=true;
-      }
+      this.initUnits(id);
+      this.loaded = true;
     }
+  }
 
   initWarehouses() {
     this._warehouseService.getNameForDropdown().subscribe((result) => {
       this.warehouses = result;
     });
   }
+
   save(): void {
     this.saving = true;
     this._warehouseMaterialService.
@@ -98,7 +107,5 @@ export class CreateWarehouseMaterialDialogComponent extends AppComponentBase {
         this.bsModalRef.hide();
         this.onSave.emit();
       });
-
   }
-
 }

@@ -22,6 +22,7 @@ import { TenantsComponent } from './tenants/tenants.component';
                     { path: 'notifications', loadChildren: () => import('../app/layout/notification/notification.module').then(m => m.NotificationModule) },
                     { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) },
                     { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
+                    { path: 'workflow', loadChildren: () => import('./workflow/work-flow.module').then(m => m.WorkFlowModule) },
                 ]
             },
         ])

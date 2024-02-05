@@ -1,42 +1,37 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateUnitDto, UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateWorkflowDto, WorkflowServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'create-unit-dialog',
-  templateUrl: './create-unit-dialog.component.html',
+  selector: 'create-workflow-dialog',
+  templateUrl: './create-workflow-dialog.component.html',
+  styleUrls: ['./create-workflow-dialog.component.scss']
 })
-
-export class CreateUnitDialogComponent extends AppComponentBase {
+export class CreateWorkflowDialogComponent extends AppComponentBase {
   saving = false;
-  unit = new CreateUnitDto();
-  parentUnits: UnitNameForDropdownDto[] = [];
-
+  workflow = new CreateWorkflowDto();
   @Output() onSave = new EventEmitter<any>();
 
   constructor(injector: Injector,
-    private _unitService: UnitServiceProxy,
+    private _workflowService: WorkflowServiceProxy,
     public bsModalRef: BsModalRef,
   ) {
     super(injector);
   }
 
-  ngOnInit(): void { 
-    this.initialAllParentUnits();
+  ngOnInit(): void {
+
   }
 
-  initialAllParentUnits(){
-    this._unitService.getAllParentUnits()
-    .subscribe((result)=>{this.parentUnits = result});
-  }
+
 
   save(): void {
     this.saving = true;
-    this._unitService.
+    this._workflowService.
       create(
-        this.unit
+        this.workflow
       )
       .pipe(
         finalize(() => {

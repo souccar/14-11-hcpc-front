@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { CreateUnitDto, UnitServiceProxy, SupplierDto, SupplierServiceProxy, UpdateUnitDto } from '@shared/service-proxies/service-proxies';
+import { UnitServiceProxy, UpdateUnitDto, UnitNameForDropdownDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -11,31 +11,38 @@ import { finalize } from 'rxjs';
 })
 export class EditUnitDialogComponent extends AppComponentBase {
   saving = false;
-
-  id:number;
-  
-  unit =  new UpdateUnitDto ();
-  suppliers: SupplierDto[] = [];
+  parentUnits: UnitNameForDropdownDto[] = [];
+  id: number;
+  unit = new UpdateUnitDto();
   @Output() onSave = new EventEmitter<any>();
-  constructor(injector: Injector,
-    private _unitService:UnitServiceProxy,
-    private _supplierService:SupplierServiceProxy,
-    public bsModalRef: BsModalRef,
 
+  constructor(injector: Injector,
+    private _unitService: UnitServiceProxy,
+    public bsModalRef: BsModalRef,
   ) {
     super(injector);
   }
+
   ngOnInit(): void {
-    this.initUnit();
+    this.initialAllParentUnits();
   }
 
+  initialAllParentUnits(){
+    this._unitService.getAllParentUnits()
+    .subscribe((result)=>{
+      this.parentUnits = result;
+      this.initUnit();
+    });
+  }
 
-  initUnit(){
-    this._unitService.get(this.id).subscribe((result) => {
-     this.unit = result;
-   });
-   }
-   save(): void {
+  initUnit() {
+    this._unitService.getIncludeParent(this.id).subscribe((result) => {
+      this.unit = result;
+    });
+  }
+
+  save(): void {
+    debugger;
     this.saving = true;
     this._unitService
       .update(
@@ -46,13 +53,11 @@ export class EditUnitDialogComponent extends AppComponentBase {
           this.saving = false;
         })
       )
-      .subscribe((response:any) => {
-       
-          this.notify.info(this.l('SavedSuccessfully'));
-          this.bsModalRef.hide();
-          this.onSave.emit();}
-      );
-
+      .subscribe((response: any) => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.bsModalRef.hide();
+        this.onSave.emit();
       }
-
+      );
+  }
 }
