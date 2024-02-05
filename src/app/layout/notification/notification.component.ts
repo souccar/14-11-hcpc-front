@@ -10,6 +10,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Data } from '@angular/router';
 import { result } from 'lodash-es';
 import * as _ from 'lodash';
+import { Location } from '@angular/common';
 @Component({
   selector: 'notifications',
   templateUrl: './notification.component.html',
@@ -51,7 +52,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   }
 
   reloadPage(): void {
-    this.loadData();
+    this.loadData(this.itemsPerPage, this.currentPage);
   }
 
   ngOnInit(): void {
@@ -60,7 +61,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
 
   move(id:string)
   {
-      this.data.forEach((item)=>{
+      this.data.forEach((item:IFormattedUserNotification)=>{ 
         if(item.userNotificationId==id)
         { this.selectedNotification=item;
           this.isMove=true;
@@ -68,7 +69,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
           notificationId.id=item.userNotificationId;
           this._notificationService.setNotificationAsRead( notificationId).subscribe(result=>{
           });
-
+  
         }
       })
   }
@@ -160,8 +161,8 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   SetAllAsRead()
   {
     this._notificationService.setAllNotificationsAsRead().subscribe((response)=>{
-
-    })
+    });
+    location.reload();
   }
   isRead(record: any): boolean {
     return record.formattedNotification.state === 'READ';
@@ -222,11 +223,14 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
             .subscribe(() => {
               this.reloadPage();
               this.notify.success(this.l('SuccessfullyDeleted'));
+              location.reload()
             });
         }
       }
     );
     this.isMove=false;
+    
+
   }
   protected delete(userNotification: UserNotification): void {
     this.message.confirm(
@@ -238,6 +242,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
             .subscribe(() => {
               this.reloadPage();
               this.notify.success(this.l('SuccessfullyDeleted'));
+            
             });
         }
       }

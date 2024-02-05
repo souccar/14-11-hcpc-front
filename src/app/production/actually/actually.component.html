@@ -1,46 +1,15 @@
-<app-list-page-header [title]="title" [itemOrder]="itemOrder" [itemOptionsOrders]="itemOptionsOrders"
-  [displayMode]="displayMode" [itemOptionsPerPage]="[5,10,20]" [itemsPerPage]="itemsPerPage"
-  [selectAllState]="selectAllState" (changeDisplayMode)="changeDisplayMode($event)" (addNewItem)="showAddNewModal()"
-  (deleteItem)="deleteItem()" [selectedCount]="selectedCount" (selectAllChange)="selectAllChange($event)"
-  (itemsPerPageChange)="itemsPerPageChange($event)" (changeOrderBy)="changeOrderBy($event)"
-  (searchKeyUp)="searchKeyUp($event)">
-</app-list-page-header>
-<div class="row">
-  <div class="col-12 mb-4 data-table-rows">
-    <ngx-datatable [rows]="data" [columnMode]="ColumnMode.flex" [limit]="itemsPerPage" [headerHeight]="20"
-      [footerHeight]="100" #table [sorts]="[{ prop: 'title', dir: 'asc' }]" (select)="onSelect($event)"
-      [selected]="selected">
-      <ngx-datatable-column [name]="l('Plan')" prop="plan" [flexGrow]="1">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          {{row.plan?.title}}
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column [name]="l('OutputRequest')" prop="outputRequest" [flexGrow]="1">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          {{row.outputRequest?.title}}
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column [sortable]="false" [name]="l('Action')" prop="Action" [flexGrow]="1">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <button id="button-basic" type="button" id="edit" class="btn btn-empty text-primary align-self-center "
-            (click)="editButton(row.id)">
-            <i class=" text-primary simple-icon-pencil"></i>
-          </button>
-          <button id="button-basic" type="button" id="delete" class=" btn btn-empty text-primary align-self-center "
-            (click)="delete(row)">
-            <i class="  text-primary simple-icon-trash"></i>
-          </button>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-footer *ngIf="true">
-        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
-          let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset" let-limit="limit">
-          <div class="w-100 d-flex justify-content-center">
-          </div>
-        </ng-template>
-      </ngx-datatable-footer>
-    </ngx-datatable>
-    <div class="col-12">
-    </div>
-  </div>
-</div>
+<app-page-header [title]="'DailyProduction' | localize"  [fields]="fields"
+ [CreatePermission]="'Production.DailyProductions.Create'" (addNewItem)="showAddNewModal()"
+  (advanceFilter)="showFilterDialog($event)" 
+  [filtering]="request.filtering && request.filtering.rules.length > 0" (onChangePage)="onChangePage($event)"
+  (changeOrderBy)="changeOrderBy($event)" (searchKeyUp)="searchKeyUp($event)">
+</app-page-header>
+
+
+<app-page-grid [EditPermission]="'Production.DailyProductions.Edit'" 
+[DeletePermission]="'Production.DailyProductions.Delete'" [fields]="fields" [data]="data" 
+[totalItems]="totalItems" [pageNumber]="pageNumber" [pageSize]="pageSize"    (viewItem)="showViewModal($event)"
+   (changeOrderBy)="changeOrderBy($event)" (editItem)="showEditModal($event)" (deleteItem)="deleteItem($event)"
+  (changePage)="pageChanged($event)" [ViewButton]="false"></app-page-grid>
+
+

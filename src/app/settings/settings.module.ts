@@ -1,5 +1,5 @@
 import { ProductComponent } from './product/product.component';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from './settings.component';
 import { UnitComponent } from './unit/unit.component';
@@ -36,6 +36,11 @@ import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-suppl
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { QueryBuilderModule } from 'angular2-query-builder';
 import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog.component';
+import { FilterTransferDialogComponent } from './Transfer/filter-transfer/filter-transfer-dialog.component';
+import { FilterSupplierDialogComponent } from './supplier/filter-supplier/filter-supplier-dialog.component';
+import { FilterProductDialogComponent } from './product/filter-product/filter-product-dialog.component';
+import { FilterMaterialDialogComponent } from './material/filter-material/filter-material-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -67,8 +72,10 @@ import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog
     EditSupplierDialogComponent,
     ViewSupplierDialogComponent,
     FilterUnitDialogComponent,
-
-
+    FilterTransferDialogComponent,
+    FilterSupplierDialogComponent,
+    FilterProductDialogComponent,
+    FilterMaterialDialogComponent
   ],
   imports: [
     AccordionModule.forRoot(),
@@ -82,6 +89,6 @@ import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog
     QueryBuilderModule,
     SettingsRoutingModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
 })
 export class SettingsModule { }

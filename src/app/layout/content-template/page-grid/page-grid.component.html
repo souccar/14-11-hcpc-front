@@ -37,15 +37,17 @@
                             <span>{{'Delete'|localize}}</span>
                           </a>
                         </ng-conatiner>
-                        <a id="button-basic" type="button" id="view" (click)="onViewItem(item.id)"
+                        <a *ngIf="ViewButton" id="button-basic" type="button" id="view" (click)="onViewItem(item.id)"
                           class="btn btn-empty dropdown-item text-primary align-self-center">
                           <i class="text-primary simple-icon-eye "></i>
                           &nbsp;&nbsp;
                           <span>{{'View'|localize}}</span>
                         </a>
-                        <!-- <li class="divider dropdown-divider"></li>
-                        <a class="dropdown-item">{{ "InProduction" | localize }}</a>
-                        <a class="dropdown-item">{{ "Finished" | localize }}</a> -->
+                        <ng-container *ngIf="IsOutputRequest">
+                        <li class="divider dropdown-divider"></li>
+                        <a *ngIf="item.status == 0" class="dropdown-item" (click)="onchangeStatusToInProduction(item.id)">{{ "InProduction" | localize }}</a>
+                        <a *ngIf="item.status == 1"   class="dropdown-item"  (click)="onchangeStatusToFinish(item.id)" >{{ "Finished" | localize }}</a>
+                      </ng-container>
                       </ul>
                       <a *ngIf="hasDetails"
                       class="pointer" (click)="getEmployeeId(item.id)"

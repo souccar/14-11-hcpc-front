@@ -24,6 +24,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ViewWarehouseDialogComponent } from './warehouse/view-warehouse/view-warehouse-dialog.component';
+import { FilterWarehouseDialogComponent } from './warehouse/filter-warehouse/filter-warehouse-dialog.component';
+import { FilterOutputRequestDialogComponent } from './output-request/filter-outputRequest/filter-output-request-dialog.component';
+import { QueryBuilderModule } from 'angular2-query-builder';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { ViewWarehouseDialogComponent } from './warehouse/view-warehouse/view-wa
     EditOutputRequestMaterialDialogComponent,
     ViewOutputRequestDialogComponent,
     ViewWarehouseDialogComponent,
+    FilterWarehouseDialogComponent,
+    FilterOutputRequestDialogComponent,
 
 
   ],
@@ -46,6 +51,7 @@ import { ViewWarehouseDialogComponent } from './warehouse/view-warehouse/view-wa
     SharedModule,
     FormsModule,
     LayoutModule,
+    QueryBuilderModule,
     BsDatepickerModule,
     NgSelectModule,
     ReactiveFormsModule,

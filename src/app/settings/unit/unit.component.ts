@@ -15,27 +15,19 @@ export class UnitComponent extends FullPagedListingComponentBase<UnitDto> implem
   units: UnitDto[] = [];
   fields = [
     { label: this.l('Name'), name: 'name', sortable: true, type: 'string' },
-  
   ];
-
-  @ViewChild(FilterUnitDialogComponent) child!: FilterUnitDialogComponent;
-
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _unitService: UnitServiceProxy,
     public bsModalRef: BsModalRef) {
     super(injector);
   }
-
-
   protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
     this._unitService.read(request)
       .subscribe(result => {
         this.units = result.items;
-    
         this.showPaging(result, pageNumber);
-      })
-  
+      });
   }
 
   showAddNewModal() {
@@ -46,13 +38,13 @@ export class UnitComponent extends FullPagedListingComponentBase<UnitDto> implem
         backdrop: true,
         ignoreBackdropClick: true,
         class: 'modal-lg',
-
       }
     );
     createUnitDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
+
   showEditModal(id: any){
     let editUnitDialog: BsModalRef;
     editUnitDialog = this._modalService.show(
@@ -64,16 +56,14 @@ export class UnitComponent extends FullPagedListingComponentBase<UnitDto> implem
         initialState:{
           id:id
         }
-
       }
     );
     editUnitDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
+
   deleteItem(id:number): void {
-  
-  
     abp.message.confirm(
       this.l('UnitDeleteWarningMessage',  'Units'),
       undefined,
@@ -86,10 +76,9 @@ export class UnitComponent extends FullPagedListingComponentBase<UnitDto> implem
         }
       }
     );
-  
 }
-showViewModal(id:number){
 
+showViewModal(id:number){
   this._modalService.show(
     ViewUnitDialogComponent,
     {
@@ -100,7 +89,6 @@ showViewModal(id:number){
       },
     }
   );
-
 }
 
   showFilterDialog(status) {
@@ -127,7 +115,6 @@ showViewModal(id:number){
       this.refresh();
     });
   }
-
 }
 
 

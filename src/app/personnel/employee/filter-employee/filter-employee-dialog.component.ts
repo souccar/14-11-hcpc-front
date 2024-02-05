@@ -31,7 +31,6 @@ export class FilterEmployeeDialogComponent extends FilterComponentBase implement
       result.forEach(item=>{
         this.nationalities.push({name:item.name, value:item.id});
       });
-      
     })
   }
 
