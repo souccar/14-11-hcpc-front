@@ -13,7 +13,7 @@
       <div class="simple-line-icons mt-1">
         <div>
           <a id="flip" class="flip glyph-icon simple-icon-action-undo btn-md text-primary "
-           (click)="backToAlloutputRequest()"  
+           (click)="backToAlloutputRequest()"
            data-bs-toggle="tooltip" data-bs-placement="right" title="Back To All Output request" ></a>
         </div>
       </div>
@@ -22,7 +22,7 @@
       </app-heading>
 
       <!-- &nbsp;&nbsp;&nbsp;&nbsp;
-      <div class="mt-3" > 
+      <div class="mt-3" >
          <div class=" text-primary " style="cursor: alias;" (click)="backToAlloutputRequest()"  >back to product list</div>
       </div> -->
     </div>
@@ -41,7 +41,7 @@
               <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
             </div>
           </div>
-   
+
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="Plans">
               {{ "Plans"|localize }}
@@ -63,7 +63,7 @@
               (close)="onCloseSelect()" (clear)="onClearSelect()" (remove)="onRemoveFromSelect()" (change)="onChangeOutputRequestProduct($event)"  #productsEl
               [items]="planProducts" [multiple]="true" bindLabel="product.name" bindValue="product.productId" [closeOnSelect]="false">
             </ng-select>
-            <!-- <abp-validation-summary [controlEl]="planIdEl"></abp-validation-summary> -->
+
           </div>
           </div>
         </div>
