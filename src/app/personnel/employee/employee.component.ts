@@ -5,6 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FilterEmployeeDialogComponent } from './filter-employee/filter-employee-dialog.component';
 import { CreateEmployeeDialogComponent } from './create-employee/create-employee-dialog.component';
 import { EditEmployeeDialogComponent } from './edit-employee/edit-employee-dialog.component';
+import { DetailsData } from '@shared/components/details/details.component';
 
 @Component({
   selector: 'employee',
@@ -14,6 +15,13 @@ import { EditEmployeeDialogComponent } from './edit-employee/edit-employee-dialo
 export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto> implements OnInit {
   employees: EmployeeDto[] = [];
   employeeId: number;
+  detailData:DetailsData[]=[{
+    icon:'simple-icon-people',
+    label:'children',
+    destinationRoute:"app/personnel/children",
+
+
+  }]
   loadDetails: boolean = false;
   fields = [
     { label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
@@ -121,8 +129,8 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
   }
 
   deleteItem(id:number): void {
-  
-  
+
+
       abp.message.confirm(
         this.l('EmployeeDeleteWarningMessage',  'Employees'),
         undefined,
@@ -135,7 +143,7 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
           }
         }
       );
-    
+
   }
 
 }

@@ -48,12 +48,12 @@
                         <a class="dropdown-item">{{ "Finished" | localize }}</a> -->
                       </ul>
                       <a *ngIf="hasDetails"
-                      class="pointer" (click)="getEmployeeId(item.id)"
+                      class="pointer" (click)="getParentId(item.id)"
                        data-bs-toggle="tooltip"
-                       data-bs-placement="right" title="{{'Details'|localize}}"> 
+                       data-bs-placement="right" title="{{'Details'|localize}}">
                        <i class=" ml-4 text-primary  iconsminds-arrow-inside"></i>
                       </a>
-                    
+
                     </span>
                   </span>
                 </td>

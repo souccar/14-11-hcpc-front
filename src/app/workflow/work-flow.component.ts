@@ -1,66 +1,54 @@
 import { Component, Injector, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FullPagedListingComponentBase } from '@shared/full-paged-listing-component-base';
-import { FilterDto, FullPagedRequestDto, WorkflowDto } from '@shared/service-proxies/service-proxies';
+import { FilterDto, FullPagedRequestDto, WorkflowDto, WorkflowServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateWorkflowDialogComponent } from './create-workflow/create-workflow-dialog.component';
+import { EditWorkflowDialogComponent } from './edit-workflow/edit-workflow-dialog.component';
+import { ViewWorkflowDialogComponent } from './view-workflow/view-workflow-dialog.component';
+import { FilterWorkflowDialogComponent } from './filter-workflow/filter-workflow-dialog.component';
+import { DetailsData } from '@shared/components/details/details.component';
 
 @Component({
   selector: 'work-flow',
   templateUrl: './work-flow.component.html',
   styleUrls: ['./work-flow.component.scss']
 })
-export class WorkFlowComponent  extends FullPagedListingComponentBase<WorkflowDto> implements OnInit{
+export class WorkFlowComponent  extends FullPagedListingComponentBase<WorkflowDto> implements OnInit {
+  Workflows: WorkflowDto[] = [];
+  loadDetails: boolean = false;
+
+  workflowId: number;
+  detailData:DetailsData[]=[{
+    icon:'iconsminds-repeat-4',
+    label:'Steps',
+    destinationRoute:"app/personnel/children",},
+  {
+    icon:'iconsminds-notepad',
+    label:' Approvals',
+    destinationRoute:"app/personnel/children",
+  }]
   fields = [
-    { label: this.l('Name'), name: 'name', sortable: true, type: 'string' },
+    { label: this.l('Title'), name: 'title', sortable: true, type: 'string' },
+    { label: this.l('Description'), name: 'description', type: 'string' },
 
   ];
 
-  protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    throw new Error('Method not implemented.');
-  }
-  columns = [
-    { prop: 'title', name: 'Title' },
-    { prop: 'sales', name: 'Sales' },
-    { prop: 'stock', name: 'Stock' },
-    { prop: 'category', name: 'Category' },
-    { prop: 'id', name: 'Id' }
-  ];
-  itemsPerPage = 10;
-  itemOptionsPerPage = [5, 10, 20];
-  selected = [];
-  selectAllState = '';
-  itemOrder = 'Title';
-  itemOptionsOrders = ['Title', 'Category', 'Status', 'Label'];
-  displayOptionsCollapsed = false;
-
-  todoItems: any[] = [{
-    name:'reem',
-    age:24,
-  }];
-
-  // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewTodoModalComponent;
-
-  constructor(injector: Injector,
-    private renderer: Renderer2,
+constructor(injector: Injector,
     private _modalService: BsModalService,
-    ) {
+    private _WorkflowService: WorkflowServiceProxy,
+    public bsModalRef: BsModalRef) {
     super(injector);
   }
 
-  ngOnInit(): void {
-    this.renderer.addClass(document.body, 'right-menu');
-    this.getItems();
-  }
 
-  ngOnDestroy(): void {
-    this.renderer.removeClass(document.body, 'right-menu');
-  }
+  protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    this._WorkflowService.read(request)
+      .subscribe(result => {
+        this.Workflows = result.items;
 
-  getItems(): void {
-    // this.todoService.getTodoItems()
-    //   .subscribe(items => {
-    //     this.todoItems = items;
-    //   });
+        this.showPaging(result, pageNumber);
+      })
+
   }
 
   showAddNewModal() {
@@ -78,62 +66,92 @@ export class WorkFlowComponent  extends FullPagedListingComponentBase<WorkflowDt
       this.refresh();
     });
   }
+  showEditModal(id: any){
+    let editWorkflowDialog: BsModalRef;
+    editWorkflowDialog = this._modalService.show(
+      EditWorkflowDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'modal-lg',
+        initialState:{
+          id:id
+        }
 
-  isSelected(p: any) {
-    // return this.selected.findIndex(x => x.id === p.id) > -1;
-  }
-  onSelect(item: any): void {
-    // if (this.isSelected(item)) {
-    //   this.selected = this.selected.filter(x => x.id !== item.id);
-    // } else {
-    //   this.selected.push(item);
-    // }
-    // this.setSelectAllState();
-  }
-
-  setSelectAllState(): void {
-    if (this.selected.length === this.todoItems.length) {
-      this.selectAllState = 'checked';
-    } else if (this.selected.length !== 0) {
-      this.selectAllState = 'indeterminate';
-    } else {
-      this.selectAllState = '';
-    }
+      }
+    );
+    editWorkflowDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
   }
 
-  selectAll($event): void {
-    if ($event.target.checked) {
-      this.selected = [...this.todoItems];
-    } else {
-      this.selected = [];
-    }
-    this.setSelectAllState();
-  }
 
-  showFilterDialog(status) {
-    // if (status == 'clear_filter') {
-    //   this.request.filtering = undefined;
-    //   this.refresh();
-    //   return;
-    // }
-    // let filterDialog: BsModalRef;
-    // filterDialog = this._modalService.show(
-    //   FilterWorkFlowDialogComponent,
-    //   {
-    //     backdrop: true,
-    //     ignoreBackdropClick: true,
-    //     initialState: {
-    //       filterInput: this.request.filtering,
-    //     },
-    //     class: 'modal-lg',
-    //   }
-    // );
-    // filterDialog.content.onSave.subscribe((result: FilterDto) => {
-    //   this.request.filtering = result;
-    //   this._modalService.hide();
-    //   this.refresh();
-    // });
-  }
+  getWorkflowIdForSteps(id: number) {
+    this.loadDetails = true;
+    this.workflowId = id;
 
+
+
+  }
+  deleteItem(id:number): void {
+
+
+    abp.message.confirm(
+      this.l('WorkflowDeleteWarningMessage',  'Workflows'),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+          this._WorkflowService.delete(id).subscribe(() => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            this.refresh();
+          });
+        }
+      }
+    );
 
 }
+showViewModal(id:number){
+
+  this._modalService.show(
+    ViewWorkflowDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      initialState: {
+        id: id,
+      },
+    }
+  );
+
+}
+
+  showFilterDialog(status) {
+    if (status == 'clear_filter') {
+      this.request.filtering = undefined;
+      this.refresh();
+      return;
+    }
+    let filterDialog: BsModalRef;
+    filterDialog = this._modalService.show(
+      FilterWorkflowDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          filterInput: this.request.filtering,
+        },
+        class: 'modal-lg',
+      }
+    );
+    filterDialog.content.onSave.subscribe((result: FilterDto) => {
+      this.request.filtering = result;
+      this._modalService.hide();
+      this.refresh();
+    });
+  }
+
+}
+
+
+
+

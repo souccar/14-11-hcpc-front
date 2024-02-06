@@ -1,0 +1,10 @@
+<div class="row icon-cards-row mb-2" >
+    <div class="col-md-3  col-lg-2 col-xl-1 col-sm-4 col-6 mb-4" *ngFor="let d of data">
+      <a (click)="navigateToChildren(d.destinationRoute)" class="card ">
+        <div class="card-body text-center p-0">
+          <i class="{{d.icon}}"></i>
+          <p class="card-text font-weight-semibold mb-0">{{ d.label | localize }}</p>
+        </div>
+      </a>
+    </div>
+  </div>

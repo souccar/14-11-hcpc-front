@@ -61,7 +61,8 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   onViewItem(id:number){
     this.viewItem.emit(id);
   }
-  getEmployeeId(id:number){
+  getParentId(id:number){
+    console.log(id);
     this.ParentId.emit(id);
   }
   pageChanged(event: any): void {
@@ -111,7 +112,6 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   }
 
   getTemplateValue(item, field: IPageField) {
-    debugger;
     let template = field.templateValue;
     for (let i = 0; i < this.fields.length; i++) {
       const text = "$" + this.fields[i].name;
