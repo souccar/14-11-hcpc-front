@@ -13,6 +13,7 @@ import { ProductComponent } from './product/product.component';
 import { MaterialComponent } from './material/material.component';
 import { FormulaComponent } from './formula/formula.component';
 import { NotificationComponent } from '@app/layout/notification/notification.component';
+import {  StepIndexComponent } from './workflow/StepIndex/stepIndex.component';
 
 
 
@@ -87,6 +88,11 @@ const routes: Routes = [{
     },
     {
       path: 'notifications', component: NotificationComponent ,
+      canActivate: [AppRouteGuard]
+    }
+    ,
+    {
+      path: 'WorkFlowStepIndex', component: StepIndexComponent ,
       canActivate: [AppRouteGuard]
     }
 

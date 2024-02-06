@@ -102,6 +102,12 @@ const data: IMenuItem[] = [
         to: `${adminRoot}/settings/generalsetting`,
         icon: 'simple-icon-globe',
       },
+      {
+        label: 'WorkFlowStepIndex',
+        to: `${adminRoot}/settings/WorkFlowStepIndex`,
+        icon: 'simple-icon-event',
+
+      },
 
 
     ],

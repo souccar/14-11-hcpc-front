@@ -40,6 +40,7 @@ import { FilterTransferDialogComponent } from './Transfer/filter-transfer/filter
 import { FilterSupplierDialogComponent } from './supplier/filter-supplier/filter-supplier-dialog.component';
 import { FilterProductDialogComponent } from './product/filter-product/filter-product-dialog.component';
 import { FilterMaterialDialogComponent } from './material/filter-material/filter-material-dialog.component';
+import { WorkflowModule } from './workflow/workflow.module';
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import { FilterMaterialDialogComponent } from './material/filter-material/filter
     PaginationModule.forRoot(),
     CommonModule,
     QueryBuilderModule,
-    SettingsRoutingModule
+    SettingsRoutingModule,
+    WorkflowModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
 })
