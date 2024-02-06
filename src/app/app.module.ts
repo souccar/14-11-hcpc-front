@@ -30,6 +30,7 @@ import { SecurityModule } from './security/security.module';import { EmployeeSer
 import { PersonnelModule } from './personnel/personnel.module';// notification
 import {NotificationModule} from './layout/notification/notification.module'
 import { ReportsModule } from './reports/reports.module';
+import {WorkFlowModule} from '../app/workflow/work-flow.module'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ReportsModule } from './reports/reports.module';
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
+
 
   ],
   imports: [
@@ -72,7 +74,7 @@ import { ReportsModule } from './reports/reports.module';
     SecurityModule,
     WarehousesModule,
     PersonnelModule,
-    
+    WorkFlowModule,
     ReportsModule
   ],
 

@@ -1,3 +1,4 @@
+import { AddNewTodoModalComponent } from './add-new-todo-modal/add-new-todo-modal.component';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListPageHeaderComponent } from './list-page-header/list-page-header.component';
@@ -21,6 +22,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     BreadcrumbComponent,
     PageHeaderComponent,
     PageGridComponent,
+    AddNewTodoModalComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     PageGridComponent,
     ApplicationMenuComponent,
     BreadcrumbComponent,
+    AddNewTodoModalComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

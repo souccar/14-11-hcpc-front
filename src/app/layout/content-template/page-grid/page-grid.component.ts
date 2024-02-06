@@ -18,9 +18,15 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   @Input() totalItems: number;
   @Input() pageNumber: number;
   @Input() pageSize: number;
-
+  @Input() hasDetails:boolean=false;
+  @Input() EditPermission:string='';
+  @Input() DeletePermission:string='';
   @Output() changeOrderBy: EventEmitter<string> = new EventEmitter();
   @Output() changePage: EventEmitter<any> = new EventEmitter();
+  @Output() ParentId: EventEmitter<any> = new EventEmitter();
+  @Output() editItem: EventEmitter<any> = new EventEmitter();
+  @Output() deleteItem: EventEmitter<any> = new EventEmitter();
+  @Output() viewItem: EventEmitter<any> = new EventEmitter();
 
   constructor(injector: Injector,
     private _renderer: Renderer2,
@@ -46,7 +52,19 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
       return direction === 'asc' ? 'desc' : 'asc';
     }
   }
-
+  onEditItem(id:number): void {
+    this.editItem.emit(id);
+  }
+  onDeleteItem(id:number){
+    this.deleteItem.emit(id);
+  }
+  onViewItem(id:number){
+    this.viewItem.emit(id);
+  }
+  getParentId(id:number){
+    console.log(id);
+    this.ParentId.emit(id);
+  }
   pageChanged(event: any): void {
     this.changePage.emit(event.page);
   }
@@ -94,7 +112,6 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   }
 
   getTemplateValue(item, field: IPageField) {
-    debugger;
     let template = field.templateValue;
     for (let i = 0; i < this.fields.length; i++) {
       const text = "$" + this.fields[i].name;

@@ -200,25 +200,25 @@ export class MaterialComponent extends PagedListingComponentBase<MaterialDto> {
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-    this._materialService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: MaterialDtoPagedResultDto) => {
+    // this._materialService
+    //   .getAll(
+    //     request.keyword,
+    //     request.sort_Field,
+    //     request.skipCount,
+    //     request.MaxResultCount,
+    //   )
+    //   .pipe(
+    //     finalize(() => {
+    //       finishedCallback();
+    //     })
+    //   )
+    //   .subscribe((result: MaterialDtoPagedResultDto) => {
 
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
-      });
+    //     this.data = result.items;
+    //     this.totalItem = result.totalCount;
+    //     this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+    //     this.setSelectAllState();
+    //   });
   }
 
 

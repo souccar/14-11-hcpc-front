@@ -4,20 +4,21 @@ import { CarouselModule } from './carousel/carousel.module';
 import { ChartsModule } from './charts/charts.module';
 import { SharedModule } from '@shared/shared.module';
 
+
 @NgModule({
   declarations: [
+
   ],
   imports: [
     CommonModule,
     SharedModule,
     CarouselModule,
-    ChartsModule
+    ChartsModule,
   ],
   exports: [
-    
   ],
   providers:[
-     
+
   ]
 })
 export class ComponentsModule { }

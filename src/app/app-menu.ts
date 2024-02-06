@@ -126,6 +126,21 @@ const data: IMenuItem[] = [
     ],
   },
 
+   //WorkFlow
+   {
+    icon: 'iconsminds-recycling-2',
+    label: 'WorkFlow',
+    to: `${adminRoot}/workflow`,
+    subs: [
+      {
+        label: 'WorkFlow',
+        to: `${adminRoot}/workflow/workflow`,
+        icon: 'iconsminds-recycling-2',
+      },
+
+
+    ],
+  },
 
 ];
 export default data;

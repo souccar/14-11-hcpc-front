@@ -31,6 +31,8 @@ import { BtSortableHeader } from './directives/bt-sortable-header.directive';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FilterComponent } from './components/filter/filter.component';
 import { QueryBuilderModule } from 'angular2-query-builder';
+import { DetailsComponent } from '../shared/components/details/details.component'
+
 @NgModule({
     imports: [
         TabsModule.forRoot(),
@@ -44,7 +46,7 @@ import { QueryBuilderModule } from 'angular2-query-builder';
         QueryBuilderModule,
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        PerfectScrollbarModule,
+        PerfectScrollbarModule
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -59,7 +61,8 @@ import { QueryBuilderModule } from 'angular2-query-builder';
         SafeHtmlPipe,
         DateFormattedPipe,
         BtSortableHeader,
-        FilterComponent
+        FilterComponent,
+        DetailsComponent
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -76,7 +79,8 @@ import { QueryBuilderModule } from 'angular2-query-builder';
         SummaryPipe,
         SafeHtmlPipe,
         DateFormattedPipe,
-        BtSortableHeader
+        BtSortableHeader,
+        DetailsComponent
     ]
 })
 export class SharedModule {

@@ -179,28 +179,28 @@ export class WarehouseMaterialComponent extends PagedListingComponentBase<Wareho
     finishedCallback: Function
   ): void {
     request.keyword = this.search;
-    this._warehouseMaterialService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        'material,warehouse,unit,supplier',
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: WarehouseMaterialDtoPagedResultDto) => {
+    // this._warehouseMaterialService
+    //   .getAll(
+    //     request.keyword,
+    //     request.sort_Field,
+    //     'material,warehouse,unit,supplier',
+    //     request.skipCount,
+    //     request.MaxResultCount,
+    //   )
+    //   .pipe(
+    //     finalize(() => {
+    //       finishedCallback();
+    //     })
+    //   )
+    //   .subscribe((result: WarehouseMaterialDtoPagedResultDto) => {
 
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
+    //     this.data = result.items;
+    //     this.totalItem = result.totalCount;
+    //     this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
+    //     this.setSelectAllState();
 
 
-      });
+    //   });
   }
 
 

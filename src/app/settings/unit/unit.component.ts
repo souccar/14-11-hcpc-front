@@ -1,235 +1,135 @@
-import { Component, Injector } from '@angular/core';
-import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { FullPagedListingComponentBase } from '@shared/full-paged-listing-component-base';
+import { UnitDto, UnitServiceProxy, FilterDto, FullPagedRequestDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { FilterUnitDialogComponent } from './filter-unit/filter-unit-dialog.component';
 import { CreateUnitDialogComponent } from './create-unit/create-unit-dialog.component';
 import { EditUnitDialogComponent } from './edit-unit/edit-unit-dialog.component';
 import { ViewUnitDialogComponent } from './view-unit/view-unit-dialog.component';
-import { UnitDto, UnitDtoPagedResultDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs';
-import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'unit',
   templateUrl: './unit.component.html',
-
 })
-export class UnitComponent extends PagedListingComponentBase<UnitDto> {
+export class UnitComponent extends FullPagedListingComponentBase<UnitDto> implements OnInit {
+  units: UnitDto[] = [];
+  fields = [
+    { label: this.l('Name'), name: 'name', sortable: true, type: 'string' },
 
-  displayMode = 'list';
-  selectAllState = '';
-  selected: UnitDto[] = [];
-  data: UnitDto[] = [];
-  currentPage = 1;
-  itemsPerPage = 10;
-  search = '';
-  orderBy = '';
-  isLoading: boolean;
-  endOfTheList = false;
-  totalItem = 0;
-  totalPage = 0;
-  ColumnMode = ColumnMode;
-  selectedCount = 0;
-  isActive: boolean | null = true;
-  advancedFiltersVisible = false;
-  loading = false;
-  title = this.l("Unit")
-  itemOrder = { label: this.l("Name"), value: "name" };
-  itemOptionsOrders = [{ label: this.l("Name"), value: "name" }];
+  ];
+
+  @ViewChild(FilterUnitDialogComponent) child!: FilterUnitDialogComponent;
 
   constructor(injector: Injector,
     private _modalService: BsModalService,
-    private _unitService: UnitServiceProxy) {
+    private _unitService: UnitServiceProxy,
+    public bsModalRef: BsModalRef) {
     super(injector);
   }
 
-  ngOnInit(): void {
-    this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+
+  protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    this._unitService.read(request)
+      .subscribe(result => {
+        this.units = result.items;
+
+        this.showPaging(result, pageNumber);
+      })
+
   }
 
-  viewButton(id: number) {
-    this._modalService.show(
-      ViewUnitDialogComponent,
+  showAddNewModal() {
+    let createUnitDialog: BsModalRef;
+    createUnitDialog = this._modalService.show(
+      CreateUnitDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
+        class: 'modal-lg',
+
       }
     );
+    createUnitDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
   }
-
-  editButton(id: number): void {
+  showEditModal(id: any){
     let editUnitDialog: BsModalRef;
     editUnitDialog = this._modalService.show(
       EditUnitDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
         class: 'modal-lg',
+        initialState:{
+          id:id
+        }
+
       }
     );
     editUnitDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
+  deleteItem(id:number): void {
 
-  protected delete(entity: UnitDto): void {
+
     abp.message.confirm(
-      this.l('UnitDeleteWarningMessage', this.selected.length, 'Units'),
+      this.l('UnitDeleteWarningMessage',  'Units'),
       undefined,
       (result: boolean) => {
         if (result) {
-
-          this._unitService.delete(entity.id).subscribe((recponce) => {
+          this._unitService.delete(id).subscribe(() => {
             abp.notify.success(this.l('SuccessfullyDeleted'));
             this.refresh();
           });
         }
       }
     );
-  }
 
-  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-    let request: PagedProductsRequestDto = new PagedProductsRequestDto();
-    this.itemsPerPage = pageSize;
-    this.currentPage = currentPage;
-    this.search = search;
-    request.keyword = search;
-    request.sort_Field = sort_Field;
-    request.sort_Desc = sort_Desc;
-    request.skipCount = (currentPage - 1) * pageSize;
-    request.maxResultCount = this.itemsPerPage;
-    this.list(request, this.pageNumber, () => { });
-  }
+}
+showViewModal(id:number){
 
-  deleteItem(): void {
-    if (this.selected.length == 0) {
-      abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
+  this._modalService.show(
+    ViewUnitDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      initialState: {
+        id: id,
+      },
     }
-    else {
-      abp.message.confirm(
-        this.l('UnitDeleteWarningMessage', this.selected.length, 'Units'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-            this.selected.forEach(element => {
-              this._unitService.delete(element.id).subscribe(() => {
-                abp.notify.success(this.l('SuccessfullyDeleted'));
-                this.refresh();
-              });
-            });
-          }
-        }
-      );
+  );
+
+}
+
+  showFilterDialog(status) {
+    if (status == 'clear_filter') {
+      this.request.filtering = undefined;
+      this.refresh();
+      return;
     }
-  }
-
-  changeDisplayMode(mode): void {
-    this.displayMode = mode;
-  }
-
-  showAddNewModal(): void {
-    let createOrEditUnitDialog: BsModalRef;
-    createOrEditUnitDialog = this._modalService.show(
-      CreateUnitDialogComponent,
+    let filterDialog: BsModalRef;
+    filterDialog = this._modalService.show(
+      FilterUnitDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
+        initialState: {
+          filterInput: this.request.filtering,
+        },
         class: 'modal-lg',
       }
     );
-    createOrEditUnitDialog.content.onSave.subscribe(() => {
+    filterDialog.content.onSave.subscribe((result: FilterDto) => {
+      this.request.filtering = result;
+      this._modalService.hide();
       this.refresh();
     });
   }
 
-  isSelected(p: UnitDto): boolean {
-    return this.selected.findIndex(x => x.id === p.id) > -1;
-  }
-
-  onSelect(item: UnitDto): void {
-    if (this.isSelected(item)) {
-      this.selected = this.selected.filter(x => x.id !== item.id);
-    } else {
-      this.selected.push(item);
-    }
-    this.setSelectAllState();
-  }
-
-  protected list(
-    request: PagedProductsRequestDto,
-    pageNumber: number,
-    finishedCallback: Function
-  ): void {
-    request.keyword = this.search;
-    request.include = 'parentUnit';
-    this._unitService
-      .getAll(
-        request.keyword,
-        request.sort_Field,
-        request.include,
-        request.skipCount,
-        request.MaxResultCount,
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: UnitDtoPagedResultDto) => {
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
-      });
-  }
-
-  setSelectAllState(): void {
-    if (this.selected.length === this.data.length) {
-      this.selectAllState = 'checked';
-    } else if (this.selected.length !== 0) {
-      this.selectAllState = 'indeterminate';
-    } else {
-      this.selectAllState = '';
-    }
-  }
-
-  selectAllChange($event): void {
-    if ($event.target.checked) {
-      this.selected = [...this.data];
-    } else {
-      this.selected = [];
-    }
-    this.setSelectAllState();
-  }
-
-  pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
-  }
-
-  itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy);
-  }
-
-  changeOrderBy(item: any): void {
-    this.loadData(this.itemsPerPage, 1, this.search, item.value);
-  }
-
-  searchKeyUp(event): void {
-    const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy);
-  }
 }
 
-class PagedProductsRequestDto extends PagedRequestDto {
-  keyword: string;
-  sort_Field: string;
-  include: string;
-  sort_Desc: boolean;
-  MaxResultCount: number
-}
+
+
 

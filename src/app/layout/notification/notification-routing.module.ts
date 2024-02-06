@@ -5,13 +5,9 @@ import {NotificationComponent} from './notification.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 
 const routes: Routes = [{
-  path: '', component: NotificationComponent ,
-  children:[
-    {
-      path: 'notifications', component: NotificationComponent,
-      canActivate: [AppRouteGuard]
-    },
-  ]
+  path: 'notifications', component: NotificationComponent ,
+ 
+
 }];
 
 @NgModule({
