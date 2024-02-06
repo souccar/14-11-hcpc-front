@@ -29,6 +29,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.WorkflowStepIndexServiceProxy ,
         ApiServiceProxies.WorkflowStepServiceProxy ,
          
+        ApiServiceProxies.WorkflowServiceProxy,
 
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]

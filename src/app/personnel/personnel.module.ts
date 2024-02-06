@@ -17,7 +17,6 @@ import { EmployeeServiceProxy, NationalityServiceProxy } from '@shared/service-p
 import { FilterEmployeeDialogComponent } from './employee/filter-employee/filter-employee-dialog.component';
 import { QueryBuilderModule } from 'angular2-query-builder';
 import { ChildrenComponent } from './employee/children/children.component';
-import { DetailsComponent } from './employee/details/details.component';
 import { CreateEmployeeDialogComponent } from './employee/create-employee/create-employee-dialog.component';
 import { EditEmployeeDialogComponent } from './employee/edit-employee/edit-employee-dialog.component';
 import { CreateChildDialogComponent } from './employee/children/create-child/create-child-dialog.component';
@@ -29,7 +28,6 @@ import { EditChildDialogComponent } from './employee/children/edit-child/edit-ch
     EmployeeComponent,
     FilterEmployeeDialogComponent,
     ChildrenComponent,
-    DetailsComponent,
     CreateEmployeeDialogComponent,
     EditEmployeeDialogComponent,
     CreateChildDialogComponent,
@@ -48,8 +46,10 @@ import { EditChildDialogComponent } from './employee/children/edit-child/edit-ch
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PersonnelRoutingModule,
-    
+
   ],
+
+
   providers:[
     EmployeeServiceProxy,
     NationalityServiceProxy,

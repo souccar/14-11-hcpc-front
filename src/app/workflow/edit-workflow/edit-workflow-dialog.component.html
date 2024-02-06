@@ -1,5 +1,5 @@
-<form class="form-horizontal " autocomplete="off" #createworkflowModal="ngForm" (ngSubmit)="save()" >
-    <abp-modal-header [title]="'CreateNewWorkFlow'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form class="form-horizontal " autocomplete="off" #EditworkflowModal="ngForm" (ngSubmit)="save()" >
+    <abp-modal-header [title]="'EditNewWorkFlow'|localize " (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body modal-xl">
           <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="name">
@@ -26,6 +26,6 @@
           </div>
     </div>
 
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createworkflowModal.form.valid || saving"
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!EditworkflowModal.form.valid || saving"
       (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
   </form>

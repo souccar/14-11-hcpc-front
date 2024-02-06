@@ -88,7 +88,8 @@ onchangeStatusToFinish(id:number)
   onViewItem(id:number){
     this.viewItem.emit(id);
   }
-  getEmployeeId(id:number){
+  getParentId(id:number){
+    console.log(id);
     this.ParentId.emit(id);
   }
   pageChanged(event: any): void {
