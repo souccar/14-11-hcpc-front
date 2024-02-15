@@ -14,8 +14,9 @@
           <div class="col-md-3 required">
             <label form="quantity">{{'Quantity'|localize}}</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required min="0"
-              oninput="validity.valid||(value='');" [(ngModel)]="formula.quantity" #quantityModel="ngModel"
+              [(ngModel)]="formula.quantity" #quantityModel="ngModel"
               #quantityEl />
+              <abp-validation-summary [control]="quantityModel"[customValidationErrors]="quantityValidationErrors()" [controlEl]="quantityEl"></abp-validation-summary>
           </div>
           <div class="col-md-3 required">
             <label form="unitId">{{'Unit'|localize}}</label>
@@ -27,8 +28,9 @@
           </div>
           <div class="col-md-3 required">
             <label form="percentage">{{'Percentage'|localize}}</label>
-            <input type="number" class="form-control" name="percentage" id="percentage" required min="1"
-              [(ngModel)]="formula.percentage" #percentageModel="ngModel" #percentageEl />
+            <input type="number" class="form-control" name="percentage" id="percentage" required min="0.0001"
+           max="100"   [(ngModel)]="formula.percentage" #percentageModel="ngModel" #percentageEl />
+              <abp-validation-summary [control]="percentageModel"[customValidationErrors]="percentageValidationErrors()" [controlEl]="percentageEl"></abp-validation-summary>
           </div>
         </div>
       </div>

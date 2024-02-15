@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ViewMaterialDialogComponent } from '@app/settings/material/view-material/view-material-dialog.component';
 import { AppComponentBase } from '@shared/app-component-base';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 import {
   FormulaDto, MaterialCodeForDropdownDto, MaterialServiceProxy,
   ProductDto, ProductInfoDropdownDto, ProductServiceProxy, UnitNameForDropdownDto,
@@ -31,6 +32,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
   @Input() productId: number;
   @Output() saveFormulaList = new EventEmitter<UpdateFormulaDto[]>();
   isButtonDisabled = false;
+  @ViewChild('editformulaModal') editformulaModal;
 
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
@@ -100,6 +102,7 @@ export class EditFormulaDialogComponent extends AppComponentBase {
       this.getUnitName(this.formula.unitId);
       this.saveFormulaList.emit(this.data);
       this.formula = new FormulaDto();
+      this.editformulaModal.reset()
     }
   }
 
@@ -135,5 +138,16 @@ export class EditFormulaDialogComponent extends AppComponentBase {
       this.data.splice(index, 1);
       this.saveFormulaList.emit(this.data);
     }
+  }
+  quantityValidationErrors() {
+    let errors: AbpValidationError[] = [{ name: 'min', localizationKey: 'QuantityCanNotBeNegativeOrZero', propertyKey: 'QuantityCanNotBeNegativeOrZero' }];
+    return errors;
+  }
+  percentageValidationErrors() {
+    let errors: AbpValidationError[] = [
+      { name: 'min', localizationKey: 'PercentageCanNotBeNegativeOrZero', propertyKey: 'PercentageQuantityCanNotBeNegativeOrZero' },
+      { name: 'max', localizationKey: 'PercentageCanNotBeGreaterThan100', propertyKey: 'PercentageCanNotBeGreaterThan100' }
+    ];
+    return errors;
   }
 }
