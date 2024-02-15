@@ -5,6 +5,7 @@ import { FullPagedRequestDto, WorkflowServiceProxy, WorkflowStepDto, WorkflowSte
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateStepsDialogComponent } from './create-steps/create-steps-dialog.component';
 import { EditStepsDialogComponent } from './edit-steps/edit-steps-dialog.component';
+import { IEnumValue } from '@app/layout/content-template/page-default/page-field';
 
 @Component({
   selector: 'steps',
@@ -13,13 +14,16 @@ import { EditStepsDialogComponent } from './edit-steps/edit-steps-dialog.compone
 export class StepsComponent extends FullPagedListingComponentBase<WorkflowStepDto>  implements OnInit{
 
   steps: WorkflowStepDto[] = [];
-  employeeId:number;
+  parentId:number;
   loadDetails: boolean=false;
+  status:IEnumValue[]=[
+    {value:0,text:this.l("Active")},
+    {value:1,text:this.l("InActive")},
+  ];
+
   fields = [
-    { label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
-    { label: this.l('FirstName'), name: 'firstName', sortable: false, type: 'string' },
-    { label: this.l('LastName'), name: 'lastName', sortable: true, type: 'string' },
-    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true, type: 'date', format: 'dd MM YYYY' },
+    { label: this.l('Title'), name: 'title', sortable: false, type: 'string' },
+    { label: this.l('Status'), name: 'status',  type: 'enum' , enumValue: this.status ,sortable: true },
   ];
 
 
@@ -38,22 +42,22 @@ export class StepsComponent extends FullPagedListingComponentBase<WorkflowStepDt
     }
     getEmloyeeId() {
       this._route.params.subscribe(params => {
-        this.employeeId = params['id']; 
+        this.parentId = params['id']; 
         this.refresh()
       });
     }
   
   protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    // this._WorkflowStepService.getByEmployeeId(this.employeeId)
-    //   .subscribe(result => {
-    //     this.steps = result;
-    //     // this.showPaging(result, pageNumber);
-    //   })
+    this._WorkflowStepService.getAllByWorkflowId(this.parentId)
+      .subscribe(result => {
+        this.steps = result;
+        // this.showPaging(result, pageNumber);
+      })
   }
 
-  getEmployeeIdForSteps(id: number) {
+  getParentIdForChildren(id: number) {
     this.loadDetails=true
-    this.employeeId=id;
+    this.parentId=id;
   }
 
   showAddNewModal() {
@@ -65,7 +69,7 @@ export class StepsComponent extends FullPagedListingComponentBase<WorkflowStepDt
         ignoreBackdropClick: true,
         class: 'modal-lg',
         initialState:{
-          employeeId:this.employeeId
+          parentId:this.parentId
         }
 
       }
@@ -84,7 +88,7 @@ export class StepsComponent extends FullPagedListingComponentBase<WorkflowStepDt
         class: 'modal-lg',
         initialState:{
           id:id,
-          employeeId:this.employeeId
+          parentId:this.parentId
         }
 
       }

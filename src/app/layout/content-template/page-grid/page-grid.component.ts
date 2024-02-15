@@ -31,7 +31,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   @Output() editItem: EventEmitter<any> = new EventEmitter();
   @Output() deleteItem: EventEmitter<any> = new EventEmitter();
   @Output() viewItem: EventEmitter<any> = new EventEmitter();
-
+  selected = {};
   constructor(injector: Injector,
     public bsModalRef: BsModalRef,
     private _OutputRequestService:OutputRequestServiceProxy,
@@ -89,8 +89,17 @@ onchangeStatusToFinish(id:number)
     this.viewItem.emit(id);
   }
   getParentId(id:number){
-    console.log(id);
-    this.ParentId.emit(id);
+    if(id){
+      //make all element false except the selected one
+      Object.keys(this.selected).forEach((key) => {
+        if (+key !== id) {
+          this.selected[+key] = false;
+        }
+      });
+      this.selected[id] = !this.selected[id];
+      ////
+      this.ParentId.emit(id);
+    }
   }
   pageChanged(event: any): void {
     this.changePage.emit(event.page);
@@ -133,9 +142,12 @@ onchangeStatusToFinish(id:number)
   }
 
   getReferenceValue(item, field: IPageField) {
-    var referenceItem = item[field.name];
-    var textField = field.referenceTextField;
-    return referenceItem[textField];
+    if (!item || !item[field.name]) { 
+      return "" ; 
+  }
+      var referenceItem = item[field.name];
+      var textField = field.referenceTextField;
+      return referenceItem[textField];
   }
   getEnumValue(item, field: IPageField) {
     var index = item[field.name];
@@ -171,5 +183,10 @@ onchangeStatusToFinish(id:number)
       }
     }
     return value;
+  }
+
+
+  getClassForRow(index: number): string {
+    return this.selected[index] ? 'highlighted-row' : '';
   }
 }

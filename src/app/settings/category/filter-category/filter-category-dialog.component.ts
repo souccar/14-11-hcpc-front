@@ -4,11 +4,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FilterComponentBase } from '@shared/filter-Component-base';
 
 @Component({
-  selector: 'filter-unit-dialog',
-  templateUrl: './filter-unit-dialog.component.html',
+  selector: 'filter-category-dialog',
+  templateUrl: './filter-category-dialog.component.html',
 
 })
-export class FilterUnitDialogComponent extends FilterComponentBase implements OnInit {
+export class FilterCategoryDialogComponent extends FilterComponentBase implements OnInit {
   public config: QueryBuilderConfig;
   constructor(injcter: Injector,
     public bsModalRef: BsModalRef) {

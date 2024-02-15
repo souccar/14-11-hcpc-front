@@ -53,6 +53,17 @@
             <abp-validation-summary [control]="sizeeModel"[customValidationErrors]="priceValidationErrors()" [controlEl]="sizeEl"></abp-validation-summary>
             </div>
           </div>
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="product.category">
+              {{ "Category" | localize }}
+            </label>
+            <div class="col-md-9 ">
+              <select class="form-control" aria-label="Category" #categoryModel="ngModel" required name="categoryId" [(ngModel)]="product.categoryId" #categoryIdEl>
+                <option *ngFor="let item of categories" value={{item.id}}>{{item.name}}</option>
+              </select>
+              <abp-validation-summary [control]="categoryModel" [controlEl]="categoryIdEl"></abp-validation-summary>
+            </div>
+          </div>
           <div class="form-group row ">
             <label class="col-md-3 col-form-label" for="description">
               {{ "Description"|localize }}

@@ -41,6 +41,11 @@ import { FilterSupplierDialogComponent } from './supplier/filter-supplier/filter
 import { FilterProductDialogComponent } from './product/filter-product/filter-product-dialog.component';
 import { FilterMaterialDialogComponent } from './material/filter-material/filter-material-dialog.component';
 import { WorkflowModule } from './workflow/workflow.module';
+import { CreateCategoryDialogComponent } from './category/create-category/create-category-dialog.component';
+import { EditCategoryDialogComponent } from './category/edit-category/edit-category-dialog.component';
+import { ViewCategoryDialogComponent } from './category/view-category/view-category-dialog.component';
+import { CategoryComponent } from './category/category.component';
+import { FilterCategoryDialogComponent } from './category/filter-category/filter-category-dialog.component';
 
 
 @NgModule({
@@ -76,10 +81,15 @@ import { WorkflowModule } from './workflow/workflow.module';
     FilterTransferDialogComponent,
     FilterSupplierDialogComponent,
     FilterProductDialogComponent,
-    FilterMaterialDialogComponent
+    FilterMaterialDialogComponent,
+    CreateCategoryDialogComponent,
+    EditCategoryDialogComponent,
+    ViewCategoryDialogComponent,
+    CategoryComponent,
+    FilterCategoryDialogComponent
   ],
   imports: [
-    AccordionModule.forRoot(),
+  AccordionModule.forRoot(),
     SharedModule,
     FormsModule,
     ReactiveFormsModule,

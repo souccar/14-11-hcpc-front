@@ -17,6 +17,7 @@ export class ProductComponent extends FullPagedListingComponentBase<ProductDto> 
     { label: this.l('Name'), name: 'name', sortable: true, type: 'string' },
     { label: this.l('Size'), name: 'size', sortable: true, type: 'number' },
     { label: this.l('Price'), name: 'price', sortable: true, type: 'string' },
+    { label: this.l('Category'), name: 'category', sortable: true, type: 'reference', referenceTextField: 'name' },
     { label: this.l('Description'), name: 'description', sortable: false, type: 'string'},
   ];
 
@@ -30,6 +31,7 @@ export class ProductComponent extends FullPagedListingComponentBase<ProductDto> 
 
 
   protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    request.including="Category"
     this._productService.read(request)
       .subscribe(result => {
         this.products = result.items;

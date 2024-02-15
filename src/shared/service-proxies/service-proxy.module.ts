@@ -28,7 +28,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.ChildServiceProxy ,
         ApiServiceProxies.WorkflowStepIndexServiceProxy ,
         ApiServiceProxies.WorkflowStepServiceProxy ,
-         
+        ApiServiceProxies.CategoryServiceProxy ,
         ApiServiceProxies.WorkflowServiceProxy,
 
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }

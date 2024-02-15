@@ -1,31 +1,42 @@
 import { Component, EventEmitter, Injector, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { ChildServiceProxy, CreateChildDto } from '@shared/service-proxies/service-proxies';
+import { CreateCategoryDto, CategoryNameForDropdownDto, CategoryServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'create-child-dialog',
-  templateUrl: './create-child-dialog.component.html',
+  selector: 'create-category-dialog',
+  templateUrl: './create-category-dialog.component.html',
 })
-export class CreateChildDialogComponent extends AppComponentBase {
+export class CreateCategoryDialogComponent extends AppComponentBase {
   saving = false;
-  parentId:number
-  child = new CreateChildDto();
-  @Output() onSave = new EventEmitter<any>();
-  constructor(injector: Injector,
-    private _childService : ChildServiceProxy,
-    public bsModalRef: BsModalRef,
+  category = new CreateCategoryDto();
+  parentCategories: CategoryNameForDropdownDto[] = [];
 
+  @Output() onSave = new EventEmitter<any>();
+
+  constructor(injector: Injector,
+    private _categoryService: CategoryServiceProxy,
+    public bsModalRef: BsModalRef,
   ) {
     super(injector);
   }
+
+  ngOnInit(): void { 
+    this.initialParentCategories();
+  }
+
+  initialParentCategories(){
+    this._categoryService.getNameForDropdown() 
+    .subscribe((result)=>{
+      this.parentCategories = result});
+  }
+
   save(): void {
     this.saving = true;
-    this.child.employeeId=this.parentId;
-    this._childService.
+    this._categoryService.
       create(
-        this.child
+        this.category
       )
       .pipe(
         finalize(() => {
@@ -33,6 +44,7 @@ export class CreateChildDialogComponent extends AppComponentBase {
         })
       )
       .subscribe((response: any) => {
+        (response);
         this.notify.info(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();
