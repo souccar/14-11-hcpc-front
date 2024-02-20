@@ -1,12 +1,9 @@
 import { Component, ElementRef, EventEmitter, Injector, Output, Renderer2, RendererFactory2 } from '@angular/core';
-import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateOutputRequestDto, CreateOutputRequestProductDto, CreateProductDto, OutputRequestMaterialDto, OutputRequestServiceProxy, PlanNameForDropdownDto, PlanProductDto, PlanServiceProxy, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
-import { state } from '@angular/animations';
-import { forEach } from 'lodash-es';
 @Component({
   selector: 'create-output-request-dialog',
   templateUrl: './create-output-request-dialog.component.html',
@@ -26,8 +23,6 @@ export class CreateOutputRequestDialogComponent extends AppComponentBase {
     public bsModalRef: BsModalRef,
     private _planService: PlanServiceProxy,
     private _location: Location,
-    private el: ElementRef,
-    private rendererFactory: RendererFactory2
   ) {
     super(injector);
   }

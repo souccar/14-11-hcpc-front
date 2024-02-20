@@ -6,6 +6,8 @@
 </app-details>
 
 <app-page-grid [hasDetails]="true" [EditPermission]="'Pages.Employee.Edit'" [DeletePermission]="'Pages.Employee.Delete'" [fields]="fields" [data]="employees" [totalItems]="totalItems" [pageNumber]="pageNumber" [pageSize]="pageSize"
-   (changeOrderBy)="changeOrderBy($event)" (editItem)="showEditModal($event)" (deleteItem)="deleteItem($event)"
+   (changeOrderBy)="changeOrderBy($event)"
+    (editItem)="showEditModal($event)" 
+    (deleteItem)="deleteItem($event)"
    (viewItem)="showViewModal($event)"
   (changePage)="pageChanged($event)" (ParentId)="getEmployeeIdForChildren($event)"></app-page-grid>

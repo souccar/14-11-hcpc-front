@@ -1,237 +1,109 @@
-import { Component, Injector } from '@angular/core';
-import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
+import { Component, Injector, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { EditProductDialogComponent } from './edit-product/edit-product-dialog.component';
-import { CreateProductDialogComponent } from './create-product/create-product-dialog.component';
 import { ViewProductDialogComponent } from './view-product/view-product-dialog.component';
-import { PagedProductRequestDto, ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs';
-
-import { Router } from '@angular/router';
-import { ColumnMode } from '@swimlane/ngx-datatable';
-import { CreateFormulaDialogComponent } from '@app/settings/formula/create-formula/create-formula-dialog.component';
-import { QueryBuilderConfig } from 'angular2-query-builder';
-
+import {  FilterDto, FullPagedRequestDto, ProductDto,ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FullPagedListingComponentBase } from '@shared/full-paged-listing-component-base';
+import { FilterProductDialogComponent } from './filter-product/filter-product-dialog.component';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+
 })
-export class ProductComponent extends PagedListingComponentBase<ProductDto> {
-
-
-  displayMode = 'list';
-  selectAllState = '';
-  selected: ProductDto[] = [];
-  data: ProductDto[] = [];
-  currentPage = 1;
-  itemsPerPage = 10;
-  search = '';
-  orderBy = '';
-  isLoading: boolean;
-  ColumnMode = ColumnMode;
-  endOfTheList = false;
-  totalItem = 0;
-  totalPage = 0;
-  itemOrder = { label: this.l("Name"), value: "name" };
-  itemOptionsOrders = [
-    { label: this.l("Name"), value: "name" },
-    { label: this.l("Description"), value: "description" },
+export class ProductComponent extends FullPagedListingComponentBase<ProductDto> implements OnInit {
+  products: ProductDto[] = [];
+  fields = [
+    { label: this.l('Name'), name: 'name', sortable: true, type: 'string' },
+    { label: this.l('Size'), name: 'size', sortable: true, type: 'number' },
+    { label: this.l('Price'), name: 'price', sortable: true, type: 'string' },
+    { label: this.l('Category'), name: 'category', sortable: true, type: 'reference', referenceTextField: 'name' },
+    { label: this.l('Description'), name: 'description', sortable: false, type: 'string'},
   ];
-  static label:any[]=['name','size','price']
-  selectedCount = 0;
-  isActive: boolean | null = true;
-  advancedFiltersVisible = false;
-  loading = false;
-  title = this.l("Product")
+
   constructor(injector: Injector,
     private _modalService: BsModalService,
     private _productService: ProductServiceProxy,
-    private _router: Router,
-  ) {
-
+    public bsModalRef: BsModalRef,
+    private _router:Router) {
     super(injector);
   }
 
 
-  ngOnInit(): void {
-    this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+  protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    request.including="Category"
+    this._productService.read(request)
+      .subscribe(result => {
+        this.products = result.items;
+        this.showPaging(result, pageNumber);
+      })
+  
   }
 
-  formula(id: number) {
-    this._router.navigate(['/app/settings/formula', id])
+  showAddNewModal() {
+    this._router.navigate(['app/settings/newproduct']);
   }
-  viewButton(id: number) {
-
-    this._modalService.show(
-      ViewProductDialogComponent,
-      {
-        backdrop: true,
-        ignoreBackdropClick: true,
-        initialState: {
-          id: id,
-        },
-        class: 'modal-lg',
-      }
-    );
-
-  }
-
-  editButton(id: number): void {
+  showEditModal(id: any){
     this._router.navigate(['app/settings/editproduct',id]);
   }
-  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-    let request: PagedProductRequestDto = new PagedProductRequestDto();
-    this.itemsPerPage = pageSize;
-    this.currentPage = currentPage;
-    this.search = search;
-    request.keyword = search;
-    request.skipCount = (currentPage - 1) * pageSize;
-    request.maxResultCount = this.itemsPerPage;
-    this.list(request, this.pageNumber, () => { });
-  }
-  deleteItem(): void {
-    if (this.selected.length == 0) {
-      abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
-    }
-    else {
-      abp.message.confirm(
-        this.l('ProductDeleteWarningMessage', this.selected.length, 'Products'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-            this.selected.forEach(element => {
-              this._productService.delete(element.id).subscribe(() => {
-                abp.notify.success(this.l('SuccessfullyDeleted'));
-                this.refresh();
-              });
-            });
-          }
-        }
-      );
-    }
-  }
-
-  changeDisplayMode(mode): void {
-    this.displayMode = mode;
-  }
-
-  showAddNewModal(): void {
-
-
-    this._router.navigate(['app/settings/newproduct']);
-
-  }
-
-  isSelected(p: any): boolean {
-    // IProduct
-    return this.selected.findIndex(x => x.id === p.id) > -1;
-  }
-  onSelect(item: any): void {
-    // IProduct
-    if (this.isSelected(item)) {
-      this.selected = this.selected.filter(x => x.id !== item.id);
-    } else {
-      this.selected.push(item);
-    }
-    this.setSelectAllState();
-  }
-  protected list(
-    request: PagedProductRequestDto,
-    pageNumber: number,
-    finishedCallback: Function
-  ): void {
-    request.keyword = this.search;
-
-    this._productService
-      .read(
-      request
-      )
-      .pipe(
-        finalize(() => {
-          finishedCallback();
-        })
-      )
-      .subscribe((result: ProductDtoPagedResultDto) => {
-
-        this.data = result.items;
-        this.totalItem = result.totalCount;
-        this.totalPage = ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-        this.setSelectAllState();
-      });
-  }
-  protected delete(entity: ProductDto): void {
+  deleteItem(id:number): void {
+  
+  
     abp.message.confirm(
-      this.l('productDeleteWarningMessage', this.selected.length, 'Products'),
+      this.l('ProductDeleteWarningMessage',  'Products'),
       undefined,
       (result: boolean) => {
         if (result) {
-          this._productService.delete(entity.id).subscribe(() => {
+          this._productService.delete(id).subscribe(() => {
             abp.notify.success(this.l('SuccessfullyDeleted'));
             this.refresh();
           });
         }
       }
     );
-  }
-  addFormula(id: number) {
+  
+}
+showViewModal(id:number){
+  this._modalService.show(
+    ViewProductDialogComponent,
+    {
+      backdrop: true,
+      ignoreBackdropClick: true,
+      initialState: {
+        id: id,
+      },
+    }
+  );
 
-    let formulaDialog: BsModalRef;
-    formulaDialog = this._modalService.show(
-      CreateFormulaDialogComponent,
+}
+
+  showFilterDialog(status) {
+    if (status == 'clear_filter') {
+      this.request.filtering = undefined;
+      this.refresh();
+      return;
+    }
+    let filterDialog: BsModalRef;
+    filterDialog = this._modalService.show(
+      FilterProductDialogComponent,
       {
         backdrop: true,
         ignoreBackdropClick: true,
         initialState: {
-          productId: id,
+          filterInput: this.request.filtering,
         },
-        class: 'modal-xl',
-
+        class: 'modal-lg',
       }
     );
-    formulaDialog.content.onSave.subscribe(() => {
+    filterDialog.content.onSave.subscribe((result: FilterDto) => {
+      this.request.filtering = result;
+      this._modalService.hide();
       this.refresh();
     });
-
   }
-
-  setSelectAllState(): void {
-    if (this.selected.length === this.data.length) {
-      this.selectAllState = 'checked';
-    } else if (this.selected.length !== 0) {
-      this.selectAllState = 'indeterminate';
-    } else {
-      this.selectAllState = '';
-    }
-  }
-
-  selectAllChange($event): void {
-    if ($event.target.checked) {
-      this.selected = [...this.data];
-    } else {
-      this.selected = [];
-    }
-    this.setSelectAllState();
-  }
-
-  pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
-  }
-
-  itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy);
-  }
-
-  changeOrderBy(item: any): void {
-    this.loadData(this.itemsPerPage, 1, this.search, item.value);
-  }
-
-  searchKeyUp(event): void {
-    const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy);
-  }
-
 
 }
+
+
+
 

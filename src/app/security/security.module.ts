@@ -15,6 +15,9 @@ import { EditRoleComponent } from './role/edit-role/edit-role.component';
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './user/create-user/create-user.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
+import { FilterRoleDialogComponent } from './role/filter-role/filter-role-dialog.component';
+import { QueryBuilderModule } from 'angular2-query-builder';
+import { FilterUserDialogComponent } from './user/filter-user/filter-user-dialog.component';
 
 
 @NgModule({
@@ -26,7 +29,9 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
     EditRoleComponent,
     UserComponent,
     CreateUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    FilterRoleDialogComponent,
+    FilterUserDialogComponent
   ],
   imports: [
     AccordionModule.forRoot(),
@@ -38,6 +43,7 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
     TreeviewModule.forRoot(),
     CommonModule,
     SecurityRoutingModule,
+    QueryBuilderModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

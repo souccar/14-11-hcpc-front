@@ -66,6 +66,7 @@ export abstract class FilterComponentBase extends AppComponentBase implements On
     }
   }
   filter() {
+ 
     const filterInput: FilterDto = new FilterDto();
     filterInput.rules = []
     filterInput.condition = this.query.condition;
@@ -77,8 +78,8 @@ export abstract class FilterComponentBase extends AppComponentBase implements On
         value: this.query.rules[i].value
       });
       filterInput.rules.push(rule);
-      console.log(filterInput)
     }
+    console.log(filterInput.rules)
     this.onSave.emit(filterInput);
   }
 
