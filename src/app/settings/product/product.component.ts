@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EditProductDialogComponent } from './edit-product/edit-product-dialog.component';
 import { CreateProductDialogComponent } from './create-product/create-product-dialog.component';
 import { ViewProductDialogComponent } from './view-product/view-product-dialog.component';
-import { PagedProductRequestDto, ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FullPagedRequestDto, ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs';
 
 import { Router } from '@angular/router';
@@ -82,7 +82,7 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
     this._router.navigate(['app/settings/editproduct',id]);
   }
   loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-    let request: PagedProductRequestDto = new PagedProductRequestDto();
+    let request: FullPagedRequestDto = new FullPagedRequestDto();
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
     this.search = search;
@@ -138,7 +138,7 @@ export class ProductComponent extends PagedListingComponentBase<ProductDto> {
     this.setSelectAllState();
   }
   protected list(
-    request: PagedProductRequestDto,
+    request: FullPagedRequestDto,
     pageNumber: number,
     finishedCallback: Function
   ): void {

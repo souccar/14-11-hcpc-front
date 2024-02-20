@@ -11,6 +11,7 @@ export class ViewWarehouseDialogComponent implements OnInit {
   id:number;
   data: WarehouseDto=new WarehouseDto();
   ngOnInit(): void {
+    debugger
     this.initWarehouse()
   }
 
@@ -21,6 +22,7 @@ export class ViewWarehouseDialogComponent implements OnInit {
   initWarehouse()
   {
     this._warehouseService.get(this.id).subscribe((result)=>{
+      debugger
       this.data=result;
     })
   }
