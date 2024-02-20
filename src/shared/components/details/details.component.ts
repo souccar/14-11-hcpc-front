@@ -1,20 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { toInteger } from 'lodash-es';
 
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
   @Input() ParentId;
   @Input() data: DetailsData[];
-  constructor(private _router: Router,) {}
+  disabled:boolean=true;
+  col_numbe:number;
+  constructor(private _router: Router,) {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.col_numbe=toInteger(12/this.data.length) ;
+  }
 
   navigateToChildren(route: string) {
-    this._router.navigate([route, this.ParentId]);}
+ 
+    if(this.ParentId)
+     this._router.navigate([route, this.ParentId]);}
 }
 
 export class DetailsData {
