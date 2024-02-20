@@ -33,6 +33,9 @@ import { ActualProductComponent } from './actually/view-actually/actual-product/
 import { ActualDetailDialogComponent } from './actually/view-actually/actual-detail-dialog/actual-detail-dialog.component';
 import { ConfirmationDialogComponent } from './actually/confirmation-dialog/confirmation-dialog.component';
 import { DailyProductionDoughnutComponent } from './actually/view-actually/actual-product/daily-production-doughnut/daily-production-doughnut.component';
+import { FilterPlanDialogComponent } from './plan/filter-plan/filter-plan-dialog.component';
+import { QueryBuilderModule } from 'angular2-query-builder';
+import { FilterActuallyDialogComponent } from './actually/filter-actually/filter-actually-dialog.component';
 @NgModule({
   declarations: [
     ProductionComponent,
@@ -57,6 +60,8 @@ import { DailyProductionDoughnutComponent } from './actually/view-actually/actua
     ActualDetailDialogComponent,
     ConfirmationDialogComponent,
     DailyProductionDoughnutComponent,
+    FilterPlanDialogComponent,
+    FilterActuallyDialogComponent,
 
   ],
   imports: [
@@ -71,7 +76,8 @@ import { DailyProductionDoughnutComponent } from './actually/view-actually/actua
     TooltipModule.forRoot(),
     PaginationModule.forRoot(),
     BsDropdownModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    QueryBuilderModule,
 
 
   ],

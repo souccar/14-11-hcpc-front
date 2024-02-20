@@ -35,6 +35,17 @@
     </div>
   </div>
   <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="category">
+      {{ "Category" | localize }}
+    </label>
+    <div class="col-md-9">
+      <label class="form-control" name="category" id="category">
+        {{data.category?.name}}
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group row">
     <label class="col-md-3 col-form-label" for="description">
       {{ "Description" | localize }}
     </label>

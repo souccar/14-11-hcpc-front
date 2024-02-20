@@ -1,148 +1,51 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
+import { Component, Injector, OnInit } from '@angular/core';
+import { FullPagedListingComponentBase } from '@shared/full-paged-listing-component-base';
+import { PlanDto, PlanServiceProxy, FilterDto, FullPagedRequestDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { FilterPlanDialogComponent } from './filter-plan/filter-plan-dialog.component';
 import { CreatePlanDialogComponent } from './create-plan/create-plan-dialog.component';
 import { EditPlanDialogComponent } from './edit-plan/edit-plan-dialog.component';
-import { PlanProductComponent } from './view-plan/plan-product/plan-product.component';
-import { CreatePlanDto, PlanDto, PlanDtoPagedResultDto, PlanServiceProxy, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs';
-import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'plan',
   templateUrl: './plan.component.html',
 
 })
-export class PlanComponent extends PagedListingComponentBase<PlanDto> {
-  ColumnMode = ColumnMode;
-  displayMode = 'list';
-  selectAllState = '';
-  selected: PlanDto[] = [];
-  data: PlanDto[] = [];
-  currentPage = 1;
-  itemsPerPage = 10;
-  search = '';
-  orderBy = '';
-  isLoading: boolean;
-  endOfTheList = false;
-  totalItem = 0;
-  totalPage = 0;
-  itemOrder = { label: this.l("Title"), value: "title" };
-  itemOptionsOrders = [
-    { label: this.l("Title"), value: "title" },
+export class PlanComponent extends FullPagedListingComponentBase<PlanDto> implements OnInit {
+  plans: PlanDto[] = [];
+  planId: number;
+  loadDetails: boolean = false;
+  fields = [
+    { label: this.l('Title'), type: 'string' ,name: 'title', sortable: true},
+    { label: this.l('Duration'), type: 'number',name: 'duration', sortable: true },
+    { label: this.l('startDate'), type: 'date', name: 'startDate', sortable: true },
   ];
-  selectedCount = 0;
-  isActive: boolean | null = true;
-  advancedFiltersVisible = false;
-  loading = false;
-  title=this.l("Plan");
-  // @ViewChild('addNewModalRef', { static: true }) addNewModalRef: AddNewProductModalComponent;
 
-  constructor(    injector: Injector,
+  constructor(injector: Injector,
     private _modalService: BsModalService,
-    private _planService:PlanServiceProxy,
-   ) {
+    private _planService: PlanServiceProxy,
+    public bsModalRef: BsModalRef) {
     super(injector);
   }
 
 
-  ngOnInit(): void {
-    this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+  protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+      this._planService.read(request)
+      .subscribe(result => {
+        this.plans = result.items;
+
+        this.showPaging(result, pageNumber);
+      })
   }
 
-  viewButton(id:number)
-{
-  this._modalService.show(
-    PlanProductComponent,
-    {
-      backdrop: true,
-      ignoreBackdropClick: true,
-      // initialState: {
-      //   id: id,
-      // },
-    }
-  );
-
-}
-
-
-  editButton(id:number): void {
-    let editPlanDialog: BsModalRef;
-        editPlanDialog = this._modalService.show(
-        EditPlanDialogComponent,
-        {
-          backdrop: true,
-          ignoreBackdropClick: true,
-          initialState: {
-            id: id,
-          },
-          class: 'modal-lg',
-        }
-      );
-      editPlanDialog.content.onSave.subscribe(() => {
-        this.refresh();
-      });
-
-
-    }
-
-    protected delete(entity: PlanDto): void {
-
-      abp.message.confirm(
-        this.l('PlanDeleteWarningMessage', this.selected.length, 'Plans'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-
-            this._planService.delete(entity.id).subscribe((recponce) => {
-              abp.notify.success(this.l('SuccessfullyDeleted'));
-              this.refresh();
-            });
-          }
-        }
-      );
-    }
-    loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', sort_Field: string = undefined, sort_Desc: boolean = false): void {
-      let request: PagedProductsRequestDto = new PagedProductsRequestDto();
-      this.itemsPerPage = pageSize;
-      this.currentPage = currentPage;
-      this.search = search;
-      request.keyword = search;
-      request.sort_Field = sort_Field;
-      request.sort_Desc = sort_Desc;
-      request.skipCount = (currentPage - 1) * pageSize;
-      request.maxResultCount = this.itemsPerPage;
-      this.list(request, this.pageNumber, () => { });
-    }
-  deleteItem(): void {
-    if (this.selected.length == 0) {
-      abp.message.info(this.l('YouHaveToSelectOneItemInMinimum'));
-    }
-    else {
-      abp.message.confirm(
-        this.l('PlanDeleteWarningMessage', this.selected.length, 'Plans'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-            this.selected.forEach(element => {
-              this._planService.delete(element.id).subscribe(() => {
-                abp.notify.success(this.l('SuccessfullyDeleted'));
-                this.refresh();
-              });
-            });
-          }
-        }
-      );
-    }
+  getPlanIdForChildren(id: number) {
+    this.loadDetails = true
+    this.planId = id;
   }
 
-  changeDisplayMode(mode): void {
-    this.displayMode = mode;
-  }
-
-  showAddNewModal(): void {
-    let createOrEditPlanDialog: BsModalRef;
-    createOrEditPlanDialog = this._modalService.show(
+  showAddNewModal() {
+    let createPlanDialog: BsModalRef;
+    createPlanDialog = this._modalService.show(
       CreatePlanDialogComponent,
       {
         backdrop: true,
@@ -151,97 +54,88 @@ export class PlanComponent extends PagedListingComponentBase<PlanDto> {
 
       }
     );
-    createOrEditPlanDialog.content.onSave.subscribe(() => {
+    createPlanDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+  }
+  showEditModal(id: any){
+    let editPlanDialog: BsModalRef;
+    editPlanDialog = this._modalService.show(
+      EditPlanDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'modal-lg',
+        initialState:{
+          id:id
+        }
+
+      }
+    );
+    editPlanDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
+  }
+  showFilterDialog(status) {
+    if (status == 'clear_filter') {
+      this.request.filtering = undefined;
+      this.refresh();
+      return;
+    }
+    let filterDialog: BsModalRef;
+    filterDialog = this._modalService.show(
+      FilterPlanDialogComponent,
+      {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        initialState: {
+          filterInput: this.request.filtering,
+        },
+        class: 'modal-lg',
+      }
+    );
+    filterDialog.content.onSave.subscribe((result: FilterDto) => {
+      this.request.filtering = result;
+      this._modalService.hide();
       this.refresh();
     });
   }
 
-  isSelected(p: PlanDto): boolean {
+  showViewModal(id:number){
 
-    return this.selected.findIndex(x => x.id === p.id) > -1;
-  }
-  onSelect(item: PlanDto): void {
+    // this._modalService.show(
+    //   ViewPlanDialogComponent,
+    //   {
+    //     backdrop: true,
+    //     ignoreBackdropClick: true,
+    //     initialState: {
+    //       id: id,
+    //     },
+    //   }
+    // );
 
-    if (this.isSelected(item)) {
-      this.selected = this.selected.filter(x => x.id !== item.id);
-    } else {
-      this.selected.push(item);
-    }
-    this.setSelectAllState();
-  }
-  protected list(
-    request: PagedProductsRequestDto,
-    pageNumber: number,
-    finishedCallback: Function
-  ): void {
-    request.keyword = this.search;
-    request.Including ="plan";
-    this._planService
-      // .getAll(
-      //   request.keyword,
-      //   request.sort_Field,
-      //   request.Including,
-      //   request.skipCount,
-      //   request.MaxResultCount,
-      // )
-      // .pipe(
-      //   finalize(() => {
-      //     finishedCallback();
-      //   })
-      // )
-      // .subscribe((result: PlanDtoPagedResultDto) => {
-
-      //   this.data = result.items;
-      //   this.totalItem = result.totalCount;
-      //   this.totalPage =  ((result.totalCount - (result.totalCount % this.pageSize)) / this.pageSize) + 1;
-      //   this.setSelectAllState();
-      // });
   }
 
-
-  setSelectAllState(): void {
-    if (this.selected.length === this.data.length) {
-      this.selectAllState = 'checked';
-    } else if (this.selected.length !== 0) {
-      this.selectAllState = 'indeterminate';
-    } else {
-      this.selectAllState = '';
-    }
+  deleteItem(id:number): void {
+  
+  
+      abp.message.confirm(
+        this.l('PlanDeleteWarningMessage',  'Plans'),
+        undefined,
+        (result: boolean) => {
+          if (result) {
+            this._planService.delete(id).subscribe(() => {
+              abp.notify.success(this.l('SuccessfullyDeleted'));
+              this.refresh();
+            });
+          }
+        }
+      );
+    
   }
-
-  selectAllChange($event): void {
-    if ($event.target.checked) {
-      this.selected = [...this.data];
-    } else {
-      this.selected = [];
-    }
-    this.setSelectAllState();
-  }
-
-  pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
-  }
-
-  itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy);
-  }
-
-  changeOrderBy(item: any): void {
-    this.loadData(this.itemsPerPage, 1, this.search, item.value);
-  }
-
-  searchKeyUp(event): void {
-    const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy);
-  }
-
 
 }
-class PagedProductsRequestDto extends PagedRequestDto {
-  keyword: string;
-  sort_Field: string;
-  Including:string;
-  sort_Desc: boolean;
-  MaxResultCount:number
-}
+
+
+
 

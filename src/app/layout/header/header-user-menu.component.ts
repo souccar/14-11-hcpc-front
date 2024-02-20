@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { IFormattedUserNotification, UserNotificationHelper } from '../notification/UserNotificationHelper';
 import { NotificationSettingsModalComponent } from '../notification/notification-settings-modal/notification-settings-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'header-user-menu',
@@ -29,6 +30,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     private _notificationService: NotificationServiceProxy,
     private _userNotificationHelper: UserNotificationHelper,
     injector: Injector,
+    private _route:Router,
     public _zone: NgZone) {
 
     super(injector);
@@ -163,7 +165,9 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   );
 
   }
-
+  navigateToNotificationList(){
+    this._route.navigate(['app/notifications/notifications']);
+  }
   gotoUrl(url): void {
     if (url) {
         location.href = url;

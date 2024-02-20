@@ -11,7 +11,6 @@ import { DetailsData } from '@shared/components/details/details.component';
 @Component({
   selector: 'work-flow',
   templateUrl: './work-flow.component.html',
-  styleUrls: ['./work-flow.component.scss']
 })
 export class WorkFlowComponent  extends FullPagedListingComponentBase<WorkflowDto> implements OnInit {
   Workflows: WorkflowDto[] = [];
@@ -21,7 +20,7 @@ export class WorkFlowComponent  extends FullPagedListingComponentBase<WorkflowDt
   detailData:DetailsData[]=[{
     icon:'iconsminds-repeat-4',
     label:'Steps',
-    destinationRoute:"app/personnel/children",},
+    destinationRoute:"app/workflow/steps",},
   {
     icon:'iconsminds-notepad',
     label:' Approvals',

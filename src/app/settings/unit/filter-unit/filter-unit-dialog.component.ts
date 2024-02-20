@@ -1,6 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { FilterDto, FilterRuleDto, NationalityServiceProxy } from '@shared/service-proxies/service-proxies';
-import { Option, QueryBuilderConfig } from 'angular2-query-builder';
+import { QueryBuilderConfig } from 'angular2-query-builder';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FilterComponentBase } from '@shared/filter-Component-base';
 

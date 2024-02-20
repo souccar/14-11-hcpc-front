@@ -74,7 +74,6 @@ import {WorkFlowModule} from '../app/workflow/work-flow.module'
     SecurityModule,
     WarehousesModule,
     PersonnelModule,
-    WorkFlowModule,
     ReportsModule
   ],
 

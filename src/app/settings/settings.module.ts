@@ -1,5 +1,5 @@
 import { ProductComponent } from './product/product.component';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from './settings.component';
 import { UnitComponent } from './unit/unit.component';
@@ -36,6 +36,17 @@ import { ViewSupplierDialogComponent } from './supplier/view-supplier/view-suppl
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { QueryBuilderModule } from 'angular2-query-builder';
 import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog.component';
+import { FilterTransferDialogComponent } from './Transfer/filter-transfer/filter-transfer-dialog.component';
+import { FilterSupplierDialogComponent } from './supplier/filter-supplier/filter-supplier-dialog.component';
+import { FilterProductDialogComponent } from './product/filter-product/filter-product-dialog.component';
+import { FilterMaterialDialogComponent } from './material/filter-material/filter-material-dialog.component';
+import { WorkflowModule } from './workflow/workflow.module';
+import { CreateCategoryDialogComponent } from './category/create-category/create-category-dialog.component';
+import { EditCategoryDialogComponent } from './category/edit-category/edit-category-dialog.component';
+import { ViewCategoryDialogComponent } from './category/view-category/view-category-dialog.component';
+import { CategoryComponent } from './category/category.component';
+import { FilterCategoryDialogComponent } from './category/filter-category/filter-category-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -67,11 +78,18 @@ import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog
     EditSupplierDialogComponent,
     ViewSupplierDialogComponent,
     FilterUnitDialogComponent,
-
-
+    FilterTransferDialogComponent,
+    FilterSupplierDialogComponent,
+    FilterProductDialogComponent,
+    FilterMaterialDialogComponent,
+    CreateCategoryDialogComponent,
+    EditCategoryDialogComponent,
+    ViewCategoryDialogComponent,
+    CategoryComponent,
+    FilterCategoryDialogComponent
   ],
   imports: [
-    AccordionModule.forRoot(),
+  AccordionModule.forRoot(),
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
@@ -80,8 +98,9 @@ import { FilterUnitDialogComponent } from './unit/filter-unit/filter-unit-dialog
     PaginationModule.forRoot(),
     CommonModule,
     QueryBuilderModule,
-    SettingsRoutingModule
+    SettingsRoutingModule,
+    WorkflowModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
 })
 export class SettingsModule { }

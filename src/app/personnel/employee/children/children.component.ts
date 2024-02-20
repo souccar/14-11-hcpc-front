@@ -65,7 +65,7 @@ export class ChildrenComponent extends FullPagedListingComponentBase<ChildDto>  
         ignoreBackdropClick: true,
         class: 'modal-lg',
         initialState:{
-          employeeId:this.employeeId
+          parentId:this.employeeId
         }
 
       }

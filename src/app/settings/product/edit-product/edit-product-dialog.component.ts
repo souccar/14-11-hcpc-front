@@ -1,7 +1,7 @@
 
 import { Component, EventEmitter, Injector, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { FormulaDto, MaterialCodeForDropdownDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy, UpdateProductDto } from '@shared/service-proxies/service-proxies';
+import { CategoryNameForDropdownDto, CategoryServiceProxy, FormulaDto, MaterialCodeForDropdownDto, MaterialDto, MaterialNameForDropdownDto, MaterialServiceProxy, ProductDto, ProductServiceProxy, UnitNameForDropdownDto, UnitServiceProxy, UpdateProductDto } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { Location } from '@angular/common';
@@ -18,6 +18,7 @@ export class EditProductDialogComponent extends AppComponentBase {
   formulas:FormulaDto[]=[];
   materials: MaterialCodeForDropdownDto[] = [];
   units: UnitNameForDropdownDto[] = [];
+  categories : CategoryNameForDropdownDto[] = [];
   id:number
   loaded=false;
   @Output() onSave = new EventEmitter<any>();
@@ -33,9 +34,8 @@ export class EditProductDialogComponent extends AppComponentBase {
     private _materialService:MaterialServiceProxy,
     private _unitService:UnitServiceProxy,
     private _location: Location,
-    private _route:ActivatedRoute
-
-
+    private _route:ActivatedRoute,
+    public _categoryService :CategoryServiceProxy,
 
   ) {
     super(injector);
@@ -46,18 +46,23 @@ export class EditProductDialogComponent extends AppComponentBase {
       this.id = params['id'];
 
     })
+    this.initCategory();
     this.initProduct();
 
   }
+  initCategory()
+  {
+    this._categoryService.getNameForDropdown().subscribe((result) => {
+      this.categories = result;
+    });
+  }
   initProduct()
   {
-
     this._productService.get(this.id).subscribe((response:ProductDto)=>{
       this.product=response;
        (response)
       this.loaded=true
-    })
-
+    });
   }
   priceValidationErrors(){
     let errors: AbpValidationError[] = [{name:'min',localizationKey:'PriceCanNotBeNegativeOrZero',propertyKey:'PriceCanNotBeNegativeOrZero'}];

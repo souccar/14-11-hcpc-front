@@ -3,6 +3,8 @@ import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, Qu
 import { AppComponentBase } from '@shared/app-component-base';
 import { BtSortableHeader, SortEvent } from '@shared/directives/bt-sortable-header.directive';
 import { IPageField } from '../page-default/page-field';
+import { OutputRequestServiceProxy } from '@shared/service-proxies/service-proxies';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-page-grid',
@@ -18,18 +20,21 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   @Input() totalItems: number;
   @Input() pageNumber: number;
   @Input() pageSize: number;
-  @Input() hasDetails:boolean=false;
-  @Input() EditPermission:string='';
-  @Input() DeletePermission:string='';
+  @Input() hasDetails: boolean = false;
+  @Input() IsOutputRequest: boolean = false;
+  @Input() EditPermission: string = '';
+  @Input() DeletePermission: string = '';
+  @Input() ViewButton: boolean = true;
   @Output() changeOrderBy: EventEmitter<string> = new EventEmitter();
   @Output() changePage: EventEmitter<any> = new EventEmitter();
   @Output() ParentId: EventEmitter<any> = new EventEmitter();
   @Output() editItem: EventEmitter<any> = new EventEmitter();
   @Output() deleteItem: EventEmitter<any> = new EventEmitter();
   @Output() viewItem: EventEmitter<any> = new EventEmitter();
-
+  selected = {};
   constructor(injector: Injector,
-    private _renderer: Renderer2,
+    public bsModalRef: BsModalRef,
+    private _OutputRequestService: OutputRequestServiceProxy,
     private _datePipe: DatePipe
   ) {
     super(injector);
@@ -52,18 +57,50 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
       return direction === 'asc' ? 'desc' : 'asc';
     }
   }
-  onEditItem(id:number): void {
+  onEditItem(id: number): void {
     this.editItem.emit(id);
   }
-  onDeleteItem(id:number){
+
+  onchangeStatusToInProduction(id: number) {
+    this._OutputRequestService.changeStatus(1, id).subscribe((result) => {
+      this.notify.info(this.l('changeSuccessfully'));
+      this.bsModalRef.hide();
+      location.reload();
+    })
+
+  }
+
+  onchangeStatusToFinish(id: number) {
+    this._OutputRequestService.changeStatus(2, id).subscribe((result) => {
+
+      this.notify.info(this.l('changeSuccessfully'));
+      this.bsModalRef.hide();
+      location.reload();
+
+    })
+
+  }
+  onDeleteItem(id: number) {
     this.deleteItem.emit(id);
   }
-  onViewItem(id:number){
+  onViewItem(id: number) {
     this.viewItem.emit(id);
   }
-  getParentId(id:number){
-    console.log(id);
-    this.ParentId.emit(id);
+  getParentId(id: number) {
+    if (id) {
+      //make all element false except the selected one
+      Object.keys(this.selected).forEach((key) => {
+        if (+key !== id) {
+          this.selected[+key] = false;
+        }
+      });
+      this.selected[id] = !this.selected[id];
+      if (this.selected[id] == true)
+        this.ParentId.emit(id);
+      else
+        this.ParentId.emit(undefined);
+    }
+
   }
   pageChanged(event: any): void {
     this.changePage.emit(event.page);
@@ -78,7 +115,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     let value = '';
     if (field.type === 'compound') {
       value = this.getCompoundValue(item, field);
-    }else{
+    } else {
       value = this.getSimpleValue(item, field);
     }
     return `<span>${value}<span>`;
@@ -92,6 +129,8 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
         return this.getNumberValue(item, field);
       case 'reference':
         return this.getReferenceValue(item, field);
+      case 'enum':
+        return this.getEnumValue(item, field);
       default:
         return field.name ? item[field.name] : '';
     }
@@ -104,7 +143,16 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   }
 
   getReferenceValue(item, field: IPageField) {
-
+    if (!item || !item[field.name]) {
+      return "";
+    }
+    var referenceItem = item[field.name];
+    var textField = field.referenceTextField;
+    return referenceItem[textField];
+  }
+  getEnumValue(item, field: IPageField) {
+    var index = item[field.name];
+    return field.enumValue.find(x => x.value == index).text;
   }
 
   getNumberValue(item, field: IPageField) {
@@ -115,9 +163,9 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     let template = field.templateValue;
     for (let i = 0; i < this.fields.length; i++) {
       const text = "$" + this.fields[i].name;
-      if(template.includes(text)){
+      if (template.includes(text)) {
         var value = this.getSimpleValue(item, this.fields[i]);
-        template = template.replace(text,value);
+        template = template.replace(text, value);
       }
     }
     return template;
@@ -128,7 +176,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     var names = field.compoundValue.split(',');
     for (let i = 0; i < names.length; i++) {
       var subField = this.fields.find(x => x.name == names[i]);
-      if(subField){
+      if (subField) {
         value += this.getSimpleValue(item, subField);
         if (i < (names.length - 1)) {
           value += ' ';
@@ -136,5 +184,10 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
       }
     }
     return value;
+  }
+
+
+  getClassForRow(index: number): string {
+    return this.selected[index] ? 'highlighted-row' : '';
   }
 }
