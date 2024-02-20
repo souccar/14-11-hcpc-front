@@ -29,7 +29,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     isTenantAvailable(body: IsTenantAvailableInput | undefined): Observable<IsTenantAvailableOutput> {
@@ -85,7 +85,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     register(body: RegisterInput | undefined): Observable<RegisterOutput> {
@@ -153,7 +153,7 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<CategoryDto> {
@@ -267,7 +267,7 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateCategoryDto> {
@@ -323,13 +323,13 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CategoryDtoPagedResultDto> {
@@ -414,7 +414,7 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<CategoryDtoPagedResultDto> {
@@ -470,7 +470,7 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateCategoryDto | undefined): Observable<CategoryDto> {
@@ -526,7 +526,7 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateCategoryDto | undefined): Observable<CategoryDto> {
@@ -582,7 +582,7 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -646,7 +646,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param employeeId (optional)
+     * @param employeeId (optional) 
      * @return Success
      */
     getByEmployeeId(employeeId: number | undefined): Observable<ChildDto[]> {
@@ -709,7 +709,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<ChildDto> {
@@ -765,7 +765,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateChildDto> {
@@ -821,13 +821,13 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ChildDtoPagedResultDto> {
@@ -912,7 +912,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<ChildDtoPagedResultDto> {
@@ -968,7 +968,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateChildDto | undefined): Observable<ChildDto> {
@@ -1024,7 +1024,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateChildDto | undefined): Observable<ChildDto> {
@@ -1080,7 +1080,7 @@ export class ChildServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -1144,7 +1144,7 @@ export class ConfigurationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changeSettings(body: SettingInput[] | undefined): Observable<void> {
@@ -1208,7 +1208,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<DailyProductionDto> {
@@ -1264,13 +1264,13 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<DailyProductionDtoPagedResultDto> {
@@ -1355,7 +1355,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateDailyProductionDto | undefined): Observable<DailyProductionDto> {
@@ -1411,7 +1411,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateDailyProductionDto | undefined): Observable<DailyProductionDto> {
@@ -1467,7 +1467,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getAllProductionsCountForPlan(planId: number | undefined): Observable<{ [key: string]: number; }> {
@@ -1532,8 +1532,8 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param note (optional)
-     * @param dailyProductionId (optional)
+     * @param note (optional) 
+     * @param dailyProductionId (optional) 
      * @return Success
      */
     addNote(note: string | undefined, dailyProductionId: number | undefined): Observable<DailyProductionNoteDto> {
@@ -1593,7 +1593,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateDailyProductionDto> {
@@ -1649,7 +1649,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<DailyProductionDtoPagedResultDto> {
@@ -1705,7 +1705,7 @@ export class DailyProductionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -1769,7 +1769,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<EmployeeDto> {
@@ -1825,7 +1825,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateEmployeeDto> {
@@ -1881,13 +1881,13 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EmployeeDtoPagedResultDto> {
@@ -1972,7 +1972,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<EmployeeDtoPagedResultDto> {
@@ -2028,7 +2028,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateEmployeeDto | undefined): Observable<EmployeeDto> {
@@ -2084,7 +2084,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateEmployeeDto | undefined): Observable<EmployeeDto> {
@@ -2140,7 +2140,7 @@ export class EmployeeServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -2204,7 +2204,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<FormulaDto> {
@@ -2260,7 +2260,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateFormulaDto> {
@@ -2316,10 +2316,10 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<FormulaDtoPagedResultDto> {
@@ -2387,7 +2387,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: PagedFormulaRequestDto | undefined): Observable<FormulaDtoPagedResultDto> {
@@ -2443,7 +2443,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateFormulaDto | undefined): Observable<FormulaDto> {
@@ -2499,7 +2499,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateFormulaDto | undefined): Observable<FormulaDto> {
@@ -2555,7 +2555,7 @@ export class FormulaServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -2677,7 +2677,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<MaterialDto> {
@@ -2733,7 +2733,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param materialId (optional)
+     * @param materialId (optional) 
      * @return Success
      */
     getMaterialDetails(materialId: number | undefined): Observable<MaterialDetailDto> {
@@ -2789,7 +2789,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateMaterialDto | undefined): Observable<MaterialDto> {
@@ -2845,7 +2845,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param materialId (optional)
+     * @param materialId (optional) 
      * @return Success
      */
     getMaterialsOfSupplier(materialId: number | undefined): Observable<MaterialsOfSupplierDto[]> {
@@ -2908,7 +2908,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param productsIds (optional)
+     * @param productsIds (optional) 
      * @return Success
      */
     getByProductsIds(productsIds: number[] | undefined): Observable<MaterialCodeForDropdownDto[]> {
@@ -2971,7 +2971,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param warehouseMaterialsIds (optional)
+     * @param warehouseMaterialsIds (optional) 
      * @return Success
      */
     getIncludeWarehouseMaterials(warehouseMaterialsIds: number[] | undefined): Observable<MaterialincludeWarehouseMaterialDto[]> {
@@ -3092,7 +3092,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateMaterialDto> {
@@ -3148,13 +3148,13 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialDtoPagedResultDto> {
@@ -3239,7 +3239,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<MaterialDtoPagedResultDto> {
@@ -3295,7 +3295,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateMaterialDto | undefined): Observable<MaterialDto> {
@@ -3351,7 +3351,7 @@ export class MaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -3415,7 +3415,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<MaterialSuppliersDto> {
@@ -3471,7 +3471,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateMaterialSuppliersDto> {
@@ -3527,13 +3527,13 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
@@ -3618,7 +3618,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<MaterialSuppliersDtoPagedResultDto> {
@@ -3674,7 +3674,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateMaterialSuppliersDto | undefined): Observable<MaterialSuppliersDto> {
@@ -3730,7 +3730,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateMaterialSuppliersDto | undefined): Observable<MaterialSuppliersDto> {
@@ -3786,7 +3786,7 @@ export class MaterialSuppliersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -3920,9 +3920,9 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param state (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param state (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getUserNotifications(state: UserNotificationState | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<GetNotificationsOutput> {
@@ -4033,7 +4033,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     setNotificationAsRead(body: GuidEntityDto | undefined): Observable<void> {
@@ -4136,7 +4136,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateNotificationSettings(body: UpdateNotificationSettingsInput | undefined): Observable<void> {
@@ -4188,7 +4188,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteNotification(id: string | undefined): Observable<void> {
@@ -4299,7 +4299,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateOutputRequestDto> {
@@ -4355,7 +4355,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<OutputRequestDto> {
@@ -4411,7 +4411,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateOutputRequestDto | undefined): Observable<OutputRequestDto> {
@@ -4467,13 +4467,13 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OutputRequestDtoPagedResultDto> {
@@ -4558,7 +4558,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getPlanOutputRequests(planId: number | undefined): Observable<OutputRequestDto[]> {
@@ -4621,7 +4621,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getWithDetail(planId: number | undefined): Observable<OutputRequestWithDetailDto[]> {
@@ -4684,8 +4684,8 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param status (optional)
-     * @param id (optional)
+     * @param status (optional) 
+     * @param id (optional) 
      * @return Success
      */
     changeStatus(status: number | undefined, id: number | undefined): Observable<OutputRequestDto> {
@@ -4745,7 +4745,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
@@ -4801,7 +4801,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateOutputRequestDto | undefined): Observable<OutputRequestDto> {
@@ -4857,7 +4857,7 @@ export class OutputRequestServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4921,7 +4921,7 @@ export class PdfServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     generateDailyProductionsReport(planId: number | undefined): Observable<void> {
@@ -5101,7 +5101,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreatePlanDto | undefined): Observable<PlanDto> {
@@ -5157,7 +5157,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdatePlanDto | undefined): Observable<PlanDto> {
@@ -5213,7 +5213,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<PlanDto> {
@@ -5371,7 +5371,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     changeStatusToActual(id: number | undefined): Observable<PlanDto> {
@@ -5427,7 +5427,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     changeStatusToArchive(id: number | undefined): Observable<PlanDto> {
@@ -5541,7 +5541,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param planId (optional)
+     * @param planId (optional) 
      * @return Success
      */
     getProductsOfPlan(planId: number | undefined): Observable<ProductInfoDropdownDto[]> {
@@ -5604,7 +5604,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdatePlanDto> {
@@ -5660,13 +5660,13 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlanDtoPagedResultDto> {
@@ -5751,7 +5751,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<PlanDtoPagedResultDto> {
@@ -5807,7 +5807,7 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -5929,7 +5929,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateProductDto | undefined): Observable<ProductDto> {
@@ -5985,7 +5985,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<ProductDto> {
@@ -6041,7 +6041,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateProductDto> {
@@ -6097,13 +6097,13 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
@@ -6188,7 +6188,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<ProductDtoPagedResultDto> {
@@ -6244,7 +6244,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateProductDto | undefined): Observable<ProductDto> {
@@ -6300,7 +6300,7 @@ export class ProductServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -6364,7 +6364,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateRoleDto | undefined): Observable<RoleDto> {
@@ -6420,7 +6420,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param permission (optional)
+     * @param permission (optional) 
      * @return Success
      */
     getRoles(permission: string | undefined): Observable<RoleListDtoListResultDto> {
@@ -6476,7 +6476,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: RoleDto | undefined): Observable<RoleDto> {
@@ -6532,7 +6532,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -6635,7 +6635,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getRoleForEdit(id: number | undefined): Observable<GetRoleForEditOutput> {
@@ -6749,7 +6749,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<RoleDtoPagedResultDto> {
@@ -6805,7 +6805,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<RoleDto> {
@@ -6861,9 +6861,9 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<RoleDtoPagedResultDto> {
@@ -7060,7 +7060,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param materialId (optional)
+     * @param materialId (optional) 
      * @return Success
      */
     getSuppliersByMaterialIdForDropdown(materialId: number | undefined): Observable<SupplierNameForDropdownDto[]> {
@@ -7123,7 +7123,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<SupplierDto> {
@@ -7179,7 +7179,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateSupplierDto> {
@@ -7235,13 +7235,13 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SupplierDtoPagedResultDto> {
@@ -7326,7 +7326,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<SupplierDtoPagedResultDto> {
@@ -7382,7 +7382,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateSupplierDto | undefined): Observable<SupplierDto> {
@@ -7438,7 +7438,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateSupplierDto | undefined): Observable<SupplierDto> {
@@ -7494,7 +7494,7 @@ export class SupplierServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -7558,7 +7558,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateTenantDto | undefined): Observable<TenantDto> {
@@ -7614,7 +7614,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -7666,7 +7666,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<TenantDto> {
@@ -7722,10 +7722,10 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param isActive (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, isActive: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TenantDtoPagedResultDto> {
@@ -7793,7 +7793,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: TenantDto | undefined): Observable<TenantDto> {
@@ -7861,7 +7861,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authenticate(body: AuthenticateModel | undefined): Observable<AuthenticateResultModel> {
@@ -7929,7 +7929,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     convertTo(body: ConvertToInputDto | undefined): Observable<ConvertToOutputDto> {
@@ -7985,7 +7985,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<TransferDto> {
@@ -8041,7 +8041,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateTransferDto> {
@@ -8097,13 +8097,13 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<TransferDtoPagedResultDto> {
@@ -8188,7 +8188,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<TransferDtoPagedResultDto> {
@@ -8244,7 +8244,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateTransferDto | undefined): Observable<TransferDto> {
@@ -8300,7 +8300,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateTransferDto | undefined): Observable<TransferDto> {
@@ -8356,7 +8356,7 @@ export class TransferServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -8420,7 +8420,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param materialId (optional)
+     * @param materialId (optional) 
      * @return Success
      */
     getAllForMaterial(materialId: number | undefined): Observable<UnitNameForDropdownDto[]> {
@@ -8541,7 +8541,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getAllRelatedUnits(id: number | undefined): Observable<UnitNameForDropdownDto[]> {
@@ -8604,7 +8604,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getIncludeParent(id: number | undefined): Observable<UnitDto> {
@@ -8718,7 +8718,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateUnitDto | undefined): Observable<UnitDto> {
@@ -8774,7 +8774,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<UnitDto> {
@@ -8830,7 +8830,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateUnitDto> {
@@ -8886,13 +8886,13 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UnitDtoPagedResultDto> {
@@ -8977,7 +8977,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<UnitDtoPagedResultDto> {
@@ -9033,7 +9033,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateUnitDto | undefined): Observable<UnitDto> {
@@ -9089,7 +9089,7 @@ export class UnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -9153,7 +9153,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateUserDto | undefined): Observable<UserDto> {
@@ -9209,7 +9209,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UserDto | undefined): Observable<UserDto> {
@@ -9265,7 +9265,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -9317,7 +9317,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     activate(body: Int64EntityDto | undefined): Observable<void> {
@@ -9369,7 +9369,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     deActivate(body: Int64EntityDto | undefined): Observable<void> {
@@ -9472,7 +9472,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changeLanguage(body: ChangeUserLanguageDto | undefined): Observable<void> {
@@ -9524,7 +9524,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changePassword(body: ChangePasswordDto | undefined): Observable<boolean> {
@@ -9569,7 +9569,7 @@ export class UserServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9581,7 +9581,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     resetPassword(body: ResetPasswordDto | undefined): Observable<boolean> {
@@ -9626,7 +9626,7 @@ export class UserServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9638,7 +9638,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<UserDtoPagedResultDto> {
@@ -9694,7 +9694,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<UserDto> {
@@ -9750,10 +9750,10 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param keyword (optional)
-     * @param isActive (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(keyword: string | undefined, isActive: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<UserDtoPagedResultDto> {
@@ -9891,7 +9891,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WarehouseDto> {
@@ -9947,7 +9947,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWarehouseDto> {
@@ -10003,13 +10003,13 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseDtoPagedResultDto> {
@@ -10094,7 +10094,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<WarehouseDtoPagedResultDto> {
@@ -10150,7 +10150,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWarehouseDto | undefined): Observable<WarehouseDto> {
@@ -10206,7 +10206,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWarehouseDto | undefined): Observable<WarehouseDto> {
@@ -10262,7 +10262,7 @@ export class WarehouseServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -10326,13 +10326,13 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
@@ -10417,7 +10417,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WarehouseMaterialDto> {
@@ -10578,7 +10578,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param materialId (optional)
+     * @param materialId (optional) 
      * @return Success
      */
     getByMaterialId(materialId: number | undefined): Observable<WarehouseMaterialWithWarehouseNameAndExpiryDateDto[]> {
@@ -10699,7 +10699,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWarehouseMaterialDto> {
@@ -10755,7 +10755,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<WarehouseMaterialDtoPagedResultDto> {
@@ -10811,7 +10811,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWarehouseMaterialDto | undefined): Observable<WarehouseMaterialDto> {
@@ -10867,7 +10867,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWarehouseMaterialDto | undefined): Observable<WarehouseMaterialDto> {
@@ -10923,7 +10923,7 @@ export class WarehouseMaterialServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -11045,7 +11045,7 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WorkflowDto> {
@@ -11101,7 +11101,7 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWorkflowDto> {
@@ -11157,13 +11157,13 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WorkflowDtoPagedResultDto> {
@@ -11248,7 +11248,7 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<WorkflowDtoPagedResultDto> {
@@ -11304,7 +11304,7 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWorkflowDto | undefined): Observable<WorkflowDto> {
@@ -11360,7 +11360,7 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWorkflowDto | undefined): Observable<WorkflowDto> {
@@ -11416,7 +11416,7 @@ export class WorkflowServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -11480,7 +11480,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param workflowId (optional)
+     * @param workflowId (optional) 
      * @return Success
      */
     getAllByWorkflowId(workflowId: number | undefined): Observable<WorkflowStepDto[]> {
@@ -11543,7 +11543,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWorkflowStepDto | undefined): Observable<WorkflowStepDto> {
@@ -11599,7 +11599,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WorkflowStepDto> {
@@ -11655,7 +11655,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWorkflowStepDto> {
@@ -11711,13 +11711,13 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WorkflowStepDtoPagedResultDto> {
@@ -11802,7 +11802,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<WorkflowStepDtoPagedResultDto> {
@@ -11858,7 +11858,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWorkflowStepDto | undefined): Observable<WorkflowStepDto> {
@@ -11914,7 +11914,7 @@ export class WorkflowStepServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -12036,7 +12036,7 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<WorkflowStepIndexDto> {
@@ -12092,7 +12092,7 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getForEdit(id: number | undefined): Observable<UpdateWorkflowStepIndexDto> {
@@ -12148,13 +12148,13 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param including (optional)
-     * @param filtering_Condition (optional)
-     * @param filtering_Rules (optional)
-     * @param keyword (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param including (optional) 
+     * @param filtering_Condition (optional) 
+     * @param filtering_Rules (optional) 
+     * @param keyword (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(including: string | undefined, filtering_Condition: string | undefined, filtering_Rules: FilterRuleDto[] | undefined, keyword: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<WorkflowStepIndexDtoPagedResultDto> {
@@ -12239,7 +12239,7 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     read(body: FullPagedRequestDto | undefined): Observable<WorkflowStepIndexDtoPagedResultDto> {
@@ -12295,7 +12295,7 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     create(body: CreateWorkflowStepIndexDto | undefined): Observable<WorkflowStepIndexDto> {
@@ -12351,7 +12351,7 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: UpdateWorkflowStepIndexDto | undefined): Observable<WorkflowStepIndexDto> {
@@ -12407,7 +12407,7 @@ export class WorkflowStepIndexServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -18561,529 +18561,6 @@ export interface IPagedFormulaRequestDto {
     skipCount: number;
     keyword: string | undefined;
     sorting: string | undefined;
-}
-
-export class PagedMaterialRequestDto implements IPagedMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedMaterialRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedMaterialRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedMaterialRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedMaterialRequestDto {
-        const json = this.toJSON();
-        let result = new PagedMaterialRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-}
-
-export class PagedOutputRequestDto implements IPagedOutputRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedOutputRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedOutputRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedOutputRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedOutputRequestDto {
-        const json = this.toJSON();
-        let result = new PagedOutputRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedOutputRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedPlanRequestDto implements IPagedPlanRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedPlanRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedPlanRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedPlanRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedPlanRequestDto {
-        const json = this.toJSON();
-        let result = new PagedPlanRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedPlanRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedProductRequestDto implements IPagedProductRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    filtering: FilterDto;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedProductRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.filtering = _data["filtering"] ? FilterDto.fromJS(_data["filtering"]) : <any>undefined;
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedProductRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedProductRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["filtering"] = this.filtering ? this.filtering.toJSON() : <any>undefined;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedProductRequestDto {
-        const json = this.toJSON();
-        let result = new PagedProductRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedProductRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    filtering: FilterDto;
-    sorting: string | undefined;
-}
-
-export class PagedSupplierRequestDto implements IPagedSupplierRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-
-    constructor(data?: IPagedSupplierRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-        }
-    }
-
-    static fromJS(data: any): PagedSupplierRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedSupplierRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        return data;
-    }
-
-    clone(): PagedSupplierRequestDto {
-        const json = this.toJSON();
-        let result = new PagedSupplierRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedSupplierRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-}
-
-export class PagedTransferRequestDto implements IPagedTransferRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedTransferRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedTransferRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedTransferRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedTransferRequestDto {
-        const json = this.toJSON();
-        let result = new PagedTransferRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedTransferRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedUnitRequestDto implements IPagedUnitRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedUnitRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedUnitRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedUnitRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedUnitRequestDto {
-        const json = this.toJSON();
-        let result = new PagedUnitRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedUnitRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedWarehouseMaterialRequestDto implements IPagedWarehouseMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedWarehouseMaterialRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedWarehouseMaterialRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedWarehouseMaterialRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedWarehouseMaterialRequestDto {
-        const json = this.toJSON();
-        let result = new PagedWarehouseMaterialRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedWarehouseMaterialRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-}
-
-export class PagedWarehouseRequestDto implements IPagedWarehouseRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
-
-    constructor(data?: IPagedWarehouseRequestDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.maxResultCount = _data["maxResultCount"];
-            this.skipCount = _data["skipCount"];
-            this.keyword = _data["keyword"];
-            this.sorting = _data["sorting"];
-            this.including = _data["including"];
-        }
-    }
-
-    static fromJS(data: any): PagedWarehouseRequestDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedWarehouseRequestDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["maxResultCount"] = this.maxResultCount;
-        data["skipCount"] = this.skipCount;
-        data["keyword"] = this.keyword;
-        data["sorting"] = this.sorting;
-        data["including"] = this.including;
-        return data;
-    }
-
-    clone(): PagedWarehouseRequestDto {
-        const json = this.toJSON();
-        let result = new PagedWarehouseRequestDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPagedWarehouseRequestDto {
-    maxResultCount: number;
-    skipCount: number;
-    keyword: string | undefined;
-    sorting: string | undefined;
-    including: string | undefined;
 }
 
 export enum ParameterAttributes {

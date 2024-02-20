@@ -60,7 +60,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
   onEditItem(id:number): void {
     this.editItem.emit(id);
   }
-  
+
   onchangeStatusToInProduction(id:number)
 {
     this._OutputRequestService.changeStatus(1,id).subscribe((result)=>{
@@ -98,6 +98,7 @@ onchangeStatusToFinish(id:number)
       });
       this.selected[id] = !this.selected[id];
       ////
+      console.log(this.selected)
       this.ParentId.emit(id);
     }
   }
@@ -142,8 +143,8 @@ onchangeStatusToFinish(id:number)
   }
 
   getReferenceValue(item, field: IPageField) {
-    if (!item || !item[field.name]) { 
-      return "" ; 
+    if (!item || !item[field.name]) {
+      return "" ;
   }
       var referenceItem = item[field.name];
       var textField = field.referenceTextField;
