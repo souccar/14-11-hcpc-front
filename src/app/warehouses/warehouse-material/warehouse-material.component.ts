@@ -28,8 +28,8 @@ export class WarehouseMaterialComponent extends FullPagedListingComponentBase<Wa
     { label: this.l('ExpirationDate'), name: 'expirationDate', sortable: true, type: 'date' },
     { label: this.l('InitialQuantity'), name: 'initialQuantity', sortable: true, type: 'number' },
     { label: this.l('CurrentQuantity'), name: 'currentQuantity', sortable: true, type: 'number' },
-   
-  
+
+
   ];
 
   constructor(injector: Injector,
@@ -46,10 +46,10 @@ export class WarehouseMaterialComponent extends FullPagedListingComponentBase<Wa
       .subscribe(result => {
         console.log(result.items)
         this.warehousematerials = result.items;
-    
+
         this.showPaging(result, pageNumber);
       })
-  
+
   }
 
   showAddNewModal() {
@@ -86,8 +86,8 @@ export class WarehouseMaterialComponent extends FullPagedListingComponentBase<Wa
     });
   }
   deleteItem(id:number): void {
-  
-  
+
+
     abp.message.confirm(
       this.l('WarehouseMaterialDeleteWarningMessage',  'WarehouseMaterials'),
       undefined,
@@ -100,7 +100,7 @@ export class WarehouseMaterialComponent extends FullPagedListingComponentBase<Wa
         }
       }
     );
-  
+
 }
 showViewModal(id:number){
 
