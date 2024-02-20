@@ -21,7 +21,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   displayName = "";
   IsOpen:boolean=false;
   notifications: IFormattedUserNotification[] = [];
-  public unreadNotificationCount: number = 0;
+  public unreadNotificationCount:any;
   @ViewChild(NotificationSettingsModalComponent) notification!: NotificationSettingsModalComponent;
   constructor(
     private _authService: AppAuthService,
@@ -92,7 +92,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
 
   loadNotifications(): void {
     this._notificationService.getUserNotifications(0, 10, 0).subscribe(result => {
-      this.unreadNotificationCount = result.unreadCount;
+      console.log(result);
+      this.unreadNotificationCount = result;
       this.notifications = [];
       _.forEach(result.items, (item: UserNotification) => {
         this.notifications.push(this._userNotificationHelper.format(<any>item));
