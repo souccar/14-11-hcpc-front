@@ -5,6 +5,7 @@ import { WorkFlowRoutingModule } from './work-flow-routing.module';
 import { LayoutModule } from '@app/layout/layout.module';
 import { SharedModule } from '@shared/shared.module';
 import { CreateWorkflowDialogComponent } from './create-workflow/create-workflow-dialog.component';
+import { StepsModule } from './steps/steps.module';
 import { FormsModule } from '@angular/forms';
 import { EditWorkflowDialogComponent } from './edit-workflow/edit-workflow-dialog.component';
 import { ViewWorkflowDialogComponent } from './view-workflow/view-workflow-dialog.component';
@@ -30,8 +31,7 @@ import { QueryBuilderModule } from 'angular2-query-builder';
     LayoutModule,
     SharedModule,
     WorkFlowRoutingModule,
-
-  ],
-  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+    StepsModule
+  ]
 })
 export class WorkFlowModule { }

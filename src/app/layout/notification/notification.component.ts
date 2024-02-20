@@ -10,6 +10,7 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Data } from '@angular/router';
 import { result } from 'lodash-es';
 import * as _ from 'lodash';
+import { Location } from '@angular/common';
 @Component({
   selector: 'notifications',
   templateUrl: './notification.component.html',
@@ -18,9 +19,16 @@ import * as _ from 'lodash';
   animations: [appModuleAnimation()]
 })
 export class NotificationComponent extends PagedListingComponentBase<UserNotification> implements OnInit {
+  fields = [
+    { label: this.l('Text'), name: 'text', sortable: true, type: 'string'  },
+    { label: this.l('Time'), name: 'time', sortable: true, type: 'date' , format: 'h:mm a'  },
+    { label: this.l('Date'), name: 'time', sortable: true, type: 'date' , format: 'dd MM YYYY' },
+    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true, type: 'date', format: 'dd MM YYYY' },
+  ];
   displayMode = 'list';
   readStateFilter = '';
   selectAllState = '';
+  color:boolean=false;
   totalItem = 0;
   totalPage = 0;
   currentPage = 1;
@@ -42,6 +50,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   selectedNotification:IFormattedUserNotification;
   tempNotifications:GetNotificationsOutput=new GetNotificationsOutput();
   loaded=false;
+  selectedd={};
   constructor(
     injector: Injector,
     private _notificationService: NotificationServiceProxy,
@@ -51,7 +60,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   }
 
   reloadPage(): void {
-    this.loadData();
+    this.loadData(this.itemsPerPage, this.currentPage);
   }
 
   ngOnInit(): void {
@@ -60,14 +69,16 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
 
   move(id:string)
   {
-      this.data.forEach((item)=>{
+      this.data.forEach((item:IFormattedUserNotification)=>{
         if(item.userNotificationId==id)
         { this.selectedNotification=item;
           this.isMove=true;
+
           const notificationId:GuidEntityDto=new GuidEntityDto();
           notificationId.id=item.userNotificationId;
           this._notificationService.setNotificationAsRead( notificationId).subscribe(result=>{
           });
+
 
         }
       })
@@ -160,8 +171,8 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   SetAllAsRead()
   {
     this._notificationService.setAllNotificationsAsRead().subscribe((response)=>{
-
-    })
+    });
+    location.reload();
   }
   isRead(record: any): boolean {
     return record.formattedNotification.state === 'READ';
@@ -222,11 +233,14 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
             .subscribe(() => {
               this.reloadPage();
               this.notify.success(this.l('SuccessfullyDeleted'));
+              location.reload()
             });
         }
       }
     );
     this.isMove=false;
+
+
   }
   protected delete(userNotification: UserNotification): void {
     this.message.confirm(
@@ -238,12 +252,14 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
             .subscribe(() => {
               this.reloadPage();
               this.notify.success(this.l('SuccessfullyDeleted'));
+
             });
         }
       }
     );
   }
-  public getRowClass = (row:IFormattedUserNotification) => {
+ getRowClass (row:IFormattedUserNotification){
+
     if(row.isUnread){
     return {
       'row-color': true

@@ -10,7 +10,7 @@ import { finalize } from 'rxjs';
 })
 export class CreateChildDialogComponent extends AppComponentBase {
   saving = false;
-  employeeId:number
+  parentId:number
   child = new CreateChildDto();
   @Output() onSave = new EventEmitter<any>();
   constructor(injector: Injector,
@@ -22,7 +22,7 @@ export class CreateChildDialogComponent extends AppComponentBase {
   }
   save(): void {
     this.saving = true;
-    this.child.employeeId=this.employeeId;
+    this.child.employeeId=this.parentId;
     this._childService.
       create(
         this.child

@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { IFormattedUserNotification, UserNotificationHelper } from '../notification/UserNotificationHelper';
 import { NotificationSettingsModalComponent } from '../notification/notification-settings-modal/notification-settings-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'header-user-menu',
@@ -20,7 +21,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   displayName = "";
   IsOpen:boolean=false;
   notifications: IFormattedUserNotification[] = [];
-  public unreadNotificationCount: number = 0;
+  public unreadNotificationCount:any;
   @ViewChild(NotificationSettingsModalComponent) notification!: NotificationSettingsModalComponent;
   constructor(
     private _authService: AppAuthService,
@@ -29,6 +30,7 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
     private _notificationService: NotificationServiceProxy,
     private _userNotificationHelper: UserNotificationHelper,
     injector: Injector,
+    private _route:Router,
     public _zone: NgZone) {
 
     super(injector);
@@ -90,7 +92,8 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
 
   loadNotifications(): void {
     this._notificationService.getUserNotifications(0, 10, 0).subscribe(result => {
-      this.unreadNotificationCount = result.unreadCount;
+      console.log(result);
+      this.unreadNotificationCount = result;
       this.notifications = [];
       _.forEach(result.items, (item: UserNotification) => {
         this.notifications.push(this._userNotificationHelper.format(<any>item));
@@ -163,7 +166,9 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
   );
 
   }
-
+  navigateToNotificationList(){
+    this._route.navigate(['app/notifications/notifications']);
+  }
   gotoUrl(url): void {
     if (url) {
         location.href = url;

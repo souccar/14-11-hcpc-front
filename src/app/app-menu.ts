@@ -76,6 +76,13 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-shopping-basket',
 
       },
+       
+      {
+        label: 'Category',
+        to: `${adminRoot}/settings/Category`,
+        icon: 'simple-icon-list',
+
+      },
       {
         label: 'Product',
         to: `${adminRoot}/settings/product`,
@@ -98,10 +105,18 @@ const data: IMenuItem[] = [
         icon: 'iconsminds-synchronize',
       },
       {
+        label: 'WorkFlowStepIndex',
+        to: `${adminRoot}/settings/WorkFlowStepIndex`,
+        icon: 'simple-icon-event',
+
+      },
+      {
         label: 'GeneralSetting',
         to: `${adminRoot}/settings/generalsetting`,
         icon: 'simple-icon-globe',
       },
+     
+     
 
 
     ],

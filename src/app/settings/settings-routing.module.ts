@@ -13,6 +13,8 @@ import { ProductComponent } from './product/product.component';
 import { MaterialComponent } from './material/material.component';
 import { FormulaComponent } from './formula/formula.component';
 import { NotificationComponent } from '@app/layout/notification/notification.component';
+import {  StepIndexComponent } from './workflow/StepIndex/stepIndex.component';
+import { CategoryComponent } from './category/category.component';
 
 
 
@@ -89,8 +91,17 @@ const routes: Routes = [{
       path: 'notifications', component: NotificationComponent ,
       canActivate: [AppRouteGuard]
     }
-
-
+    ,
+    {
+      path: 'WorkFlowStepIndex', component: StepIndexComponent ,
+      canActivate: [AppRouteGuard]
+    }
+    ,
+    {
+      path: 'Category', component: CategoryComponent ,
+      // data: { permission : 'Setting.Categories' },
+      canActivate: [AppRouteGuard]
+    }
   ]
 
 }];
