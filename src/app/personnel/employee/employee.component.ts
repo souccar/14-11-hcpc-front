@@ -19,10 +19,13 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
     icon:'simple-icon-people',
     label:'children',
     destinationRoute:"app/personnel/children",
-
-
+  },
+  {
+    icon:'simple-icon-people',
+    label:'children',
+    destinationRoute:"app/personnel/children",
   }]
-  loadDetails: boolean = false;
+  loadDetails: boolean = true;
   fields = [
     { label: this.l('FullName'), type: 'compound', compoundValue: 'firstName,lastName' },
     { label: this.l('FirstName'), name: 'firstName', sortable: false, type: 'string' },
