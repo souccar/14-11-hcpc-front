@@ -24,6 +24,16 @@ export class EmployeeComponent extends FullPagedListingComponentBase<EmployeeDto
     icon:'simple-icon-people',
     label:'children',
     destinationRoute:"app/personnel/children",
+  },
+  {
+    icon:'simple-icon-people',
+    label:'children',
+    destinationRoute:"app/personnel/children",
+  },
+  {
+    icon:'simple-icon-people',
+    label:'children',
+    destinationRoute:"app/personnel/children",
   }]
   loadDetails: boolean = true;
   fields = [
