@@ -37,7 +37,7 @@ export class ProductComponent extends FullPagedListingComponentBase<ProductDto> 
         this.products = result.items;
         this.showPaging(result, pageNumber);
       })
-  
+
   }
 
   showAddNewModal() {
@@ -47,8 +47,8 @@ export class ProductComponent extends FullPagedListingComponentBase<ProductDto> 
     this._router.navigate(['app/settings/editproduct',id]);
   }
   deleteItem(id:number): void {
-  
-  
+
+
     abp.message.confirm(
       this.l('ProductDeleteWarningMessage',  'Products'),
       undefined,
@@ -61,7 +61,7 @@ export class ProductComponent extends FullPagedListingComponentBase<ProductDto> 
         }
       }
     );
-  
+
 }
 showViewModal(id:number){
   this._modalService.show(

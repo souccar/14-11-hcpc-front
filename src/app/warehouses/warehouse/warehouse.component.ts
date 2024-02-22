@@ -16,9 +16,8 @@ export class WarehouseComponent extends FullPagedListingComponentBase<WarehouseD
   warehouses: WarehouseDto[] = [];
   fields = [
     { label: this.l('Name'), name: 'name', sortable: true, type: 'string' },
-    { label: this.l('WarehouseKeeper'), name: 'warehouseKeeper', sortable: true, type: 'string' },
+    { label: this.l('Storekeeper'), name: 'warehouseKeeper', sortable: true, type: 'reference',referenceTextField: 'name' },
     { label: this.l('Place'), name: 'place', sortable: true, type: 'string' },
-
   ];
 
   constructor(injector: Injector,
@@ -30,15 +29,15 @@ export class WarehouseComponent extends FullPagedListingComponentBase<WarehouseD
 
 
   protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    this.request.including = "To,From";
+    this.request.including = "To,From,WarehouseKeeper";
     this._warehouseService.read(request)
       .subscribe(result => {
         console.log(result.items)
         this.warehouses = result.items;
-    
+
         this.showPaging(result, pageNumber);
       })
-  
+
   }
 
   showAddNewModal() {
@@ -75,8 +74,8 @@ export class WarehouseComponent extends FullPagedListingComponentBase<WarehouseD
     });
   }
   deleteItem(id:number): void {
-  
-  
+
+
     abp.message.confirm(
       this.l('WarehouseDeleteWarningMessage',  'Warehouses'),
       undefined,
@@ -89,7 +88,7 @@ export class WarehouseComponent extends FullPagedListingComponentBase<WarehouseD
         }
       }
     );
-  
+
 }
 showViewModal(id:number){
 
