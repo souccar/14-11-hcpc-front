@@ -23,7 +23,10 @@ export class DetailsComponent implements OnInit {
   navigateToChildren(route: string) {
  
     if(this.ParentId)
-     this._router.navigate([route, this.ParentId]);}
+    { console.log("sdsdsdsdds")
+      this._router.navigate([route, this.ParentId]);}
+
+    }
 }
 
 export class DetailsData {
