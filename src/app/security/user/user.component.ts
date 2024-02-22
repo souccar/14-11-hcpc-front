@@ -15,10 +15,10 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
   userId: number;
   loadDetails: boolean = false;
   fields = [
-    { label: this.l('FullName'), type: 'string' ,name: 'fullName', sortable: true},
-    { label: this.l('UserName'), type: 'string',name: 'userName', sortable: true },
+    { label: this.l('FullName'), type: 'string', name: 'fullName', sortable: false },
+    { label: this.l('UserName'), type: 'string', name: 'userName', sortable: true },
     { label: this.l('EmailAddress'), type: 'string', name: 'emailAddress', sortable: true },
-    { label: this.l('Role'), type: 'string', name: 'roleNames', sortable: true },
+    { label: this.l('Role'), type: 'string', name: 'roleNames', sortable: false },
   ];
 
   constructor(injector: Injector,
@@ -30,7 +30,7 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
 
 
   protected list(request: FullPagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-      this._userService.read(request)
+    this._userService.read(request)
       .subscribe(result => {
         this.users = result.items;
 
@@ -54,11 +54,11 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
 
       }
     );
-    createUserDialog.content.onSave.subscribe(() => {
+    createUserDialog.onHide.subscribe((e) => {
       this.refresh();
     });
   }
-  showEditModal(id: any){
+  showEditModal(id: any) {
     let editUserDialog: BsModalRef;
     editUserDialog = this._modalService.show(
       EditUserComponent,
@@ -66,13 +66,13 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
         backdrop: true,
         ignoreBackdropClick: true,
         class: 'modal-lg',
-        initialState:{
-          id:id
+        initialState: {
+          id: id
         }
 
       }
     );
-    editUserDialog.content.onSave.subscribe(() => {
+    editUserDialog.onHide.subscribe(() => {
       this.refresh();
     });
   }
@@ -101,7 +101,7 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
     });
   }
 
-  showViewModal(id:number){
+  showViewModal(id: number) {
 
     // this._modalService.show(
     //   ViewUserDialogComponent,
@@ -116,22 +116,22 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
 
   }
 
-  deleteItem(id:number): void {
-  
-  
-      abp.message.confirm(
-        this.l('UserDeleteWarningMessage',  'Users'),
-        undefined,
-        (result: boolean) => {
-          if (result) {
-            this._userService.delete(id).subscribe(() => {
-              abp.notify.success(this.l('SuccessfullyDeleted'));
-              this.refresh();
-            });
-          }
+  deleteItem(id: number): void {
+
+
+    abp.message.confirm(
+      this.l('UserDeleteWarningMessage', 'Users'),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+          this._userService.delete(id).subscribe(() => {
+            abp.notify.success(this.l('SuccessfullyDeleted'));
+            this.refresh();
+          });
         }
-      );
-    
+      }
+    );
+
   }
 
 }
