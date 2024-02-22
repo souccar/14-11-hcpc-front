@@ -19,9 +19,16 @@ import { Location } from '@angular/common';
   animations: [appModuleAnimation()]
 })
 export class NotificationComponent extends PagedListingComponentBase<UserNotification> implements OnInit {
+  fields = [
+    { label: this.l('Text'), name: 'text', sortable: true, type: 'string'  },
+    { label: this.l('Time'), name: 'time', sortable: true, type: 'date' , format: 'h:mm a'  },
+    { label: this.l('Date'), name: 'time', sortable: true, type: 'date' , format: 'dd MM YYYY' },
+    { label: this.l('DateOfBirth'), name: 'dateOfBirth', sortable: true, type: 'date', format: 'dd MM YYYY' },
+  ];
   displayMode = 'list';
   readStateFilter = '';
   selectAllState = '';
+  color:boolean=false;
   totalItem = 0;
   totalPage = 0;
   currentPage = 1;
@@ -43,6 +50,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
   selectedNotification:IFormattedUserNotification;
   tempNotifications:GetNotificationsOutput=new GetNotificationsOutput();
   loaded=false;
+  selectedd={};
   constructor(
     injector: Injector,
     private _notificationService: NotificationServiceProxy,
@@ -61,15 +69,17 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
 
   move(id:string)
   {
-      this.data.forEach((item:IFormattedUserNotification)=>{ 
+      this.data.forEach((item:IFormattedUserNotification)=>{
         if(item.userNotificationId==id)
         { this.selectedNotification=item;
           this.isMove=true;
+
           const notificationId:GuidEntityDto=new GuidEntityDto();
           notificationId.id=item.userNotificationId;
           this._notificationService.setNotificationAsRead( notificationId).subscribe(result=>{
           });
-  
+
+
         }
       })
   }
@@ -229,7 +239,7 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
       }
     );
     this.isMove=false;
-    
+
 
   }
   protected delete(userNotification: UserNotification): void {
@@ -242,13 +252,14 @@ export class NotificationComponent extends PagedListingComponentBase<UserNotific
             .subscribe(() => {
               this.reloadPage();
               this.notify.success(this.l('SuccessfullyDeleted'));
-            
+
             });
         }
       }
     );
   }
-  public getRowClass = (row:IFormattedUserNotification) => {
+ getRowClass (row:IFormattedUserNotification){
+
     if(row.isUnread){
     return {
       'row-color': true

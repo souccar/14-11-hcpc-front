@@ -61,8 +61,10 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     this.editItem.emit(id);
   }
 
+
   onchangeStatusToInProduction(id: number) {
     this._OutputRequestService.changeStatus(1, id).subscribe((result) => {
+
       this.notify.info(this.l('changeSuccessfully'));
       this.bsModalRef.hide();
       location.reload();
@@ -99,6 +101,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
         this.ParentId.emit(id);
       else
         this.ParentId.emit(undefined);
+
     }
 
   }
@@ -149,6 +152,7 @@ export class PageGridComponent extends AppComponentBase implements OnChanges {
     var referenceItem = item[field.name];
     var textField = field.referenceTextField;
     return referenceItem[textField];
+
   }
   getEnumValue(item, field: IPageField) {
     var index = item[field.name];

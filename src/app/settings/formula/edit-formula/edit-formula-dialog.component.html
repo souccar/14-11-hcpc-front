@@ -4,7 +4,7 @@
       <div class="col-md-11">
         <!-- Inputs -->
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-3 required">
             <label form="materialId">{{'Material'|localize}}</label>
             <select aria-placeholder="Material" class="form-control" aria-label="Material" #materialIdModel="ngModel"
               required name="materialId" [(ngModel)]="formula.materialId" #materialIdEl
@@ -12,12 +12,12 @@
               <option *ngFor="let item of materialDropdown" value={{item.id}}>{{item.code}}</option>
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 required">
             <label form="quantity">{{'quantity'|localize}}</label>
             <input type="number" class="form-control" name="quantity" id="quantity" required
               [(ngModel)]="formula.quantity" #quantityModel="ngModel" min="0" #quantityEl />
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 required">
             <label form="unitId">{{'Unit'|localize}}</label>
             <select class="form-control" aria-label="unit" #unitIdModel="ngModel" required name="unitId"
               [(ngModel)]="formula.unitId" #unitIdEl>
@@ -27,8 +27,10 @@
           </div>
           <div class="col-md-3 required">
             <label form="percentage">{{'Percentage'|localize}}</label>
-            <input type="number" class="form-control" name="percentage" id="percentage" required min="1"
+            <input type="number" class="form-control" name="percentage" id="percentage" required min="0.0001" max="100"
               [(ngModel)]="formula.percentage" #percentageModel="ngModel" #percentageEl />
+            <abp-validation-summary [control]="percentageModel" [customValidationErrors]="percentageValidationErrors()"
+              [controlEl]="percentageEl"></abp-validation-summary>
           </div>
         </div>
       </div>

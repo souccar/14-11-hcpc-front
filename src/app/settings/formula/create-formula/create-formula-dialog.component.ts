@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { CreateFormulaDto, FormulaDto,MaterialCodeForDropdownDto,MaterialServiceProxy, ProductInfoDropdownDto,UnitNameForDropdownDto, UnitServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -33,6 +33,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       localizationKey: 'QuantityCanNotBeNegativeOrZero',
     },
   ];
+  @ViewChild('createformulaModal') createformulaModal;
 
   constructor(injector: Injector,
     private _materialService: MaterialServiceProxy,
@@ -90,6 +91,7 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
       this.saveFormulaList.emit(this.data);
       this.saving = true;
       this.formula = new FormulaDto()
+      this.createformulaModal.reset()
     }
   }
 
@@ -130,4 +132,17 @@ export class CreateFormulaDialogComponent extends AppComponentBase {
     }
 
   }
+  quantityValidationErrors() {
+    let errors: AbpValidationError[] = [{ name: 'min', localizationKey: 'QuantityCanNotBeNegativeOrZero', propertyKey: 'QuantityCanNotBeNegativeOrZero' }];
+    return errors;
+  }
+  percentageValidationErrors() {
+    let errors: AbpValidationError[] = [
+      { name: 'min', localizationKey: 'PercentageCanNotBeNegativeOrZero', propertyKey: 'PercentageQuantityCanNotBeNegativeOrZero' },
+      { name: 'max', localizationKey: 'PercentageCanNotBeGreaterThan100', propertyKey: 'PercentageCanNotBeGreaterThan100' }
+    ];
+    return errors;
+  }
+
+
 }
