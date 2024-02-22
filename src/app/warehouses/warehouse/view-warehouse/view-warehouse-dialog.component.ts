@@ -26,6 +26,4 @@ export class ViewWarehouseDialogComponent implements OnInit {
       this.data=result;
     })
   }
-
-
 }
