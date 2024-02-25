@@ -33,11 +33,16 @@ export class PageHeaderComponent extends AppComponentBase {
   @Output() changeOrderBy: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('search') search: any;
+
+  selectedOptionIndex: number = 0; 
+
   constructor(injector: Injector,
     private _location: Location) {
     super(injector);
    }
-
+   ngOnInit(){
+    this.pageSize = this.itemOptionsPerPage[this.selectedOptionIndex];
+   }
   onSelectDisplayMode(mode: string): void {
     this.changeDisplayMode.emit(mode);
   }
@@ -46,6 +51,8 @@ export class PageHeaderComponent extends AppComponentBase {
   }
   
   onChangeItemsPerPage(item): void  {
+    this.selectedOptionIndex = this.itemOptionsPerPage.findIndex((x) => x === item);
+    this.pageSize = this.itemOptionsPerPage[this.selectedOptionIndex];
     this.onChangePage.emit(item);
   }
 

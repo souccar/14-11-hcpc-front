@@ -4748,6 +4748,62 @@ export class OutputRequestServiceProxy {
      * @param body (optional) 
      * @return Success
      */
+    customRead(body: FullPagedRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/OutputRequest/CustomRead";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCustomRead(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCustomRead(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OutputRequestDtoPagedResultDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OutputRequestDtoPagedResultDto>;
+        }));
+    }
+
+    protected processCustomRead(response: HttpResponseBase): Observable<OutputRequestDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OutputRequestDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     read(body: FullPagedRequestDto | undefined): Observable<OutputRequestDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OutputRequest/Read";
         url_ = url_.replace(/[?&]$/, "");
@@ -9694,6 +9750,64 @@ export class UserServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getForDropdown(): Observable<UserForDropdownDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<UserForDropdownDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<UserForDropdownDto[]>;
+        }));
+    }
+
+    protected processGetForDropdown(response: HttpResponseBase): Observable<UserForDropdownDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(UserForDropdownDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -14544,7 +14658,7 @@ export interface ICreateUserDto {
 export class CreateWarehouseDto implements ICreateWarehouseDto {
     name: string;
     place: string;
-    warehouseKeeper: string;
+    warehouseKeeperId: number;
 
     constructor(data?: ICreateWarehouseDto) {
         if (data) {
@@ -14559,7 +14673,7 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
         if (_data) {
             this.name = _data["name"];
             this.place = _data["place"];
-            this.warehouseKeeper = _data["warehouseKeeper"];
+            this.warehouseKeeperId = _data["warehouseKeeperId"];
         }
     }
 
@@ -14574,7 +14688,7 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["place"] = this.place;
-        data["warehouseKeeper"] = this.warehouseKeeper;
+        data["warehouseKeeperId"] = this.warehouseKeeperId;
         return data;
     }
 
@@ -14589,7 +14703,7 @@ export class CreateWarehouseDto implements ICreateWarehouseDto {
 export interface ICreateWarehouseDto {
     name: string;
     place: string;
-    warehouseKeeper: string;
+    warehouseKeeperId: number;
 }
 
 export class CreateWarehouseMaterialDto implements ICreateWarehouseMaterialDto {
@@ -23102,7 +23216,7 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
     id: number;
     name: string;
     place: string;
-    warehouseKeeper: string;
+    warehouseKeeperId: number;
 
     constructor(data?: IUpdateWarehouseDto) {
         if (data) {
@@ -23118,7 +23232,7 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.place = _data["place"];
-            this.warehouseKeeper = _data["warehouseKeeper"];
+            this.warehouseKeeperId = _data["warehouseKeeperId"];
         }
     }
 
@@ -23134,7 +23248,7 @@ export class UpdateWarehouseDto implements IUpdateWarehouseDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["place"] = this.place;
-        data["warehouseKeeper"] = this.warehouseKeeper;
+        data["warehouseKeeperId"] = this.warehouseKeeperId;
         return data;
     }
 
@@ -23150,7 +23264,7 @@ export interface IUpdateWarehouseDto {
     id: number;
     name: string;
     place: string;
-    warehouseKeeper: string;
+    warehouseKeeperId: number;
 }
 
 export class UpdateWarehouseMaterialDto implements IUpdateWarehouseMaterialDto {
@@ -23657,6 +23771,53 @@ export interface IUserDtoPagedResultDto {
     totalCount: number;
 }
 
+export class UserForDropdownDto implements IUserForDropdownDto {
+    id: number;
+    name: string | undefined;
+
+    constructor(data?: IUserForDropdownDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): UserForDropdownDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserForDropdownDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data;
+    }
+
+    clone(): UserForDropdownDto {
+        const json = this.toJSON();
+        let result = new UserForDropdownDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserForDropdownDto {
+    id: number;
+    name: string | undefined;
+}
+
 export class UserLoginInfoDto implements IUserLoginInfoDto {
     id: number;
     name: string | undefined;
@@ -23800,7 +23961,8 @@ export class WarehouseDto implements IWarehouseDto {
     id: number;
     name: string | undefined;
     place: string | undefined;
-    warehouseKeeper: string | undefined;
+    warehouseKeeperId: number | undefined;
+    warehouseKeeper: UserForDropdownDto;
 
     constructor(data?: IWarehouseDto) {
         if (data) {
@@ -23816,7 +23978,8 @@ export class WarehouseDto implements IWarehouseDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.place = _data["place"];
-            this.warehouseKeeper = _data["warehouseKeeper"];
+            this.warehouseKeeperId = _data["warehouseKeeperId"];
+            this.warehouseKeeper = _data["warehouseKeeper"] ? UserForDropdownDto.fromJS(_data["warehouseKeeper"]) : <any>undefined;
         }
     }
 
@@ -23832,7 +23995,8 @@ export class WarehouseDto implements IWarehouseDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["place"] = this.place;
-        data["warehouseKeeper"] = this.warehouseKeeper;
+        data["warehouseKeeperId"] = this.warehouseKeeperId;
+        data["warehouseKeeper"] = this.warehouseKeeper ? this.warehouseKeeper.toJSON() : <any>undefined;
         return data;
     }
 
@@ -23848,7 +24012,8 @@ export interface IWarehouseDto {
     id: number;
     name: string | undefined;
     place: string | undefined;
-    warehouseKeeper: string | undefined;
+    warehouseKeeperId: number | undefined;
+    warehouseKeeper: UserForDropdownDto;
 }
 
 export class WarehouseDtoPagedResultDto implements IWarehouseDtoPagedResultDto {
