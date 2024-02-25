@@ -15,23 +15,28 @@ const routes: Routes = [{
   children:[
     {
       path: 'plan', component: ViewPlanComponent,
-      canActivate: [AppRouteGuard]
+      canActivate: [AppRouteGuard],
+         data: { permission : 'Production.Plans' },
     },
     {
       path: 'displayAllPlan',
       component: PlanComponent,
-      canActivate: [AppRouteGuard]
+      canActivate: [AppRouteGuard],
+      data: { permission : 'Production.Plans' },
     },
 
     {
       path: 'diallyProduction',
       component: ViewActuallyComponent,
-      canActivate: [AppRouteGuard]
+      canActivate: [AppRouteGuard],
+      data: { permission : 'Production.DailyProductions' },
     },
     {
       path: 'diallyProduction/list',
       component: ActuallyComponent,
-      canActivate: [AppRouteGuard]
+      canActivate: [AppRouteGuard],
+      data: { permission : 'Production.DailyProductions' },
+
     },
 
 

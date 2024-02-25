@@ -40,13 +40,15 @@ export class EditRoleComponent extends AppComponentBase implements OnInit {
     this._route.params.subscribe((params: Params) => {
       this.id = params['id'];
     });
-    this.initialRole(this.id);    
+    this.initialRole(this.id);
   }
 
   initialRole(id){
+    console.log(id)
     this._roleService.get(id)
     .subscribe((result)=>{
       this.role = result;
+      console.log(this.role)
       this.initialPermissions();
     })
   }
@@ -110,15 +112,16 @@ export class EditRoleComponent extends AppComponentBase implements OnInit {
           })
         );
       }
-    });     
-    
+    });
+
+
     this.role.grantedPermissions.forEach((element)=>{
       let parent = this.items[0].children.find(x=>x.children.find(y=>y.value.toString() == element.toString()));
-      parent.children.find(q=>q.value.toString() == element.toString()).checked = true;      
+      parent.children.find(q=>q.value.toString() == element.toString()).checked = true;
     });
-    
+
     this.items[0].children.forEach((element)=>{
-      
+
       if (element.children.every(a=>a.checked == true)) {
         element.checked = true;
       }
