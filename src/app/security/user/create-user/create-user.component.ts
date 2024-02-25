@@ -93,6 +93,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
           this.notify.info(this.l('SavedSuccessfully'));
           this.bsModalRef.hide();
       });
+      // location.reload()
   }
 
   onSelectedChange(event): void {

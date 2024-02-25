@@ -3,6 +3,7 @@ import { AbpSessionService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { RoleServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
 @Component({
@@ -20,7 +21,7 @@ onResize(event) {
     injector: Injector,
     private renderer:  Renderer2,
     public authService: AppAuthService,
-    private _sessionService: AbpSessionService
+    private _sessionService: AbpSessionService,
   ) {
     super(injector);
   }
@@ -49,5 +50,6 @@ onResize(event) {
   login(): void {
     this.submitting = true;
     this.authService.authenticate(() => (this.submitting = false));
+
   }
 }

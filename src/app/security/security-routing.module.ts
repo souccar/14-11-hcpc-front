@@ -15,25 +15,27 @@ const routes: Routes = [{
     {
       path: 'user',
       component: UserComponent,
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Security.Users' },
       canActivate: [AppRouteGuard],
     },
     {
       path: 'role',
       component: RoleComponent,
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Security.Roles' },
       canActivate: [AppRouteGuard],
     },
     {
       path: 'newRole',
       component: CreateRoleComponent,
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Security.Roles' },
+
       canActivate: [AppRouteGuard]
     },
     {
       path: 'editRole/:id',
       component: EditRoleComponent,
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Security.Roles' },
+
       canActivate: [AppRouteGuard]
     }
   ]

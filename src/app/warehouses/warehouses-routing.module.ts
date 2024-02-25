@@ -19,21 +19,21 @@ const routes: Routes = [{
       path: 'warehouse',
       component: WarehouseComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Warehouses.Warehouses' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'warehouseMaterial',
       component: WarehouseMaterialComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Warehouses.WarehouseMaterials' },
       canActivate: [AppRouteGuard]
     },
         {
       path: 'outputRequest',
       component: OutputRequestComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Warehouses.OutputRquests' },
       canActivate: [AppRouteGuard]
     },
 
@@ -41,14 +41,14 @@ const routes: Routes = [{
       path: 'newOutputRequest',
       component: CreateOutputRequestDialogComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Warehouses.OutputRquests' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'editOutputRequest/:id',
       component: EditOutputRequestDialogComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Warehouses.OutputRquests' },
       canActivate: [AppRouteGuard]
     }
 

@@ -1,16 +1,19 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Injector } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from '@shared/services/sidebar/sidebar.service';
 import menuItems, { IMenuItem } from 'app/app-menu';
 import { Subscription } from 'rxjs';
+import { SharedService } from '@shared/services/shared.service';
+import { RoleServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/app-component-base';
 
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent extends AppComponentBase implements OnInit, OnDestroy {
   menuItems: IMenuItem[] = menuItems;
   selectedParentMenu = '';
   viewingParentMenu = '';
@@ -25,8 +28,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private sidebarService: SidebarService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _roleService:RoleServiceProxy,
+    private _sharedService:SharedService,
+    injector: Injector,
   ) {
+    super(injector);
     // this.authService.getUser().then((user) => {
     //   this.currentUser = user;
     // });
@@ -75,6 +82,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this._roleService.get(1).subscribe((response)=>{
+      this._sharedService.permissons=response.grantedPermissions;
+      console.log(this._sharedService.permissons)
+     })
     setTimeout(() => {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;
@@ -294,13 +305,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:no-shadowed-variable
   filteredMenuItems(menuItems: IMenuItem[]): IMenuItem[] {
-    return menuItems
-  //     ? menuItems.filter(
-  //         (x) =>
-  //           !x.roles || (x.roles && x.roles.includes(this.currentUser.role))
-  //       )
-  //     : [];
- }
- 
- 
+      return menuItems
+      ? menuItems.filter(
+          (x) =>
+          (x.permissions.length!=0 && (x.permissions.some((y) =>this.isGranted(y))
+          ))
+
+        )
+      : [];
+  }
+
+
+
 }

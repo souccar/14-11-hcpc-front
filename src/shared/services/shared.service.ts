@@ -5,7 +5,8 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
- 
+
+  permissons:string[];
   constructor() { }
 
 
