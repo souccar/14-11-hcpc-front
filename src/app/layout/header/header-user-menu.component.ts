@@ -92,7 +92,6 @@ export class HeaderUserMenuComponent extends AppComponentBase implements OnInit 
 
   loadNotifications(): void {
     this._notificationService.getUserNotifications(0, 10, 0).subscribe(result => {
-      console.log(result);
       this.unreadNotificationCount = result;
       this.notifications = [];
       _.forEach(result.items, (item: UserNotification) => {

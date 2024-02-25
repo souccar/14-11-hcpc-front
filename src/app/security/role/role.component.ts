@@ -20,7 +20,7 @@ export class RoleComponent extends FullPagedListingComponentBase<RoleDto> implem
   fields = [
     { label: this.l('Name'), type: 'string' ,name: 'name', sortable: true},
     { label: this.l('DisplayName'), type: 'string',name: 'displayName', sortable: true },
-  
+
 
 
   ];
@@ -38,6 +38,7 @@ export class RoleComponent extends FullPagedListingComponentBase<RoleDto> implem
     this._roleService.read(request)
       .subscribe(result => {
         this.roles = result.items;
+        console.log(this.roles)
         this.showPaging(result, pageNumber);
       })
   }
@@ -94,8 +95,8 @@ export class RoleComponent extends FullPagedListingComponentBase<RoleDto> implem
   }
 
   deleteItem(id:number): void {
-  
-  
+
+
       abp.message.confirm(
         this.l('RoleDeleteWarningMessage',  'Roles'),
         undefined,
@@ -108,7 +109,7 @@ export class RoleComponent extends FullPagedListingComponentBase<RoleDto> implem
           }
         }
       );
-    
+
   }
 
 }

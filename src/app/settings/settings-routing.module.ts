@@ -25,28 +25,28 @@ const routes: Routes = [{
       path: 'supplier',
       component: SupplierComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Setting.Suppliers' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'product',
       component: ProductComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Setting.Products' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'unit',
       component: UnitComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Setting.Units' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'transfer',
       component: TransferComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Setting.Transfers' },
       canActivate: [AppRouteGuard]
     }
     ,
@@ -54,14 +54,14 @@ const routes: Routes = [{
       path: 'generalsetting',
       component: GeneralSettingComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Setting.GeneralSettings' },
       canActivate: [AppRouteGuard]
     },
     {
       path: 'material',
       component: MaterialComponent,
 
-      //data: { permission : 'Pages.Products' },
+      data: { permission : 'Setting.Materials' },
       canActivate: [AppRouteGuard]
     },
 
@@ -99,7 +99,7 @@ const routes: Routes = [{
     ,
     {
       path: 'Category', component: CategoryComponent ,
-      // data: { permission : 'Setting.Categories' },
+      data: { permission : 'Setting.Categories' },
       canActivate: [AppRouteGuard]
     }
   ]
