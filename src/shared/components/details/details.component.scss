@@ -4,7 +4,6 @@
   flex-direction: row;
   gap: 15px;
 }
-
 .cards .card {
   display: flex;
   align-items: center;
@@ -17,16 +16,10 @@
   cursor: pointer;
   transition: 400ms;
   font-size: 12px;
-
-
 }
  .darkened {
- 
   color:#696969 !important;
-
  }
-
-
 .text-color{
   color:var(--theme-color-1);
 }
@@ -34,11 +27,9 @@
   font-size: 1em;
   font-weight: 700;
 }
-
 .cards .card p.second-text {
   font-size: .7em;
 }
-
 .cards .card:hover {
   transform: scale(1.2, 1.2);
 }

@@ -34,6 +34,7 @@
       </div>
     </div>
     <div class="form-group row required ">
+
       <label class="col-md-3 col-form-label" for="suppliers">
         {{ "Suppliers" | localize }}
       </label>
@@ -42,15 +43,17 @@
             class="iconsminds-add"></i>
           {{'AddSupplier'|localize}}</button>
       </div>
+    </div>
+
       <div style=" position: relative;
       max-height: 250px;
       overflow: auto;">
-      <div class="col-md-12">
+
         <div *ngFor="let materialsupplier of material.suppliers;  let i=index">
           <div class="separator mb-1"></div>
-          <div class="row mx-3 my-3">
+          <div class="row mx-3 my-3 required">
             <label class="col-md-2  col-form-label" for="name">
-              {{i+1}}
+              {{"Supplier"|localize}}&nbsp;{{i+1}}
             </label>
             <div class="col-md-3 ">
               <select class="form-control" aria-label="supplier" #supplierModel="ngModel" required name="supplier{{i}}"
@@ -77,8 +80,7 @@
         </div>
       </div>
     </div>
-    </div>
-  </div>
+
   <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createBrandModal.form.valid || saving"
     (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

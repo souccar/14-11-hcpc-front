@@ -34,6 +34,7 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
     super(injector);
   }
   ngOnInit(): void {
+   
     this.initPlan();
     this.initProducts();
     this.initProductsDropDown();
@@ -61,14 +62,16 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
 
   }
 
-  getProductName(id: number) {
+  getProductName(id: number):ProductDto {
+    let p=new ProductDto();
     this._productService.get(id).subscribe((response) => {
-      this.products.push(response);
+      p=response;
     });
-
+return p;
   }
 
   addToProductList() {
+    this.planProduct.product=new ProductDto();
     this.isButtonDisabled = false;
     if (this.planProduct.numberOfItems == null || this.planProduct.productId == null) {
       return;
@@ -76,14 +79,14 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
     else {
       if (this.planProduct.id == null) {
         this.planProduct.planId = this.planId;
-        var product = this.products.filter(x => x.id == this.planProduct.productId)[0];
-        this.planProduct.product = product;
-        if (this.plan.planProducts.filter(x => x.product.name == this.planProduct.product.name).length > 0) {
+        var product = this.productsForDropDown.filter(x => x.id == this.planProduct.productId)[0];
+        this.planProduct.product.id= product.id;
+        this.planProduct.product.name= product.information;
+        if (this.plan.planProducts.filter(x => x.product.id == this.planProduct.product.id).length > 0) {
           this.notify.error(this.l('ProductIsAlreadyExist'));
           return;
         }
         this.plan.planProducts.push(this.planProduct)
-
         this.planProduct = new PlanProductDto()
         this.plan.planProducts = [...this.plan.planProducts];
         this.savePlanProductList.emit(this.plan.planProducts);
@@ -95,7 +98,6 @@ export class EditPlanProductDialogComponent extends AppComponentBase {
           return;
         }
         let product = this.productsForDropDown.filter(x => x.id == this.planProduct.productId)[0];
-
         this.planProduct.product.id = product.id;
         this.planProduct.product.name = product.information;
         this.plan.planProducts.push(this.planProduct)

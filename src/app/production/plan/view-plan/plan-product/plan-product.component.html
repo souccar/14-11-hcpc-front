@@ -6,7 +6,7 @@
         <div class="float-left float-none-xs mb-0">
           <div class="d-inline-block">
             <h5 class="d-inline">{{ p.product.name }}</h5>
-            <span class="text-muted text-small d-block">MMT</span>
+            <span class="text-muted text-small d-block">{{p.product.category.name}}</span>
           </div>
         </div>
         <div class="float-right float-none-xs">
@@ -119,7 +119,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let f of p.product.formulas">
-                    <td>
+                    <td >
                       <a
                         class="btn btn-empty text-muted"
                         (click)="editMaterial(f.material.id)"
@@ -139,13 +139,13 @@
                         >
                       </a>
                     </td>
-                    <td>
-                      <span class="font-weight-medium">{{
+                    <td class="align-middle "> 
+                      <span class=" font-weight-medium">{{
                         getNumberOfItem(p, f.materialId)
                       }}</span>
                     </td>
-                    <td>
-                      <span class="text-muted"
+                    <td class="align-middle ">
+                      <span class=" text-muted"
                         >{{ getTotalQuentity(p, f.materialId)
                         }}{{ f.unit.name }}</span
                       >

@@ -56,6 +56,7 @@ export class PlanProductComponent extends AppComponentBase implements OnInit {
   {
     this._planService.getForEdit(this.planProducts[0].planId).subscribe((response)=>{
       this.plan=response;
+      console.log(this.planProducts)
     });
   }
   getTotalQuentity(planProduct: PlanProductDto, materialId){
