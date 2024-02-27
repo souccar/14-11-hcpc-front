@@ -16,7 +16,7 @@ export class PageHeaderComponent extends AppComponentBase {
   @Input() showAdvanceFilter = true;
   @Input() showItemsPerPage = true;
   @Input() pageSize =10;
-  @Input() itemOptionsPerPage = [4, 7, 10];
+  @Input() itemOptionsPerPage = [5,10,20];
   @Input() itemOrder ;
   @Input() fields = [];
   @Input() filtering: boolean = false;

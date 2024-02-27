@@ -48,7 +48,7 @@ export abstract class FilterComponentBase extends AppComponentBase implements On
 
   getOperators(type: string){
     switch(type){
-      case 'string': return ['=', '!=', 'contains', 'starts with', 'ends with'];
+      case 'string': return ['=', '!=', this.l('Contains'), this.l('StartsWith'), this.l('EndsWith')];
       case 'number': return ['=','!=', '<=', '>'];
       case 'category': return ['=','!=', 'in', 'not in'];
       case 'date': return ['=','!=', '<=', '>'];

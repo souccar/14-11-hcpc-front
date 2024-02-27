@@ -50,7 +50,7 @@ export class UserComponent extends FullPagedListingComponentBase<UserDto> implem
       {
         backdrop: true,
         ignoreBackdropClick: true,
-        class: 'modal-lg',
+        class: 'modal-xl',
 
       }
     );

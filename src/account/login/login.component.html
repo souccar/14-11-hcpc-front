@@ -20,22 +20,34 @@
             <h6 class="mb-4">{{'Login'|localize}}</h6>
 
             <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
-              <label class="form-group has-float-label">
-                <input type="text" class="form-control" name="userNameOrEmailAddress"
-                  [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress"
-                  required maxlength="256"
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <a class="input-group-text " style="cursor: pointer;">
+                    <span >@</span>
+                  </a>
+                </div>
+                <input type="text" class="form-control" name="userNameOrEmailAddress" placeholder="{{'UserName' | localize}}"
+                  [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" required maxlength="256"
                   #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl />
-                <span>{{'UserName' | localize}}</span>
-                <abp-validation-summary [control]="userNameOrEmailAddressModel"
-                  [controlEl]="userNameOrEmailAddressEl"></abp-validation-summary>
-              </label>
-              <label class="form-group has-float-label">
-                <input type="password" class="form-control" name="password"
-                  [(ngModel)]="authService.authenticateModel.password" required
-                  maxlength="32" #passwordModel="ngModel" #passwordEl />
-                <span>{{'Password' | localize}}</span>
-                <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
-              </label>
+
+              </div>
+              <abp-validation-summary [control]="userNameOrEmailAddressModel"
+              [controlEl]="userNameOrEmailAddressEl"></abp-validation-summary>
+
+
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <a class="input-group-text " style="cursor: pointer;" (click)="togglePasswordVisibilty()">
+                    <i [ngClass]="{' bi bi-eye-slash':!showPassword,'simple-icon-eye':showPassword}"></i>
+                  </a>
+                </div>
+                <input  type="{{ !showPassword ? 'password' : 'text' }}"
+                class="form-control" name="password" placeholder= "{{'Password' | localize}}"
+                  [(ngModel)]="authService.authenticateModel.password" required maxlength="32" #passwordModel="ngModel"
+                  #passwordEl />
+                  </div>
+                  <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
+            
               <div class="form-group row">
                 <div class="col-md-8">
                   <div class="custom-control custom-checkbox">

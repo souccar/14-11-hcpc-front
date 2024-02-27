@@ -15,14 +15,12 @@
           <li role="menuitem ">
             <a class="dropdown-item" routerLink="/app/production/displayAllPlan">
               <i class="iconsminds-align-justify-all glyph-icon text-primary mr-1"></i>
-
               {{ "GoToPlansList" | localize }}
             </a>
           </li>
         </ul>
       </div>
     </div>
-    
   </div>
   
   <ng-container *ngFor="let plan of plans">
@@ -40,20 +38,16 @@
                 <div class="text-one">
                   {{ plan.title }}
                 </div>
-
                 &nbsp;
                 <h3 class="text-primary">&nbsp;#{{ plan.id }}</h3>
               </div>
-
               <div class="">
                 <span class="mt-2">
                   <i class="iconsminds-calendar-4"> </i>{{ plan.startDate | format }}</span>
                 |
-
                 <span class="mt-3"> {{ plan.duration }} day</span>
               </div>
             </div>
-
             <div class="mr-5 mb-5 text-muted text-small" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Start Date">
               <div class="row">
